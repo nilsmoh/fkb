@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outFile": "sched.js",
+        "sourceMap": true,
+		  "strictNullChecks": true
+    },
+  "files": [
+    "SaxSchedules.ts",
+    "SaxSchedZusatzinfoBase.ts",
+    "SaxSchedulesTyped.ts",
+    "SaxSchedulesTypedNachberechnung.ts",
+    "SaxRenderer.ts",
+    "SaxApp.ts"
+  ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+tr{
+height:50px;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+	position:relative;
+	box-sizing:border-box;
+	
+}
+.rot{
+	background-color:green;
+	transform: rotate(90deg);
+	box-sizing:border-box;
+	position:absolute;
+	transform-origin: 35px 35px 0; 
+}
+
+.sa{
+	width:150px;
+	height:70px;
+	padding: 5px;
+	top:0px;
+	left:0px;
+	
+}
+</style>
+</head>
+<body>
+
+<h2>Cell that spans two rows:</h2>
+<table style="width:80%; height:200px;">
+  <tr>
+    <th>Name:</th>
+    <th>Bill Gates</th>
+	<th>Bill Gates</th>
+	<th>Bill Gates</th>
+	<th style="width:70px">Bill Gates</th>
+  </tr>
+  <tr>
+    <td>X</td>
+    <th rowspan="2" colspan="3">Telephone:</th>
+    <td rowspan="3">
+	   <div class="rot sa" > senk </div>
+	</td>
+  </tr>
+  <tr>
+    <td>55577855</td>
+	
+  </tr>
+   <tr>
+    <th>Name:</th>
+    <td>Bill Gates</td>
+	<td>Bill Gates</td>
+	<td>Bill Gates</td>
+	
+  </tr>
+  
+</table>
+
+</body>
+</html>

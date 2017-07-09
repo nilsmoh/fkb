@@ -1,0 +1,452 @@
+body {
+  font-family: "Noto Serif";
+}
+#vorbild {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 0px 0px;
+  background-image: url(file:///D:/hobby/fahrkarten_test/schedules/fkb2x.png);
+  position: absolute;
+  width: calc(981px);
+  height: calc(641px);
+  /* */
+}
+table.FahrplanTabelle tbody {
+  opacity: 1.0;
+}
+table.FahrplanTabelle tbody tr td > div {
+  height: 26px;
+  width: 68px;
+}
+table.FahrplanTabelle,
+table.FahrplanTabelle th,
+table.FahrplanTabelle td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 68px;
+  table-layout: fixed;
+  position: relative;
+  text-align: center;
+  padding: 0px;
+}
+.BhfAusClass {
+  left: 5px;
+  font-size: 28px;
+  margin-top: -11.5px;
+}
+.BhfInClass {
+  left: 22px;
+  font-size: 28px;
+  margin-top: -11.5px;
+}
+.ClassAbBhfFirst,
+.ClassAbBhf,
+.ClassInBhf {
+  left: 66px;
+  height: 26px;
+  line-height: 26px;
+  font-size: 26px;
+  /* baseline-shift: 5px; */
+  top: -4px;
+  font-stretch: 5px;
+  letter-spacing: 1.5px;
+  width: 238px;
+  overflow: hidden;
+  word-break: break-all;
+}
+div.ErsteSpalteNormal.ClassKMVOLL.ClassAn .BhfInClass {
+  left: 66px;
+}
+div.ErsteSpalteNormal.ClassKMVOLL.ClassAn div.ClassInBhf {
+  left: 100px;
+  width: 204px;
+}
+.ErsteSpalteAnschluss div.ZubringerAbAus {
+  left: 63px;
+}
+.ErsteSpalteAnschluss div.ZubringerAbBhf {
+  left: 128px;
+}
+.ErsteSpalteAnschluss div.WeiterIn {
+  left: 0px;
+}
+.ErsteSpalteAnschluss div.WeiterInBhfBhf {
+  left: 36px;
+}
+.ErsteSpalteAnschluss {
+  height: 26px;
+  line-height: 26px;
+  font-size: 26px;
+  /* baseline-shift: 5px; */
+  top: -4px;
+  font-stretch: 5px;
+  letter-spacing: 1.5px;
+}
+.ZZZ_ANSCHLUSS_WEITER_IN .ErsteSpalteAnschluss {
+  left: 5px;
+  height: 26px;
+  line-height: 26px;
+  font-size: 26px;
+  /* baseline-shift: 5px; */
+  top: -4px;
+  font-stretch: 5px;
+  letter-spacing: 1.5px;
+  width: 299px !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+tr.ZZZ_ZUGNR td div {
+  font-size: 27px;
+  margin-top: -20px;
+}
+table.FahrplanTabelle tr.ZZZ_ZUGNR td:first-child > div {
+  font-size: 27px;
+  margin-top: -20px;
+  width: 304px;
+}
+table.FahrplanTabelle tr.ZZZ_ZUGNR td:first-child > div > div.ZugNrText {
+  right: 0px;
+  top: 19px;
+  letter-spacing: 2.5px;
+}
+table.FahrplanTabelle tr td:first-child {
+  width: 304px;
+}
+table.FahrplanTabelle tr td:first-child > div {
+  width: 304px;
+  position: relative;
+}
+table.FahrplanTabelle tr td:first-child > div > div {
+  position: absolute;
+}
+table.FahrplanTabelle tr td div {
+  background-color: brown;
+}
+.notImplemented {
+  background-color: red;
+}
+.blockSenkrecht.invalid {
+  background-color: green;
+}
+.blockSenkrecht {
+  background-color: lightgreen;
+}
+.blockWaagerecht.invalid {
+  background-color: orange;
+}
+.blockWaagerecht {
+  background-color: yellow;
+}
+.DickStrich {
+  background-color: black;
+}
+.senkrecht {
+  transform: rotate(90deg);
+  background-color: rgba(255, 0, 0, 0.3);
+  position: absolute;
+  transform-origin: 38px 38px 0;
+  height: 68px;
+  top: 0px;
+  left: 0px;
+  padding: 4px;
+}
+/*
+.senkOrgBreit-1 {    height:40px;}
+.senkOrgBreit-2 {    height:80px;}
+
+.senkOrgHoch-1 {    width:30px;}
+.senkOrgHoch-2 {    width:60px;}
+*/
+.senkOrgBreit-1 {
+  height: 68px;
+}
+.senkOrgHoch-1 {
+  width: 18px;
+}
+.senkOrgBreit-2 {
+  height: 136px;
+}
+.senkOrgHoch-2 {
+  width: 45px;
+}
+.senkOrgBreit-3 {
+  height: 204px;
+}
+.senkOrgHoch-3 {
+  width: 72px;
+}
+.senkOrgBreit-4 {
+  height: 272px;
+}
+.senkOrgHoch-4 {
+  width: 99px;
+}
+.senkOrgBreit-5 {
+  height: 340px;
+}
+.senkOrgHoch-5 {
+  width: 126px;
+}
+.senkOrgBreit-6 {
+  height: 408px;
+}
+.senkOrgHoch-6 {
+  width: 153px;
+}
+.senkOrgBreit-7 {
+  height: 476px;
+}
+.senkOrgHoch-7 {
+  width: 180px;
+}
+.senkOrgBreit-8 {
+  height: 544px;
+}
+.senkOrgHoch-8 {
+  width: 207px;
+}
+.senkOrgBreit-9 {
+  height: 612px;
+}
+.senkOrgHoch-9 {
+  width: 234px;
+}
+.senkOrgBreit-10 {
+  height: 680px;
+}
+.senkOrgHoch-10 {
+  width: 261px;
+}
+.senkOrgBreit-11 {
+  height: 748px;
+}
+.senkOrgHoch-11 {
+  width: 288px;
+}
+.senkOrgBreit-12 {
+  height: 816px;
+}
+.senkOrgHoch-12 {
+  width: 315px;
+}
+.senkOrgBreit-13 {
+  height: 884px;
+}
+.senkOrgHoch-13 {
+  width: 342px;
+}
+.senkOrgBreit-14 {
+  height: 952px;
+}
+.senkOrgHoch-14 {
+  width: 369px;
+}
+.senkOrgBreit-15 {
+  height: 1020px;
+}
+.senkOrgHoch-15 {
+  width: 396px;
+}
+.ZeitMinuten {
+  vertical-align: 7px;
+  font-size: 70%;
+}
+.nachtsUnterstrichen {
+  text-decoration: underline;
+  border-bottom: 1px solid black;
+}
+.Schnellzug {
+  font-style: italic;
+  font-family: serif;
+  font-weight: 600;
+}
+.HeadDiv {
+  display: block;
+  background-color: #f5ec80;
+}
+.Head1Div {
+  display: block;
+}
+.Head1Div .HeadLeftDiv {
+  display: inline-block;
+  background-color: green;
+  min-width: 30px;
+  padding: 3px;
+}
+.Head1Div .HeadNrDiv {
+  display: inline-block;
+  background-color: lightgreen;
+  min-width: 30px;
+  padding: 3px;
+}
+.Head1Div .HeadTitleDiv {
+  display: inline-block;
+  background-color: green;
+  min-width: 30px;
+  padding: 3px;
+}
+.Head1Div .HeadRightDiv {
+  display: inline-block;
+  background-color: #00d490;
+  min-width: 30px;
+  padding: 3px;
+}
+.Head2Div {
+  display: block;
+}
+.Head2Div .HeadRow2Div {
+  display: inline-block;
+  background-color: green;
+  min-width: 30px;
+  padding: 3px;
+  column-count: 4;
+}
+.ErsteSpalteNormal {
+  text-align: left !important;
+}
+.ErsteSpalteAnschluss {
+  text-align: left !important;
+}
+.KM {
+  width: 40px;
+  display: inline-block;
+  background-color: lightblue;
+  padding-right: 10px;
+  text-align: right;
+}
+.Linien {
+  display: block;
+  background-color: lightgreen;
+  /* padding-right: 3px; */
+  text-align: right;
+  right: 0px;
+  position: absolute;
+  top: 0px;
+}
+.ClassAb {
+  background-color: yellow;
+}
+.ClassAn {
+  background-color: orange;
+}
+.ClassInBhf {
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 28px;
+  letter-spacing: 0.9px;
+}
+.ClassAbBhfFirst {
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 28px;
+  letter-spacing: 0.9px;
+}
+.TimeInvalid {
+  background-color: red;
+}
+.Gestern {
+  background-color: aqua;
+}
+.Heute {
+  background-color: cornflowerblue;
+}
+.Morgen {
+  background-color: deeppink;
+}
+.UnbekannterTag {
+  background-color: crimson;
+}
+.Gestern,
+.Heute,
+.Morgen,
+.UnbekannterTag {
+  margin-top: -20px;
+  font-family: Noto Serif;
+  font-size: 33px;
+}
+table.FahrplanTabelle td > div.isEnd {
+  box-shadow: inset 0px -2px 0 0 green, inset -2px 0 0 green, inset 2px 0 0 green;
+}
+table.FahrplanTabelle td > div.isStart {
+  box-shadow: inset 0px 2px 0 0 blue, inset -2px 0 0 blue, inset 2px 0 0 blue;
+}
+/*
+    keep for reference
+border-top: 1px solid red	box-shadow: inset 0 1px 0 0 red
+border-right: 1px solid red	box-shadow: inset -1px 0 0 red
+border-bottom: 1px solid red	box-shadow: inset 0 -1px 0 0 red
+border-left: 1px solid red	box-shadow: inset 1px 0 0 red
+
+*/
+.ZZZ_ANSCHLUSS_ZUBRINGER_AB {
+  height: 29px;
+}
+.TRENN_nachAnschlussAus {
+  height: 22px;
+}
+.TRENN_nachAnschlussAus td div {
+  height: 20px !important;
+}
+.TRENN_nachAnschlussAus td div div {
+  height: 3px !important;
+  left: 5px;
+  right: 5px;
+  top: 3px;
+  background-color: black;
+  position: absolute;
+  z-index: 0;
+}
+.TRENN {
+  height: 12px;
+}
+.TRENN td div {
+  height: 9px !important;
+}
+.TRENN td div div {
+  height: 3px !important;
+  left: 5px;
+  right: 5px;
+  top: 3px;
+  background-color: black;
+  position: absolute;
+  z-index: 0;
+}
+.TRENN.durchgehend td div div {
+  left: 0px;
+  right: 0px;
+  top: 3px;
+}
+tr:last-child td div div {
+  z-index: 100;
+}
+.ZZZ_ZUGNR {
+  height: 28px;
+}
+.ZZZ_NORMAL {
+  height: 29px;
+}
+.ZZZ_ANSCHLUSS_WEITER_IN {
+  height: 29px;
+}
+table.FahrplanTabelle tr td:first-child > div.ErsteSpalteNormal.ClassAb {
+  width: 304px;
+  background-color: green;
+}
+td.TEMPTY div {
+  position: relative;
+}
+td.TEMPTY div div {
+  left: 30%;
+  /* right: 3px; */
+  height: 3px;
+  background-color: black !important;
+  top: 50%;
+  width: 40%;
+}
+td.bla.true0of1 > div {
+  background-color: purple;
+  width: 68px;
+  height: 1000px;
+  position: absolute;
+  z-index: 15;
+}
