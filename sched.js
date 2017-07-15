@@ -1100,6 +1100,9 @@ var SaxSchedulesZusatzBase;
                 Unbekannt: tBRT,
                 Bahnverwaltung: tBahn
             };
+            console.log(JSON.stringify(inp));
+            console.log("wird zu:");
+            console.log(JSON.stringify(tBlockKpl));
             return tBlockKpl;
         };
         return Importer;

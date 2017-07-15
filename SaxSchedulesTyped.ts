@@ -322,6 +322,10 @@ module SaxSchedulesTyped {
         }
 
 
+        /**
+         *  kopiere Bahnhofsname, der in "_anschluss_aus" belegte Zeilen aus den zusatzinfos in den header
+         *  kopiere Anschlussnummern fuer normale zeilen aus den zusatzinfos in den header 
+         */
         public static validate_move_Anschluss_ZusatzInfo(s: SingleDirectionScheduleTyped) {
             s.Zeilen.forEach((z) => {
                 switch (z.kind) {

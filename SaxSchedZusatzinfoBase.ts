@@ -15,15 +15,15 @@ module SaxSchedulesZusatzBase
      /*Inhalt eines Erlaeuterungstextes, entweder mit opticalMarker, oder senkrecht in ein en zuglauf geschrieben */
     export interface TBlockinhaltBase {
         Verweistyp: TVerweisTyp;
-        ZugNrOderKlasse: TBlockInhaltZugnummerOderKlasse;
-        Gueltig: TGueltigkeit,
-        KbsAbweichung: TKbsAbweichung,  //nach / von
-        Fahrtage: TFahrtage,
+         ZugNrOderKlasse: TBlockInhaltZugnummerOderKlasse;
+         Gueltig: TGueltigkeit,
+         KbsAbweichung: TKbsAbweichung,  //nach / von
+         Fahrtage: TFahrtage,
         TextOrt: TTextOrt,
-        PfeilInfo: TPfeilInfo,
+         PfeilInfo: TPfeilInfo,
         //Scope: EScope, now in Verweistyp where it belongs
         Unbekannt: TBlockInhaltRawUnbekannt | TBlockInhaltRawOk;
-        Bahnverwaltung: SaxSchedulesTyped.EBahnverwaltung;
+         Bahnverwaltung: SaxSchedulesTyped.EBahnverwaltung;
 
     }
        
@@ -581,6 +581,11 @@ module SaxSchedulesZusatzBase
                 Bahnverwaltung: tBahn
              };
 
+
+            console.log(JSON.stringify(inp));
+            console.log("wird zu:")
+            console.log(JSON.stringify(tBlockKpl));
+
               return tBlockKpl;                                            
         }
     }
@@ -700,3 +705,98 @@ module SaxSchedulesZusatzBase
         }
     }
 }
+
+
+
+//werte fuer erste strecke fkb99 annaberg werdau
+/*
+var test2 = {
+    "cellkey": "a510",
+    "typ": "_VERWEISTYP_fern",
+    "marker": "*",
+
+    "zugnr": 2041,
+    "klassen": "_Klassen_2_bis_4"
+};
+//wird zu:
+var test3 = {
+    "Verweistyp": {
+        "kind": "VERWEIS_FERN",
+        "ReferenzKey": "a",
+        "OpticalMarker": "*"
+    },
+    "ZugNrOderKlasse": { "Zugnr": "2041", "Klassen": 3 },
+    "Gueltig": { "kind": "GUELTIG_IMMER" },
+    "KbsAbweichung": { "kind": "KBS_ABWEICHUNG_KEINE" },
+    "Fahrtage": { "kind": "FAEHRT_IMMER" },
+    "TextOrt": { "kind": "TEXTORT_NICHTANGEGEBEN" },
+    "PfeilInfo": { "kind": "TKEINPFEIL" },
+    "Unbekannt": {
+        "kind": "BLOCKRAWUNBEKANNT",
+        "Eingabedaten": { "cellkey": "a510", "zugnr": 2041, "klassen": "_Klassen_2_bis_4", "typ": "_VERWEISTYP_fern", "marker": "*" }
+    },
+    "Bahnverwaltung": 0
+}
+
+//neutyp:
+
+{   q: " *Zug2041 II-IV",
+    BLOCK: { Standard: { scope: Zug, ZugNr: 2041, Klasse: Kl2bis4 } }
+}
+
+
+
+
+
+
+
+SaxSchedZusatzinfoBase.ts:585 {"cellkey":"b355","zugnr":1961,"typ":"_VERWEISTYP_fern","marker":"_markerAussehen_fatdot"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_FERN","ReferenzKey":"b","OpticalMarker":"_markerAussehen_fatdot"},
+"ZugNrOderKlasse":{"Zugnr":"1961","Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"cellkey":"b355","zugnr":1961,"typ":"_VERWEISTYP_fern","marker":"_markerAussehen_fatdot"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"cellkey":"c510","zugnr":1963,"typ":"_VERWEISTYP_fern","marker":"?"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_FERN","ReferenzKey":"c","OpticalMarker":"?"},
+"ZugNrOderKlasse":{"Zugnr":"1963","Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"cellkey":"c510","zugnr":1963,"typ":"_VERWEISTYP_fern","marker":"?"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"cellkey":"d1153","zugnr":1957,"typ":"_VERWEISTYP_fern","marker":"!"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_FERN","ReferenzKey":"d","OpticalMarker":"!"},"ZugNrOderKlasse":{"Zugnr":"1957","Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"cellkey":"d1153","zugnr":1957,"typ":"_VERWEISTYP_fern","marker":"!"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"e","nach":"Stollberg","typ":"_VERWEISTYP_passend"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"e","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_NACH","bhf":"Stollberg","KBS":"","SchonKomplettiert":false},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"e","nach":"Stollberg","typ":"_VERWEISTYP_passend"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"f","nach":"Stollberg","typ":"_VERWEISTYP_passend"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"f","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_NACH","bhf":"Stollberg","KBS":"","SchonKomplettiert":false},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"f","nach":"Stollberg","typ":"_VERWEISTYP_passend"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"g","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_sonn_und_festtags"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"g","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_SONNUNDFESTTAGS"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"g","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_sonn_und_festtags"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"h","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_sonn_und_festtags"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"h","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_SONNUNDFESTTAGS"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"h","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_sonn_und_festtags"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"i","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_nur_werktags"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"i","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_WERKTAGS"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"i","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_nur_werktags"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"k","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_sonn_und_festtags"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"k","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_SONNUNDFESTTAGS"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"k","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_sonn_und_festtags"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"key":"l","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_nur_werktags"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_PASSEND","ReferenzKey":"l","Scope":1},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},
+"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_WERKTAGS"},
+"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},
+"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"key":"l","typ":"_VERWEISTYP_passend","tage":"_TAGTYP_nur_werktags"}},"Bahnverwaltung":0}
+
+SaxSchedZusatzinfoBase.ts:585 {"cellkey":"m747","typ":"_VERWEISTYP_pfeilstart","destcellkey":"n822"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_FERN","ReferenzKey":"m","OpticalMarker":""},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},
+"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},
+"PfeilInfo":{"kind":"TPFEIL_START","ReferenzKey":"n"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"cellkey":"m747","typ":"_VERWEISTYP_pfeilstart","destcellkey":"n822"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"cellkey":"n822","typ":"_VERWEISTYP_pfeilziel","srccellkey":"m747"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_FERN","ReferenzKey":"n","OpticalMarker":""},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_NICHTANGEGEBEN"},"PfeilInfo":{"kind":"TPFEIL_ZIEL","ReferenzKey":"m"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"cellkey":"n822","typ":"_VERWEISTYP_pfeilziel","srccellkey":"m747"}},"Bahnverwaltung":0}
+SaxSchedZusatzinfoBase.ts:585 {"typ":"_VERWEISTYP_GLOBAL","bahn":"_bahnverwaltung_Sachs","verweisort":"_headerleft"}
+SaxSchedZusatzinfoBase.ts:586 wird zu:
+SaxSchedZusatzinfoBase.ts:587 {"Verweistyp":{"kind":"VERWEIS_GLOBAL_DEFAULT"},"ZugNrOderKlasse":{"Zugnr":null,"Klassen":0},"Gueltig":{"kind":"GUELTIG_IMMER"},"KbsAbweichung":{"kind":"KBS_ABWEICHUNG_KEINE"},"Fahrtage":{"kind":"FAEHRT_IMMER"},"TextOrt":{"kind":"TEXTORT_LINKSVONHEADER"},"PfeilInfo":{"kind":"TKEINPFEIL"},"Unbekannt":{"kind":"BLOCKRAWUNBEKANNT","Eingabedaten":{"typ":"_VERWEISTYP_GLOBAL","bahn":"_bahnverwaltung_Sachs","verweisort":"_headerleft"}},"Bahnverwaltung":1}
+
+
+*/
