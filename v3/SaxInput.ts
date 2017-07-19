@@ -1,202 +1,15 @@
 // experimenteller richtungsfahrplan
+// schwach getypt
 
-module SaxSchedules{
+import {SingleDirectionScheduleInput, _anschluss_aus,_anschluss_nach_in, _zugnr,_klassen, gnix, nix, _, an, ab ,sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl, ank, 
+    Ank, fern, fatdot, kHlt, wa, pfeilstart, pfeilziel, global, Sachs, k2b4,k1b3,k2b3,k3b4, passend, sonn_und_festtags, nur_werktags, headerlinks, zn,kl, CH, LE,
+     WaltersdfHst, MittwMrkb, a510, s810, Z1967, Z1971, Z2045, Z2065, n822, m747, d1153, b355, s321, s550, s748, c510, s800
+    
+     ,s113 ,s710, s845 , s1058 ,wx,sj,sp,sm, ZW, SC,AN, CT, AU, LU, CN, JO, KA, x135, x150, a644,a659,a818,a754,b233,c937,Z1960,dick,Z1991, Z1998, m149, cross,chooseown,nach9spalten
+     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten,a858,nach5spalten2spalten,nach4spalten2spalten, _anschluss_aus_ziel, _anschluss_nach_start
+    } from "./SaxInputTypes";
 
-export interface SingleDirectionScheduleInput{
-	route1900:string | number;
-	comment?:string;
-    todo?: string;
-    seite: number; // seite in FKB wie gedruckt
-    klassen?: string;
-    caption: string;
-	zeilen: Array< Array <(string|number|IZeilenZusatzInfo)> >;
-    ZellenVerweise?: Array<IZellenEigenschaft>;
-    }
-
-    export interface IZeilenZusatzInfo {
-        ort?: string;
-        nr?: string | number;
-        nrn?: Array<(string | number)>;
-        fk?: Array<number>;
-        fkab?: string;
-        FROM?: string;
-        NACH?: string;
-        via?: string;
-        lfd?:number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden
-}
-
-    // normaler Zelleneintrag
-    export interface IZellenEigenschaft {
-        cellkey?: string;                         //z.B. a812
-        zugnr?: string | number;
-        klassen?: string;
-        typ: string;                                //fern = verlinkt mit * oder ! oder so;     passend = direkt in korrekter spalte, pfeilstart, pfeilziel, Zeitaenderung
-        marker?: string;                             // z.B. "*"
-        key?: string;                                // z.B. "e"
-        nach?: string;                               // z.B. "Stollberg" d.h. verlaesst die Kursbuchstrecke
-        tage?: string;             //tage "nur werktags" oder "sonn-und feiertags"
-        destcellkey?: string;   // nur typ pfeilstart oder pfeilziel
-        srccellkey?: string;    // nur typ pfeilstart oder pfeilziel
-        ab?: string; // fuer zugnummernwechsel mit startstation
-        von?: string; // zug der auf kursbuchstrecke einbiegt
-        verweisort?: string; // wo wird a hingeschrieben wenn weder sa noch wa existiert
-        sonnundfeiertagzeit?: string| number; //abweichende zeit sonnundfeiertags
-        scope?: string;  //DEfaultZug oder RestSpalte falls auch darunterstehende Zuege betrofen sind, vgl S100 ganz vorne
-        bahn?: string;
-    }
-
-//scope
-export var defaultzug = "defaultzug";
-export var restspalte = "restspalte";
-
-
-//export var zn = "_zn";  //zugnummer for aliasing only
-export var ab = "_Ab";
-export var an = "_An";
-export var zn = "_xZugnr";
-export var kl = "_xKlassen";
-
-export var _anschluss_aus = "_Anschluss_aus"; //  aus Zwickau  // Abfahrtszeit in Zwickau
-export var _anschluss_aus_ziel = "_Anschluss_aus_ankunft"; // aus Karlsbad in Johanngeorgenstadt
-export var _anschluss_nach_start = "_Anschluss_nach_abfahrt"; // nach Karlsbad ab Johanngeorgenstadt
-export var _anschluss_nach_in    ="_Anschluss_nach_in"; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
-
-export var _klassen = "_Klassen_";
-
-export var _zugnr = "_xZugnr";
-
-var WaltersdfHst = "Waltersdorf Haltest."; 
-var MittwMrkb = "Mittweida-Markrsb.";
-
-export var SENKRECHT_PREFIX = "_senkrecht_"; 
-export var WAAGERECHT_PREFIX = "_waagerecht_"; 
-var ORTPREFIX = "_Ort_";
-export var MARKERPREFIX = "_markerAussehen_";
-
-export var fatdot = MARKERPREFIX + "fatdot";  // dicker schwarzer runder punkt
-export var cross = MARKERPREFIX + "christlichesKreuz";  // normales Kirchenkreuz
-export var chooseown = MARKERPREFIX + "selbstEinenFreienAussuchen"; // im FKB durch geschweifte klammern
-
-    var BAHNVERWALTUNGPREFIX = "_bahnverwaltung_";
-export    var Sachs = BAHNVERWALTUNGPREFIX + "Sachs";
-
-//s1= senkrecht start 1
-//se= senkrecht ende // letzter eintrag
-
-export var nix = "_Nix"; // waagerechter strich
-export var _ = "_Nix";
-export var gnix = "_Nixleer"; // wirklich leer
-
-export var kHlt = "_Kein_Halt";
-export var ank = "_XZug_endet"; // an fuer zuege die nur auf teilstrecke fahren
-export var Ank = "_XZug_endet"; // an fuer zuege die nur auf teilstrecke fahren
-
-var wa = WAAGERECHT_PREFIX + "a";
-
-var sa = SENKRECHT_PREFIX + "a";
-var sb = SENKRECHT_PREFIX + "b";
-var sc = SENKRECHT_PREFIX +"c";
-var sd = SENKRECHT_PREFIX +"d";
-var se = SENKRECHT_PREFIX +"e";
-var sf = SENKRECHT_PREFIX +"f";
-var sg = SENKRECHT_PREFIX +"g";
-var sh = SENKRECHT_PREFIX +"h";
-var si = SENKRECHT_PREFIX +"i";
-var sk = SENKRECHT_PREFIX +"k";
-var sl = SENKRECHT_PREFIX +"l";
-
-var sj = SENKRECHT_PREFIX + "j";
-var sm = SENKRECHT_PREFIX + "m";
-    var sp = SENKRECHT_PREFIX + "p";
-
-
-    var wx = WAAGERECHT_PREFIX + "x";
-
-var LE = ORTPREFIX + "Leipzig";
-var CH = ORTPREFIX + "Chemnitz";
-var ZW = ORTPREFIX + "Zwickau";
-var SC = ORTPREFIX + "Schwarzenberg";
-var JO = ORTPREFIX + "Johangeorgenstadt";
-var KA = ORTPREFIX + "Karlsbad BEB";
-var AU = ORTPREFIX + "Aue";
-var AN = ORTPREFIX + "Annaberg";
-var LU = ORTPREFIX + "Lugau";
-var CT = ORTPREFIX + "Chemnitz ü.Thalheim";
-    var CN = ORTPREFIX + "Chemnitz ü.Neu.";
-
-export var k2b4 = "_Klassen_2_bis_4";
-export var k2b3 = "_Klassen_2_bis_3";
-export var k3b4 = "_Klassen_3_bis_4";
-export var k1b3 = "_Klassen_1_bis_3";
-
-//var rundvoll = "_MARKER_rundvoll";
-
-export var fern = "_VERWEISTYP_fern";
-export var passend = "_VERWEISTYP_passend";
-export var global = "_VERWEISTYP_GLOBAL";
-export var pfeilziel = "_VERWEISTYP_pfeilziel";
-export var pfeilstart = "_VERWEISTYP_pfeilstart";
-
-export var sonn_und_festtags = "_TAGTYP_sonn_und_festtags";
-export var nur_werktags = "_TAGTYP_nur_werktags";
-
-export var dick = "_CELL_dickerstrich";
-
-//verweisort
-export var headerlinks = "_headerleft";
-export var headerrechts = "_headerright";
-export var nach9spalten = "_nach9spalten";
-export var nach4spalten2spalten = "nach4spalten2spalten";
-export var nach10spalten4spalten = 'nach10spalten4spalten';
-export var nach4spalten ='nach4spalten';
-export var nach6spalten ='nach6spalten';
-export var nach5spalten2spalten = 'nach5spalten2spalten';
-
-
-
-var Z1971 = "_Z1971";
-var Z2045 = "_Z2045";
-var Z1967 = "_Z1967";
-var Z2065 = "_Z2065";
-var Z1991 = "_Z1991";
-var Z1998 = "_Z1998";
-
-
-var m747 = "_m747";
-var b355 = "_b355";
-var a510 = "_a510";
-var n822 = "_n822";
-var c510 = "_c510";
-var d1153 = "_d1153";
-var s550 = "_s550";  //schnellzug
-var s748 = "_s748";
-var s800 = "_s800";
-var s321 = "_s321";
-var s810 = "_s810";
-
-var a858 = "_a858";
-
-var s113 = "_s113";
-    var s710 = "_s710";
-    var s845 = "_s845";
-var s1058 = "_s1058";
-
-    var c937 = "_c937";
-    var b233 = "_b233";
-    var a754 = "_a754";
-
-    var m149 = "_m149";
-
-    var x135 = "_x135";
-    var x150 = "_x150";
-    var a644 = "_a644";
-    var a659 = "_a659";
-    var a818 = "_a818";
-
-
-    var Z1960 = "_Z1960";
-
-    export class InputData {
+export class InputData {
         public static einzelplaene: SingleDirectionScheduleInput[] = [
  /*
 /////  Seite 102
@@ -227,20 +40,20 @@ var s1058 = "_s1058";
                     [_klassen,             kl,    _, k2b4,    _,    _,    _,    _,k2b4,    _, k2b4,    _,    _,    _,    _, k2b4,    _,    _, k2b3, k2b4, k2b4, sk, _],
                     ["Aue",                ab,    _,  507,    _,    _,    _,    _, 817,    _, 1141,    _, 118,    _,    _,   505,    _,    _,  715,  732, 1004, sk, _],
                     [41.6, "Niederschlema",an,    _,  516,    _,    _,    _,    _, 826,    _, 1150,    _, 126,    _,    _, 514,    _,    _, 723, 741, 1013,    _, _],
-                    [_zugnr,               zn, 1978,    _, 2043,  205, 2051, 2053,    _, 2055,    _, 2057,    _, 2059, 2061,    _, 1975, 2047,    _,    _,    _,    _, _],
-                    [_klassen,             kl, k2b4,    _, k2b4, k1b3, k2b4, k2b4,    _, k2b4,    _, k2b4,    _, k2b4, k2b4,    _, k3b4, k2b4,    _,    _,    _,    _, _],
-                    ["Niederschlema",      ab, sl, 518,    _,    _,    _,    _, 830, sd, 1155,    _, 128,    _,    _, 517, si,    _, 724, 742, 1019,    _, _],
-                    [47.4, "Stein-Hartenstein", ab, sl, 528,    _,    _,    _,    _, 840, sd, 1206,    _, 139,    _,    _, 527, si,    _, 734, 755, 1029,    _, _],
-                    ["Fährbrücke",         ab, sl, 538,    _,    _,    _,    _, 849, sd, 1216,    _, 148,    _,    _, 537, si,    _, 743, 804, 1038,    _, _],
-                    [55.7, "Wiesenburg",   ab, sl, 548,    _,    _, 717,    _, 900, sd, 1228,    _, 157, 319,    _, 547, si, 635, 752, 813, 1048,    _, _],
+                    [_zugnr,               zn, 1978,    _, 2043,  205, 2051, 2053,   _, 2055,    _, 2057,    _, 2059, 2061,    _, 1975, 2047,    _,    _,    _,    _, _],
+                    [_klassen,             kl, k2b4,    _, k2b4, k1b3, k2b4, k2b4,   _, k2b4,    _, k2b4,    _, k2b4, k2b4,    _, k3b4, k2b4,    _,    _,    _,    _, _],
+                    ["Niederschlema",      ab,   sl,  518,    _,    _,    _,    _, 830, sd, 1155,    _, 128,    _,    _, 517, si,    _, 724, 742, 1019,    _, _],
+                    [47.4, "Stein-Hartenstein",ab,sl, 528,    _,    _,    _,    _, 840, sd, 1206,    _, 139,    _,    _, 527, si,    _, 734, 755, 1029,    _, _],
+                    ["Fährbrücke",             ab,sl, 538,    _,    _,    _,    _, 849, sd, 1216,    _, 148,    _,    _, 537, si,    _, 743, 804, 1038,    _, _],
+                    [55.7, "Wiesenburg",       ab,sl, 548,    _,    _,  717,    _, 900, sd, 1228,    _, 157,  319,    _, 547, si, 635, 752, 813, 1048,    _, _],
                     ["Silberstrasse",      ab, sl, kHlt,    _,    _, 723,    _, kHlt, sd, kHlt,    _, 203, 325,    _, kHlt, si, 641, kHlt, kHlt, kHlt,    _, _],
                     [61.8, "Wilkau Bf.",   ab, 445, 600, 631,    _, 731, 818, 912, 1042, 1242, 124, 212, 334, 443, 600, si, 650, 804, 826, 1102,    _,    _, { nr: 96 }],
-                    ["Cainsdorf",    ab, 452, 606, 637,    _, 736, 824, 917, 1048, 1247, 130, 217, 339, 448, 605, si, 655, 809, 831, 1108,    _, _],
-                    ["Schedewitz",   ab, 459, 612, 642,    _, 741, 829, 922, 1053, 1252, 135, 222, 344, 453, 610, si, 700, 814, 836, 1114,    _, _],
-                    [67.2, "Zwickau",an, 505, 618, 649,    _, m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120,    _,    _, { nr: 54 }],
-                    ["Zwickau",      ab, a510, 632, 656, n822,    _,    _, 948, d1153, 115,    _, 235, b355, c510, 620, 628, 710, 825, 908, 1150,    _,    _, { nrn: [54, 68] }],
-                    ["Lichtentanne", ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125,    _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200,    _, _],
-                    [76.8,"Werdau",  an, 530, 647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, 1208,    _,    _, { nr: 59 }],
+                    ["Cainsdorf",           ab, 452, 606, 637,    _, 736, 824, 917, 1048, 1247, 130, 217, 339, 448, 605, si, 655, 809, 831, 1108,    _, _],
+                    ["Schedewitz",          ab, 459, 612, 642,    _, 741, 829, 922, 1053, 1252, 135, 222, 344, 453, 610, si, 700, 814, 836, 1114,    _, _],
+                    [67.2, "Zwickau",       an, 505, 618, 649,    _, m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120,    _,    _, { nr: 54 }],
+                    ["Zwickau",             ab, a510, 632, 656, n822,    _,    _, 948, d1153, 115,    _, 235, b355, c510, 620, 628, 710, 825, 908, 1150,    _,    _, { nrn: [54, 68] }],
+                    ["Lichtentanne",        ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125,    _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200,    _, _],
+                    [76.8,"Werdau",         an, 530,  647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, 1208,    _,    _, { nr: 59 }],
                     [_anschluss_nach_in, LE, 749, s810, 925, 1019,    _,    _, 1232,    _, 341,    _, s550, 652, s748, s800,    _, 957,    _, 1205, s321,    _, _,{ort:"Leipzig", nr:56}]
                 ],
                 ZellenVerweise: [
@@ -639,15 +452,15 @@ var s1058 = "_s1058";
                 caption: "Grünstädtel-- Oberrittersgrün",
                 //klassen: k2b3,
                 zeilen: [
-                    [_anschluss_aus,          SC, 714, 1058,  336,  532,  911, { ort: "Schwarzenberg", nr: 99 }],
-                    [_zugnr,                  zn,3102, 3104, 3106, 3108, 3110],
-                    ["Grünstädtel",           ab, 735, 1110,  355,  605,  922, { fkab: "Grünstädtel" }],
-                    [2.4, "Pöhla",            ab, 747, 1121,  405,  617,  932, { fk: [15, 10] }],
-                    [3.6, "Siegelhof",        ab, 756, 1128,  412,  626,  939, { fk: [25, 15] }],
-                    [5.4, "Niederglobenstein",ab, 805, 1137,  421,  635,  948, { fk: [35, 25] }],
-                    [6.4, "Oberglobenstein",  ab, 811, 1143,  427,  641,  954, { fk: [45, 30] }],
-                    [7.2, "Unterrittersgrün", ab, 816, 1148,  432,  646,  959, { fk: [45, 30] }],
-                    [9.4, "Oberrittersgrün",  ab, 824, 1156,  440,  654, 1007, { fk: [60, 40] }]
+                    [_anschluss_aus, SC, 714, 1058, 336, 532, 911, { ort: "Schwarzenberg", nr: 99 }],
+                    [_zugnr, zn, 3102, 3104, 3106, 3108, 3110],
+                    ["Grünstädtel", ab, 735, 1110, 355, 605, 922, { fkab: "Grünstädtel" }],
+                    [2.4, "Pöhla", ab, 747, 1121, 405, 617, 932, { fk: [15, 10] }],
+                    [3.6, "Siegelhof", ab, 756, 1128, 412, 626, 939, { fk: [25, 15] }],
+                    [5.4, "Niederglobenstein", ab, 805, 1137, 421, 635, 948, { fk: [35, 25] }],
+                    [6.4, "Oberglobenstein", ab, 811, 1143, 427, 641, 954, { fk: [45, 30] }],
+                    [7.2, "Unterrittersgrün", ab, 816, 1148, 432, 646, 959, { fk: [45, 30] }],
+                    [9.4, "Oberrittersgrün", ab, 824, 1156, 440, 654, 1007, { fk: [60, 40] }]
                 ],
                  ZellenVerweise: [
                     {
@@ -846,4 +659,3 @@ var s1058 = "_s1058";
 
         ];
     }
-}

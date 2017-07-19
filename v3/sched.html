@@ -1,0 +1,29 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+	<script src="system.js"></script>
+<script src="Sched.js"></script>
+    <link rel="stylesheet" type="text/css" href="f.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts_sans.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts_serif.css">
+</head>
+<body>
+Testseite Routenplaner 3
+    <div id="testdiv">
+
+    </div>
+	<script>
+		var SaxApp = null;
+		SystemJS.import('SaxApp').then(function(m) {
+			 SaxApp = m;
+			 
+			 console.log("Now you can call:");
+			 console.log("SaxApp.Sched.do");
+			 SaxApp.Sched.do
+    });
+
+
+	</script>
+	
+</body>
+</html>

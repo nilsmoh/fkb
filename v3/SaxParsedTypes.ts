@@ -1,27 +1,191 @@
-///<reference path="SaxSchedZusatzinfoBase.ts" />
+import { EKlassen } from "./SaxBaseTypes";
+import { IZellenEigenschaft } from "./SaxInputTypes";
 
-module SaxSchedulesTyped {
+export enum EBahnverwaltung {
+    NichtAngegeben,
+    KSaechsStsEB
+}
+
+// enthaelt die mit * oder so angeflanschten Zusatzinformationen
+//export module SaxSchedulesZusatzBase {
+
+    export enum EScope {
+        //KeineAngabe = 0,
+        DefaultZug = 1,   // nur die aktuelle Zugnummer vgl strecke 99
+        RestSpalte = 2    // auch darunter stehende Zuege vgl strecke 99
+    }
+
+
+    /*Inhalt eines Erlaeuterungstextes, entweder mit opticalMarker, oder senkrecht in ein en zuglauf geschrieben */
+    export interface TBlockinhaltBase {
+        Verweistyp: TVerweisTyp;
+        ZugNrOderKlasse: TBlockInhaltZugnummerOderKlasse;
+        Gueltig: TGueltigkeit,
+        KbsAbweichung: TKbsAbweichung,  //nach / von
+        Fahrtage: TFahrtage,
+        TextOrt: TTextOrt,
+        PfeilInfo: TPfeilInfo,
+        //Scope: EScope, now in Verweistyp where it belongs
+        Unbekannt: TBlockInhaltRawUnbekannt | TBlockInhaltRawOk;
+        Bahnverwaltung: EBahnverwaltung;
+
+    }
+
+
+    //// Typen fuer Verweis
+    export type TVerweisTyp = TVerweisPassend | TVerweisFern | TVerweisEmbedded | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
+    export const VERWEIS_PASSEND: "VERWEIS_PASSEND" = "VERWEIS_PASSEND";
+    export const VERWEIS_FERN: "VERWEIS_FERN" = "VERWEIS_FERN";
+    export const VERWEIS_EMBEDDED: "VERWEIS_EMBEDDED" = "VERWEIS_EMBEDDED";
+    export const VERWEIS_GLOBAL_DEFAULT: "VERWEIS_GLOBAL_DEFAULT" = "VERWEIS_GLOBAL_DEFAULT";
+
+    // in richtiger Spalte, aber mit buchstabe referenziert
+    export interface TVerweisPassend {
+        kind: typeof VERWEIS_PASSEND,
+        ReferenzKey: string,
+        Scope: EScope
+    }
+    export interface TVerweisFern {
+        kind: typeof VERWEIS_FERN,
+        ReferenzKey: string,            // nur Verweistyp == Fern :  a..r, t..z
+        OpticalMarker: string
+    }
+    export interface TVerweisEmbedded { //direkt 1*1 eingebettet
+        kind: typeof VERWEIS_EMBEDDED
+    }
+    // z.b. alle zuege 2u3 klasse,  textort gibt die renderposition an
+    export interface TVerweisGlobalDefault {
+        kind: typeof VERWEIS_GLOBAL_DEFAULT
+    }
+
+
+    // ZugNrOderKlasse
+    export interface TBlockInhaltZugnummerOderKlasse {
+        Zugnr: string | null;
+        Klassen: EKlassen;
+    }
+
+    /*
+    //// Typen fuer Klassen
+    export enum EKlassen {
+        NichtAngegeben,
+        Klassen1bis3,
+        Klassen2bis3,
+        Klassen2bis4,
+        Klassen3bis4
+    }
+*/
+
+    // GUELTIGKEIT
+    export type TGueltigkeit = TGueltigImmer | TGueltigNie | TGueltigAb;
+    export const GUELTIG_IMMER: "GUELTIG_IMMER" = "GUELTIG_IMMER";
+    export const GUELTIG_NIE: "GUELTIG_NIE" = "GUELTIG_NIE";
+    export const GUELTIG_AB: "GUELTIG_AB" = "GUELTIG_AB";
+    interface TGueltigImmer { kind: typeof GUELTIG_IMMER };
+    interface TGueltigNie { kind: typeof GUELTIG_NIE };
+    interface TGueltigAb { kind: typeof GUELTIG_AB, bhf: string };
+    //todo wochentagsabhaengige gueltigkeit etc
+
+
+    //// Typen fuer KbsAbweichung
+    export type TKbsAbweichung = TKbsAbweichung_Keine | TKbsAbweichung_Aus | TKbsAbweichung_Nach;
+
+    export const KBS_ABWEICHUNG_KEINE: "KBS_ABWEICHUNG_KEINE" = "KBS_ABWEICHUNG_KEINE";
+    export const KBS_ABWEICHUNG_AUS: "KBS_ABWEICHUNG_AUS" = "KBS_ABWEICHUNG_AUS";
+    export const KBS_ABWEICHUNG_NACH: "KBS_ABWEICHUNG_NACH" = "KBS_ABWEICHUNG_NACH";
+
+    export interface TKbsAbweichung_Keine { kind: typeof KBS_ABWEICHUNG_KEINE };
+    export interface TKbsAbweichung_Aus {
+        kind: typeof KBS_ABWEICHUNG_AUS;
+        bhf: string;
+        KBS: string;
+        SchonKomplettiert: boolean;
+    };               //Validierungsschritt soll das spaeter korrekt eintragen
+    export interface TKbsAbweichung_Nach {
+        kind: typeof KBS_ABWEICHUNG_NACH;
+        bhf: string;
+        KBS: string;
+        SchonKomplettiert: boolean;
+    };
+
+
+    //// Fahrtage
+    export type TFahrtage = TFaehrtImmer | TFaehrtWerktags | TFaehrtSonnUndFesttags;
+    export const FAEHRT_IMMER: "FAEHRT_IMMER" = "FAEHRT_IMMER";
+    export const FAEHRT_WERKTAGS: "FAEHRT_WERKTAGS" = "FAEHRT_WERKTAGS";
+    export const FAEHRT_SONNUNDFESTTAGS: "FAEHRT_SONNUNDFESTTAGS" = "FAEHRT_SONNUNDFESTTAGS";
+    interface TFaehrtImmer { kind: typeof FAEHRT_IMMER };
+    interface TFaehrtWerktags { kind: typeof FAEHRT_WERKTAGS };
+    interface TFaehrtSonnUndFesttags { kind: typeof FAEHRT_SONNUNDFESTTAGS };
+
+
+    //// TEXTORT //Text wird in z.b. links neben header geschrieben
+    export type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
+    export const TEXTORT_NICHTANGEGEBEN: "TEXTORT_NICHTANGEGEBEN" = "TEXTORT_NICHTANGEGEBEN";
+    export const TEXTORT_LINKSVONHEADER: "TEXTORT_LINKSVONHEADER" = "TEXTORT_LINKSVONHEADER";
+    export const TEXTORT_RECHTSVONHEADER: "TEXTORT_RECHTSVONHEADER" = "TEXTORT_RECHTSVONHEADER";
+    export const TEXTORT_UNTERHEADER: "TEXTORT_UNTERHEADER" = "TEXTORT_UNTERHEADER";
+    export const TEXTORT_GANZESPALTE: "TEXTORT_GANZESPALTE" = "TEXTORT_GANZESPALTE";
+    export interface TTextOrtNichtAngegeben { kind: typeof TEXTORT_NICHTANGEGEBEN };
+    export interface TTextOrtLinksVonHeader { kind: typeof TEXTORT_LINKSVONHEADER };
+    export interface TTextOrtRechtsVonHeader { kind: typeof TEXTORT_RECHTSVONHEADER };
+    export interface TTextOrtUnterHeader { kind: typeof TEXTORT_UNTERHEADER };
+    export interface TTextOrtGanzeSpalte { kind: typeof TEXTORT_GANZESPALTE, UebersprungeneSpalten: number, Spaltenbreite: number };
+
+
+    //PFEILINFO
+    export type TPfeilInfo = TKeinPfeil | TPfeilStart | TPfeilZiel;
+    export const TKEINPFEIL: "TKEINPFEIL" = "TKEINPFEIL";
+    export const TPFEIL_START: "TPFEIL_START" = "TPFEIL_START";
+    export const TPFEIL_ZIEL: "TPFEIL_ZIEL" = "TPFEIL_ZIEL";
+    export interface TKeinPfeil { kind: typeof TKEINPFEIL };
+    export interface TPfeilStart { kind: typeof TPFEIL_START; ReferenzKey: string; };
+    export interface TPfeilZiel { kind: typeof TPFEIL_ZIEL; ReferenzKey: string; };
+
+
+    //// Typen fuer Raw
+    export const BlockRaw_ok: "BLOCKRAWOK" = "BLOCKRAWOK";
+    export const BlockRawUnbekannt: "BLOCKRAWUNBEKANNT" = "BLOCKRAWUNBEKANNT";
+
+    export interface TBlockInhaltRawOk {
+        kind: typeof BlockRaw_ok;
+    }
+
+    export interface TBlockInhaltRawUnbekannt {
+        kind: typeof BlockRawUnbekannt;
+        Eingabedaten: IZellenEigenschaft;
+    }
+
+
+
+    //// Verarbeitung
+
+
+
+//}
+
+
+
+//module SaxParsedTypes {
 
     // Header
     export enum EQuelle {
         FritzscheSommer1900
     }
 
-    export enum EBahnverwaltung {
-        NichtAngegeben,
-        KSaechsStsEB
-    }
 
-    // stark typisiert
+
+    // stark typisierte, geparste Tabelle - noch unbearbeitet !!!
     export interface SingleDirectionScheduleTyped {
         Quelle: EQuelle;
         Kommentar: string;
-        Seite: number; // seite in FKB wie gedrukt
+        Seite: number; // seite in FKB wie gedruckt
         Ueberschrift: string,
         Route1900: string,
-        Klassen: SaxSchedulesZusatzBase.EKlassen,
+        Klassen: EKlassen,
         Zeilen: Array<TZeile>;
-        ZusatzBloecke: Array<SaxSchedulesZusatzBase.TBlockinhaltBase>
+
+        ZusatzBloecke: Array<TBlockinhaltBase>
     }
 
     // ZEILENTYPEN
@@ -134,7 +298,6 @@ module SaxSchedulesTyped {
         BerechneterZugLauf: TZugLaufInfo;
     }
 
-    //wa
     export interface TBlockEintrag {
         kind: typeof BLOCK_BLOCK;
         Start: boolean;                   // true -> blockinhalt
@@ -143,7 +306,7 @@ module SaxSchedulesTyped {
         Hoehe: number;
         Passend: boolean; // Gegenteil waere fern
         Referenzkey: string | undefined;
-        Blockinhalt: SaxSchedulesZusatzBase.TBlockinhaltBase | undefined;
+        Blockinhalt: TBlockinhaltBase | undefined;
         Valid: boolean; // false in first incarnation, true when width / height is known and blockinhalt is analyzed
         BerechneterZugLauf: TZugLaufInfo;
     }
@@ -275,4 +438,4 @@ module SaxSchedulesTyped {
         AbfahrtsOrt: string
     }
 
-}
+//}
