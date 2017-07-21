@@ -1,6 +1,5 @@
-import {TBlockEintrag, ZEILE_ANSCHLUSS_ZUBRINGER_AB, ZEILE_ANSCHLUSS_ZUBRINGER_IN, ZEILE_NORMAL, ZEILE_ZUGNR, ZEILE_ANSCHLUSS_WEITER_AB, ZEILE_ANSCHLUSS_WEITER_IN
-, ZEILE_KLASSEN, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, BLOCK_ANKUNFT, BLOCK_BLOCK, BLOCK_DICKERSTRICH, BLOCK_ERROR, BLOCK_KEINHALT, BLOCK_LEER,
-BLOCK_ZEITEINTRAG, BLOCK_ZUG_NR_WERT, TNormalZeileEintrag, VERWEIS_EMBEDDED, VERWEIS_PASSEND, VERWEIS_FERN,
+import {TBlockEintrag, ZEILE_T, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, BLOCK_T,
+ TNormalZeileEintrag, VERWEIS_T,
 
 SingleDirectionScheduleTyped,
 TBlockinhaltBase
@@ -43,41 +42,41 @@ export class Validator {
             //liste alle wa/sa der ganzen tabelle in unprocessedBlocks auf
             s.Zeilen.forEach((z, zeileidx) => {
                 switch (z.kind) {
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case ZEILE_NORMAL:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
-                    case ZEILE_ZUGNR:
-                    case ZEILE_KLASSEN:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.NORMAL:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.ZUGNR:
+                    case ZEILE_T.KLASSEN:
                         var tEintraege: Array<TZugNrEintrag | TKlassenNrEintrag | TNormalZeileEintrag> = [];
-                        if (z.kind == ZEILE_ZUGNR) {
+                        if (z.kind == ZEILE_T.ZUGNR) {
                             tEintraege = z.ZugNummern;
                         }
-                        if (z.kind == ZEILE_KLASSEN) {
+                        if (z.kind == ZEILE_T.KLASSEN) {
                             tEintraege = z.KlassenNummern;
                             //console.error("todo block eintragen");
                         }
-                        if ((z.kind == ZEILE_ANSCHLUSS_ZUBRINGER_AB)
-                            || (z.kind == ZEILE_ANSCHLUSS_ZUBRINGER_IN)
-                            || (z.kind == ZEILE_ANSCHLUSS_WEITER_AB)
-                            || (z.kind == ZEILE_ANSCHLUSS_WEITER_IN)
-                            || (z.kind == ZEILE_NORMAL)) {
+                        if ((z.kind == ZEILE_T.ANSCHLUSS_ZUBRINGER_AB)
+                            || (z.kind == ZEILE_T.ANSCHLUSS_ZUBRINGER_IN)
+                            || (z.kind == ZEILE_T.ANSCHLUSS_WEITER_AB)
+                            || (z.kind == ZEILE_T.ANSCHLUSS_WEITER_IN)
+                            || (z.kind == ZEILE_T.NORMAL)) {
                             tEintraege = z.Zeiteintraege;
                         }
                         tEintraege.forEach((zi, spalteidx) => {
                             switch (zi.kind) {
-                                case BLOCK_BLOCK:
+                                case BLOCK_T.BLOCK:
 
                                     tUnprocessedBlocks.push({ eintrag: zi, zeile: zeileidx, spalte: spalteidx, alreadyDone: false });
                                     console.log("push ", spalteidx, zeileidx);
                                     break;
-                                case BLOCK_ANKUNFT:
-                                case BLOCK_ZEITEINTRAG:
-                                case BLOCK_LEER:
-                                case BLOCK_KEINHALT:
-                                case BLOCK_DICKERSTRICH:
-                                case BLOCK_ERROR:
+                                case BLOCK_T.ANKUNFT:
+                                case BLOCK_T.ZEITEINTRAG:
+                                case BLOCK_T.LEER:
+                                case BLOCK_T.KEINHALT:
+                                case BLOCK_T.DICKERSTRICH:
+                                case BLOCK_T.ERROR:
                                     // alle die kein block sind
                                     /*
                                     if (tLetzteWaag != null){
@@ -220,7 +219,7 @@ export class Validator {
 
             //replace chooseown optical markers
             s.ZusatzBloecke.forEach((z, idx, arr) => {
-                if (z.Verweistyp.kind == VERWEIS_FERN) {
+                if (z.Verweistyp.kind == VERWEIS_T.FERN) {
                     if (z.Verweistyp.OpticalMarker == chooseown) {
                         z.Verweistyp.OpticalMarker = freemarker[nextFreeMarkerIdx];
                         nextFreeMarkerIdx++;
@@ -234,28 +233,28 @@ export class Validator {
                 switch (z.kind) {
                     //case ZEILE_ANSCHLUSS_NACH_IN:
                     //case ZEILE_ANSCHLUSS_AUS:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case ZEILE_NORMAL:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
-                    case ZEILE_ZUGNR:
-                    case ZEILE_KLASSEN:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.NORMAL:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.ZUGNR:
+                    case ZEILE_T.KLASSEN:
                         var tEintraege: Array<TZugNrEintrag | TKlassenNrEintrag | TNormalZeileEintrag> = [];
-                        if (z.kind == ZEILE_ZUGNR) {
+                        if (z.kind == ZEILE_T.ZUGNR) {
                             tEintraege = z.ZugNummern;
                         }
-                        if (z.kind == ZEILE_KLASSEN) {
+                        if (z.kind == ZEILE_T.KLASSEN) {
                             tEintraege = z.KlassenNummern;
 
                             if (z.BlockEintrag) {
                                 let tFound: TBlockinhaltBase | null = null;
                                 for (let i = 0; i < s.ZusatzBloecke.length; i++) {
                                     let tBlockZusatz = s.ZusatzBloecke[i];
-                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_EMBEDDED) {
+                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.EMBEDDED) {
                                         // embedded has no RefKey !!!
                                     }
-                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_PASSEND) {
+                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_T.PASSEND) {
                                         if (tBlockZusatz.Verweistyp.ReferenzKey === z.BlockEintrag.Referenzkey) {
                                             if (tFound == null) {
                                                 tFound = tBlockZusatz;
@@ -280,24 +279,24 @@ export class Validator {
                         //if ((z.kind == ZEILE_ANSCHLUSS_AUS) ||(z.kind == ZEILE_ANSCHLUSS_NACH_IN)|| (z.kind == ZEILE_NORMAL)) {
                         //    tEintraege = z.Zeiteintraege;
                         //}
-                        if ((z.kind == ZEILE_ANSCHLUSS_ZUBRINGER_AB)
-                            || (z.kind == ZEILE_ANSCHLUSS_ZUBRINGER_IN)
-                            || (z.kind == ZEILE_ANSCHLUSS_WEITER_AB)
-                            || (z.kind == ZEILE_ANSCHLUSS_WEITER_IN)
-                            || (z.kind == ZEILE_NORMAL)) {
+                        if ((z.kind == ZEILE_T.ANSCHLUSS_ZUBRINGER_AB)
+                            || (z.kind == ZEILE_T.ANSCHLUSS_ZUBRINGER_IN)
+                            || (z.kind == ZEILE_T.ANSCHLUSS_WEITER_AB)
+                            || (z.kind == ZEILE_T.ANSCHLUSS_WEITER_IN)
+                            || (z.kind == ZEILE_T.NORMAL)) {
                             tEintraege = z.Zeiteintraege;
                         }
                         tEintraege.forEach((zi, spalteidx) => {
                             switch (zi.kind) {
-                                case BLOCK_BLOCK:
+                                case BLOCK_T.BLOCK:
                                     if (zi.Start && zi.Referenzkey) {
                                         let tFound: TBlockinhaltBase | null = null;
                                         for (let i = 0; i < s.ZusatzBloecke.length; i++) {
                                             let tBlockZusatz = s.ZusatzBloecke[i];
-                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_EMBEDDED) {
+                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.EMBEDDED) {
                                                 // embedded has no RefKey !!!
                                             }
-                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_PASSEND) {
+                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_T.PASSEND) {
                                                 if (tBlockZusatz.Verweistyp.ReferenzKey === zi.Referenzkey) {
                                                     if (tFound == null) {
                                                         tFound = tBlockZusatz;
@@ -315,12 +314,12 @@ export class Validator {
                                         }
                                     }
                                     break;
-                                case BLOCK_LEER:
-                                case BLOCK_DICKERSTRICH:
-                                case BLOCK_ERROR:
-                                case BLOCK_ANKUNFT:
-                                case BLOCK_ZEITEINTRAG:
-                                case BLOCK_KEINHALT:
+                                case BLOCK_T.LEER:
+                                case BLOCK_T.DICKERSTRICH:
+                                case BLOCK_T.ERROR:
+                                case BLOCK_T.ANKUNFT:
+                                case BLOCK_T.ZEITEINTRAG:
+                                case BLOCK_T.KEINHALT:
                                     // ???? TODO
                                     break;
                                 default:
@@ -345,10 +344,10 @@ export class Validator {
                 switch (z.kind) {
                     //case ZEILE_ANSCHLUSS_NACH_IN:
                     //case ZEILE_ANSCHLUSS_AUS:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
 
                         if (z.ZeitZeileZusatzInfo) {
                             if (z.ZeitZeileZusatzInfo.Ortsname.length > 0) {
@@ -358,7 +357,7 @@ export class Validator {
                                 console.warn("ANSCHLUSS MUSS ORT HABEN !!!", z);
                             }
                         }
-                    case ZEILE_NORMAL:
+                    case ZEILE_T.NORMAL:
                         if (z.ZeitZeileZusatzInfo) {
                             if (z.ZeitZeileZusatzInfo.AnschlussNummern.length > 0) {
                                 z.AnschlussNummern = z.ZeitZeileZusatzInfo.AnschlussNummern;
@@ -368,8 +367,8 @@ export class Validator {
                         }
 
                         break;
-                    case ZEILE_ZUGNR:
-                    case ZEILE_KLASSEN:
+                    case ZEILE_T.ZUGNR:
+                    case ZEILE_T.KLASSEN:
                         // ??? todo
                         break;
                     default:

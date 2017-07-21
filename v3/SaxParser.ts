@@ -1,14 +1,21 @@
 import {
-    TVerweisEmbedded, VERWEIS_EMBEDDED, VERWEIS_PASSEND, KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
+    TVerweisEmbedded,  KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
     TBlockEintrag, TAnkunftEintrag, TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, TBlockinhaltBase, TAnschlussZubringerAbZeile, TDickerStrichEintrag, TAnschlussZubringerInZeile,
-    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, TGueltigkeit, GUELTIG_IMMER, TError, TEXTORT_GANZESPALTE, TEXTORT_LINKSVONHEADER, TEXTORT_NICHTANGEGEBEN, TEXTORT_RECHTSVONHEADER,
-    TEXTORT_UNTERHEADER, TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage, BLOCK_ZEITEINTRAG, FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
-    FAEHRT_WERKTAGS, VERWEIS_FERN, VERWEIS_GLOBAL_DEFAULT, TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
-    TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, GUELTIG_AB, BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung
-
-     ,BLOCK_ANKUNFT, BLOCK_BLOCK, BLOCK_DICKERSTRICH, BLOCK_ERROR, BLOCK_KEINHALT, BLOCK_LEER, BLOCK_ZUG_NR_WERT, ZEILE_ANSCHLUSS_WEITER_AB, ZEILE_ANSCHLUSS_WEITER_IN,
-     ZEILE_ANSCHLUSS_ZUBRINGER_AB, ZEILE_ANSCHLUSS_ZUBRINGER_IN, ZEILE_KLASSEN, ZEILE_NORMAL, ZEILE_ZUGNR, ZEIT_24, ZEIT_ROH, TZeit24,
-     ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, GesternHeuteMorgen, TZeiteintrag, FAHRPREIS_AB, FAHRPREIS_EINFACH, FAHRPREIS_EINFACH_UND_RUECK, FAHRPREIS_KEINE_ANGABE,
+    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, TGueltigkeit, GUELTIG_IMMER, TError, TEXTORT_T
+    /*GANZESPALTE, TEXTORT_LINKSVONHEADER, TEXTORT_NICHTANGEGEBEN, TEXTORT_RECHTSVONHEADER,
+    TEXTORT_UNTERHEADER */, TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage,  FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
+    FAEHRT_WERKTAGS,  TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
+    TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, GUELTIG_AB, BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
+    /*
+     ,BLOCK_ANKUNFT, BLOCK_BLOCK, BLOCK_DICKERSTRICH, BLOCK_ERROR, BLOCK_KEINHALT, BLOCK_LEER, BLOCK_ZUG_NR_WERT, 
+     ZEILE_ANSCHLUSS_WEITER_AB, ZEILE_ANSCHLUSS_WEITER_IN,  ZEILE_ANSCHLUSS_ZUBRINGER_AB, ZEILE_ANSCHLUSS_ZUBRINGER_IN, ZEILE_KLASSEN, ZEILE_NORMAL, ZEILE_ZUGNR, 
+     */
+    VERWEIS_T,
+     BLOCK_T,
+     ZEILE_T,
+     FAHRPREIS_T,
+     ZEIT_24, ZEIT_ROH, TZeit24,
+     ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, GesternHeuteMorgen, TZeiteintrag, 
      EAnAb, EQuelle, SingleDirectionScheduleTyped, ETimeValid, ZeitZeileZusatzInfo, TNormalzeile, TLeerEintrag,TKeinHalt, TZugNrZeile, TKlassenNrZeile
      
 
@@ -44,15 +51,15 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
             var tLen = 0;
             s.Zeilen.forEach((z) => {
                 switch (z.kind) {
-                    case ZEILE_NORMAL:
+                    case ZEILE_T.NORMAL:
                         tLen = z.Zeiteintraege.length;
                         break;
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
-                    case ZEILE_KLASSEN:
-                    case ZEILE_ZUGNR:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.KLASSEN:
+                    case ZEILE_T.ZUGNR:
                         // ignored for counting columns
                         break;
                     default:
@@ -101,13 +108,13 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                 //console.log("--- ",sp);
                 s.Zeilen.forEach((z) => {
                     switch (z.kind) {
-                        case ZEILE_NORMAL:
-                        case ZEILE_ANSCHLUSS_WEITER_AB:
-                        case ZEILE_ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.NORMAL:
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
                             var tEintrag = z.Zeiteintraege[sp];
                             //zugriff nur auf einen eintrag
                             switch (tEintrag.kind) {
-                                case BLOCK_ZEITEINTRAG:
+                                case BLOCK_T.ZEITEINTRAG:
                                     // vorgaenger nach links suchen  
                                     var tFestgelegt = false;   //suche nach links hat was ergeben 
 
@@ -116,7 +123,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         var tVorgaenger = z.Zeiteintraege[i];
 
                                         switch (tVorgaenger.kind) {
-                                            case BLOCK_ZEITEINTRAG:
+                                            case BLOCK_T.ZEITEINTRAG:
                                                 if ((tVorgaenger.Zeit.kind == ZEIT_ROH) || (tVorgaenger.Zeit.Valid == ETimeValid.Nein)) {
                                                     console.error(" LINKS SOLLTE VALIDE SEIN !!!!");
                                                 }
@@ -153,13 +160,13 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                         }
                                                     }
                                                 break;
-                                            case BLOCK_LEER:
-                                            case BLOCK_KEINHALT:
-                                            case BLOCK_DICKERSTRICH:
-                                            case BLOCK_KEINHALT:
-                                            case BLOCK_ERROR:
-                                            case BLOCK_ANKUNFT:
-                                            case BLOCK_BLOCK:
+                                            case BLOCK_T.LEER:
+                                            case BLOCK_T.KEINHALT:
+                                            case BLOCK_T.DICKERSTRICH:
+                                            case BLOCK_T.KEINHALT:
+                                            case BLOCK_T.ERROR:
+                                            case BLOCK_T.ANKUNFT:
+                                            case BLOCK_T.BLOCK:
                                                 // diese linksliegende Felder werden uebersprungen, suche nur links liegen Zeitfelder            
                                                 break;
 
@@ -176,13 +183,13 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         fill24(tEintrag, 0, GesternHeuteMorgen.Heute);
                                     }
                                     break;
-                                case BLOCK_LEER:
-                                case BLOCK_KEINHALT:
-                                case BLOCK_DICKERSTRICH:
-                                case BLOCK_KEINHALT:
-                                case BLOCK_ERROR:
-                                case BLOCK_ANKUNFT:
-                                case BLOCK_BLOCK:
+                                case BLOCK_T.LEER:
+                                case BLOCK_T.KEINHALT:
+                                case BLOCK_T.DICKERSTRICH:
+                                case BLOCK_T.KEINHALT:
+                                case BLOCK_T.ERROR:
+                                case BLOCK_T.ANKUNFT:
+                                case BLOCK_T.BLOCK:
                                     //nothing to fill for these entries            
                                     break;
                                 default:
@@ -190,10 +197,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                             }
                             break;
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                        case ZEILE_ZUGNR:
-                        case ZEILE_KLASSEN:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.ZUGNR:
+                        case ZEILE_T.KLASSEN:
                             //ignored in first fill step
                             break;
                         default:
@@ -211,16 +218,16 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                 s.Zeilen.forEach((z, zidx, arr) => {
                     switch (z.kind) {
                         //case ZEILE_ANSCHLUSS_AUS:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                             //suche 24h drunter
                             var tAnschlusszeit = z.Zeiteintraege[sp];
-                            if (tAnschlusszeit.kind == BLOCK_ZEITEINTRAG) {
+                            if (tAnschlusszeit.kind == BLOCK_T.ZEITEINTRAG) {
                                 for (var di = zidx + 1; di < s.Zeilen.length; di++) {
                                     var zzz_zeileDrunter = s.Zeilen[di];
-                                    if (zzz_zeileDrunter.kind == ZEILE_NORMAL) {
+                                    if (zzz_zeileDrunter.kind == ZEILE_T.NORMAL) {
                                         var eee_drunterEintrag = zzz_zeileDrunter.Zeiteintraege[sp];
-                                        if (eee_drunterEintrag.kind == BLOCK_ZEITEINTRAG) {
+                                        if (eee_drunterEintrag.kind == BLOCK_T.ZEITEINTRAG) {
                                             if (eee_drunterEintrag.Zeit.kind == ZEIT_ROH) {
                                                 console.error("NORMALZEILE SOLLTE SEIT OBEN KORREKT GEFUELLT SEIN?!");
                                             }
@@ -281,10 +288,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                     | null = null;
                 switch (z.kind) {
                     //case ZEILE_ANSCHLUSS_AUS:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                         z.Zeiteintraege.forEach((e) => {
-                            if (e.kind == BLOCK_ZEITEINTRAG) {
+                            if (e.kind == BLOCK_T.ZEITEINTRAG) {
                                 if (e.Zeit.kind == ZEIT_ROH) {
                                     console.error("HIER SOLLTE ALLES ZEIT24 sein !!!");
                                 } else {
@@ -313,12 +320,12 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
             console.log("korriere tage heute / morgen  fuer eintraege unten rechts");
             s.Zeilen.forEach((z, zidx, arr) => {
                 switch (z.kind) {
-                    case ZEILE_NORMAL:
+                    case ZEILE_T.NORMAL:
                     //case ZEILE_ANSCHLUSS_NACH_IN:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
                         z.Zeiteintraege.forEach((e) => {
-                            if (e.kind == BLOCK_ZEITEINTRAG) {
+                            if (e.kind == BLOCK_T.ZEITEINTRAG) {
                                 if (e.Zeit.kind == ZEIT_24) {
                                     if (e.Zeit.Stunde24 >= 24 && e.Zeit.WelcherTag == GesternHeuteMorgen.Heute) {
                                         e.Zeit.Stunde24 -= 24;
@@ -338,7 +345,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
         
         public static createTBlockEintrag_single(BlockInhalt: TBlockinhaltBase): TBlockEintrag {
             var tResultEntryB: TBlockEintrag = {
-                kind: BLOCK_BLOCK,
+                kind: BLOCK_T.BLOCK,
                 Senkrecht: false,
                 Valid: true, // false in first incarnation, true when width / height is known and blockinhalt is analyzed
                 Start: true,
@@ -356,7 +363,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
             var tZeitZeilenZusatzInfo: ZeitZeileZusatzInfo = {
                 AnschlussNummern: [],
                 Ortsname: "",
-                Fahrpreise: { kind: FAHRPREIS_KEINE_ANGABE },
+                Fahrpreise: { kind: FAHRPREIS_T.KEINE_ANGABE },
                 Valid: false,
                 Raw: JSON.stringify(rawEntry)
             };
@@ -366,14 +373,14 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                 if (rawEntry.fk.length == 2) {
                     // nur einfache Fahrt
                     var tFahrpreisInfo2: TFahrpreisEinfach = {
-                        kind: FAHRPREIS_EINFACH,
+                        kind: FAHRPREIS_T.EINFACH,
                         Einfach2: rawEntry.fk[0],
                         Einfach3: rawEntry.fk[1]
                     };
                     tZeitZeilenZusatzInfo.Fahrpreise = tFahrpreisInfo2;
                 } else if (rawEntry.fk.length == 4) {
                     var tFahrpreisInfo4: TFahrpreisEinfachUndRueck = {
-                        kind: FAHRPREIS_EINFACH_UND_RUECK,
+                        kind: FAHRPREIS_T.EINFACH_UND_RUECK,
                         Einfach2: rawEntry.fk[0],
                         Einfach3: rawEntry.fk[1],
                         Rueck2: rawEntry.fk[2],
@@ -390,7 +397,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
             if (rawEntry.fkab) { // fahrpreis ab 
                 var tFahrpreisAb: TFahrpreisAb = {
-                    kind: FAHRPREIS_AB,
+                    kind: FAHRPREIS_T.AB,
                     AbfahrtsOrt: rawEntry.fkab
                 };
                 tZeitZeilenZusatzInfo.Fahrpreise = tFahrpreisAb;
@@ -476,7 +483,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
 
                             var tResultZeileN: TNormalzeile = {
-                                kind: ZEILE_NORMAL, // EZeilentyp.Normalzeile,
+                                kind: ZEILE_T.NORMAL, // EZeilentyp.Normalzeile,
                                 Km: <number>("number" == typeof zeile[0] ? zeile[0] : -1),
                                 BhfTag: <string>("number" == typeof zeile[0] ? zeile[1] : zeile[0]),
                                 AnschlussNummern: [], // TODO
@@ -492,7 +499,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                             // overwrite tResultZeile in Spezialfall
                             if (("string" == typeof zeile[0]) && ((<string>zeile[0]).indexOf(SaxInput._anschluss_nach_in) == 0)) {
                                 var tResultZeileX: TAnschlussWeiterInZeile = {
-                                    kind: ZEILE_ANSCHLUSS_WEITER_IN, // ZEILE_ANSCHLUSS_NACH_IN, // EZeilentyp.AnschlussNachIn,
+                                    kind: ZEILE_T.ANSCHLUSS_WEITER_IN, // ZEILE_ANSCHLUSS_NACH_IN, // EZeilentyp.AnschlussNachIn,
                                     BhfTag: "",             // TODO aus Zusatzinfo lesen
                                     AnschlussNummern: [],
                                     Zeiteintraege: [],
@@ -503,7 +510,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                             if (("string" == typeof zeile[0]) && ((<string>zeile[0]).indexOf(SaxInput._anschluss_nach_start) == 0)) {
                                 var tResultZeileXD: TAnschlussWeiterAbZeile = {
-                                    kind: ZEILE_ANSCHLUSS_WEITER_AB,  // ZEILE_ANSCHLUSS_NACH_IN, // EZeilentyp.AnschlussNachIn,
+                                    kind: ZEILE_T.ANSCHLUSS_WEITER_AB,  // ZEILE_ANSCHLUSS_NACH_IN, // EZeilentyp.AnschlussNachIn,
                                     BhfTag: "",             // TODO aus Zusatzinfo lesen
                                     AnschlussNummern: [],
                                     Zeiteintraege: [],
@@ -514,7 +521,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                             if (("string" == typeof zeile[0]) && ((<string>zeile[0]).indexOf(SaxInput._anschluss_aus) == 0)) {
                                 var tResultZeileY: TAnschlussZubringerAbZeile = {
-                                    kind: ZEILE_ANSCHLUSS_ZUBRINGER_AB, //
+                                    kind: ZEILE_T.ANSCHLUSS_ZUBRINGER_AB, //
                                     BhfTag: "",             // TODO aus Zusatzinfo lesen
                                     AnschlussNummern: [],
                                     Zeiteintraege: [],
@@ -525,7 +532,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                             if (("string" == typeof zeile[0]) && ((<string>zeile[0]).indexOf(SaxInput._anschluss_aus_ziel) == 0)) {
                                 var tResultZeileZ: TAnschlussZubringerInZeile = {
-                                    kind: ZEILE_ANSCHLUSS_ZUBRINGER_IN, //
+                                    kind: ZEILE_T.ANSCHLUSS_ZUBRINGER_IN, //
                                     BhfTag: "",             // TODO aus Zusatzinfo lesen
                                     AnschlussNummern: [],
                                     Zeiteintraege: [],
@@ -566,7 +573,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                                             if (rawEntry == SaxInput.nix) {
                                                 var tResultEntryL: TLeerEintrag = {
-                                                    kind: BLOCK_LEER,
+                                                    kind: BLOCK_T.LEER,
                                                     MitStrich: true,
                                                     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                 };
@@ -575,7 +582,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                             }
                                             else if (rawEntry == SaxInput.gnix) {
                                                 var tResultEntryL: TLeerEintrag = {
-                                                    kind: BLOCK_LEER,
+                                                    kind: BLOCK_T.LEER,
                                                     MitStrich: false,
                                                     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                 };
@@ -588,7 +595,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                             else if (rawEntry.indexOf(SaxInput.ank) == 0) {
 
                                                 var tResultEntryAnk: TAnkunftEintrag = {
-                                                    kind: BLOCK_ANKUNFT,
+                                                    kind: BLOCK_T.ANKUNFT,
                                                     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                 };
 
@@ -601,7 +608,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                                             else if (rawEntry == SaxInput.kHlt) {
                                                 var tResultEntryK: TKeinHalt = {
-                                                    kind: BLOCK_KEINHALT,
+                                                    kind: BLOCK_T.KEINHALT,
                                                     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
 
                                                 };
@@ -610,7 +617,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                             }
                                             else if (rawEntry == SaxInput.dick) {
                                                 var tResultEntryD: TDickerStrichEintrag = {
-                                                    kind: BLOCK_DICKERSTRICH,
+                                                    kind: BLOCK_T.DICKERSTRICH,
                                                     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                 };
 
@@ -622,7 +629,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                 var waagleng = SaxInput.WAAGERECHT_PREFIX.length;
 
                                                 var tResultEntryB: TBlockEintrag = {
-                                                    kind: BLOCK_BLOCK,
+                                                    kind: BLOCK_T.BLOCK,
                                                     Senkrecht: (rawEntry.indexOf(SaxInput.SENKRECHT_PREFIX) == 0),
                                                     Valid: false, // false in first incarnation, true when width / height is known and blockinhalt is analyzed
                                                     Start: false,
@@ -653,7 +660,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                     Gueltig: { kind: GUELTIG_IMMER },
                                                     KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
                                                     Fahrtage: { kind: FAEHRT_IMMER },
-                                                    TextOrt: { kind: TEXTORT_NICHTANGEGEBEN },
+                                                    TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                                     PfeilInfo: { kind: TKEINPFEIL },
                                                     //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
                                                     Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -682,7 +689,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                     //SpezialInfo: createTSpezialNix(),
                                                     KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
                                                     Fahrtage: { kind: FAEHRT_IMMER },
-                                                    TextOrt: { kind: TEXTORT_NICHTANGEGEBEN },
+                                                    TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                                     PfeilInfo: { kind: TKEINPFEIL },
                                                     //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
                                                     Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -702,7 +709,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                 //var tNeuerTagesBereich = Importer.berechneTagesbereich(entry, tLetzteZeit, tLetzterTagesbereich);  
                                                 console.warn("TAGESBEREICH NICHT BERECHNET");
                                                 var tZeiteintrag: TZeiteintrag = {
-                                                    kind: BLOCK_ZEITEINTRAG,
+                                                    kind: BLOCK_T.ZEITEINTRAG,
                                                     //RohZeit: entry,
                                                     Schnellzug: tBuchstabe == "s",
                                                     //Tagesbereich: ETagesbereich.Unbekannt, // tNeuerTagesBereich,
@@ -725,7 +732,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                                             else {
                                                 var tResultEntryE: TError = {
-                                                    kind: BLOCK_ERROR,
+                                                    kind: BLOCK_T.ERROR,
                                                     Grund: "unknown string " + rawEntry
                                                 };
                                                 console.log("ELSE unknown string ", JSON.stringify(rawEntry));
@@ -746,7 +753,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     if (tIsTime) {
                                         //var tNeuerTagesBereich = Importer.berechneTagesbereich(entry, tLetzteZeit, tLetzterTagesbereich);
                                         var tZeiteintrag: TZeiteintrag = {
-                                            kind: BLOCK_ZEITEINTRAG,
+                                            kind: BLOCK_T.ZEITEINTRAG,
                                             //RohZeit: entry,
                                             Schnellzug: false,
                                             //Tagesbereich: ETagesbereich.Unbekannt, // tNeuerTagesBereich,
@@ -772,7 +779,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                                     if (!z.Valid) {
                                         var tResultEntryE: TError = {
-                                            kind: BLOCK_ERROR,
+                                            kind: BLOCK_T.ERROR,
                                             Grund: "ZeitZeile ZeitZeilenZusatzInfo not fully implemented for " + JSON.stringify(rawEntry)
                                         };
                                         tResultZeile.Zeiteintraege.push(tResultEntryE);
@@ -794,14 +801,14 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                             || ((<string>zeile[0]).indexOf(SaxInput._klassen) == 0)
                             || ((<string>zeile[1]).indexOf(SaxInput.kl) == 0))) {
                             var tResultZeileNrn: TZugNrZeile | TKlassenNrZeile = {
-                                kind: ZEILE_ZUGNR, // EZeilentyp.Zugnummer,
+                                kind: ZEILE_T.ZUGNR, // EZeilentyp.Zugnummer,
                                 ZugNummern: [],
                                 ZeitZeileZusatzInfo: undefined
                             };
 
                             if (((<string>zeile[0]).indexOf(SaxInput._klassen) == 0) || (<string>zeile[1]).indexOf(SaxInput.kl) == 0) {
                                 var x: TKlassenNrZeile = {
-                                    kind: ZEILE_KLASSEN,
+                                    kind: ZEILE_T.KLASSEN,
                                     KlassenNummern: [],
                                     ZeitZeileZusatzInfo: undefined,    //letzter eintrag
                                     BlockEintrag: undefined
@@ -816,7 +823,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     var tKey = (<string>zeile[0]).substr(SaxInput.WAAGERECHT_PREFIX.length);
                                     console.log("BLOCKK2");
                                     x.BlockEintrag = {
-                                        kind: BLOCK_BLOCK,
+                                        kind: BLOCK_T.BLOCK,
                                         Start: true,
                                         Senkrecht: false,
                                         Breite: 1,
@@ -851,7 +858,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         Gueltig: { kind: GUELTIG_IMMER },
                                         KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
                                         Fahrtage: { kind: FAEHRT_IMMER },
-                                        TextOrt: { kind: TEXTORT_NICHTANGEGEBEN },
+                                        TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                         PfeilInfo: { kind: TKEINPFEIL },
                                         //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
                                         Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -861,10 +868,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
 
                                     switch (tResultZeileNrn.kind) {
-                                        case (ZEILE_ZUGNR):
+                                        case (ZEILE_T.ZUGNR):
                                             tResultZeileNrn.ZugNummern.push(tWert);
                                             break;
-                                        case (ZEILE_KLASSEN):
+                                        case (ZEILE_T.KLASSEN):
                                             tResultZeileNrn.KlassenNummern.push(tWert);
                                             break;
                                     }
@@ -872,7 +879,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                 }
                                 else if (SaxInput.gnix === zeile[zi]) {
                                     var tLeer: TLeerEintrag = {
-                                        kind: BLOCK_LEER,
+                                        kind: BLOCK_T.LEER,
                                         MitStrich: false,
                                         BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
 
@@ -880,10 +887,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     //tResultZeileNrn.ZugNummern.push(tLeer);
 
                                     switch (tResultZeileNrn.kind) {
-                                        case (ZEILE_ZUGNR):
+                                        case (ZEILE_T.ZUGNR):
                                             tResultZeileNrn.ZugNummern.push(tLeer);
                                             break;
-                                        case (ZEILE_KLASSEN):
+                                        case (ZEILE_T.KLASSEN):
                                             tResultZeileNrn.KlassenNummern.push(tLeer);
                                             break;
                                     }
@@ -892,17 +899,17 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                 }
                                 else if (SaxInput._ === zeile[zi]) {
                                     var tLeer: TLeerEintrag = {
-                                        kind: BLOCK_LEER,
+                                        kind: BLOCK_T.LEER,
                                         MitStrich: true,
                                         BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
 
                                     };
 
                                     switch (tResultZeileNrn.kind) {
-                                        case (ZEILE_ZUGNR):
+                                        case (ZEILE_T.ZUGNR):
                                             tResultZeileNrn.ZugNummern.push(tLeer);
                                             break;
-                                        case (ZEILE_KLASSEN):
+                                        case (ZEILE_T.KLASSEN):
                                             tResultZeileNrn.KlassenNummern.push(tLeer);
                                             break;
                                     }
@@ -927,7 +934,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         Gueltig: { kind: GUELTIG_IMMER },
                                         KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
                                         Fahrtage: { kind: FAEHRT_IMMER },
-                                        TextOrt: { kind: TEXTORT_NICHTANGEGEBEN },
+                                        TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                         PfeilInfo: { kind: TKEINPFEIL },
                                         //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
                                         Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -937,10 +944,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
 
                                     switch (tResultZeileNrn.kind) {
-                                        case (ZEILE_ZUGNR):
+                                        case (ZEILE_T.ZUGNR):
                                             tResultZeileNrn.ZugNummern.push(tWert);
                                             break;
-                                        case (ZEILE_KLASSEN):
+                                        case (ZEILE_T.KLASSEN):
                                             tResultZeileNrn.KlassenNummern.push(tWert);
                                             break;
                                     }
@@ -960,7 +967,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     var waagleng = SaxInput.WAAGERECHT_PREFIX.length;
 
                                     var tResultEntryB: TBlockEintrag = {
-                                        kind: BLOCK_BLOCK,
+                                        kind: BLOCK_T.BLOCK,
                                         Senkrecht: ((<string>zeile[zi]).indexOf(SaxInput.SENKRECHT_PREFIX) == 0),
                                         Valid: false, // false in first incarnation, true when width / height is known and blockinhalt is analyzed
                                         Start: false,
@@ -975,10 +982,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     //      tResultZeile.Zeiteintraege.push(tResultEntryB);
 
                                     switch (tResultZeileNrn.kind) {
-                                        case (ZEILE_ZUGNR):
+                                        case (ZEILE_T.ZUGNR):
                                             tResultZeileNrn.ZugNummern.push(tResultEntryB);
                                             break;
-                                        case (ZEILE_KLASSEN):
+                                        case (ZEILE_T.KLASSEN):
                                             tResultZeileNrn.KlassenNummern.push(tResultEntryB);
                                             break;
                                     }
@@ -999,7 +1006,7 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         Gueltig: { kind: GUELTIG_IMMER },
                                         KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
                                         Fahrtage: { kind: FAEHRT_IMMER },
-                                        TextOrt: { kind: TEXTORT_NICHTANGEGEBEN },
+                                        TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                         PfeilInfo: { kind: TKEINPFEIL },
                                         //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
                                         Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -1009,10 +1016,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
 
                                     switch (tResultZeileNrn.kind) {
-                                        case (ZEILE_ZUGNR):
+                                        case (ZEILE_T.ZUGNR):
                                             tResultZeileNrn.ZugNummern.push(tWert);
                                             break;
-                                        case (ZEILE_KLASSEN):
+                                        case (ZEILE_T.KLASSEN):
                                             tResultZeileNrn.KlassenNummern.push(tWert);
                                             break;
                                     }
@@ -1032,16 +1039,16 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 
                                     if (!z.Valid) {
                                         var tResultEntryE: TError = {
-                                            kind: BLOCK_ERROR,
+                                            kind: BLOCK_T.ERROR,
                                             Grund: "ZeitZeile ZeitZeilenZusatzInfo not fully implemented for " + JSON.stringify(zeile[zi])
                                         };
                                         //tResultZeileNrn.Zeiteintraege.push(tResultEntryE);    
 
                                         switch (tResultZeileNrn.kind) {
-                                            case (ZEILE_ZUGNR):
+                                            case (ZEILE_T.ZUGNR):
                                                 tResultZeileNrn.ZugNummern.push(tResultEntryE);
                                                 break;
-                                            case (ZEILE_KLASSEN):
+                                            case (ZEILE_T.KLASSEN):
                                                 tResultZeileNrn.KlassenNummern.push(tResultEntryE);
                                                 break;
                                         }
@@ -1118,13 +1125,13 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
 export class ZI_Creator {
     public static createTVerweisEmbedded(): TVerweisEmbedded {
         return {
-            kind: VERWEIS_EMBEDDED
+            kind: VERWEIS_T.EMBEDDED
         }
     }
 
     public static createTVerweisPassend(key: string, scope: EScope): TVerweisPassend {
         return {
-            kind: VERWEIS_PASSEND,
+            kind: VERWEIS_T.PASSEND,
             ReferenzKey: key,
             Scope: scope
         }
@@ -1309,7 +1316,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.fern:
                     tTyp = {
-                        kind: VERWEIS_FERN,
+                        kind: VERWEIS_T.FERN,
                         ReferenzKey: (tReferenzkey.length > 0) ? tReferenzkey : tCellKey,
                         OpticalMarker: tMarker
                     };
@@ -1324,7 +1331,7 @@ export class ZI_Importer {
                         tPfeilInfo = tPfeilStart;
                         ok_inp_destcellkey = true;
                         tTyp = {
-                            kind: VERWEIS_FERN,
+                            kind: VERWEIS_T.FERN,
                             ReferenzKey: (tReferenzkey.length > 0) ? tReferenzkey : tCellKey,
                             OpticalMarker: ""
                         };
@@ -1343,7 +1350,7 @@ export class ZI_Importer {
                         tPfeilInfo = tPfeilZiel;
                         ok_inp_srccellkey = true;
                         tTyp = {
-                            kind: VERWEIS_FERN,
+                            kind: VERWEIS_T.FERN,
                             ReferenzKey: (tReferenzkey.length > 0) ? tReferenzkey : tCellKey,
                             OpticalMarker: ""
                         };
@@ -1356,7 +1363,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.global:
                     tTyp = {
-                        kind: VERWEIS_GLOBAL_DEFAULT
+                        kind: VERWEIS_T.GLOBAL_DEFAULT
                     };
                     ok_inp_typ = true;
                     break;
@@ -1392,20 +1399,20 @@ export class ZI_Importer {
 
 
         // wo steht der text falls nicht in tabelle
-        var tTextOrt: TTextOrt = { kind: TEXTORT_NICHTANGEGEBEN };
+        var tTextOrt: TTextOrt = { kind: TEXTORT_T.NICHTANGEGEBEN };
         if (inp.verweisort) {
             switch (inp.verweisort) {
                 case SaxInput.headerlinks:
-                    tTextOrt = { kind: TEXTORT_LINKSVONHEADER };
+                    tTextOrt = { kind: TEXTORT_T.LINKSVONHEADER };
                     ok_inp_verweisort = true;
                     break;
                 case SaxInput.headerrechts:
-                    tTextOrt = { kind: TEXTORT_RECHTSVONHEADER };
+                    tTextOrt = { kind: TEXTORT_T.RECHTSVONHEADER };
                     ok_inp_verweisort = true;
                     break;
                 case SaxInput.nach9spalten:
                     tTextOrt = {
-                        kind: TEXTORT_GANZESPALTE,
+                        kind: TEXTORT_T.GANZESPALTE,
                         UebersprungeneSpalten: 9,
                         Spaltenbreite: 1
                     };
@@ -1413,7 +1420,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.nach4spalten:
                     tTextOrt = {
-                        kind: TEXTORT_GANZESPALTE,
+                        kind: TEXTORT_T.GANZESPALTE,
                         UebersprungeneSpalten: 4,
                         Spaltenbreite: 1
                     };
@@ -1421,7 +1428,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.nach4spalten2spalten:
                     tTextOrt = {
-                        kind: TEXTORT_GANZESPALTE,
+                        kind: TEXTORT_T.GANZESPALTE,
                         UebersprungeneSpalten: 4,
                         Spaltenbreite: 2
                     };
@@ -1429,7 +1436,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.nach5spalten2spalten:
                     tTextOrt = {
-                        kind: TEXTORT_GANZESPALTE,
+                        kind: TEXTORT_T.GANZESPALTE,
                         UebersprungeneSpalten: 5,
                         Spaltenbreite: 2
                     };
@@ -1437,7 +1444,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.nach6spalten:
                     tTextOrt = {
-                        kind: TEXTORT_GANZESPALTE,
+                        kind: TEXTORT_T.GANZESPALTE,
                         UebersprungeneSpalten: 6,
                         Spaltenbreite: 1
                     };
@@ -1445,7 +1452,7 @@ export class ZI_Importer {
                     break;
                 case SaxInput.nach10spalten4spalten:
                     tTextOrt = {
-                        kind: TEXTORT_GANZESPALTE,
+                        kind: TEXTORT_T.GANZESPALTE,
                         UebersprungeneSpalten: 10,
                         Spaltenbreite: 4
                     };
@@ -1589,9 +1596,9 @@ export class ZI_Renderer {
         }
 
 
-        var tEmbedded: boolean = (t.Verweistyp.kind === VERWEIS_EMBEDDED);
+        var tEmbedded: boolean = (t.Verweistyp.kind === VERWEIS_T.EMBEDDED);
 
-        if (t.Verweistyp.kind == VERWEIS_FERN) {
+        if (t.Verweistyp.kind == VERWEIS_T.FERN) {
             tResult += ZI_Renderer.renderOpticalMarker(t.Verweistyp.OpticalMarker);
         }
 

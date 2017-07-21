@@ -1,15 +1,16 @@
     
 import {
-    TVerweisEmbedded, VERWEIS_EMBEDDED, VERWEIS_PASSEND, KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
+    TVerweisEmbedded, VERWEIS_T  , KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
     TBlockEintrag, TAnkunftEintrag, TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, TBlockinhaltBase, TAnschlussZubringerAbZeile, TDickerStrichEintrag, TAnschlussZubringerInZeile,
-    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, TGueltigkeit, GUELTIG_IMMER, TError, TEXTORT_GANZESPALTE, TEXTORT_LINKSVONHEADER, TEXTORT_NICHTANGEGEBEN, TEXTORT_RECHTSVONHEADER,
-    TEXTORT_UNTERHEADER, TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage, BLOCK_ZEITEINTRAG, FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
-    FAEHRT_WERKTAGS, VERWEIS_FERN, VERWEIS_GLOBAL_DEFAULT, TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
+    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, TGueltigkeit, GUELTIG_IMMER, TError, TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage, 
+    FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
+    FAEHRT_WERKTAGS,  TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
     TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, GUELTIG_AB, BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung
 
-     ,BLOCK_ANKUNFT, BLOCK_BLOCK, BLOCK_DICKERSTRICH, BLOCK_ERROR, BLOCK_KEINHALT, BLOCK_LEER, BLOCK_ZUG_NR_WERT, ZEILE_ANSCHLUSS_WEITER_AB, ZEILE_ANSCHLUSS_WEITER_IN,
-     ZEILE_ANSCHLUSS_ZUBRINGER_AB, ZEILE_ANSCHLUSS_ZUBRINGER_IN, ZEILE_KLASSEN, ZEILE_NORMAL, ZEILE_ZUGNR, ZEIT_24, ZEIT_ROH, TZeit24,
-     ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, GesternHeuteMorgen, TZeiteintrag, FAHRPREIS_AB, FAHRPREIS_EINFACH, FAHRPREIS_EINFACH_UND_RUECK, FAHRPREIS_KEINE_ANGABE,
+     ,BLOCK_T,
+     ZEILE_T, 
+     ZEIT_24, ZEIT_ROH, TZeit24,
+     ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, GesternHeuteMorgen, TZeiteintrag, FAHRPREIS_T, 
      EAnAb, EQuelle, SingleDirectionScheduleTyped, ETimeValid, ZeitZeileZusatzInfo, TNormalzeile, TLeerEintrag,TKeinHalt, TZugNrZeile, TKlassenNrZeile,
      TNormalZeileEintrag
      
@@ -29,19 +30,17 @@ import { assertNever } from "./SaxBaseTypes";
             var tLen = 0;
             s.Zeilen.forEach((z) => {
                 switch (z.kind) {
-                    case ZEILE_NORMAL:
+                    case ZEILE_T.NORMAL:
                         tLen = z.Zeiteintraege.length;
                         break;
-                    //case ZEILE_ANSCHLUSS_AUS:
-                    //case ZEILE_ANSCHLUSS_NACH_IN:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
 
 
-                    case ZEILE_KLASSEN:
-                    case ZEILE_ZUGNR:
+                    case ZEILE_T.KLASSEN:
+                    case ZEILE_T.ZUGNR:
                         // ignored for counting columns
                         break;
                     default:
@@ -62,10 +61,10 @@ import { assertNever } from "./SaxBaseTypes";
                 //console.log("--- ",sp);
                 s.Zeilen.forEach((z) => {
                     switch (z.kind) {
-                        case ZEILE_ZUGNR:
+                        case ZEILE_T.ZUGNR:
                             var tZNEintrag = z.ZugNummern[sp];
                             switch (tZNEintrag.kind) {
-                                case BLOCK_BLOCK:
+                                case BLOCK_T.BLOCK:
                                     if (tZNEintrag.Blockinhalt) {
                                         tZugNr = tZNEintrag.Blockinhalt.ZugNrOderKlasse.Zugnr!;   //force not undefined ??   TODO error handling
                                         // Neuer Zugnummereintrag bekommt seine eigene Zugnummer auch als berechneter wert
@@ -90,8 +89,8 @@ import { assertNever } from "./SaxBaseTypes";
                                         };
                                     }
                                     break;
-                                case BLOCK_LEER:
-                                case BLOCK_DICKERSTRICH:
+                                case BLOCK_T.LEER:
+                                case BLOCK_T.DICKERSTRICH:
                                     tZNEintrag.BerechneterZugLauf = {
                                         kind: ZUGLAUF_BERECHNET,
                                         isStart: false,
@@ -102,16 +101,14 @@ import { assertNever } from "./SaxBaseTypes";
                                     };
                             }
                             break;
-                        //case ZEILE_ANSCHLUSS_AUS:
-                        //case ZEILE_ANSCHLUSS_NACH_IN:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                        case ZEILE_ANSCHLUSS_WEITER_AB:
-                        case ZEILE_ANSCHLUSS_WEITER_IN:
-                        case ZEILE_KLASSEN:
-                        case ZEILE_NORMAL:
-                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_ERROR, Grund: "temp" };
-                            if (z.kind == ZEILE_KLASSEN) {
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.KLASSEN:
+                        case ZEILE_T.NORMAL:
+                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
+                            if (z.kind == ZEILE_T.KLASSEN) {
                                 tEintrag = z.KlassenNummern[sp];
                             }
                             else {
@@ -122,12 +119,12 @@ import { assertNever } from "./SaxBaseTypes";
 
                             //falls der aktuelle eintrag einen fernverweis (z.b. * oder ? oder !) hat, wird dessen zugnummer ab jetzt verwendet     
                             switch (tEintrag.kind) {
-                                case BLOCK_ZEITEINTRAG:
+                                case BLOCK_T.ZEITEINTRAG:
                                     if (tEintrag.Referenzkey) {
                                         var tZeitEintrag = tEintrag;
                                         s.ZusatzBloecke.forEach((fe) => {
                                             switch (fe.Verweistyp.kind) {
-                                                case VERWEIS_FERN:
+                                                case VERWEIS_T.FERN: // VERWEIS_FERN:
                                                     if (fe.Verweistyp.ReferenzKey === tZeitEintrag.Referenzkey) {
                                                         if (tZugNrRefKey != null) {
                                                             //2 tes auftreten des key -> zugnr beenden
@@ -148,18 +145,18 @@ import { assertNever } from "./SaxBaseTypes";
                                             }
                                         });
                                     }
-                                case BLOCK_LEER:
-                                case BLOCK_KEINHALT:
-                                case BLOCK_DICKERSTRICH:
-                                case BLOCK_KEINHALT:
-                                case BLOCK_ANKUNFT:
-                                case BLOCK_BLOCK:
+                                case BLOCK_T.LEER:
+                                case BLOCK_T.KEINHALT:
+                                case BLOCK_T.DICKERSTRICH:
+                                case BLOCK_T.KEINHALT:
+                                case BLOCK_T.ANKUNFT:
+                                case BLOCK_T.BLOCK:
 
-                                    if (tEintrag.kind === BLOCK_BLOCK) {
+                                    if (tEintrag.kind === BLOCK_T.BLOCK) {
 
                                         if (tEintrag.Blockinhalt) {
-                                            if ((tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_PASSEND) ||
-                                                (tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_EMBEDDED)) {
+                                            if ((tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.PASSEND) ||
+                                                (tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.EMBEDDED)) {
                                                 if (tEintrag.Blockinhalt.ZugNrOderKlasse.Zugnr) {
                                                     tZugNr = tEintrag.Blockinhalt.ZugNrOderKlasse.Zugnr;
                                                 }
@@ -186,7 +183,7 @@ import { assertNever } from "./SaxBaseTypes";
                                     break;
                                 // TODO * external blocks and intern blocks
 
-                                case BLOCK_ERROR:
+                                case BLOCK_T.ERROR:
 
                                     //nothing to fill for these entries            
                                     break;
@@ -220,21 +217,21 @@ import { assertNever } from "./SaxBaseTypes";
                         //case ZEILE_NORMAL:
                         //case ZEILE_ANSCHLUSS_AUS:
                         //case ZEILE_ANSCHLUSS_NACH_IN:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                        case ZEILE_NORMAL:
-                        case ZEILE_ANSCHLUSS_WEITER_AB:
-                        case ZEILE_ANSCHLUSS_WEITER_IN:
-                        case ZEILE_KLASSEN:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.NORMAL:
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.KLASSEN:
                             //case ZEILE_ZUGNR:
-                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_ERROR, Grund: "temp" };
-                            if (tZeile.kind == ZEILE_KLASSEN) {
+                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
+                            if (tZeile.kind == ZEILE_T.KLASSEN) {
                                 tEintrag = tZeile.KlassenNummern[sp];
                             }
                             else {
                                 tEintrag = tZeile.Zeiteintraege[sp];
                             }
-                            if ((tEintrag.kind != BLOCK_ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
+                            if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                 if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr) /* || (tLoesche) */) {
                                     //if ((tCurrentZugNr != undefined)&&(tCurrentZugNr.length > 0)) {
                                     var TEb = tEintrag.BerechneterZugLauf;
@@ -258,7 +255,7 @@ import { assertNever } from "./SaxBaseTypes";
                                 //}
                             }
                             break;
-                        case ZEILE_ZUGNR:
+                        case ZEILE_T.ZUGNR:
                         //tZeile.ZugNummern
                         //TODO
 
@@ -277,24 +274,24 @@ import { assertNever } from "./SaxBaseTypes";
                         //case ZEILE_NORMAL:
                         //case ZEILE_ANSCHLUSS_AUS:
                         //case ZEILE_ANSCHLUSS_NACH_IN:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                        case ZEILE_NORMAL:
-                        case ZEILE_ANSCHLUSS_WEITER_AB:
-                        case ZEILE_ANSCHLUSS_WEITER_IN:
-                        case ZEILE_KLASSEN:
-                        case ZEILE_ZUGNR:
-                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_ERROR, Grund: "temp" };
-                            if (tZeile.kind == ZEILE_KLASSEN) {
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.NORMAL:
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.KLASSEN:
+                        case ZEILE_T.ZUGNR:
+                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
+                            if (tZeile.kind == ZEILE_T.KLASSEN) {
                                 tEintrag = tZeile.KlassenNummern[sp];
                             } else
-                                if (tZeile.kind == ZEILE_ZUGNR) {
+                                if (tZeile.kind == ZEILE_T.ZUGNR) {
                                     tEintrag = tZeile.ZugNummern[sp];
                                 }
                                 else {
                                     tEintrag = tZeile.Zeiteintraege[sp];
                                 }
-                            if ((tEintrag.kind != BLOCK_ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
+                            if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                 if (tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr) {
                                     //if ((tCurrentZugNr != undefined)&&(tCurrentZugNr.length > 0)) {
                                     if (tEintrag.BerechneterZugLauf.ZugNr) {
@@ -329,26 +326,26 @@ import { assertNever } from "./SaxBaseTypes";
                         //case ZEILE_NORMAL:
                         //case ZEILE_ANSCHLUSS_AUS:
                         //case ZEILE_ANSCHLUSS_NACH_IN:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                        case ZEILE_NORMAL:
-                        case ZEILE_ANSCHLUSS_WEITER_AB:
-                        case ZEILE_ANSCHLUSS_WEITER_IN:
-                        case ZEILE_KLASSEN:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.NORMAL:
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.KLASSEN:
                             //case ZEILE_ZUGNR:
-                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_ERROR, Grund: "temp" };
-                            if (tZeile.kind == ZEILE_KLASSEN) {
+                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
+                            if (tZeile.kind == ZEILE_T.KLASSEN) {
                                 tEintrag = tZeile.KlassenNummern[sp];
                             }
                             else {
                                 tEintrag = tZeile.Zeiteintraege[sp];
                             }
-                            if ((tEintrag.kind != BLOCK_ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
+                            if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                 var teb = tEintrag.BerechneterZugLauf;
 
                                 if (((teb.isEnd == true) || tNeedEnd) &&
-                                    ((tEintrag.kind == BLOCK_LEER)
-                                        || ((tEintrag.kind == BLOCK_BLOCK) && (tEintrag.Start == false))))  // trag end in obersten sa / wa block ein, d.h der welche start ist und ggf die anderen im tabellenrenderer ueberlappt
+                                    ((tEintrag.kind == BLOCK_T.LEER)
+                                        || ((tEintrag.kind == BLOCK_T.BLOCK) && (tEintrag.Start == false))))  // trag end in obersten sa / wa block ein, d.h der welche start ist und ggf die anderen im tabellenrenderer ueberlappt
                                 {
                                     teb.isEnd = false;
                                     teb.isDeleted = true;
@@ -503,17 +500,17 @@ import { assertNever } from "./SaxBaseTypes";
             var tLen = 0;
             s.Zeilen.forEach((z) => {
                 switch (z.kind) {
-                    case ZEILE_NORMAL:
+                    case ZEILE_T.NORMAL:
                         tLen = z.Zeiteintraege.length;
                         break;
                     //case ZEILE_ANSCHLUSS_AUS:
                     //case ZEILE_ANSCHLUSS_NACH_IN:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case ZEILE_ANSCHLUSS_WEITER_AB:
-                    case ZEILE_ANSCHLUSS_WEITER_IN:
-                    case ZEILE_KLASSEN:
-                    case ZEILE_ZUGNR:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    case ZEILE_T.KLASSEN:
+                    case ZEILE_T.ZUGNR:
                         // ignored for counting columns
                         break;
                     default:
@@ -538,18 +535,18 @@ import { assertNever } from "./SaxBaseTypes";
                         //case ZEILE_NORMAL:
                         //case ZEILE_ANSCHLUSS_AUS:
                         //case ZEILE_ANSCHLUSS_NACH_IN:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                        case ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                        case ZEILE_NORMAL:
-                        case ZEILE_ANSCHLUSS_WEITER_AB:
-                        case ZEILE_ANSCHLUSS_WEITER_IN:
-                        case ZEILE_KLASSEN:
-                        case ZEILE_ZUGNR:
-                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_ERROR, Grund: "temp" };
-                            if (tZeile.kind == ZEILE_KLASSEN) {
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                        case ZEILE_T.NORMAL:
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.KLASSEN:
+                        case ZEILE_T.ZUGNR:
+                            var tEintrag: TNormalZeileEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
+                            if (tZeile.kind == ZEILE_T.KLASSEN) {
                                 tEintrag = tZeile.KlassenNummern[sp];
                             } else
-                                if (tZeile.kind == ZEILE_ZUGNR) {
+                                if (tZeile.kind == ZEILE_T.ZUGNR) {
                                     tEintrag = tZeile.ZugNummern[sp];
                                 }
                                 else {
@@ -563,7 +560,7 @@ import { assertNever } from "./SaxBaseTypes";
 
                             if (tCurrentZugNr) {
                                 // d.h es gibt was zu speichern
-                                if ((tEintrag.kind != BLOCK_ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
+                                if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                     if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr)) {
                                         tJetztSpeichern = true;
                                     }
@@ -601,7 +598,7 @@ import { assertNever } from "./SaxBaseTypes";
                             }
 
 
-                            if ((tEintrag.kind != BLOCK_ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
+                            if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                 if ((tCurrentZugNr == undefined)) {
 
                                     if ((tEintrag.BerechneterZugLauf.ZugNr != null) && (tEintrag.BerechneterZugLauf.ZugNr.length > 0)) {
@@ -658,9 +655,9 @@ import { assertNever } from "./SaxBaseTypes";
                                 */
 
                                 switch (tEintrag.kind) {
-                                    case BLOCK_ZEITEINTRAG:
+                                    case BLOCK_T.ZEITEINTRAG:
                                         switch (tZeile.kind) {
-                                            case ZEILE_NORMAL:
+                                            case ZEILE_T.NORMAL:
                                                 var tEnt: LaufEintragNormal = {
                                                     kind: LAUFEINTRAG_NORMAL,
                                                     BhfTag: tZeile.BhfTag,
@@ -687,11 +684,11 @@ import { assertNever } from "./SaxBaseTypes";
                                         }
                                         //todo
                                         break;
-                                    case BLOCK_LEER:
+                                    case BLOCK_T.LEER:
                                         break;
-                                    case BLOCK_KEINHALT:
+                                    case BLOCK_T.KEINHALT:
                                         switch (tZeile.kind) {
-                                            case ZEILE_NORMAL:
+                                            case ZEILE_T.NORMAL:
                                                 var tEntK: LaufEintragKeinHalt = {
                                                     kind: LAUFEINTRAG_KEINHALT,
                                                     BhfTag: tZeile.BhfTag
@@ -702,7 +699,7 @@ import { assertNever } from "./SaxBaseTypes";
 
 
                                         break;
-                                    case BLOCK_ANKUNFT: // darueberliegendes war eigentlich eine ankunft, vgl posteintrag in rkb 1914 nr 90 1240 zug endet in wilkau, nicht in silberstrasse
+                                    case BLOCK_T.ANKUNFT: // darueberliegendes war eigentlich eine ankunft, vgl posteintrag in rkb 1914 nr 90 1240 zug endet in wilkau, nicht in silberstrasse
                                         console.warn("Todo handle ankunft, soll vorherigen eintrag auf an wechseln");
                                         if (tCurrentFolge) {  //???
                                             var tEntAn: LaufEintragAn = {
@@ -712,7 +709,7 @@ import { assertNever } from "./SaxBaseTypes";
                                             tCurrentFolge.push(tEntAn);
                                         }
                                         break;
-                                    case BLOCK_BLOCK:
+                                    case BLOCK_T.BLOCK:
                                         console.warn("todo auszulesender blockinhalt: ", tEintrag.Blockinhalt);
                                         if (tEintrag.Passend) {
                                             if (tEintrag.Blockinhalt) {
@@ -752,7 +749,7 @@ import { assertNever } from "./SaxBaseTypes";
 
 
                                         break;
-                                    case BLOCK_DICKERSTRICH:
+                                    case BLOCK_T.DICKERSTRICH:
                                         break;
                                     default:
                                         return assertNever(tEintrag);

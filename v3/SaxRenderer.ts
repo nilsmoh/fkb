@@ -91,32 +91,32 @@ export class Renderer{
             input.Zeilen.forEach(function(z: SaxSchedulesTyped.TZeile,zidx: number){
               switch (z.kind){
                 //case ZEILE_NORMAL:
-                case SaxSchedulesTyped.ZEILE_ZUGNR:
+                case SaxSchedulesTyped.ZEILE_T.ZUGNR:
                 //case ZEILE_ANSCHLUSS_NACH_IN:
                 //case ZEILE_ANSCHLUSS_AUS:
-                case SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                case SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                case SaxSchedulesTyped.ZEILE_NORMAL:
-                case SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_AB:
-                case SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_IN:
+                case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                case SaxSchedulesTyped.ZEILE_T.NORMAL:
+                case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN:
 
-                case SaxSchedulesTyped.ZEILE_KLASSEN:
+                case SaxSchedulesTyped.ZEILE_T.KLASSEN:
                       if (z.ZeitZeileZusatzInfo){
                         switch(z.ZeitZeileZusatzInfo.Fahrpreise.kind){
-                            case SaxSchedulesTyped.FAHRPREIS_KEINE_ANGABE:
+                            case SaxSchedulesTyped.FAHRPREIS_T.KEINE_ANGABE:
                                 break;
-                            case SaxSchedulesTyped.FAHRPREIS_EINFACH_UND_RUECK:
+                            case SaxSchedulesTyped.FAHRPREIS_T.EINFACH_UND_RUECK:
                                 tFahrpreisSpalten = 4;
                                 if (tErsteBelegteFahrpreisZeile < 0){
                                     tErsteBelegteFahrpreisZeile = zidx;
                                 }
                                 break;
-                            case SaxSchedulesTyped.FAHRPREIS_AB:
+                            case SaxSchedulesTyped.FAHRPREIS_T.AB:
                                 if (tErsteBelegteFahrpreisZeile < 0){
                                     tErsteBelegteFahrpreisZeile = zidx;
                                 }
                                 break;
-                            case SaxSchedulesTyped.FAHRPREIS_EINFACH:
+                            case SaxSchedulesTyped.FAHRPREIS_T.EINFACH:
                                 tFahrpreisSpalten = 2;
                                 if (tErsteBelegteFahrpreisZeile < 0){
                                     tErsteBelegteFahrpreisZeile = zidx;
@@ -146,9 +146,9 @@ export class Renderer{
            
             // normale spalten
             let tZeile0 = input.Zeilen[0];
-            if (tZeile0.kind == SaxSchedulesTyped.ZEILE_ZUGNR){
+            if (tZeile0.kind == SaxSchedulesTyped.ZEILE_T.ZUGNR){
                 tSpaltenGesamtZahl += tZeile0.ZugNummern.length;
-            }else if(tZeile0.kind == SaxSchedulesTyped.ZEILE_KLASSEN){
+            }else if(tZeile0.kind == SaxSchedulesTyped.ZEILE_T.KLASSEN){
                 tSpaltenGesamtZahl += tZeile0.KlassenNummern.length;
             }else{
                 tSpaltenGesamtZahl += tZeile0.Zeiteintraege.length;
@@ -156,8 +156,8 @@ export class Renderer{
             
             // globale spalten
             input.ZusatzBloecke.forEach((zb)=>{
-                if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_GLOBAL_DEFAULT){
-                    if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_GANZESPALTE){
+                if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT){
+                    if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_T.GANZESPALTE){
                         tSpaltenGesamtZahl += zb.TextOrt.Spaltenbreite;
                     }
                 }
@@ -197,8 +197,8 @@ export class Renderer{
             var tSpalteNach: {[key: number]: {breite: number, bl: SaxSchedulesTyped.TBlockinhaltBase} } = {};
             
             input.ZusatzBloecke.forEach((zb)=>{
-                if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_GLOBAL_DEFAULT){
-                    if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_GANZESPALTE){
+                if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT){
+                    if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_T.GANZESPALTE){
                         //tSpaltenGesamtZahl += zb.TextOrt.Spaltenbreite;
                         tSpalteNach[zb.TextOrt.UebersprungeneSpalten] = {breite:zb.TextOrt.Spaltenbreite , bl : zb };
                         // FallsEinTextWirklichEineKompletteSpalteEinnimmt
@@ -212,20 +212,20 @@ export class Renderer{
             input.Zeilen.forEach(function (z, zindex) {
                 var tr = document.createElement("tr");
                 switch (z.kind) {
-                    case SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                    case SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                    case SaxSchedulesTyped.ZEILE_NORMAL:
-                    case SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_AB:
-                    case SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_IN:
-                    case SaxSchedulesTyped.ZEILE_ZUGNR:
-                    case SaxSchedulesTyped.ZEILE_KLASSEN:
+                    case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                    case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                    case SaxSchedulesTyped.ZEILE_T.NORMAL:
+                    case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                    case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    case SaxSchedulesTyped.ZEILE_T.ZUGNR:
+                    case SaxSchedulesTyped.ZEILE_T.KLASSEN:
 
                         if ((tTypDerLetztenZeile != z.kind) 
-                            && (tTypDerLetztenZeile != SaxSchedulesTyped.ZEILE_ZUGNR)
+                            && (tTypDerLetztenZeile != SaxSchedulesTyped.ZEILE_T.ZUGNR)
                             && (tTypDerLetztenZeile != "")){
                             
                             var trenncl = "";
-                            if (tTypDerLetztenZeile == SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_AB){
+                            if (tTypDerLetztenZeile == SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB){
                                 trenncl="TRENN_nachAnschlussAus";
                             }else{
                                 trenncl =  "TRENN";
@@ -248,16 +248,16 @@ export class Renderer{
                         // erste spalte:
               
                         switch (z.kind){
-                            case SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_AB:
-                            case SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_IN:
-                            case SaxSchedulesTyped.ZEILE_NORMAL:
-                            case SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_AB:
-                            case SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_IN:
+                            case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                            case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                            case SaxSchedulesTyped.ZEILE_T.NORMAL:
+                            case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                            case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 var tKm = document.createElement("div");
                                 tKm.setAttribute("class","KM");
 
                                 var tBhfSpanClass = "";
-                                if (z.kind === SaxSchedulesTyped.ZEILE_NORMAL){
+                                if (z.kind === SaxSchedulesTyped.ZEILE_T.NORMAL){
                                    if ((z.Km != undefined) && (z.Km >=0)) {
                                        tKm.innerHTML += z.Km + " ";
                                        tdk.setAttribute("class","ErsteSpalteNormal ClassKMVOLL");
@@ -305,7 +305,7 @@ export class Renderer{
                    
 
 
-                                if (z.kind === SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_AB){ //ZEILE_ANSCHLUSS_AUS){
+                                if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB){ //ZEILE_ANSCHLUSS_AUS){
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     tdk.innerHTML += "<div class=\""+  "ZubringerAbAus"  +"\">" +"aus"     + "</div>";
                                     tdk.innerHTML += "<div class=\""+  "ZubringerAbBhf"  +"\">" + z.BhfTag + "</div>";
@@ -313,7 +313,7 @@ export class Renderer{
                                     //tLastWasAb = false;
                                     
                                 }
-                                if (z.kind === SaxSchedulesTyped.ZEILE_ANSCHLUSS_ZUBRINGER_IN){ //ZEILE_ANSCHLUSS_AUS){
+                                if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN){ //ZEILE_ANSCHLUSS_AUS){
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     //tdk.innerHTML = "i. " + z.BhfTag;
                                     tdk.innerHTML += "<div class=\""+  "ZubringerInI"  +"\">" +"i."     + "</div>";
@@ -323,7 +323,7 @@ export class Renderer{
                                     
                                 }
 
-                                if (z.kind === SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_AB ){ //ZEILE_ANSCHLUSS_NACH_IN){
+                                if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_AB ){ //ZEILE_ANSCHLUSS_NACH_IN){
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     //tdk.innerHTML = "a. " + z.BhfTag;
                                     tdk.innerHTML += "<div class=\""+  "WeiterAbAus"  +"\">" +"a."     + "</div>";
@@ -332,7 +332,7 @@ export class Renderer{
                                     //tLastWasAb = false;
                                 }
 
-                                if (z.kind === SaxSchedulesTyped.ZEILE_ANSCHLUSS_WEITER_IN ){ //ZEILE_ANSCHLUSS_NACH_IN){
+                                if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN ){ //ZEILE_ANSCHLUSS_NACH_IN){
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     //tdk.innerHTML = "in " + z.BhfTag;
                                     tdk.innerHTML += "<div class=\""+  "WeiterIn"  +"\">" +"in"     + "</div>";
@@ -350,7 +350,7 @@ export class Renderer{
 
                                 tEintraege = z.Zeiteintraege;
                                 break;
-                            case (SaxSchedulesTyped.ZEILE_ZUGNR):
+                            case (SaxSchedulesTyped.ZEILE_T.ZUGNR):
                                 tEintraege = z.ZugNummern;
                                 var tText = document.createElement("div");
                                 tText.setAttribute("class","ZugNrText");
@@ -358,7 +358,7 @@ export class Renderer{
                                 tdk.appendChild(tText);
 
                                 break;
-                            case (SaxSchedulesTyped.ZEILE_KLASSEN):
+                            case (SaxSchedulesTyped.ZEILE_T.KLASSEN):
                                 tEintraege = z.KlassenNummern;
                                 tdk.innerHTML = "";
 
@@ -416,7 +416,7 @@ export class Renderer{
                             
                             //var ze: SaxSchedulesTyped.TNormalZeileEintrag = zex;
                             switch (ze.kind) {
-                                case SaxSchedulesTyped.BLOCK_LEER:
+                                case SaxSchedulesTyped.BLOCK_T.LEER:
                                     //var zel = ze;
                                     td.innerHTML = ((ze.MitStrich == true) ? "-" : "");
                                     td.title = " Z" + (ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
@@ -426,7 +426,7 @@ export class Renderer{
                                     //}
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_KEINHALT:
+                                case SaxSchedulesTyped.BLOCK_T.KEINHALT:
                                     td.innerHTML = " | ";
                                     //td.title = ze.BerechneterZugLauf.kind;
                                     td.title = " Z" +  (ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
@@ -434,7 +434,7 @@ export class Renderer{
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_BLOCK:
+                                case SaxSchedulesTyped.BLOCK_T.BLOCK:
                                     //console.warn("ZugnrZeile Blockeintrag not yet implemented");
                                     //td.setAttribute("class", "notImplemented");
 
@@ -484,13 +484,13 @@ export class Renderer{
                                      //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_ERROR:
+                                case SaxSchedulesTyped.BLOCK_T.ERROR:
                                     console.warn("NormalZeile Erroreintrag not yet implemented");
                                     td.setAttribute("class", "notImplemented");
                                     td.innerHTML = JSON.stringify(ze);
                                     //td.title =  " Z" +  ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                     break;
-                                case SaxSchedulesTyped.BLOCK_ZEITEINTRAG:
+                                case SaxSchedulesTyped.BLOCK_T.ZEITEINTRAG:
                                     if(ze.Zeit.kind == SaxSchedulesTyped.ZEIT_24){
                                     td.title= ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                     td.setAttribute("class", ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Gestern ? "Gestern" :
@@ -509,7 +509,7 @@ export class Renderer{
                                     for (let i = 0; i < input.ZusatzBloecke.length; i++){
                                            
                                             let tVerweis = input.ZusatzBloecke[i].Verweistyp;
-                                            if (tVerweis.kind == SaxSchedulesTyped.VERWEIS_FERN ){
+                                            if (tVerweis.kind == SaxSchedulesTyped.VERWEIS_T.FERN ){
                                                if(tVerweis.ReferenzKey === ze.Referenzkey){
                                                     tOptical= tVerweis.OpticalMarker;
                                               }
@@ -555,7 +555,7 @@ export class Renderer{
                                         console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
                                     }
                                     break;
-                                case SaxSchedulesTyped.BLOCK_DICKERSTRICH:
+                                case SaxSchedulesTyped.BLOCK_T.DICKERSTRICH:
                                     td.innerHTML = "DICK";
                                     td.setAttribute("class", "DickStrich");
                                     //td.title = ze.BerechneterZugLauf.kind;
@@ -565,7 +565,7 @@ export class Renderer{
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_ANKUNFT:
+                                case SaxSchedulesTyped.BLOCK_T.ANKUNFT:
                                     td.innerHTML = "Ank.";
                                     td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                      //td.innerHTML+= " Z" +  (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
@@ -626,7 +626,7 @@ export class Renderer{
                         if (z.ZeitZeileZusatzInfo){
                             let f = z.ZeitZeileZusatzInfo.Fahrpreise;
                             switch (f.kind){
-                                case SaxSchedulesTyped.FAHRPREIS_KEINE_ANGABE: 
+                                case SaxSchedulesTyped.FAHRPREIS_T.KEINE_ANGABE: 
                                     if ((tErsteBelegteFahrpreisZeile > -1) && (zindex > tErsteBelegteFahrpreisZeile)) {
                                        for (var i =  0;i < (tFahrpreisSpalten == 2 ? 1 : 2) ; i++){
                                             var tde = document.createElement("td");
@@ -638,13 +638,13 @@ export class Renderer{
                                     }
                                     }
                                     break;
-                                case SaxSchedulesTyped.FAHRPREIS_AB:
+                                case SaxSchedulesTyped.FAHRPREIS_T.AB:
                                     var tde = document.createElement("td");
                                     tde.innerHTML = "ab " + f.AbfahrtsOrt;
                                     tde.setAttribute("colspan", ""+ tFahrpreisSpalten);
                                     tr.appendChild (tde);
                                     break;
-                                case SaxSchedulesTyped.FAHRPREIS_EINFACH:
+                                case SaxSchedulesTyped.FAHRPREIS_T.EINFACH:
                                     var tde = document.createElement("td");
                                     tde.innerHTML = "" + f.Einfach2;
                                     tr.appendChild (tde);
@@ -652,7 +652,7 @@ export class Renderer{
                                     tde.innerHTML = "" + f.Einfach3;
                                     tr.appendChild (tde);
                                     break;
-                                case SaxSchedulesTyped.FAHRPREIS_EINFACH_UND_RUECK: 
+                                case SaxSchedulesTyped.FAHRPREIS_T.EINFACH_UND_RUECK: 
                                     var tde = document.createElement("td");
                                     tde.innerHTML = "" + f.Einfach2;
                                     tr.appendChild (tde);
@@ -754,9 +754,9 @@ export class Renderer{
             input.ZusatzBloecke.forEach((zb)=>{
 
                 switch( zb.Verweistyp.kind){
-                    case SaxSchedulesTyped.VERWEIS_GLOBAL_DEFAULT:
+                    case SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT:
                        switch (zb.TextOrt.kind){
-                           case SaxSchedulesTyped.TEXTORT_LINKSVONHEADER :
+                           case SaxSchedulesTyped.TEXTORT_T.LINKSVONHEADER :
                             console.log("x tHeadLeftDiv ", tHeadLeftDiv);
                             //tHeadLeftDiv.innerHTML += 'THL'; //   todo find out why jquery doesnt work here ???
                             var e:HTMLElement = document.getElementById(tHeadLeftDiv.getAttribute("id")!)!;
@@ -765,7 +765,7 @@ export class Renderer{
                                 // (input.Bahnverwaltung === EBahnverwaltung.KSaechsStsEB) ? "S�chs. Staatsb." : "";
                             }
                           break;
-                         case SaxSchedulesTyped.TEXTORT_RECHTSVONHEADER:
+                         case SaxSchedulesTyped.TEXTORT_T.RECHTSVONHEADER:
                             console.log("x tHeadRightDiv ", tHeadRightDiv);
                             //tHeadLeftDiv.innerHTML += 'THL'; //   todo find out why jquery doesnt work here ???
                             var e:HTMLElement = document.getElementById(tHeadRightDiv.getAttribute("id")!)!;

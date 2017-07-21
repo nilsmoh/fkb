@@ -34,28 +34,36 @@ export enum EBahnverwaltung {
 
     //// Typen fuer Verweis
     export type TVerweisTyp = TVerweisPassend | TVerweisFern | TVerweisEmbedded | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
-    export const VERWEIS_PASSEND: "VERWEIS_PASSEND" = "VERWEIS_PASSEND";
-    export const VERWEIS_FERN: "VERWEIS_FERN" = "VERWEIS_FERN";
-    export const VERWEIS_EMBEDDED: "VERWEIS_EMBEDDED" = "VERWEIS_EMBEDDED";
-    export const VERWEIS_GLOBAL_DEFAULT: "VERWEIS_GLOBAL_DEFAULT" = "VERWEIS_GLOBAL_DEFAULT";
+    //export const VERWEIS_PASSEND: "VERWEIS_PASSEND" = "VERWEIS_PASSEND";
+    //export const VERWEIS_FERN: "VERWEIS_FERN" = "VERWEIS_FERN";
+    //export const VERWEIS_EMBEDDED: "VERWEIS_EMBEDDED" = "VERWEIS_EMBEDDED";
+    //export const VERWEIS_GLOBAL_DEFAULT: "VERWEIS_GLOBAL_DEFAULT" = "VERWEIS_GLOBAL_DEFAULT";
+
+    export enum VERWEIS_T{
+        PASSEND = "VERWEIS_PASSEND",
+        FERN = "VERWEIS_FERN" ,
+        EMBEDDED = "VERWEIS_EMBEDDED",
+        GLOBAL_DEFAULT = "VERWEIS_GLOBAL_DEFAULT"
+    }
+
 
     // in richtiger Spalte, aber mit buchstabe referenziert
     export interface TVerweisPassend {
-        kind: typeof VERWEIS_PASSEND,
+        kind: typeof VERWEIS_T.PASSEND, // VERWEIS_PASSEND,
         ReferenzKey: string,
         Scope: EScope
     }
     export interface TVerweisFern {
-        kind: typeof VERWEIS_FERN,
+        kind: typeof VERWEIS_T.FERN, // VERWEIS_FERN,
         ReferenzKey: string,            // nur Verweistyp == Fern :  a..r, t..z
         OpticalMarker: string
     }
     export interface TVerweisEmbedded { //direkt 1*1 eingebettet
-        kind: typeof VERWEIS_EMBEDDED
+        kind: typeof VERWEIS_T.EMBEDDED // VERWEIS_EMBEDDED
     }
     // z.b. alle zuege 2u3 klasse,  textort gibt die renderposition an
     export interface TVerweisGlobalDefault {
-        kind: typeof VERWEIS_GLOBAL_DEFAULT
+        kind: typeof VERWEIS_T.GLOBAL_DEFAULT // VERWEIS_GLOBAL_DEFAULT
     }
 
 
@@ -121,16 +129,20 @@ export enum EBahnverwaltung {
 
     //// TEXTORT //Text wird in z.b. links neben header geschrieben
     export type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
-    export const TEXTORT_NICHTANGEGEBEN: "TEXTORT_NICHTANGEGEBEN" = "TEXTORT_NICHTANGEGEBEN";
-    export const TEXTORT_LINKSVONHEADER: "TEXTORT_LINKSVONHEADER" = "TEXTORT_LINKSVONHEADER";
-    export const TEXTORT_RECHTSVONHEADER: "TEXTORT_RECHTSVONHEADER" = "TEXTORT_RECHTSVONHEADER";
-    export const TEXTORT_UNTERHEADER: "TEXTORT_UNTERHEADER" = "TEXTORT_UNTERHEADER";
-    export const TEXTORT_GANZESPALTE: "TEXTORT_GANZESPALTE" = "TEXTORT_GANZESPALTE";
-    export interface TTextOrtNichtAngegeben { kind: typeof TEXTORT_NICHTANGEGEBEN };
-    export interface TTextOrtLinksVonHeader { kind: typeof TEXTORT_LINKSVONHEADER };
-    export interface TTextOrtRechtsVonHeader { kind: typeof TEXTORT_RECHTSVONHEADER };
-    export interface TTextOrtUnterHeader { kind: typeof TEXTORT_UNTERHEADER };
-    export interface TTextOrtGanzeSpalte { kind: typeof TEXTORT_GANZESPALTE, UebersprungeneSpalten: number, Spaltenbreite: number };
+    
+    export enum TEXTORT_T {
+        NICHTANGEGEBEN = "TEXTORT_NICHTANGEGEBEN",
+        LINKSVONHEADER = "TEXTORT_LINKSVONHEADER",
+        RECHTSVONHEADER = "TEXTORT_RECHTSVONHEADER",
+        UNTERHEADER = "TEXTORT_UNTERHEADER",
+        GANZESPALTE = "TEXTORT_GANZESPALTE"
+    }
+
+    export interface TTextOrtNichtAngegeben { kind: typeof TEXTORT_T.NICHTANGEGEBEN };
+    export interface TTextOrtLinksVonHeader { kind: typeof TEXTORT_T.LINKSVONHEADER };
+    export interface TTextOrtRechtsVonHeader { kind: typeof TEXTORT_T.RECHTSVONHEADER };
+    export interface TTextOrtUnterHeader { kind: typeof TEXTORT_T.UNTERHEADER };
+    export interface TTextOrtGanzeSpalte { kind: typeof TEXTORT_T.GANZESPALTE, UebersprungeneSpalten: number, Spaltenbreite: number };
 
 
     //PFEILINFO
@@ -192,53 +204,57 @@ export enum EBahnverwaltung {
 
     // isue tracker 11784 beschreibt algebraische Datentypen
     // BEISPIELE 100a Seite 105
-    export const ZEILE_ZUGNR: "ZUGNR" = "ZUGNR";
-    export const ZEILE_KLASSEN: "KLASSEN" = "KLASSEN";
-    export const ZEILE_ANSCHLUSS_ZUBRINGER_AB: "ANSCHLUSS_ZUBRINGER_AB" = "ANSCHLUSS_ZUBRINGER_AB"; // a.  Karlsbad B.E.B.
-    export const ZEILE_ANSCHLUSS_ZUBRINGER_IN: "ANSCHLUSS_ZUBRINGER_IN" = "ANSCHLUSS_ZUBRINGER_IN"; // in  Johanngeorgenstadt  //Ort == Zielort        FROM == Losfahrort
-    export const ZEILE_NORMAL: "NORMAL" = "NORMAL";                                                 // aus Johanngeorgenstadt
+    export enum ZEILE_T {
+        ZUGNR = "ZUGNR",
+        KLASSEN = "KLASSEN",
+        ANSCHLUSS_ZUBRINGER_AB = "ANSCHLUSS_ZUBRINGER_AB", // a.  Karlsbad B.E.B.
+        ANSCHLUSS_ZUBRINGER_IN = "ANSCHLUSS_ZUBRINGER_IN", // in  Johanngeorgenstadt  //Ort == Zielort        FROM == Losfahrort
+        NORMAL = "NORMAL",                                                 // aus Johanngeorgenstadt
     // ab  Erlabrunn
     // .. Erlabrunn
     // .. in Johanngeorgensatdt
-    export const ZEILE_ANSCHLUSS_WEITER_AB: "ANSCHLUSS_WEITER_AB" = "ANSCHLUSS_WEITER_AB"; // a. Johanngeorgenstadt   //Ort == Abfahrtsort,   NACH == Zielort
-    export const ZEILE_ANSCHLUSS_WEITER_IN: "ANSCHLUSS_WEITER_IN" = "ANSCHLUSS_WEITER_IN"; // in Karlsbad B.E.B.  
+        ANSCHLUSS_WEITER_AB = "ANSCHLUSS_WEITER_AB", // a. Johanngeorgenstadt   //Ort == Abfahrtsort,   NACH == Zielort
+        ANSCHLUSS_WEITER_IN = "ANSCHLUSS_WEITER_IN" // in Karlsbad B.E.B.  
+    }
 
     export type TZeile = TZugNrZeile | TKlassenNrZeile | TNormalzeile | TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile;
 
     // EINTRAG in Zeile    
+    export enum BLOCK_T{
+        ZUG_NR_WERT = "ZUG_NR_WERT",
+        LEER = "LEER",
+        BLOCK = "BLOCKEINTRAG", //war BLOCKBLOCK
+        ERROR = "BLOCKERROR",
+        KEINHALT = "BLOCKKEINHALT",
+        DICKERSTRICH = "BLOCK_DICKERSTRICH",
+        ZEITEINTRAG = "BLOCK_ZEITEINTRAG",
+        ANKUNFT = "BLOCK_ANKUNFT"
+    }
 
-    export const BLOCK_ZUG_NR_WERT: "ZUG_NR_WERT" = "ZUG_NR_WERT";
-    export const BLOCK_LEER: "LEER" = "LEER";
-    export const BLOCK_BLOCK: "BLOCKEINTRAG" = "BLOCKEINTRAG";
-    export const BLOCK_ERROR: "BLOCKERROR" = "BLOCKERROR";
-    export const BLOCK_KEINHALT: "BLOCKKEINHALT" = "BLOCKKEINHALT";
-    export const BLOCK_DICKERSTRICH: "BLOCK_DICKERSTRICH" = "BLOCK_DICKERSTRICH";
-    export const BLOCK_ZEITEINTRAG: "BLOCK_ZEITEINTRAG" = "BLOCK_ZEITEINTRAG";
-    export const BLOCK_ANKUNFT: "BLOCK_ANKUNFT" = "BLOCK_ANKUNFT";
 
 
     export type TZugNrEintrag = TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError;
     export type TKlassenNrEintrag = TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError;
 
     export interface TLeerEintrag {
-        kind: typeof BLOCK_LEER;
+        kind: typeof BLOCK_T.LEER;
         MitStrich: boolean;
         BerechneterZugLauf: TZugLaufInfo;
     }
 
     export interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seite 103   Mittweida
-        kind: typeof BLOCK_DICKERSTRICH;
+        kind: typeof BLOCK_T.DICKERSTRICH;
         BerechneterZugLauf: TZugLaufInfo;
     }
 
     export interface TAnkunftEintrag  //"Ank." in tabelle
     {
-        kind: typeof BLOCK_ANKUNFT;
+        kind: typeof BLOCK_T.ANKUNFT;
         BerechneterZugLauf: TZugLaufInfo;
     }
 
     export interface TError {
-        kind: typeof BLOCK_ERROR;
+        kind: typeof BLOCK_T.ERROR;
         Grund: string;
     }
 
@@ -278,7 +294,7 @@ export enum EBahnverwaltung {
 
 
     export interface TZeiteintrag {
-        kind: typeof BLOCK_ZEITEINTRAG;
+        kind: typeof BLOCK_T.ZEITEINTRAG;
         //RohZeit: number;
         Referenzkey: string | null;
         Schnellzug: boolean;
@@ -294,12 +310,12 @@ export enum EBahnverwaltung {
 
     // Zug faehrt durch, senkrechter strich in FKB
     export interface TKeinHalt {
-        kind: typeof BLOCK_KEINHALT;
+        kind: typeof BLOCK_T.KEINHALT;
         BerechneterZugLauf: TZugLaufInfo;
     }
 
     export interface TBlockEintrag {
-        kind: typeof BLOCK_BLOCK;
+        kind: typeof BLOCK_T.BLOCK;
         Start: boolean;                   // true -> blockinhalt
         Senkrecht: boolean;
         Breite: number;
@@ -312,13 +328,13 @@ export enum EBahnverwaltung {
     }
 
     export interface TZugNrZeile {
-        kind: typeof ZEILE_ZUGNR,
+        kind: typeof ZEILE_T.ZUGNR,
         ZugNummern: Array<TZugNrEintrag>,
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined
     }
 
     export interface TKlassenNrZeile {
-        kind: typeof ZEILE_KLASSEN,
+        kind: typeof ZEILE_T.KLASSEN,
         KlassenNummern: Array<TKlassenNrEintrag>,
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined,    //letzter eintrag
         BlockEintrag: TBlockEintrag | undefined                  // falls in Kopfspalte
@@ -355,7 +371,7 @@ export enum EBahnverwaltung {
 
     // KOPF der Normalzeilen
     export interface TNormalzeile {
-        kind: typeof ZEILE_NORMAL,
+        kind: typeof ZEILE_T.NORMAL,
         Km: number | undefined;
         BhfTag: string;
         AnschlussNummern: Array<string>;
@@ -365,7 +381,7 @@ export enum EBahnverwaltung {
     }
 
     export interface TAnschlussZubringerAbZeile {
-        kind: typeof ZEILE_ANSCHLUSS_ZUBRINGER_AB, // ZEILE_ANSCHLUSS_AUS,
+        kind: typeof ZEILE_T.ANSCHLUSS_ZUBRINGER_AB, // ZEILE_ANSCHLUSS_AUS,
         BhfTag: string;
         AnschlussNummern: Array<string>;
         Zeiteintraege: Array<TNormalZeileEintrag>;
@@ -373,7 +389,7 @@ export enum EBahnverwaltung {
     }
 
     export interface TAnschlussZubringerInZeile {
-        kind: typeof ZEILE_ANSCHLUSS_ZUBRINGER_IN, // ZEILE_ANSCHLUSS_AUS,
+        kind: typeof ZEILE_T.ANSCHLUSS_ZUBRINGER_IN, // ZEILE_ANSCHLUSS_AUS,
         BhfTag: string;
         AnschlussNummern: Array<string>;
         Zeiteintraege: Array<TNormalZeileEintrag>;
@@ -381,7 +397,7 @@ export enum EBahnverwaltung {
     }
 
     export interface TAnschlussWeiterAbZeile {
-        kind: typeof ZEILE_ANSCHLUSS_WEITER_AB,
+        kind: typeof ZEILE_T.ANSCHLUSS_WEITER_AB,
         BhfTag: string;
         AnschlussNummern: Array<string>;
         Zeiteintraege: Array<TNormalZeileEintrag>;
@@ -389,7 +405,7 @@ export enum EBahnverwaltung {
     }
 
     export interface TAnschlussWeiterInZeile {
-        kind: typeof ZEILE_ANSCHLUSS_WEITER_IN, //  ZEILE_ANSCHLUSS_NACH_IN,
+        kind: typeof ZEILE_T.ANSCHLUSS_WEITER_IN, //  ZEILE_ANSCHLUSS_NACH_IN,
         BhfTag: string;
         AnschlussNummern: Array<string>;
         Zeiteintraege: Array<TNormalZeileEintrag>;
@@ -408,25 +424,26 @@ export enum EBahnverwaltung {
 
 
     //Fahrpreise hinter ZeitZeile
-    export const FAHRPREIS_KEINE_ANGABE: "FAHRPREIS_KEINE_ANGABE" = "FAHRPREIS_KEINE_ANGABE";
-    export const FAHRPREIS_EINFACH: "FAHRPREIS_EINFACH" = "FAHRPREIS_EINFACH";
-    export const FAHRPREIS_EINFACH_UND_RUECK: "FAHRPREIS_EINFACH_UND_RUECK" = "FAHRPREIS_EINFACH_UND_RUECK";
-    export const FAHRPREIS_AB: "FAHRPREIS_AB" = "FAHRPREIS_AB";
-
+    export enum FAHRPREIS_T{
+        KEINE_ANGABE = "FAHRPREIS_KEINE_ANGABE",
+        EINFACH = "FAHRPREIS_EINFACH",
+        EINFACH_UND_RUECK = "FAHRPREIS_EINFACH_UND_RUECK",
+        AB = "FAHRPREIS_AB"
+    }
     export type TFahrpreisAngabe = TFahrpreisNix | TFahrpreisEinfach | TFahrpreisEinfachUndRueck | TFahrpreisAb;
 
     export interface TFahrpreisNix {
-        kind: typeof FAHRPREIS_KEINE_ANGABE
+        kind: typeof FAHRPREIS_T.KEINE_ANGABE
     }
 
     export interface TFahrpreisEinfach {
-        kind: typeof FAHRPREIS_EINFACH,
+        kind: typeof FAHRPREIS_T.EINFACH,
         Einfach2: number,
         Einfach3: number
     }
 
     export interface TFahrpreisEinfachUndRueck {
-        kind: typeof FAHRPREIS_EINFACH_UND_RUECK,
+        kind: typeof FAHRPREIS_T.EINFACH_UND_RUECK,
         Einfach2: number,
         Einfach3: number,
         Rueck2: number,
@@ -434,7 +451,7 @@ export enum EBahnverwaltung {
     }
 
     export interface TFahrpreisAb {
-        kind: typeof FAHRPREIS_AB,
+        kind: typeof FAHRPREIS_T.AB,
         AbfahrtsOrt: string
     }
 
