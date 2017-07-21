@@ -604,7 +604,7 @@ import { assertNever } from "./SaxBaseTypes";
                             if ((tEintrag.kind != BLOCK_ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                 if ((tCurrentZugNr == undefined)) {
 
-                                    if (tEintrag.BerechneterZugLauf.ZugNr.length > 0) {
+                                    if ((tEintrag.BerechneterZugLauf.ZugNr != null) && (tEintrag.BerechneterZugLauf.ZugNr.length > 0)) {
                                         tCurrentFolge = [];
                                         tCurrentFahrtage = { kind: FAEHRT_IMMER };
                                         tCurrentZugNr = tEintrag.BerechneterZugLauf.ZugNr;
