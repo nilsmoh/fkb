@@ -1,50 +1,52 @@
-
 /**
  * Typen um Fahrplaene einzugeben
  */
 
-export interface SingleDirectionScheduleInput{
-	route1900:string | number;
-	comment?:string;
+
+export interface SingleDirectionScheduleInput {
+    route1900: string | number;
+    comment?: string;
     todo?: string;
     seite: number; // seite in FKB wie gedruckt
     klassen?: string;
     caption: string;
-	zeilen: Array< Array <(string|number|IZeilenZusatzInfo)> >;
+    zeilen: Array<Array<(string | number | IZeilenZusatzInfo)>>;
     ZellenVerweise?: Array<IZellenEigenschaft>;
-    }
-
-export interface IZeilenZusatzInfo {
-        ort?: string;
-        nr?: string | number;
-        nrn?: Array<(string | number)>;
-        fk?: Array<number>;
-        fkab?: string;
-        FROM?: string;
-        NACH?: string;
-        via?: string;
-        lfd?:number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden
 }
 
-    // normaler Zelleneintrag
+//rechts hinter zeile
+export interface IZeilenZusatzInfo {
+    ort?: string;
+    nr?: string | number;
+    nrn?: Array<(string | number)>;
+    fk?: Array<number>;
+    fkab?: string;
+    FROM?: string;
+    NACH?: string;
+    via?: string;
+    lfd?: number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden
+}
+
+// zusatzinformation untern
 export interface IZellenEigenschaft {
-        cellkey?: string;                         //z.B. a812
-        zugnr?: string | number;
-        klassen?: string;
-        typ: string;                                //fern = verlinkt mit * oder ! oder so;     passend = direkt in korrekter spalte, pfeilstart, pfeilziel, Zeitaenderung
-        marker?: string;                             // z.B. "*"
-        key?: string;                                // z.B. "e"
-        nach?: string;                               // z.B. "Stollberg" d.h. verlaesst die Kursbuchstrecke
-        tage?: string;             //tage "nur werktags" oder "sonn-und feiertags"
-        destcellkey?: string;   // nur typ pfeilstart oder pfeilziel
-        srccellkey?: string;    // nur typ pfeilstart oder pfeilziel
-        ab?: string; // fuer zugnummernwechsel mit startstation
-        von?: string; // zug der auf kursbuchstrecke einbiegt
-        verweisort?: string; // wo wird a hingeschrieben wenn weder sa noch wa existiert
-        sonnundfeiertagzeit?: string| number; //abweichende zeit sonnundfeiertags
-        scope?: string;  //DEfaultZug oder RestSpalte falls auch darunterstehende Zuege betrofen sind, vgl S100 ganz vorne
-        bahn?: string;
-    }
+    cellkey?: string;                         //z.B. a812 bei verweis aus einer zelle heraus
+    typ: string;                                //fern = verlinkt mit * oder ! oder so;     passend = direkt in korrekter spalte, pfeilstart, pfeilziel, Zeitaenderung
+    marker?: string;                             // z.B. "*"
+    key?: string;                                // z.B. "e"
+    verweisort?: string; // wo wird a hingeschrieben wenn weder sa noch wa existiert
+    scope?: string;  //DEfaultZug oder RestSpalte falls auch darunterstehende Zuege betrofen sind, vgl S100 ganz vorne
+    
+    zugnr?: string | number;
+    klassen?: string;
+    nach?: string;                               // z.B. "Stollberg" d.h. verlaesst die Kursbuchstrecke
+    tage?: string;             //tage "nur werktags" oder "sonn-und feiertags"
+    destcellkey?: string;   // nur typ pfeilstart oder pfeilziel
+    srccellkey?: string;    // nur typ pfeilstart oder pfeilziel
+    ab?: string; // fuer zugnummernwechsel mit startstation
+    von?: string; // zug der auf kursbuchstrecke einbiegt
+    sonnundfeiertagzeit?: string | number; //abweichende zeit sonnundfeiertags
+    bahn?: string;
+}
 
 //scope
 export var defaultzug = "defaultzug";
@@ -60,17 +62,17 @@ export var kl = "_xKlassen";
 export var _anschluss_aus = "_Anschluss_aus"; //  aus Zwickau  // Abfahrtszeit in Zwickau
 export var _anschluss_aus_ziel = "_Anschluss_aus_ankunft"; // aus Karlsbad in Johanngeorgenstadt
 export var _anschluss_nach_start = "_Anschluss_nach_abfahrt"; // nach Karlsbad ab Johanngeorgenstadt
-export var _anschluss_nach_in    ="_Anschluss_nach_in"; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
+export var _anschluss_nach_in = "_Anschluss_nach_in"; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
 
 export var _klassen = "_Klassen_";
 
 export var _zugnr = "_xZugnr";
 
-export var WaltersdfHst = "Waltersdorf Haltest."; 
+export var WaltersdfHst = "Waltersdorf Haltest.";
 export var MittwMrkb = "Mittweida-Markrsb.";
 
-export var SENKRECHT_PREFIX = "_senkrecht_"; 
-export var WAAGERECHT_PREFIX = "_waagerecht_"; 
+export var SENKRECHT_PREFIX = "_senkrecht_";
+export var WAAGERECHT_PREFIX = "_waagerecht_";
 var ORTPREFIX = "_Ort_";
 export var MARKERPREFIX = "_markerAussehen_";
 
@@ -78,8 +80,8 @@ export var fatdot = MARKERPREFIX + "fatdot";  // dicker schwarzer runder punkt
 export var cross = MARKERPREFIX + "christlichesKreuz";  // normales Kirchenkreuz
 export var chooseown = MARKERPREFIX + "selbstEinenFreienAussuchen"; // im FKB durch geschweifte klammern
 
-    var BAHNVERWALTUNGPREFIX = "_bahnverwaltung_";
-export    var Sachs = BAHNVERWALTUNGPREFIX + "Sachs";
+var BAHNVERWALTUNGPREFIX = "_bahnverwaltung_";
+export var Sachs = BAHNVERWALTUNGPREFIX + "Sachs";
 
 //s1= senkrecht start 1
 //se= senkrecht ende // letzter eintrag
@@ -96,22 +98,22 @@ export var wa = WAAGERECHT_PREFIX + "a";
 
 export var sa = SENKRECHT_PREFIX + "a";
 export var sb = SENKRECHT_PREFIX + "b";
-export var sc = SENKRECHT_PREFIX +"c";
-export var sd = SENKRECHT_PREFIX +"d";
-export var se = SENKRECHT_PREFIX +"e";
-export var sf = SENKRECHT_PREFIX +"f";
-export var sg = SENKRECHT_PREFIX +"g";
-export var sh = SENKRECHT_PREFIX +"h";
-export var si = SENKRECHT_PREFIX +"i";
-export var sk = SENKRECHT_PREFIX +"k";
-export var sl = SENKRECHT_PREFIX +"l";
+export var sc = SENKRECHT_PREFIX + "c";
+export var sd = SENKRECHT_PREFIX + "d";
+export var se = SENKRECHT_PREFIX + "e";
+export var sf = SENKRECHT_PREFIX + "f";
+export var sg = SENKRECHT_PREFIX + "g";
+export var sh = SENKRECHT_PREFIX + "h";
+export var si = SENKRECHT_PREFIX + "i";
+export var sk = SENKRECHT_PREFIX + "k";
+export var sl = SENKRECHT_PREFIX + "l";
 
 export var sj = SENKRECHT_PREFIX + "j";
 export var sm = SENKRECHT_PREFIX + "m";
 export var sp = SENKRECHT_PREFIX + "p";
 
 
-export    var wx = WAAGERECHT_PREFIX + "x";
+export var wx = WAAGERECHT_PREFIX + "x";
 
 export var LE = ORTPREFIX + "Leipzig";
 export var CH = ORTPREFIX + "Chemnitz";
@@ -149,8 +151,8 @@ export var headerrechts = "_headerright";
 export var nach9spalten = "_nach9spalten";
 export var nach4spalten2spalten = "nach4spalten2spalten";
 export var nach10spalten4spalten = 'nach10spalten4spalten';
-export var nach4spalten ='nach4spalten';
-export var nach6spalten ='nach6spalten';
+export var nach4spalten = 'nach4spalten';
+export var nach6spalten = 'nach6spalten';
 export var nach5spalten2spalten = 'nach5spalten2spalten';
 
 
@@ -182,17 +184,19 @@ export var s710 = "_s710";
 export var s845 = "_s845";
 export var s1058 = "_s1058";
 
-export    var c937 = "_c937";
-export    var b233 = "_b233";
-export    var a754 = "_a754";
+export var c937 = "_c937";
+export var b233 = "_b233";
+export var a754 = "_a754";
 
-export    var m149 = "_m149";
+export var m149 = "_m149";
 
 export var x135 = "_x135";
-export     var x150 = "_x150";
-export    var a644 = "_a644";
-export    var a659 = "_a659";
-export    var a818 = "_a818";
+export var x150 = "_x150";
+export var a644 = "_a644";
+export var a659 = "_a659";
+export var a818 = "_a818";
 
 
-export    var Z1960 = "_Z1960";
+export var Z1960 = "_Z1960";
+
+

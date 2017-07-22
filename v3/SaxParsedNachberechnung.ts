@@ -1,10 +1,10 @@
     
 import {
-    TVerweisEmbedded, VERWEIS_T  , KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
+    TVerweisEmbedded, VERWEIS_T  , KBS_ABWEICHUNG_T, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
     TBlockEintrag, TAnkunftEintrag, TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, TBlockinhaltBase, TAnschlussZubringerAbZeile, TDickerStrichEintrag, TAnschlussZubringerInZeile,
     TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, TError, 
     
-    TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
+    TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL,  EScope, BlockRaw_ok, TPfeilZiel,
     TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, 
     BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
     BLOCK_T, ZEILE_T, 

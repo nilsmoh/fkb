@@ -181,7 +181,7 @@ System.register("SaxBaseTypes", [], function (exports_2, context_2) {
 System.register("SaxParsedTypes", [], function (exports_3, context_3) {
     "use strict";
     var __moduleName = context_3 && context_3.id;
-    var EBahnverwaltung, EScope, VERWEIS_T, KBS_ABWEICHUNG_KEINE, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, TEXTORT_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt, EQuelle, ZEILE_T, BLOCK_T, EAnAb, ZUGLAUF_UNBEKANNT, ZUGLAUF_BERECHNET;
+    var EBahnverwaltung, EScope, EQuelle, ZEILE_T, BLOCK_T, EAnAb, ZUGLAUF_UNBEKANNT, ZUGLAUF_BERECHNET, VERWEIS_T, TEXTORT_T, KBS_ABWEICHUNG_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt;
     return {
         setters: [],
         execute: function () {
@@ -195,40 +195,6 @@ System.register("SaxParsedTypes", [], function (exports_3, context_3) {
                 EScope[EScope["RestSpalte"] = 2] = "RestSpalte";
             })(EScope || (EScope = {}));
             exports_3("EScope", EScope);
-            (function (VERWEIS_T) {
-                VERWEIS_T["PASSEND"] = "VERWEIS_PASSEND";
-                VERWEIS_T["FERN"] = "VERWEIS_FERN";
-                VERWEIS_T["EMBEDDED"] = "VERWEIS_EMBEDDED";
-                VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
-            })(VERWEIS_T || (VERWEIS_T = {}));
-            exports_3("VERWEIS_T", VERWEIS_T);
-            exports_3("KBS_ABWEICHUNG_KEINE", KBS_ABWEICHUNG_KEINE = "KBS_ABWEICHUNG_KEINE");
-            exports_3("KBS_ABWEICHUNG_AUS", KBS_ABWEICHUNG_AUS = "KBS_ABWEICHUNG_AUS");
-            exports_3("KBS_ABWEICHUNG_NACH", KBS_ABWEICHUNG_NACH = "KBS_ABWEICHUNG_NACH");
-            ;
-            ;
-            ;
-            (function (TEXTORT_T) {
-                TEXTORT_T["NICHTANGEGEBEN"] = "TEXTORT_NICHTANGEGEBEN";
-                TEXTORT_T["LINKSVONHEADER"] = "TEXTORT_LINKSVONHEADER";
-                TEXTORT_T["RECHTSVONHEADER"] = "TEXTORT_RECHTSVONHEADER";
-                TEXTORT_T["UNTERHEADER"] = "TEXTORT_UNTERHEADER";
-                TEXTORT_T["GANZESPALTE"] = "TEXTORT_GANZESPALTE";
-            })(TEXTORT_T || (TEXTORT_T = {}));
-            exports_3("TEXTORT_T", TEXTORT_T);
-            ;
-            ;
-            ;
-            ;
-            ;
-            exports_3("TKEINPFEIL", TKEINPFEIL = "TKEINPFEIL");
-            exports_3("TPFEIL_START", TPFEIL_START = "TPFEIL_START");
-            exports_3("TPFEIL_ZIEL", TPFEIL_ZIEL = "TPFEIL_ZIEL");
-            ;
-            ;
-            ;
-            exports_3("BlockRaw_ok", BlockRaw_ok = "BLOCKRAWOK");
-            exports_3("BlockRawUnbekannt", BlockRawUnbekannt = "BLOCKRAWUNBEKANNT");
             (function (EQuelle) {
                 EQuelle[EQuelle["FritzscheSommer1900"] = 0] = "FritzscheSommer1900";
             })(EQuelle || (EQuelle = {}));
@@ -262,6 +228,43 @@ System.register("SaxParsedTypes", [], function (exports_3, context_3) {
             exports_3("EAnAb", EAnAb);
             exports_3("ZUGLAUF_UNBEKANNT", ZUGLAUF_UNBEKANNT = "ZUGLAUF_UNBEKANNT");
             exports_3("ZUGLAUF_BERECHNET", ZUGLAUF_BERECHNET = "ZUGLAUF_BERECHNET");
+            (function (VERWEIS_T) {
+                VERWEIS_T["PASSEND"] = "VERWEIS_PASSEND";
+                VERWEIS_T["FERN"] = "VERWEIS_FERN";
+                VERWEIS_T["EMBEDDED"] = "VERWEIS_EMBEDDED";
+                VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
+            })(VERWEIS_T || (VERWEIS_T = {}));
+            exports_3("VERWEIS_T", VERWEIS_T);
+            (function (TEXTORT_T) {
+                TEXTORT_T["NICHTANGEGEBEN"] = "TEXTORT_NICHTANGEGEBEN";
+                TEXTORT_T["LINKSVONHEADER"] = "TEXTORT_LINKSVONHEADER";
+                TEXTORT_T["RECHTSVONHEADER"] = "TEXTORT_RECHTSVONHEADER";
+                TEXTORT_T["UNTERHEADER"] = "TEXTORT_UNTERHEADER";
+                TEXTORT_T["GANZESPALTE"] = "TEXTORT_GANZESPALTE";
+            })(TEXTORT_T || (TEXTORT_T = {}));
+            exports_3("TEXTORT_T", TEXTORT_T);
+            ;
+            ;
+            ;
+            ;
+            ;
+            (function (KBS_ABWEICHUNG_T) {
+                KBS_ABWEICHUNG_T["KEINE"] = "KBS_ABWEICHUNG_KEINE";
+                KBS_ABWEICHUNG_T["AUS"] = "KBS_ABWEICHUNG_AUS";
+                KBS_ABWEICHUNG_T["NACH"] = "KBS_ABWEICHUNG_NACH";
+            })(KBS_ABWEICHUNG_T || (KBS_ABWEICHUNG_T = {}));
+            exports_3("KBS_ABWEICHUNG_T", KBS_ABWEICHUNG_T);
+            ;
+            ;
+            ;
+            exports_3("TKEINPFEIL", TKEINPFEIL = "TKEINPFEIL");
+            exports_3("TPFEIL_START", TPFEIL_START = "TPFEIL_START");
+            exports_3("TPFEIL_ZIEL", TPFEIL_ZIEL = "TPFEIL_ZIEL");
+            ;
+            ;
+            ;
+            exports_3("BlockRaw_ok", BlockRaw_ok = "BLOCKRAWOK");
+            exports_3("BlockRawUnbekannt", BlockRawUnbekannt = "BLOCKRAWUNBEKANNT");
         }
     };
 });
@@ -1059,7 +1062,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 };
                 ZI_Creator.createKbsAbweichungKeine = function () {
                     return {
-                        kind: SaxParsedTypes_1.KBS_ABWEICHUNG_KEINE
+                        kind: SaxParsedTypes_1.KBS_ABWEICHUNG_T.KEINE
                     };
                 };
                 ZI_Creator.parseKlassenString = function (Klassenstring) {
@@ -1339,7 +1342,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     var tKbsAbweichung = ZI_Creator.createKbsAbweichungKeine();
                     if (inp.von) {
                         var tKbsAbweichungA = {
-                            kind: SaxParsedTypes_1.KBS_ABWEICHUNG_AUS,
+                            kind: SaxParsedTypes_1.KBS_ABWEICHUNG_T.AUS,
                             bhf: inp.von,
                             KBS: "",
                             SchonKomplettiert: false
@@ -1352,7 +1355,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     }
                     if (inp.nach) {
                         var tKbsAbweichungN = {
-                            kind: SaxParsedTypes_1.KBS_ABWEICHUNG_NACH,
+                            kind: SaxParsedTypes_1.KBS_ABWEICHUNG_T.NACH,
                             bhf: inp.nach,
                             KBS: "",
                             SchonKomplettiert: false
@@ -1414,7 +1417,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 ZI_Renderer.isEmptyBIBGlobal = function (b) {
                     console.warn("isEmptyBibGlobal not complete");
                     return ((b.Bahnverwaltung == SaxParsedTypes_1.EBahnverwaltung.NichtAngegeben)
-                        && (b.KbsAbweichung.kind == SaxParsedTypes_1.KBS_ABWEICHUNG_KEINE)
+                        && (b.KbsAbweichung.kind == SaxParsedTypes_1.KBS_ABWEICHUNG_T.KEINE)
                         && (b.ZugNrOderKlasse.Klassen == SaxBaseTypes_1.EKlassen.NichtAngegeben)
                         && (b.ZugNrOderKlasse.Zugnr == null));
                 };
@@ -1478,12 +1481,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             return ZI_Importer.assertNever(t.Fahrtage);
                     }
                     switch (t.KbsAbweichung.kind) {
-                        case SaxParsedTypes_1.KBS_ABWEICHUNG_KEINE:
+                        case SaxParsedTypes_1.KBS_ABWEICHUNG_T.KEINE:
                             break;
-                        case SaxParsedTypes_1.KBS_ABWEICHUNG_AUS:
+                        case SaxParsedTypes_1.KBS_ABWEICHUNG_T.AUS:
                             tResult += "von " + t.KbsAbweichung.bhf;
                             break;
-                        case SaxParsedTypes_1.KBS_ABWEICHUNG_NACH:
+                        case SaxParsedTypes_1.KBS_ABWEICHUNG_T.NACH:
                             tResult += "nach " + t.KbsAbweichung.bhf;
                             break;
                         default:
@@ -3442,19 +3445,19 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                 if (tEintrag.Passend) {
                                                     if (tEintrag.Blockinhalt) {
                                                         switch (tEintrag.Blockinhalt.KbsAbweichung.kind) {
-                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_AUS:
+                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_T.AUS:
                                                                 var tEntKo = {
                                                                     kind: LAUFEINTRAG_KOMMEAUSKBS
                                                                 };
                                                                 tCurrentFolge.push(tEntKo);
                                                                 break;
-                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_NACH:
+                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_T.NACH:
                                                                 var tEntN = {
                                                                     kind: LAUFEINTRAG_VERLASSENACHKBS
                                                                 };
                                                                 tCurrentFolge.push(tEntN);
                                                                 break;
-                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_KEINE:
+                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_T.KEINE:
                                                                 break;
                                                             default:
                                                                 return SaxBaseTypes_5.assertNever(tEintrag.Blockinhalt.KbsAbweichung);

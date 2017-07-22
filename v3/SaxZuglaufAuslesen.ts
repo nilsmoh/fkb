@@ -1,5 +1,5 @@
 import { TFahrtage, assertNever, FAEHRT_T, ZEIT_24, TZeit24 } from "./SaxBaseTypes";
-import { ZEILE_T, BLOCK_T, TNormalZeileEintrag, ZUGLAUF_BERECHNET, EAnAb, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_KEINE, KBS_ABWEICHUNG_NACH, SingleDirectionScheduleTyped } from "./SaxParsedTypes";
+import { ZEILE_T, BLOCK_T, TNormalZeileEintrag, ZUGLAUF_BERECHNET, EAnAb, KBS_ABWEICHUNG_T, SingleDirectionScheduleTyped } from "./SaxParsedTypes";
 
     export const LAUFEINTRAG_NORMAL: "LAUFEINTRAG_NORMAL" = "LAUFEINTRAG_NORMAL";
     export const LAUFEINTRAG_KEINHALT: "LAUFEINTRAG_KEINHALT" = "LAUFEINTRAG_KEINHALT";
@@ -338,19 +338,19 @@ import { ZEILE_T, BLOCK_T, TNormalZeileEintrag, ZUGLAUF_BERECHNET, EAnAb, KBS_AB
                                             if (tEintrag.Blockinhalt) {
                                                 //aus / nach andere kursbuchstrecke
                                                 switch (tEintrag.Blockinhalt.KbsAbweichung.kind) {
-                                                    case KBS_ABWEICHUNG_AUS:
+                                                    case KBS_ABWEICHUNG_T.AUS:
                                                         var tEntKo: LaufEintragKommeAusKbs = {
                                                             kind: LAUFEINTRAG_KOMMEAUSKBS
                                                         };
                                                         tCurrentFolge.push(tEntKo);
                                                         break;
-                                                    case KBS_ABWEICHUNG_NACH:
+                                                    case KBS_ABWEICHUNG_T.NACH:
                                                         var tEntN: LaufEintragVerlasseNachKbs = {
                                                             kind: LAUFEINTRAG_VERLASSENACHKBS
                                                         };
                                                         tCurrentFolge.push(tEntN);
                                                         break;
-                                                    case KBS_ABWEICHUNG_KEINE:
+                                                    case KBS_ABWEICHUNG_T.KEINE:
                                                         break;
                                                     default:
                                                         return assertNever(tEintrag.Blockinhalt.KbsAbweichung);

@@ -1,5 +1,5 @@
 import {
-    TVerweisEmbedded,  KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
+    TVerweisEmbedded,  KBS_ABWEICHUNG_T, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
     TBlockEintrag, TAnkunftEintrag, TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, TBlockinhaltBase, TAnschlussZubringerAbZeile, TDickerStrichEintrag, TAnschlussZubringerInZeile,
     TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, 
    // TGueltigkeit, GUELTIG_IMMER, 
@@ -8,7 +8,7 @@ import {
     TEXTORT_UNTERHEADER */,
    //  TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage,  FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
    // FAEHRT_WERKTAGS,  
-    TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
+    TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, EScope, BlockRaw_ok, TPfeilZiel,
     TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, 
     //GUELTIG_AB, 
     BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
@@ -1152,7 +1152,7 @@ export class ZI_Creator {
 
     public static createKbsAbweichungKeine(): TKbsAbweichung_Keine {
         return {
-            kind: KBS_ABWEICHUNG_KEINE
+            kind: KBS_ABWEICHUNG_T.KEINE
         }
     }
 
@@ -1489,7 +1489,7 @@ export class ZI_Importer {
         if (inp.von) {   //"von Stollberg"
             // TODO
             var tKbsAbweichungA: TKbsAbweichung_Aus = {
-                kind: KBS_ABWEICHUNG_AUS,
+                kind: KBS_ABWEICHUNG_T.AUS,
                 bhf: inp.von,
                 KBS: "",           //N.B. this shall be filled in a filling step
                 SchonKomplettiert: false
@@ -1503,7 +1503,7 @@ export class ZI_Importer {
         // nach Stollberg
         if (inp.nach) {
             var tKbsAbweichungN: TKbsAbweichung_Nach = {
-                kind: KBS_ABWEICHUNG_NACH,
+                kind: KBS_ABWEICHUNG_T.NACH,
                 bhf: inp.nach,
                 KBS: "",           //N.B. this shall be filled in a filling step
                 SchonKomplettiert: false
@@ -1580,7 +1580,7 @@ export class ZI_Renderer {
 
         return ((b.Bahnverwaltung == EBahnverwaltung.NichtAngegeben)
             //&& (b.Fahrtage == SaxSchedulesZusatzBase.TFahrtage.
-            && (b.KbsAbweichung.kind == KBS_ABWEICHUNG_KEINE)
+            && (b.KbsAbweichung.kind == KBS_ABWEICHUNG_T.KEINE)
             && (b.ZugNrOderKlasse.Klassen == EKlassen.NichtAngegeben)
             && (b.ZugNrOderKlasse.Zugnr == null)
 
@@ -1658,13 +1658,13 @@ export class ZI_Renderer {
 
 
         switch (t.KbsAbweichung.kind) {
-            case KBS_ABWEICHUNG_KEINE:
+            case KBS_ABWEICHUNG_T.KEINE:
                 // nothing to do
                 break;
-            case KBS_ABWEICHUNG_AUS:
+            case KBS_ABWEICHUNG_T.AUS:
                 tResult += "von " + t.KbsAbweichung.bhf;  //von Stollberg
                 break;
-            case KBS_ABWEICHUNG_NACH:
+            case KBS_ABWEICHUNG_T.NACH:
                 tResult += "nach " + t.KbsAbweichung.bhf;  //nach Stollberg
                 break;
             default:
