@@ -1,6 +1,6 @@
 import * as SaxSchedulesTyped from "./SaxParsedTypes";   
 import { ZI_Renderer } from "./SaxParser";
-import { assertNever } from "./SaxBaseTypes";
+import { assertNever, FAHRPREIS_T, GesternHeuteMorgen, ZEIT_24, ETimeValid } from "./SaxBaseTypes";
 
 export class Renderer{
  
@@ -103,20 +103,20 @@ export class Renderer{
                 case SaxSchedulesTyped.ZEILE_T.KLASSEN:
                       if (z.ZeitZeileZusatzInfo){
                         switch(z.ZeitZeileZusatzInfo.Fahrpreise.kind){
-                            case SaxSchedulesTyped.FAHRPREIS_T.KEINE_ANGABE:
+                            case FAHRPREIS_T.KEINE_ANGABE:
                                 break;
-                            case SaxSchedulesTyped.FAHRPREIS_T.EINFACH_UND_RUECK:
+                            case FAHRPREIS_T.EINFACH_UND_RUECK:
                                 tFahrpreisSpalten = 4;
                                 if (tErsteBelegteFahrpreisZeile < 0){
                                     tErsteBelegteFahrpreisZeile = zidx;
                                 }
                                 break;
-                            case SaxSchedulesTyped.FAHRPREIS_T.AB:
+                            case FAHRPREIS_T.AB:
                                 if (tErsteBelegteFahrpreisZeile < 0){
                                     tErsteBelegteFahrpreisZeile = zidx;
                                 }
                                 break;
-                            case SaxSchedulesTyped.FAHRPREIS_T.EINFACH:
+                            case FAHRPREIS_T.EINFACH:
                                 tFahrpreisSpalten = 2;
                                 if (tErsteBelegteFahrpreisZeile < 0){
                                     tErsteBelegteFahrpreisZeile = zidx;
@@ -491,11 +491,11 @@ export class Renderer{
                                     //td.title =  " Z" +  ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                     break;
                                 case SaxSchedulesTyped.BLOCK_T.ZEITEINTRAG:
-                                    if(ze.Zeit.kind == SaxSchedulesTyped.ZEIT_24){
+                                    if(ze.Zeit.kind == ZEIT_24){
                                     td.title= ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
-                                    td.setAttribute("class", ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Gestern ? "Gestern" :
-                                        ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Heute ? "Heute":
-                                            ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Morgen ? "Morgen": "UnbekannterTag");
+                                    td.setAttribute("class", ze.Zeit.WelcherTag == GesternHeuteMorgen.Gestern ? "Gestern" :
+                                        ze.Zeit.WelcherTag == GesternHeuteMorgen.Heute ? "Heute":
+                                            ze.Zeit.WelcherTag == GesternHeuteMorgen.Morgen ? "Morgen": "UnbekannterTag");
                                                
 
                                     let tSpanRefKey = document.createElement("span");
@@ -531,7 +531,7 @@ export class Renderer{
 
                                     let tSpanStunde = document.createElement("span");
                                     tSpanStunde.setAttribute("class","ZeitStunde"+ (ze.Schnellzug ? " Schnellzug": "") 
-                                        + ((ze.Zeit.Valid === <any>SaxSchedulesTyped.ETimeValid.Nein) ? " TimeInvalid": "") );                                // compiler bug !!!
+                                        + ((ze.Zeit.Valid === ETimeValid.Nein) ? " TimeInvalid": "") );                                // compiler bug !!!
 
                                     tSpanStunde.innerHTML =  ((tStunde < 10) ? "&nbsp;" : "") + tStunde.toString();
                                     
@@ -626,7 +626,7 @@ export class Renderer{
                         if (z.ZeitZeileZusatzInfo){
                             let f = z.ZeitZeileZusatzInfo.Fahrpreise;
                             switch (f.kind){
-                                case SaxSchedulesTyped.FAHRPREIS_T.KEINE_ANGABE: 
+                                case FAHRPREIS_T.KEINE_ANGABE: 
                                     if ((tErsteBelegteFahrpreisZeile > -1) && (zindex > tErsteBelegteFahrpreisZeile)) {
                                        for (var i =  0;i < (tFahrpreisSpalten == 2 ? 1 : 2) ; i++){
                                             var tde = document.createElement("td");
@@ -638,13 +638,13 @@ export class Renderer{
                                     }
                                     }
                                     break;
-                                case SaxSchedulesTyped.FAHRPREIS_T.AB:
+                                case FAHRPREIS_T.AB:
                                     var tde = document.createElement("td");
                                     tde.innerHTML = "ab " + f.AbfahrtsOrt;
                                     tde.setAttribute("colspan", ""+ tFahrpreisSpalten);
                                     tr.appendChild (tde);
                                     break;
-                                case SaxSchedulesTyped.FAHRPREIS_T.EINFACH:
+                                case FAHRPREIS_T.EINFACH:
                                     var tde = document.createElement("td");
                                     tde.innerHTML = "" + f.Einfach2;
                                     tr.appendChild (tde);
@@ -652,7 +652,7 @@ export class Renderer{
                                     tde.innerHTML = "" + f.Einfach3;
                                     tr.appendChild (tde);
                                     break;
-                                case SaxSchedulesTyped.FAHRPREIS_T.EINFACH_UND_RUECK: 
+                                case FAHRPREIS_T.EINFACH_UND_RUECK: 
                                     var tde = document.createElement("td");
                                     tde.innerHTML = "" + f.Einfach2;
                                     tr.appendChild (tde);

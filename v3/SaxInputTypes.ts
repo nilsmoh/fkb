@@ -123,7 +123,7 @@ export var AU = ORTPREFIX + "Aue";
 export var AN = ORTPREFIX + "Annaberg";
 export var LU = ORTPREFIX + "Lugau";
 export var CT = ORTPREFIX + "Chemnitz ü.Thalheim";
-export    var CN = ORTPREFIX + "Chemnitz ü.Neu.";
+export var CN = ORTPREFIX + "Chemnitz ü.Neu.";
 
 export var k2b4 = "_Klassen_2_bis_4";
 export var k2b3 = "_Klassen_2_bis_3";

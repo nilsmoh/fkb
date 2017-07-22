@@ -9,6 +9,7 @@ import * as SaxRender from "./SaxRenderer";
 import * as SaxSchedules from "./SaxInput";
 
 import * as SaxNachberechnung from "./SaxParsedNachberechnung";
+import { ZugExtraktor, Lauf } from "./SaxZuglaufAuslesen";
 
 // simpler HIGH Level Aufruf
 
@@ -37,12 +38,12 @@ export class Sched{
             
              SaxValidator.Validator.validate_move_Anschluss_ZusatzInfo(tResult);
 
-            var tZugl = SaxNachberechnung.ZugExtraktor.findeZuglaeufe(tResult);
+            var tZugl = ZugExtraktor.findeZuglaeufe(tResult);
             
             // zuglaeufe ausgeben:
-            tZugl.forEach((zl: SaxNachberechnung.Lauf) => {
+            tZugl.forEach((zl: Lauf) => {
                 console.log("--- Lauf: " +zl.Nummer + zl.TagAbhaengig[0].Gueltig.kind);
-                SaxNachberechnung.ZugExtraktor.printZuglauf(zl.TagAbhaengig[0].Ablauf);
+                ZugExtraktor.printZuglauf(zl.TagAbhaengig[0].Ablauf);
             });
             
 
@@ -104,7 +105,7 @@ export class Sched{
                 tResults.push({ "moved": idx, val: tResult });
 
                 try {
-                    var tZugl = SaxNachberechnung.ZugExtraktor.findeZuglaeufe(tResult);
+                    var tZugl = ZugExtraktor.findeZuglaeufe(tResult);
                     //console.log("---zuglaufextrakt:");
                     //console.log(JSON.stringify(tResult));
                     tResults.push({ "zuglauf": idx, val: tZugl });

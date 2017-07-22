@@ -1,4 +1,4 @@
-import { EKlassen } from "./SaxBaseTypes";
+import { EKlassen, TFahrpreisAngabe, TEchteZeit, TGueltigkeit, TFahrtage } from "./SaxBaseTypes";
 import { IZellenEigenschaft } from "./SaxInputTypes";
 
 export enum EBahnverwaltung {
@@ -18,26 +18,21 @@ export enum EBahnverwaltung {
 
     /*Inhalt eines Erlaeuterungstextes, entweder mit opticalMarker, oder senkrecht in ein en zuglauf geschrieben */
     export interface TBlockinhaltBase {
-        Verweistyp: TVerweisTyp;
+        Verweistyp: TVerweisTyp; 
+        TextOrt: TTextOrt,
+
         ZugNrOderKlasse: TBlockInhaltZugnummerOderKlasse;
         Gueltig: TGueltigkeit,
         KbsAbweichung: TKbsAbweichung,  //nach / von
         Fahrtage: TFahrtage,
-        TextOrt: TTextOrt,
         PfeilInfo: TPfeilInfo,
-        //Scope: EScope, now in Verweistyp where it belongs
         Unbekannt: TBlockInhaltRawUnbekannt | TBlockInhaltRawOk;
         Bahnverwaltung: EBahnverwaltung;
-
     }
 
 
     //// Typen fuer Verweis
     export type TVerweisTyp = TVerweisPassend | TVerweisFern | TVerweisEmbedded | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
-    //export const VERWEIS_PASSEND: "VERWEIS_PASSEND" = "VERWEIS_PASSEND";
-    //export const VERWEIS_FERN: "VERWEIS_FERN" = "VERWEIS_FERN";
-    //export const VERWEIS_EMBEDDED: "VERWEIS_EMBEDDED" = "VERWEIS_EMBEDDED";
-    //export const VERWEIS_GLOBAL_DEFAULT: "VERWEIS_GLOBAL_DEFAULT" = "VERWEIS_GLOBAL_DEFAULT";
 
     export enum VERWEIS_T{
         PASSEND = "VERWEIS_PASSEND",
@@ -73,27 +68,8 @@ export enum EBahnverwaltung {
         Klassen: EKlassen;
     }
 
-    /*
-    //// Typen fuer Klassen
-    export enum EKlassen {
-        NichtAngegeben,
-        Klassen1bis3,
-        Klassen2bis3,
-        Klassen2bis4,
-        Klassen3bis4
-    }
-*/
 
-    // GUELTIGKEIT
-    export type TGueltigkeit = TGueltigImmer | TGueltigNie | TGueltigAb;
-    export const GUELTIG_IMMER: "GUELTIG_IMMER" = "GUELTIG_IMMER";
-    export const GUELTIG_NIE: "GUELTIG_NIE" = "GUELTIG_NIE";
-    export const GUELTIG_AB: "GUELTIG_AB" = "GUELTIG_AB";
-    interface TGueltigImmer { kind: typeof GUELTIG_IMMER };
-    interface TGueltigNie { kind: typeof GUELTIG_NIE };
-    interface TGueltigAb { kind: typeof GUELTIG_AB, bhf: string };
-    //todo wochentagsabhaengige gueltigkeit etc
-
+   
 
     //// Typen fuer KbsAbweichung
     export type TKbsAbweichung = TKbsAbweichung_Keine | TKbsAbweichung_Aus | TKbsAbweichung_Nach;
@@ -117,15 +93,7 @@ export enum EBahnverwaltung {
     };
 
 
-    //// Fahrtage
-    export type TFahrtage = TFaehrtImmer | TFaehrtWerktags | TFaehrtSonnUndFesttags;
-    export const FAEHRT_IMMER: "FAEHRT_IMMER" = "FAEHRT_IMMER";
-    export const FAEHRT_WERKTAGS: "FAEHRT_WERKTAGS" = "FAEHRT_WERKTAGS";
-    export const FAEHRT_SONNUNDFESTTAGS: "FAEHRT_SONNUNDFESTTAGS" = "FAEHRT_SONNUNDFESTTAGS";
-    interface TFaehrtImmer { kind: typeof FAEHRT_IMMER };
-    interface TFaehrtWerktags { kind: typeof FAEHRT_WERKTAGS };
-    interface TFaehrtSonnUndFesttags { kind: typeof FAEHRT_SONNUNDFESTTAGS };
-
+  
 
     //// TEXTORT //Text wird in z.b. links neben header geschrieben
     export type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
@@ -219,7 +187,7 @@ export enum EBahnverwaltung {
 
     export type TZeile = TZugNrZeile | TKlassenNrZeile | TNormalzeile | TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile;
 
-    // EINTRAG in Zeile    
+    // EINTRAG in Zelle    
     export enum BLOCK_T{
         ZUG_NR_WERT = "ZUG_NR_WERT",
         LEER = "LEER",
@@ -258,51 +226,15 @@ export enum EBahnverwaltung {
         Grund: string;
     }
 
-    export enum GesternHeuteMorgen {
-        Unbekannt,
-        Gestern,
-        Heute,
-        Morgen
-    }
 
-    export enum ETimeValid {
-        Nein = 1,        //
-        Vorgabe24 = 2,  // 24 irgendwie geparst aus json
-        Berechnet24 = 3  // 24 berechnet
-    }
 
-    // neuer Zeittyp, der roh und 24 klar trennt
-    export const ZEIT_ROH: "ZEIT_ROH" = "ZEIT_ROH";
-    export const ZEIT_24: "ZEIT_24" = "ZEIT_24";
 
-    export interface TZeitRoh {
-        kind: typeof ZEIT_ROH;
-        RohZeit: number;
-    }
-
-    export interface TZeit24 {
-        kind: typeof ZEIT_24;
-        Stunde24: number;
-        Minute24: number;
-        WelcherTag: GesternHeuteMorgen;
-        Valid: ETimeValid;
-        src: number;
-
-    }
-
-    type TEchteZeit = TZeitRoh | TZeit24;
 
 
     export interface TZeiteintrag {
         kind: typeof BLOCK_T.ZEITEINTRAG;
-        //RohZeit: number;
         Referenzkey: string | null;
         Schnellzug: boolean;
-        //Valid: ETimeValid;               //zeigt an ob vormittag korrekt berechnet wurde
-        //Stunde24: number;
-        //Minute24: number;
-        //WelcherTag:GesternHeuteMorgen;
-
         Zeit: TEchteZeit;
         BerechneterZugLauf: TZugLaufInfo;
 
@@ -423,36 +355,6 @@ export enum EBahnverwaltung {
     }
 
 
-    //Fahrpreise hinter ZeitZeile
-    export enum FAHRPREIS_T{
-        KEINE_ANGABE = "FAHRPREIS_KEINE_ANGABE",
-        EINFACH = "FAHRPREIS_EINFACH",
-        EINFACH_UND_RUECK = "FAHRPREIS_EINFACH_UND_RUECK",
-        AB = "FAHRPREIS_AB"
-    }
-    export type TFahrpreisAngabe = TFahrpreisNix | TFahrpreisEinfach | TFahrpreisEinfachUndRueck | TFahrpreisAb;
-
-    export interface TFahrpreisNix {
-        kind: typeof FAHRPREIS_T.KEINE_ANGABE
-    }
-
-    export interface TFahrpreisEinfach {
-        kind: typeof FAHRPREIS_T.EINFACH,
-        Einfach2: number,
-        Einfach3: number
-    }
-
-    export interface TFahrpreisEinfachUndRueck {
-        kind: typeof FAHRPREIS_T.EINFACH_UND_RUECK,
-        Einfach2: number,
-        Einfach3: number,
-        Rueck2: number,
-        Rueck3: number
-    }
-
-    export interface TFahrpreisAb {
-        kind: typeof FAHRPREIS_T.AB,
-        AbfahrtsOrt: string
-    }
+   
 
 //}

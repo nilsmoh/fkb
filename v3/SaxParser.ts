@@ -1,11 +1,17 @@
 import {
     TVerweisEmbedded,  KBS_ABWEICHUNG_KEINE, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
     TBlockEintrag, TAnkunftEintrag, TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, TBlockinhaltBase, TAnschlussZubringerAbZeile, TDickerStrichEintrag, TAnschlussZubringerInZeile,
-    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, TGueltigkeit, GUELTIG_IMMER, TError, TEXTORT_T
+    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, 
+   // TGueltigkeit, GUELTIG_IMMER, 
+    TError, TEXTORT_T
     /*GANZESPALTE, TEXTORT_LINKSVONHEADER, TEXTORT_NICHTANGEGEBEN, TEXTORT_RECHTSVONHEADER,
-    TEXTORT_UNTERHEADER */, TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage,  FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
-    FAEHRT_WERKTAGS,  TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
-    TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, GUELTIG_AB, BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
+    TEXTORT_UNTERHEADER */,
+   //  TFahrpreisAb, TFahrpreisAngabe, TFahrpreisEinfach, TFahrpreisEinfachUndRueck, TFahrpreisNix, TFahrtage,  FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS,
+   // FAEHRT_WERKTAGS,  
+    TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, EScope, BlockRaw_ok, TPfeilZiel,
+    TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, 
+    //GUELTIG_AB, 
+    BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
     /*
      ,BLOCK_ANKUNFT, BLOCK_BLOCK, BLOCK_DICKERSTRICH, BLOCK_ERROR, BLOCK_KEINHALT, BLOCK_LEER, BLOCK_ZUG_NR_WERT, 
      ZEILE_ANSCHLUSS_WEITER_AB, ZEILE_ANSCHLUSS_WEITER_IN,  ZEILE_ANSCHLUSS_ZUBRINGER_AB, ZEILE_ANSCHLUSS_ZUBRINGER_IN, ZEILE_KLASSEN, ZEILE_NORMAL, ZEILE_ZUGNR, 
@@ -13,10 +19,14 @@ import {
     VERWEIS_T,
      BLOCK_T,
      ZEILE_T,
-     FAHRPREIS_T,
-     ZEIT_24, ZEIT_ROH, TZeit24,
-     ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, GesternHeuteMorgen, TZeiteintrag, 
-     EAnAb, EQuelle, SingleDirectionScheduleTyped, ETimeValid, ZeitZeileZusatzInfo, TNormalzeile, TLeerEintrag,TKeinHalt, TZugNrZeile, TKlassenNrZeile
+     //FAHRPREIS_T,
+     //ZEIT_24, ZEIT_ROH, TZeit24,
+     ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, 
+     //GesternHeuteMorgen, 
+     TZeiteintrag, 
+     EAnAb, EQuelle, SingleDirectionScheduleTyped, 
+     //ETimeValid, 
+     ZeitZeileZusatzInfo, TNormalzeile, TLeerEintrag,TKeinHalt, TZugNrZeile, TKlassenNrZeile
      
 
      
@@ -25,7 +35,10 @@ import {
 
 import * as SaxInput from "./SaxInputTypes";
 
-import { EKlassen, assertNever } from "./SaxBaseTypes";
+import { EKlassen, assertNever, TEchteZeit, TZeitRoh, GesternHeuteMorgen, ZEIT_ROH, TGueltigkeit, 
+    //GUELTIG_AB, GUELTIG_IMMER, GUELTIG_NIE,     FAEHRT_IMMER, FAEHRT_SONNUNDFESTTAGS, FAEHRT_WERKTAGS, 
+    GUELTIG_T, FAEHRT_T, FAHRPREIS_T, TFahrpreisEinfach, TFahrpreisAb, 
+    TFahrpreisEinfachUndRueck, ETimeValid, ZEIT_24, TZeit24, TFahrtage } from "./SaxBaseTypes";
 
 /**
  * code coverting
@@ -657,9 +670,9 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                 var tBlockKpl: TBlockinhaltBase = {
                                                     Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                     ZugNrOderKlasse: tBlock,
-                                                    Gueltig: { kind: GUELTIG_IMMER },
+                                                    Gueltig: { kind: GUELTIG_T.IMMER },
                                                     KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                    Fahrtage: { kind: FAEHRT_IMMER },
+                                                    Fahrtage: { kind: FAEHRT_T.IMMER },
                                                     TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                                     PfeilInfo: { kind: TKEINPFEIL },
                                                     //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
@@ -685,10 +698,10 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                                     Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                     //Referenzkey: "", //Marker: "",
                                                     ZugNrOderKlasse: tBlock,
-                                                    Gueltig: { kind: GUELTIG_IMMER },
+                                                    Gueltig: { kind: GUELTIG_T.IMMER },
                                                     //SpezialInfo: createTSpezialNix(),
                                                     KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                    Fahrtage: { kind: FAEHRT_IMMER },
+                                                    Fahrtage: { kind: FAEHRT_T.IMMER },
                                                     TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                                     PfeilInfo: { kind: TKEINPFEIL },
                                                     //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
@@ -855,9 +868,9 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                     var tBlockKpl: TBlockinhaltBase = {
                                         Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                         ZugNrOderKlasse: tBlockK,
-                                        Gueltig: { kind: GUELTIG_IMMER },
+                                        Gueltig: { kind: GUELTIG_T.IMMER },
                                         KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                        Fahrtage: { kind: FAEHRT_IMMER },
+                                        Fahrtage: { kind: FAEHRT_T.IMMER },
                                         TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                         PfeilInfo: { kind: TKEINPFEIL },
                                         //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
@@ -931,9 +944,9 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         //Referenzkey: "", //Marker: "",
                                         ZugNrOderKlasse: tBlockK,
                                         //SpezialInfo: createTSpezialNix(),
-                                        Gueltig: { kind: GUELTIG_IMMER },
+                                        Gueltig: { kind: GUELTIG_T.IMMER },
                                         KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                        Fahrtage: { kind: FAEHRT_IMMER },
+                                        Fahrtage: { kind: FAEHRT_T.IMMER },
                                         TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                         PfeilInfo: { kind: TKEINPFEIL },
                                         //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
@@ -1003,9 +1016,9 @@ import { EKlassen, assertNever } from "./SaxBaseTypes";
                                         Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                         ZugNrOderKlasse: tBlockK,
                                         //SpezialInfo: createTSpezialNix(),
-                                        Gueltig: { kind: GUELTIG_IMMER },
+                                        Gueltig: { kind: GUELTIG_T.IMMER },
                                         KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                        Fahrtage: { kind: FAEHRT_IMMER },
+                                        Fahrtage: { kind: FAEHRT_T.IMMER },
                                         TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                         PfeilInfo: { kind: TKEINPFEIL },
                                         //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
@@ -1206,10 +1219,10 @@ export class ZI_Importer {
         // default values, might be overwritten in next step
 
         // ab
-        var tGueltig: TGueltigkeit = { kind: GUELTIG_IMMER };
+        var tGueltig: TGueltigkeit = { kind: GUELTIG_T.IMMER };
         if (inp.ab) {
             tGueltig = {
-                kind: GUELTIG_AB,
+                kind: GUELTIG_T.AB,
                 bhf: inp.ab
             };
             ok_inp_ab = true;
@@ -1260,21 +1273,21 @@ export class ZI_Importer {
 
         // fahrtage
         var tFahrtage: TFahrtage = {
-            kind: FAEHRT_IMMER
+            kind: FAEHRT_T.IMMER
         };
 
         if (inp.tage) {
             switch (inp.tage) {
                 case SaxInput.sonn_und_festtags:
                     tFahrtage = {
-                        kind: FAEHRT_SONNUNDFESTTAGS
+                        kind: FAEHRT_T.SONNUNDFESTTAGS
                     };
                     break;
 
 
                 case SaxInput.nur_werktags:
                     tFahrtage = {
-                        kind: FAEHRT_WERKTAGS
+                        kind: FAEHRT_T.WERKTAGS
                     };
                     break;
                 default: console.warn("unbekannte Fahrtage: ", inp.tage);
@@ -1630,13 +1643,13 @@ export class ZI_Renderer {
         }
 
         switch (t.Fahrtage.kind) {
-            case (FAEHRT_IMMER):
+            case (FAEHRT_T.IMMER):
                 // print nothing
                 break;
-            case (FAEHRT_WERKTAGS):
+            case (FAEHRT_T.WERKTAGS):
                 tResult += "Nur Werktags";
                 break
-            case (FAEHRT_SONNUNDFESTTAGS):
+            case (FAEHRT_T.SONNUNDFESTTAGS):
                 tResult += "Sonn- und Festtags";
                 break;
             default:

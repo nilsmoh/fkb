@@ -123,7 +123,7 @@ System.register("SaxBaseTypes", [], function (exports_2, context_2) {
         throw new Error("Unexpected object: " + x);
     }
     exports_2("assertNever", assertNever);
-    var EKlassen;
+    var EKlassen, FAHRPREIS_T, GesternHeuteMorgen, ETimeValid, ZEIT_ROH, ZEIT_24, GUELTIG_T, FAEHRT_T;
     return {
         setters: [],
         execute: function () {
@@ -135,13 +135,53 @@ System.register("SaxBaseTypes", [], function (exports_2, context_2) {
                 EKlassen[EKlassen["Klassen3bis4"] = 4] = "Klassen3bis4";
             })(EKlassen || (EKlassen = {}));
             exports_2("EKlassen", EKlassen);
+            (function (FAHRPREIS_T) {
+                FAHRPREIS_T["KEINE_ANGABE"] = "FAHRPREIS_KEINE_ANGABE";
+                FAHRPREIS_T["EINFACH"] = "FAHRPREIS_EINFACH";
+                FAHRPREIS_T["EINFACH_UND_RUECK"] = "FAHRPREIS_EINFACH_UND_RUECK";
+                FAHRPREIS_T["AB"] = "FAHRPREIS_AB";
+            })(FAHRPREIS_T || (FAHRPREIS_T = {}));
+            exports_2("FAHRPREIS_T", FAHRPREIS_T);
+            (function (GesternHeuteMorgen) {
+                GesternHeuteMorgen[GesternHeuteMorgen["Unbekannt"] = 0] = "Unbekannt";
+                GesternHeuteMorgen[GesternHeuteMorgen["Gestern"] = 1] = "Gestern";
+                GesternHeuteMorgen[GesternHeuteMorgen["Heute"] = 2] = "Heute";
+                GesternHeuteMorgen[GesternHeuteMorgen["Morgen"] = 3] = "Morgen";
+            })(GesternHeuteMorgen || (GesternHeuteMorgen = {}));
+            exports_2("GesternHeuteMorgen", GesternHeuteMorgen);
+            (function (ETimeValid) {
+                ETimeValid[ETimeValid["Nein"] = 1] = "Nein";
+                ETimeValid[ETimeValid["Vorgabe24"] = 2] = "Vorgabe24";
+                ETimeValid[ETimeValid["Berechnet24"] = 3] = "Berechnet24";
+            })(ETimeValid || (ETimeValid = {}));
+            exports_2("ETimeValid", ETimeValid);
+            exports_2("ZEIT_ROH", ZEIT_ROH = "ZEIT_ROH");
+            exports_2("ZEIT_24", ZEIT_24 = "ZEIT_24");
+            (function (GUELTIG_T) {
+                GUELTIG_T["IMMER"] = "GUELTIG_IMMER";
+                GUELTIG_T["NIE"] = "GUELTIG_NIE";
+                GUELTIG_T["AB"] = "GUELTIG_AB";
+            })(GUELTIG_T || (GUELTIG_T = {}));
+            exports_2("GUELTIG_T", GUELTIG_T);
+            ;
+            ;
+            ;
+            (function (FAEHRT_T) {
+                FAEHRT_T["IMMER"] = "FAEHRT_IMMER";
+                FAEHRT_T["WERKTAGS"] = "FAEHRT_WERKTAGS";
+                FAEHRT_T["SONNUNDFESTTAGS"] = "FAEHRT_SONNUNDFESTTAGS";
+            })(FAEHRT_T || (FAEHRT_T = {}));
+            exports_2("FAEHRT_T", FAEHRT_T);
+            ;
+            ;
+            ;
         }
     };
 });
 System.register("SaxParsedTypes", [], function (exports_3, context_3) {
     "use strict";
     var __moduleName = context_3 && context_3.id;
-    var EBahnverwaltung, EScope, VERWEIS_T, GUELTIG_IMMER, GUELTIG_NIE, GUELTIG_AB, KBS_ABWEICHUNG_KEINE, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, FAEHRT_IMMER, FAEHRT_WERKTAGS, FAEHRT_SONNUNDFESTTAGS, TEXTORT_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt, EQuelle, ZEILE_T, BLOCK_T, GesternHeuteMorgen, ETimeValid, ZEIT_ROH, ZEIT_24, EAnAb, ZUGLAUF_UNBEKANNT, ZUGLAUF_BERECHNET, FAHRPREIS_T;
+    var EBahnverwaltung, EScope, VERWEIS_T, KBS_ABWEICHUNG_KEINE, KBS_ABWEICHUNG_AUS, KBS_ABWEICHUNG_NACH, TEXTORT_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt, EQuelle, ZEILE_T, BLOCK_T, EAnAb, ZUGLAUF_UNBEKANNT, ZUGLAUF_BERECHNET;
     return {
         setters: [],
         execute: function () {
@@ -162,21 +202,9 @@ System.register("SaxParsedTypes", [], function (exports_3, context_3) {
                 VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
             })(VERWEIS_T || (VERWEIS_T = {}));
             exports_3("VERWEIS_T", VERWEIS_T);
-            exports_3("GUELTIG_IMMER", GUELTIG_IMMER = "GUELTIG_IMMER");
-            exports_3("GUELTIG_NIE", GUELTIG_NIE = "GUELTIG_NIE");
-            exports_3("GUELTIG_AB", GUELTIG_AB = "GUELTIG_AB");
-            ;
-            ;
-            ;
             exports_3("KBS_ABWEICHUNG_KEINE", KBS_ABWEICHUNG_KEINE = "KBS_ABWEICHUNG_KEINE");
             exports_3("KBS_ABWEICHUNG_AUS", KBS_ABWEICHUNG_AUS = "KBS_ABWEICHUNG_AUS");
             exports_3("KBS_ABWEICHUNG_NACH", KBS_ABWEICHUNG_NACH = "KBS_ABWEICHUNG_NACH");
-            ;
-            ;
-            ;
-            exports_3("FAEHRT_IMMER", FAEHRT_IMMER = "FAEHRT_IMMER");
-            exports_3("FAEHRT_WERKTAGS", FAEHRT_WERKTAGS = "FAEHRT_WERKTAGS");
-            exports_3("FAEHRT_SONNUNDFESTTAGS", FAEHRT_SONNUNDFESTTAGS = "FAEHRT_SONNUNDFESTTAGS");
             ;
             ;
             ;
@@ -226,21 +254,6 @@ System.register("SaxParsedTypes", [], function (exports_3, context_3) {
                 BLOCK_T["ANKUNFT"] = "BLOCK_ANKUNFT";
             })(BLOCK_T || (BLOCK_T = {}));
             exports_3("BLOCK_T", BLOCK_T);
-            (function (GesternHeuteMorgen) {
-                GesternHeuteMorgen[GesternHeuteMorgen["Unbekannt"] = 0] = "Unbekannt";
-                GesternHeuteMorgen[GesternHeuteMorgen["Gestern"] = 1] = "Gestern";
-                GesternHeuteMorgen[GesternHeuteMorgen["Heute"] = 2] = "Heute";
-                GesternHeuteMorgen[GesternHeuteMorgen["Morgen"] = 3] = "Morgen";
-            })(GesternHeuteMorgen || (GesternHeuteMorgen = {}));
-            exports_3("GesternHeuteMorgen", GesternHeuteMorgen);
-            (function (ETimeValid) {
-                ETimeValid[ETimeValid["Nein"] = 1] = "Nein";
-                ETimeValid[ETimeValid["Vorgabe24"] = 2] = "Vorgabe24";
-                ETimeValid[ETimeValid["Berechnet24"] = 3] = "Berechnet24";
-            })(ETimeValid || (ETimeValid = {}));
-            exports_3("ETimeValid", ETimeValid);
-            exports_3("ZEIT_ROH", ZEIT_ROH = "ZEIT_ROH");
-            exports_3("ZEIT_24", ZEIT_24 = "ZEIT_24");
             (function (EAnAb) {
                 EAnAb[EAnAb["An"] = 0] = "An";
                 EAnAb[EAnAb["FirstAb"] = 1] = "FirstAb";
@@ -249,13 +262,6 @@ System.register("SaxParsedTypes", [], function (exports_3, context_3) {
             exports_3("EAnAb", EAnAb);
             exports_3("ZUGLAUF_UNBEKANNT", ZUGLAUF_UNBEKANNT = "ZUGLAUF_UNBEKANNT");
             exports_3("ZUGLAUF_BERECHNET", ZUGLAUF_BERECHNET = "ZUGLAUF_BERECHNET");
-            (function (FAHRPREIS_T) {
-                FAHRPREIS_T["KEINE_ANGABE"] = "FAHRPREIS_KEINE_ANGABE";
-                FAHRPREIS_T["EINFACH"] = "FAHRPREIS_EINFACH";
-                FAHRPREIS_T["EINFACH_UND_RUECK"] = "FAHRPREIS_EINFACH_UND_RUECK";
-                FAHRPREIS_T["AB"] = "FAHRPREIS_AB";
-            })(FAHRPREIS_T || (FAHRPREIS_T = {}));
-            exports_3("FAHRPREIS_T", FAHRPREIS_T);
         }
     };
 });
@@ -301,10 +307,10 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     var fill24 = function (pEintrag, offsetH, ghm) {
                         var EintragRohZeit = 0;
                         switch (pEintrag.Zeit.kind) {
-                            case SaxParsedTypes_1.ZEIT_ROH:
+                            case SaxBaseTypes_1.ZEIT_ROH:
                                 EintragRohZeit = pEintrag.Zeit.RohZeit;
                                 break;
-                            case SaxParsedTypes_1.ZEIT_24:
+                            case SaxBaseTypes_1.ZEIT_24:
                                 console.error("fill24 mit ZEIT24 (trotzdem aus src)");
                                 EintragRohZeit = pEintrag.Zeit.src;
                         }
@@ -314,11 +320,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             tRohStunde12 = 0;
                         }
                         var tZeit24 = {
-                            kind: SaxParsedTypes_1.ZEIT_24,
+                            kind: SaxBaseTypes_1.ZEIT_24,
                             Minute24: tRohMinute12,
                             Stunde24: tRohStunde12 + offsetH,
                             WelcherTag: ghm,
-                            Valid: SaxParsedTypes_1.ETimeValid.Berechnet24,
+                            Valid: SaxBaseTypes_1.ETimeValid.Berechnet24,
                             src: EintragRohZeit
                         };
                         pEintrag.Zeit = tZeit24;
@@ -338,24 +344,24 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                 var tVorgaenger = z.Zeiteintraege[i];
                                                 switch (tVorgaenger.kind) {
                                                     case SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG:
-                                                        if ((tVorgaenger.Zeit.kind == SaxParsedTypes_1.ZEIT_ROH) || (tVorgaenger.Zeit.Valid == SaxParsedTypes_1.ETimeValid.Nein)) {
+                                                        if ((tVorgaenger.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) || (tVorgaenger.Zeit.Valid == SaxBaseTypes_1.ETimeValid.Nein)) {
                                                             console.error(" LINKS SOLLTE VALIDE SEIN !!!!");
                                                         }
-                                                        else if ((tVorgaenger.Zeit.Valid == SaxParsedTypes_1.ETimeValid.Berechnet24) || (tVorgaenger.Zeit.Valid == SaxParsedTypes_1.ETimeValid.Vorgabe24)) {
-                                                            fill24(tEintrag, 0, SaxParsedTypes_1.GesternHeuteMorgen.Heute);
-                                                            if (tEintrag.Zeit.kind == SaxParsedTypes_1.ZEIT_ROH) {
+                                                        else if ((tVorgaenger.Zeit.Valid == SaxBaseTypes_1.ETimeValid.Berechnet24) || (tVorgaenger.Zeit.Valid == SaxBaseTypes_1.ETimeValid.Vorgabe24)) {
+                                                            fill24(tEintrag, 0, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
+                                                            if (tEintrag.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) {
                                                                 console.error("fill24 liefert ZEIT_ROH ???");
                                                             }
                                                             else {
                                                                 if ((tVorgaenger.Zeit.Stunde24 < tEintrag.Zeit.Stunde24) || (tVorgaenger.Zeit.Stunde24 == tEintrag.Zeit.Stunde24 && tVorgaenger.Zeit.Minute24 <= tEintrag.Zeit.Minute24)) {
                                                                 }
                                                                 else {
-                                                                    fill24(tEintrag, 12, SaxParsedTypes_1.GesternHeuteMorgen.Heute);
+                                                                    fill24(tEintrag, 12, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
                                                                 }
                                                                 if ((tVorgaenger.Zeit.Stunde24 < tEintrag.Zeit.Stunde24) || (tVorgaenger.Zeit.Stunde24 == tEintrag.Zeit.Stunde24 && tVorgaenger.Zeit.Minute24 <= tEintrag.Zeit.Minute24)) {
                                                                 }
                                                                 else {
-                                                                    fill24(tEintrag, 24, SaxParsedTypes_1.GesternHeuteMorgen.Heute);
+                                                                    fill24(tEintrag, 24, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
                                                                 }
                                                                 i = -1;
                                                                 tFestgelegt = true;
@@ -377,7 +383,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             if (tFestgelegt) {
                                             }
                                             else {
-                                                fill24(tEintrag, 0, SaxParsedTypes_1.GesternHeuteMorgen.Heute);
+                                                fill24(tEintrag, 0, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
                                             }
                                             break;
                                         case SaxParsedTypes_1.BLOCK_T.LEER:
@@ -415,12 +421,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             if (zzz_zeileDrunter.kind == SaxParsedTypes_1.ZEILE_T.NORMAL) {
                                                 var eee_drunterEintrag = zzz_zeileDrunter.Zeiteintraege[sp];
                                                 if (eee_drunterEintrag.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
-                                                    if (eee_drunterEintrag.Zeit.kind == SaxParsedTypes_1.ZEIT_ROH) {
+                                                    if (eee_drunterEintrag.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) {
                                                         console.error("NORMALZEILE SOLLTE SEIT OBEN KORREKT GEFUELLT SEIN?!");
                                                     }
                                                     else {
                                                         var tAnschlusszeit_roh = 0;
-                                                        if (tAnschlusszeit.Zeit.kind == SaxParsedTypes_1.ZEIT_ROH) {
+                                                        if (tAnschlusszeit.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) {
                                                             tAnschlusszeit_roh = tAnschlusszeit.Zeit.RohZeit;
                                                             console.error("ANSCHLUSS EINTRAG KORREKT BERECHNET , war ROH ", tAnschlusszeit.Zeit.RohZeit);
                                                         }
@@ -430,15 +436,15 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                         }
                                                         if (tAnschlusszeit_roh > eee_drunterEintrag.Zeit.src) {
                                                             if (eee_drunterEintrag.Zeit.Stunde24 > 12) {
-                                                                fill24(tAnschlusszeit, 0, SaxParsedTypes_1.GesternHeuteMorgen.Heute);
+                                                                fill24(tAnschlusszeit, 0, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
                                                             }
                                                             else {
-                                                                fill24(tAnschlusszeit, 12, SaxParsedTypes_1.GesternHeuteMorgen.Gestern);
+                                                                fill24(tAnschlusszeit, 12, SaxBaseTypes_1.GesternHeuteMorgen.Gestern);
                                                                 console.log("kori2x ", eee_drunterEintrag.Zeit.src);
                                                             }
                                                         }
                                                         else {
-                                                            fill24(tAnschlusszeit, 0, SaxParsedTypes_1.GesternHeuteMorgen.Heute);
+                                                            fill24(tAnschlusszeit, 0, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
                                                         }
                                                     }
                                                 }
@@ -458,7 +464,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                                 z.Zeiteintraege.forEach(function (e) {
                                     if (e.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
-                                        if (e.Zeit.kind == SaxParsedTypes_1.ZEIT_ROH) {
+                                        if (e.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) {
                                             console.error("HIER SOLLTE ALLES ZEIT24 sein !!!");
                                         }
                                         else {
@@ -467,7 +473,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                 tFirst = false;
                                             }
                                             else {
-                                                if (((tLast.Stunde24 * 100 + tLast.Minute24) > (e.Zeit.Stunde24 * 100 + e.Zeit.Minute24)) && tLast.WelcherTag == SaxParsedTypes_1.GesternHeuteMorgen.Heute) {
+                                                if (((tLast.Stunde24 * 100 + tLast.Minute24) > (e.Zeit.Stunde24 * 100 + e.Zeit.Minute24)) && tLast.WelcherTag == SaxBaseTypes_1.GesternHeuteMorgen.Heute) {
                                                     console.log("kori3 ", e.Zeit.src);
                                                     e.Zeit.Stunde24 += 12;
                                                 }
@@ -486,10 +492,10 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 z.Zeiteintraege.forEach(function (e) {
                                     if (e.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
-                                        if (e.Zeit.kind == SaxParsedTypes_1.ZEIT_24) {
-                                            if (e.Zeit.Stunde24 >= 24 && e.Zeit.WelcherTag == SaxParsedTypes_1.GesternHeuteMorgen.Heute) {
+                                        if (e.Zeit.kind == SaxBaseTypes_1.ZEIT_24) {
+                                            if (e.Zeit.Stunde24 >= 24 && e.Zeit.WelcherTag == SaxBaseTypes_1.GesternHeuteMorgen.Heute) {
                                                 e.Zeit.Stunde24 -= 24;
-                                                e.Zeit.WelcherTag = SaxParsedTypes_1.GesternHeuteMorgen.Morgen;
+                                                e.Zeit.WelcherTag = SaxBaseTypes_1.GesternHeuteMorgen.Morgen;
                                             }
                                         }
                                         else {
@@ -520,7 +526,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     var tZeitZeilenZusatzInfo = {
                         AnschlussNummern: [],
                         Ortsname: "",
-                        Fahrpreise: { kind: SaxParsedTypes_1.FAHRPREIS_T.KEINE_ANGABE },
+                        Fahrpreise: { kind: SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE },
                         Valid: false,
                         Raw: JSON.stringify(rawEntry)
                     };
@@ -528,7 +534,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     if (rawEntry.fk) {
                         if (rawEntry.fk.length == 2) {
                             var tFahrpreisInfo2 = {
-                                kind: SaxParsedTypes_1.FAHRPREIS_T.EINFACH,
+                                kind: SaxBaseTypes_1.FAHRPREIS_T.EINFACH,
                                 Einfach2: rawEntry.fk[0],
                                 Einfach3: rawEntry.fk[1]
                             };
@@ -536,7 +542,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         }
                         else if (rawEntry.fk.length == 4) {
                             var tFahrpreisInfo4 = {
-                                kind: SaxParsedTypes_1.FAHRPREIS_T.EINFACH_UND_RUECK,
+                                kind: SaxBaseTypes_1.FAHRPREIS_T.EINFACH_UND_RUECK,
                                 Einfach2: rawEntry.fk[0],
                                 Einfach3: rawEntry.fk[1],
                                 Rueck2: rawEntry.fk[2],
@@ -551,7 +557,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     }
                     if (rawEntry.fkab) {
                         var tFahrpreisAb = {
-                            kind: SaxParsedTypes_1.FAHRPREIS_T.AB,
+                            kind: SaxBaseTypes_1.FAHRPREIS_T.AB,
                             AbfahrtsOrt: rawEntry.fkab
                         };
                         tZeitZeilenZusatzInfo.Fahrpreise = tFahrpreisAb;
@@ -740,9 +746,9 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                         var tBlockKpl = {
                                                             Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                             ZugNrOderKlasse: tBlock,
-                                                            Gueltig: { kind: SaxParsedTypes_1.GUELTIG_IMMER },
+                                                            Gueltig: { kind: SaxBaseTypes_1.GUELTIG_T.IMMER },
                                                             KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                            Fahrtage: { kind: SaxParsedTypes_1.FAEHRT_IMMER },
+                                                            Fahrtage: { kind: SaxBaseTypes_1.FAEHRT_T.IMMER },
                                                             TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                                             PfeilInfo: { kind: SaxParsedTypes_1.TKEINPFEIL },
                                                             Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -759,9 +765,9 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                         var tBlockKpl = {
                                                             Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                             ZugNrOderKlasse: tBlock,
-                                                            Gueltig: { kind: SaxParsedTypes_1.GUELTIG_IMMER },
+                                                            Gueltig: { kind: SaxBaseTypes_1.GUELTIG_T.IMMER },
                                                             KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                            Fahrtage: { kind: SaxParsedTypes_1.FAEHRT_IMMER },
+                                                            Fahrtage: { kind: SaxBaseTypes_1.FAEHRT_T.IMMER },
                                                             TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                                             PfeilInfo: { kind: SaxParsedTypes_1.TKEINPFEIL },
                                                             Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -779,7 +785,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                             Schnellzug: tBuchstabe == "s",
                                                             Referenzkey: (tBuchstabe != "s") ? tBuchstabe : null,
                                                             BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT },
-                                                            Zeit: { kind: SaxParsedTypes_1.ZEIT_ROH, RohZeit: entry }
+                                                            Zeit: { kind: SaxBaseTypes_1.ZEIT_ROH, RohZeit: entry }
                                                         };
                                                         tResultZeile.Zeiteintraege.push(tZeiteintrag);
                                                     }
@@ -807,7 +813,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     Schnellzug: false,
                                                     Referenzkey: null,
                                                     BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT },
-                                                    Zeit: { kind: SaxParsedTypes_1.ZEIT_ROH, RohZeit: entry }
+                                                    Zeit: { kind: SaxBaseTypes_1.ZEIT_ROH, RohZeit: entry }
                                                 };
                                                 tResultZeile.Zeiteintraege.push(tZeiteintrag);
                                             }
@@ -873,9 +879,9 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 ZugNrOderKlasse: tBlockK,
-                                                Gueltig: { kind: SaxParsedTypes_1.GUELTIG_IMMER },
+                                                Gueltig: { kind: SaxBaseTypes_1.GUELTIG_T.IMMER },
                                                 KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                Fahrtage: { kind: SaxParsedTypes_1.FAEHRT_IMMER },
+                                                Fahrtage: { kind: SaxBaseTypes_1.FAEHRT_T.IMMER },
                                                 TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                                 PfeilInfo: { kind: SaxParsedTypes_1.TKEINPFEIL },
                                                 Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -930,9 +936,9 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 ZugNrOderKlasse: tBlockK,
-                                                Gueltig: { kind: SaxParsedTypes_1.GUELTIG_IMMER },
+                                                Gueltig: { kind: SaxBaseTypes_1.GUELTIG_T.IMMER },
                                                 KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                Fahrtage: { kind: SaxParsedTypes_1.FAEHRT_IMMER },
+                                                Fahrtage: { kind: SaxBaseTypes_1.FAEHRT_T.IMMER },
                                                 TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                                 PfeilInfo: { kind: SaxParsedTypes_1.TKEINPFEIL },
                                                 Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -981,9 +987,9 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 ZugNrOderKlasse: tBlockK,
-                                                Gueltig: { kind: SaxParsedTypes_1.GUELTIG_IMMER },
+                                                Gueltig: { kind: SaxBaseTypes_1.GUELTIG_T.IMMER },
                                                 KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                Fahrtage: { kind: SaxParsedTypes_1.FAEHRT_IMMER },
+                                                Fahrtage: { kind: SaxBaseTypes_1.FAEHRT_T.IMMER },
                                                 TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                                 PfeilInfo: { kind: SaxParsedTypes_1.TKEINPFEIL },
                                                 Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
@@ -1114,10 +1120,10 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     var ok_inp_zugnr = false;
                     var ok_inp_scope = false;
                     var ok_inp_bahn = false;
-                    var tGueltig = { kind: SaxParsedTypes_1.GUELTIG_IMMER };
+                    var tGueltig = { kind: SaxBaseTypes_1.GUELTIG_T.IMMER };
                     if (inp.ab) {
                         tGueltig = {
-                            kind: SaxParsedTypes_1.GUELTIG_AB,
+                            kind: SaxBaseTypes_1.GUELTIG_T.AB,
                             bhf: inp.ab
                         };
                         ok_inp_ab = true;
@@ -1150,18 +1156,18 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         ok_inp_marker = true;
                     }
                     var tFahrtage = {
-                        kind: SaxParsedTypes_1.FAEHRT_IMMER
+                        kind: SaxBaseTypes_1.FAEHRT_T.IMMER
                     };
                     if (inp.tage) {
                         switch (inp.tage) {
                             case SaxInput.sonn_und_festtags:
                                 tFahrtage = {
-                                    kind: SaxParsedTypes_1.FAEHRT_SONNUNDFESTTAGS
+                                    kind: SaxBaseTypes_1.FAEHRT_T.SONNUNDFESTTAGS
                                 };
                                 break;
                             case SaxInput.nur_werktags:
                                 tFahrtage = {
-                                    kind: SaxParsedTypes_1.FAEHRT_WERKTAGS
+                                    kind: SaxBaseTypes_1.FAEHRT_T.WERKTAGS
                                 };
                                 break;
                             default: console.warn("unbekannte Fahrtage: ", inp.tage);
@@ -1460,12 +1466,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             return ZI_Importer.assertNever(t.ZugNrOderKlasse.Klassen);
                     }
                     switch (t.Fahrtage.kind) {
-                        case (SaxParsedTypes_1.FAEHRT_IMMER):
+                        case (SaxBaseTypes_1.FAEHRT_T.IMMER):
                             break;
-                        case (SaxParsedTypes_1.FAEHRT_WERKTAGS):
+                        case (SaxBaseTypes_1.FAEHRT_T.WERKTAGS):
                             tResult += "Nur Werktags";
                             break;
-                        case (SaxParsedTypes_1.FAEHRT_SONNUNDFESTTAGS):
+                        case (SaxBaseTypes_1.FAEHRT_T.SONNUNDFESTTAGS):
                             tResult += "Sonn- und Festtags";
                             break;
                         default:
@@ -1868,20 +1874,20 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                             case SaxSchedulesTyped.ZEILE_T.KLASSEN:
                                 if (z.ZeitZeileZusatzInfo) {
                                     switch (z.ZeitZeileZusatzInfo.Fahrpreise.kind) {
-                                        case SaxSchedulesTyped.FAHRPREIS_T.KEINE_ANGABE:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.KEINE_ANGABE:
                                             break;
-                                        case SaxSchedulesTyped.FAHRPREIS_T.EINFACH_UND_RUECK:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH_UND_RUECK:
                                             tFahrpreisSpalten = 4;
                                             if (tErsteBelegteFahrpreisZeile < 0) {
                                                 tErsteBelegteFahrpreisZeile = zidx;
                                             }
                                             break;
-                                        case SaxSchedulesTyped.FAHRPREIS_T.AB:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.AB:
                                             if (tErsteBelegteFahrpreisZeile < 0) {
                                                 tErsteBelegteFahrpreisZeile = zidx;
                                             }
                                             break;
-                                        case SaxSchedulesTyped.FAHRPREIS_T.EINFACH:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH:
                                             tFahrpreisSpalten = 2;
                                             if (tErsteBelegteFahrpreisZeile < 0) {
                                                 tErsteBelegteFahrpreisZeile = zidx;
@@ -2131,11 +2137,11 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                             td.innerHTML = JSON.stringify(ze);
                                             break;
                                         case SaxSchedulesTyped.BLOCK_T.ZEITEINTRAG:
-                                            if (ze.Zeit.kind == SaxSchedulesTyped.ZEIT_24) {
+                                            if (ze.Zeit.kind == SaxBaseTypes_3.ZEIT_24) {
                                                 td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
-                                                td.setAttribute("class", ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Gestern ? "Gestern" :
-                                                    ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Heute ? "Heute" :
-                                                        ze.Zeit.WelcherTag == SaxSchedulesTyped.GesternHeuteMorgen.Morgen ? "Morgen" : "UnbekannterTag");
+                                                td.setAttribute("class", ze.Zeit.WelcherTag == SaxBaseTypes_3.GesternHeuteMorgen.Gestern ? "Gestern" :
+                                                    ze.Zeit.WelcherTag == SaxBaseTypes_3.GesternHeuteMorgen.Heute ? "Heute" :
+                                                        ze.Zeit.WelcherTag == SaxBaseTypes_3.GesternHeuteMorgen.Morgen ? "Morgen" : "UnbekannterTag");
                                                 var tSpanRefKey = document.createElement("span");
                                                 tSpanRefKey.setAttribute("class", "ZeitRefKey");
                                                 tSpanRefKey.innerHTML = ((ze.Referenzkey) ? ze.Referenzkey : "");
@@ -2156,7 +2162,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 var tUnterstrichen = false;
                                                 var tSpanStunde = document.createElement("span");
                                                 tSpanStunde.setAttribute("class", "ZeitStunde" + (ze.Schnellzug ? " Schnellzug" : "")
-                                                    + ((ze.Zeit.Valid === SaxSchedulesTyped.ETimeValid.Nein) ? " TimeInvalid" : ""));
+                                                    + ((ze.Zeit.Valid === SaxBaseTypes_3.ETimeValid.Nein) ? " TimeInvalid" : ""));
                                                 tSpanStunde.innerHTML = ((tStunde < 10) ? "&nbsp;" : "") + tStunde.toString();
                                                 var tSpanMinuten = document.createElement("span");
                                                 tSpanMinuten.setAttribute("class", "ZeitMinuten" + (ze.Schnellzug ? " Schnellzug" : "") + (tUnterstrichen ? " nachtsUnterstrichen" : ""));
@@ -2196,7 +2202,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                 if (z.ZeitZeileZusatzInfo) {
                                     var f = z.ZeitZeileZusatzInfo.Fahrpreise;
                                     switch (f.kind) {
-                                        case SaxSchedulesTyped.FAHRPREIS_T.KEINE_ANGABE:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.KEINE_ANGABE:
                                             if ((tErsteBelegteFahrpreisZeile > -1) && (zindex > tErsteBelegteFahrpreisZeile)) {
                                                 for (var i = 0; i < (tFahrpreisSpalten == 2 ? 1 : 2); i++) {
                                                     var tde = document.createElement("td");
@@ -2208,13 +2214,13 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 }
                                             }
                                             break;
-                                        case SaxSchedulesTyped.FAHRPREIS_T.AB:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.AB:
                                             var tde = document.createElement("td");
                                             tde.innerHTML = "ab " + f.AbfahrtsOrt;
                                             tde.setAttribute("colspan", "" + tFahrpreisSpalten);
                                             tr.appendChild(tde);
                                             break;
-                                        case SaxSchedulesTyped.FAHRPREIS_T.EINFACH:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH:
                                             var tde = document.createElement("td");
                                             tde.innerHTML = "" + f.Einfach2;
                                             tr.appendChild(tde);
@@ -2222,7 +2228,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                             tde.innerHTML = "" + f.Einfach3;
                                             tr.appendChild(tde);
                                             break;
-                                        case SaxSchedulesTyped.FAHRPREIS_T.EINFACH_UND_RUECK:
+                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH_UND_RUECK:
                                             var tde = document.createElement("td");
                                             tde.innerHTML = "" + f.Einfach2;
                                             tr.appendChild(tde);
@@ -2957,7 +2963,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
 System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], function (exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
-    var SaxParsedTypes_3, SaxBaseTypes_4, Nachberechnung, LAUFEINTRAG_NORMAL, LAUFEINTRAG_KEINHALT, LAUFEINTRAG_AN, LAUFEINTRAG_GELOESCHT, LAUFEINTRAG_KOMMEAUSKBS, LAUFEINTRAG_VERLASSENACHKBS, ZugExtraktor;
+    var SaxParsedTypes_3, SaxBaseTypes_4, Nachberechnung;
     return {
         setters: [
             function (SaxParsedTypes_3_1) {
@@ -3223,12 +3229,29 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                 return Nachberechnung;
             }());
             exports_8("Nachberechnung", Nachberechnung);
-            exports_8("LAUFEINTRAG_NORMAL", LAUFEINTRAG_NORMAL = "LAUFEINTRAG_NORMAL");
-            exports_8("LAUFEINTRAG_KEINHALT", LAUFEINTRAG_KEINHALT = "LAUFEINTRAG_KEINHALT");
-            exports_8("LAUFEINTRAG_AN", LAUFEINTRAG_AN = "LAUFEINTRAG_AN");
-            exports_8("LAUFEINTRAG_GELOESCHT", LAUFEINTRAG_GELOESCHT = "LAUFEINTRAG_GELOESCHT");
-            exports_8("LAUFEINTRAG_KOMMEAUSKBS", LAUFEINTRAG_KOMMEAUSKBS = "LAUFEINTRAG_KOMMEAUSKBS");
-            exports_8("LAUFEINTRAG_VERLASSENACHKBS", LAUFEINTRAG_VERLASSENACHKBS = "LAUFEINTRAG_VERLASSENACHKBS");
+        }
+    };
+});
+System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], function (exports_9, context_9) {
+    "use strict";
+    var __moduleName = context_9 && context_9.id;
+    var SaxBaseTypes_5, SaxParsedTypes_4, LAUFEINTRAG_NORMAL, LAUFEINTRAG_KEINHALT, LAUFEINTRAG_AN, LAUFEINTRAG_GELOESCHT, LAUFEINTRAG_KOMMEAUSKBS, LAUFEINTRAG_VERLASSENACHKBS, ZugExtraktor;
+    return {
+        setters: [
+            function (SaxBaseTypes_5_1) {
+                SaxBaseTypes_5 = SaxBaseTypes_5_1;
+            },
+            function (SaxParsedTypes_4_1) {
+                SaxParsedTypes_4 = SaxParsedTypes_4_1;
+            }
+        ],
+        execute: function () {
+            exports_9("LAUFEINTRAG_NORMAL", LAUFEINTRAG_NORMAL = "LAUFEINTRAG_NORMAL");
+            exports_9("LAUFEINTRAG_KEINHALT", LAUFEINTRAG_KEINHALT = "LAUFEINTRAG_KEINHALT");
+            exports_9("LAUFEINTRAG_AN", LAUFEINTRAG_AN = "LAUFEINTRAG_AN");
+            exports_9("LAUFEINTRAG_GELOESCHT", LAUFEINTRAG_GELOESCHT = "LAUFEINTRAG_GELOESCHT");
+            exports_9("LAUFEINTRAG_KOMMEAUSKBS", LAUFEINTRAG_KOMMEAUSKBS = "LAUFEINTRAG_KOMMEAUSKBS");
+            exports_9("LAUFEINTRAG_VERLASSENACHKBS", LAUFEINTRAG_VERLASSENACHKBS = "LAUFEINTRAG_VERLASSENACHKBS");
             ZugExtraktor = (function () {
                 function ZugExtraktor() {
                 }
@@ -3249,7 +3272,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                 console.log(" verlasse nach kbs");
                                 break;
                             default:
-                                return SaxBaseTypes_4.assertNever(ae);
+                                return SaxBaseTypes_5.assertNever(ae);
                         }
                     });
                 };
@@ -3288,42 +3311,42 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                     var tLen = 0;
                     s.Zeilen.forEach(function (z) {
                         switch (z.kind) {
-                            case SaxParsedTypes_3.ZEILE_T.NORMAL:
+                            case SaxParsedTypes_4.ZEILE_T.NORMAL:
                                 tLen = z.Zeiteintraege.length;
                                 break;
-                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                            case SaxParsedTypes_3.ZEILE_T.KLASSEN:
-                            case SaxParsedTypes_3.ZEILE_T.ZUGNR:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                            case SaxParsedTypes_4.ZEILE_T.KLASSEN:
+                            case SaxParsedTypes_4.ZEILE_T.ZUGNR:
                                 break;
                             default:
-                                return SaxBaseTypes_4.assertNever(z);
+                                return SaxBaseTypes_5.assertNever(z);
                         }
                     });
                     var tCurrentZugNr;
                     var tCurrentFolge = [];
                     var tCurrentFahrtage = {
-                        kind: SaxParsedTypes_3.FAEHRT_IMMER
+                        kind: SaxBaseTypes_5.FAEHRT_T.IMMER
                     };
                     for (var sp = 0; sp < tLen; sp++) {
                         var tZeilenZahl = s.Zeilen.length;
                         for (var zei = 0; zei < tZeilenZahl; zei++) {
                             var tZeile = s.Zeilen[zei];
                             switch (tZeile.kind) {
-                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                case SaxParsedTypes_3.ZEILE_T.NORMAL:
-                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                case SaxParsedTypes_3.ZEILE_T.KLASSEN:
-                                case SaxParsedTypes_3.ZEILE_T.ZUGNR:
-                                    var tEintrag = { kind: SaxParsedTypes_3.BLOCK_T.ERROR, Grund: "temp" };
-                                    if (tZeile.kind == SaxParsedTypes_3.ZEILE_T.KLASSEN) {
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                case SaxParsedTypes_4.ZEILE_T.NORMAL:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                case SaxParsedTypes_4.ZEILE_T.KLASSEN:
+                                case SaxParsedTypes_4.ZEILE_T.ZUGNR:
+                                    var tEintrag = { kind: SaxParsedTypes_4.BLOCK_T.ERROR, Grund: "temp" };
+                                    if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
-                                    else if (tZeile.kind == SaxParsedTypes_3.ZEILE_T.ZUGNR) {
+                                    else if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.ZUGNR) {
                                         tEintrag = tZeile.ZugNummern[sp];
                                     }
                                     else {
@@ -3331,7 +3354,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                     }
                                     var tJetztSpeichern = false;
                                     if (tCurrentZugNr) {
-                                        if ((tEintrag.kind != SaxParsedTypes_3.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_3.ZUGLAUF_BERECHNET)) {
+                                        if ((tEintrag.kind != SaxParsedTypes_4.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_4.ZUGLAUF_BERECHNET)) {
                                             if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr)) {
                                                 tJetztSpeichern = true;
                                             }
@@ -3356,32 +3379,32 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                         tResult.push(tCurrentLauf);
                                         tCurrentFolge = [];
                                         tCurrentZugNr = undefined;
-                                        tCurrentFahrtage = { kind: SaxParsedTypes_3.FAEHRT_IMMER };
+                                        tCurrentFahrtage = { kind: SaxBaseTypes_5.FAEHRT_T.IMMER };
                                     }
-                                    if ((tEintrag.kind != SaxParsedTypes_3.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_3.ZUGLAUF_BERECHNET)) {
+                                    if ((tEintrag.kind != SaxParsedTypes_4.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_4.ZUGLAUF_BERECHNET)) {
                                         if ((tCurrentZugNr == undefined)) {
                                             if ((tEintrag.BerechneterZugLauf.ZugNr != null) && (tEintrag.BerechneterZugLauf.ZugNr.length > 0)) {
                                                 tCurrentFolge = [];
-                                                tCurrentFahrtage = { kind: SaxParsedTypes_3.FAEHRT_IMMER };
+                                                tCurrentFahrtage = { kind: SaxBaseTypes_5.FAEHRT_T.IMMER };
                                                 tCurrentZugNr = tEintrag.BerechneterZugLauf.ZugNr;
                                                 console.log("start new ", tCurrentZugNr);
                                             }
                                         }
                                         switch (tEintrag.kind) {
-                                            case SaxParsedTypes_3.BLOCK_T.ZEITEINTRAG:
+                                            case SaxParsedTypes_4.BLOCK_T.ZEITEINTRAG:
                                                 switch (tZeile.kind) {
-                                                    case SaxParsedTypes_3.ZEILE_T.NORMAL:
+                                                    case SaxParsedTypes_4.ZEILE_T.NORMAL:
                                                         var tEnt = {
                                                             kind: LAUFEINTRAG_NORMAL,
                                                             BhfTag: tZeile.BhfTag,
                                                             AnZeit: null,
                                                             AbZeit: null
                                                         };
-                                                        if (tEintrag.Zeit.kind == SaxParsedTypes_3.ZEIT_24) {
-                                                            if ((tZeile.AnAb == SaxParsedTypes_3.EAnAb.FirstAb) || (tZeile.AnAb == SaxParsedTypes_3.EAnAb.FollowAb)) {
+                                                        if (tEintrag.Zeit.kind == SaxBaseTypes_5.ZEIT_24) {
+                                                            if ((tZeile.AnAb == SaxParsedTypes_4.EAnAb.FirstAb) || (tZeile.AnAb == SaxParsedTypes_4.EAnAb.FollowAb)) {
                                                                 tEnt.AbZeit = tEintrag.Zeit;
                                                             }
-                                                            if ((tZeile.AnAb == SaxParsedTypes_3.EAnAb.An)) {
+                                                            if ((tZeile.AnAb == SaxParsedTypes_4.EAnAb.An)) {
                                                                 tEnt.AnZeit = tEintrag.Zeit;
                                                             }
                                                         }
@@ -3392,11 +3415,11 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                         break;
                                                 }
                                                 break;
-                                            case SaxParsedTypes_3.BLOCK_T.LEER:
+                                            case SaxParsedTypes_4.BLOCK_T.LEER:
                                                 break;
-                                            case SaxParsedTypes_3.BLOCK_T.KEINHALT:
+                                            case SaxParsedTypes_4.BLOCK_T.KEINHALT:
                                                 switch (tZeile.kind) {
-                                                    case SaxParsedTypes_3.ZEILE_T.NORMAL:
+                                                    case SaxParsedTypes_4.ZEILE_T.NORMAL:
                                                         var tEntK = {
                                                             kind: LAUFEINTRAG_KEINHALT,
                                                             BhfTag: tZeile.BhfTag
@@ -3405,7 +3428,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                         break;
                                                 }
                                                 break;
-                                            case SaxParsedTypes_3.BLOCK_T.ANKUNFT:
+                                            case SaxParsedTypes_4.BLOCK_T.ANKUNFT:
                                                 console.warn("Todo handle ankunft, soll vorherigen eintrag auf an wechseln");
                                                 if (tCurrentFolge) {
                                                     var tEntAn = {
@@ -3414,43 +3437,43 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                     tCurrentFolge.push(tEntAn);
                                                 }
                                                 break;
-                                            case SaxParsedTypes_3.BLOCK_T.BLOCK:
+                                            case SaxParsedTypes_4.BLOCK_T.BLOCK:
                                                 console.warn("todo auszulesender blockinhalt: ", tEintrag.Blockinhalt);
                                                 if (tEintrag.Passend) {
                                                     if (tEintrag.Blockinhalt) {
                                                         switch (tEintrag.Blockinhalt.KbsAbweichung.kind) {
-                                                            case SaxParsedTypes_3.KBS_ABWEICHUNG_AUS:
+                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_AUS:
                                                                 var tEntKo = {
                                                                     kind: LAUFEINTRAG_KOMMEAUSKBS
                                                                 };
                                                                 tCurrentFolge.push(tEntKo);
                                                                 break;
-                                                            case SaxParsedTypes_3.KBS_ABWEICHUNG_NACH:
+                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_NACH:
                                                                 var tEntN = {
                                                                     kind: LAUFEINTRAG_VERLASSENACHKBS
                                                                 };
                                                                 tCurrentFolge.push(tEntN);
                                                                 break;
-                                                            case SaxParsedTypes_3.KBS_ABWEICHUNG_KEINE:
+                                                            case SaxParsedTypes_4.KBS_ABWEICHUNG_KEINE:
                                                                 break;
                                                             default:
-                                                                return SaxBaseTypes_4.assertNever(tEintrag.Blockinhalt.KbsAbweichung);
+                                                                return SaxBaseTypes_5.assertNever(tEintrag.Blockinhalt.KbsAbweichung);
                                                         }
                                                         switch (tEintrag.Blockinhalt.Fahrtage.kind) {
-                                                            case SaxParsedTypes_3.FAEHRT_WERKTAGS:
-                                                                tCurrentFahrtage = { kind: SaxParsedTypes_3.FAEHRT_WERKTAGS };
+                                                            case SaxBaseTypes_5.FAEHRT_T.WERKTAGS:
+                                                                tCurrentFahrtage = { kind: SaxBaseTypes_5.FAEHRT_T.WERKTAGS };
                                                                 break;
-                                                            case SaxParsedTypes_3.FAEHRT_SONNUNDFESTTAGS:
-                                                                tCurrentFahrtage = { kind: SaxParsedTypes_3.FAEHRT_SONNUNDFESTTAGS };
+                                                            case SaxBaseTypes_5.FAEHRT_T.SONNUNDFESTTAGS:
+                                                                tCurrentFahrtage = { kind: SaxBaseTypes_5.FAEHRT_T.SONNUNDFESTTAGS };
                                                                 break;
                                                         }
                                                     }
                                                 }
                                                 break;
-                                            case SaxParsedTypes_3.BLOCK_T.DICKERSTRICH:
+                                            case SaxParsedTypes_4.BLOCK_T.DICKERSTRICH:
                                                 break;
                                             default:
-                                                return SaxBaseTypes_4.assertNever(tEintrag);
+                                                return SaxBaseTypes_5.assertNever(tEintrag);
                                         }
                                     }
                                     else {
@@ -3479,14 +3502,14 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                 };
                 return ZugExtraktor;
             }());
-            exports_8("ZugExtraktor", ZugExtraktor);
+            exports_9("ZugExtraktor", ZugExtraktor);
         }
     };
 });
-System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput", "SaxParsedNachberechnung"], function (exports_9, context_9) {
+System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput", "SaxParsedNachberechnung", "SaxZuglaufAuslesen"], function (exports_10, context_10) {
     "use strict";
-    var __moduleName = context_9 && context_9.id;
-    var Parser, SaxValidator, SaxRender, SaxSchedules, SaxNachberechnung, Sched;
+    var __moduleName = context_10 && context_10.id;
+    var Parser, SaxValidator, SaxRender, SaxSchedules, SaxNachberechnung, SaxZuglaufAuslesen_1, Sched;
     return {
         setters: [
             function (Parser_1) {
@@ -3500,12 +3523,15 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
             },
             function (SaxSchedules_1) {
                 SaxSchedules = SaxSchedules_1;
-                exports_9({
+                exports_10({
                     "InputData": SaxSchedules_1["InputData"]
                 });
             },
             function (SaxNachberechnung_1) {
                 SaxNachberechnung = SaxNachberechnung_1;
+            },
+            function (SaxZuglaufAuslesen_1_1) {
+                SaxZuglaufAuslesen_1 = SaxZuglaufAuslesen_1_1;
             }
         ],
         execute: function () {
@@ -3520,10 +3546,10 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                     Parser.Importer.berechneZeiten(tResult);
                     SaxNachberechnung.Nachberechnung.berechneZugLaeufe(tResult);
                     SaxValidator.Validator.validate_move_Anschluss_ZusatzInfo(tResult);
-                    var tZugl = SaxNachberechnung.ZugExtraktor.findeZuglaeufe(tResult);
+                    var tZugl = SaxZuglaufAuslesen_1.ZugExtraktor.findeZuglaeufe(tResult);
                     tZugl.forEach(function (zl) {
                         console.log("--- Lauf: " + zl.Nummer + zl.TagAbhaengig[0].Gueltig.kind);
-                        SaxNachberechnung.ZugExtraktor.printZuglauf(zl.TagAbhaengig[0].Ablauf);
+                        SaxZuglaufAuslesen_1.ZugExtraktor.printZuglauf(zl.TagAbhaengig[0].Ablauf);
                     });
                     var t = document.getElementById("testdiv");
                     if (t != null) {
@@ -3549,7 +3575,7 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                         SaxValidator.Validator.validate_move_Anschluss_ZusatzInfo(tResult);
                         tResults.push({ "moved": idx, val: tResult });
                         try {
-                            var tZugl = SaxNachberechnung.ZugExtraktor.findeZuglaeufe(tResult);
+                            var tZugl = SaxZuglaufAuslesen_1.ZugExtraktor.findeZuglaeufe(tResult);
                             tResults.push({ "zuglauf": idx, val: tZugl });
                         }
                         catch (e) {
@@ -3560,7 +3586,7 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                 };
                 return Sched;
             }());
-            exports_9("Sched", Sched);
+            exports_10("Sched", Sched);
         }
     };
 });
