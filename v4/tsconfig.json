@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+		"target":"es5",
+        "module": "system",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outFile": "Sched.js",
+        "sourceMap": true,
+		  "strictNullChecks": true
+    },
+  "include": [
+    "*.ts"
+  ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}

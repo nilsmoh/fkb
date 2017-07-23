@@ -1,0 +1,29 @@
+table.FahrplanTabelle,
+table.FahrplanTabelle th,
+table.FahrplanTabelle td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    //padding: @padding;
+    //width: @spaltbreit;
+    table-layout: fixed;
+    position: relative;
+    text-align: center;
+    padding: 0px;
+
+  
+}
+
+.Gestern {
+        color: mediumseagreen;
+}
+
+.Morgen {
+    color: red;
+}
+
+/* zeige erste spalte nacheinander */
+.KM,.BhfInClass,.BhfAusClass, .ClassAbBhf,.ClassAbBhfFirst,.ClassInBhf, .Linien {
+    display:inline-block;
+    padding-left:2px;
+    padding-right:2px;
+}
