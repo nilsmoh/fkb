@@ -1,8 +1,10 @@
 // experimenteller richtungsfahrplan
 // schwach getypt
 
-import {SingleDirectionScheduleInput, _anschluss_aus,_anschluss_nach_in, _zugnr,_klassen, gnix, nix, _, an, ab ,sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl, ank, 
-    Ank, fern, fatdot, kHlt, wa, pfeilstart, pfeilziel, global, Sachs, k2b4,k1b3,k2b3,k3b4, passend, sonn_und_festtags, nur_werktags, headerlinks, zn,kl, CH, LE,
+import {SingleDirectionScheduleInput, _anschluss_aus,_anschluss_nach_in, _zugnr, gnix, nix, _, an, ab ,sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl, ank, 
+    Ank, fern, fatdot, kHlt, wa, pfeilstart, pfeilziel, global, Sachs, 
+    /*k2b4,k1b3,k2b3,k3b4, _klassen, */ 
+    passend, sonn_und_festtags, nur_werktags, headerlinks, zn,kl, CH, LE,
      WaltersdfHst, MittwMrkb, a510, s810, Z1967, Z1971, Z2045, Z2065, n822, m747, d1153, b355, s321, s550, s748, c510, s800
     
      ,s113 ,s710, s845 , s1058 ,wx,sj,sp,sm, ZW, SC,AN, CT, AU, LU, CN, JO, KA, x135, x150, a644,a659,a818,a754,b233,c937,Z1960,dick,Z1991, Z1998, m149, cross,chooseown,nach9spalten

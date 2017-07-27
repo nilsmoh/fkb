@@ -1,3 +1,5 @@
+//import {TKbsAbweichung} from "./SaxParsedTypes";
+
 interface Empty {
     dummy?: never; //weak type to check for exccess properties
 }
@@ -250,15 +252,9 @@ var SHN221 = "";   //Schnellzug heute nachmittag um 14:21
 var MV1203 = "";
 
 
-var Kl2bis4 = "";
-var Kl2bis3 = "";
-var Kl1bis2 = "";
-var Kl1bis3 = "";
-var Kl1bis4 = "";
-var Kl1 = "";
-var Kl3 = "";
-var KlNurEine = "";
-var Kl3bis4 = '';
+
+
+
 
 
 

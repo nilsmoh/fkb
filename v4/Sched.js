@@ -95,15 +95,6 @@ var HN830 = "";
 var ASMV157 = "";
 var SHN221 = "";
 var MV1203 = "";
-var Kl2bis4 = "";
-var Kl2bis3 = "";
-var Kl1bis2 = "";
-var Kl1bis3 = "";
-var Kl1bis4 = "";
-var Kl1 = "";
-var Kl3 = "";
-var KlNurEine = "";
-var Kl3bis4 = '';
 var x24 = [
     {
         head: "24.1 (FKB1 Verbindungsbahn)",
@@ -2742,6 +2733,33 @@ console.log("execute statistics");
 statistics(xall);
 console.log("teilstatistik region schwarzenberg :");
 statistics(xalt);
+var EKlassen;
+(function (EKlassen) {
+    EKlassen["NichtAngegeben"] = "_Klassen_nicht_angegeben";
+    EKlassen["Klassen1"] = "_Klassen_1";
+    EKlassen["Klassen1bis2"] = "_Klassen_1_bis_2";
+    EKlassen["Klassen1bis3"] = "_Klassen_1_bis_3";
+    EKlassen["Klassen1bis4"] = "_Klassen_1_bis_4";
+    EKlassen["Klassen2bis3"] = "_Klassen_2_bis_3";
+    EKlassen["Klassen2bis4"] = "_Klassen_2_bis_4";
+    EKlassen["Klassen3"] = "_Klassen_3";
+    EKlassen["Klassen3bis4"] = "_Klassen_3_bis_4";
+    EKlassen["KlassenNurEine"] = "_Klassen_nur_eine";
+})(EKlassen || (EKlassen = {}));
+var Kl1 = EKlassen.Klassen1;
+var Kl1bis2 = EKlassen.Klassen1bis2;
+var Kl1bis3 = EKlassen.Klassen1bis3;
+var Kl1bis4 = EKlassen.Klassen1bis4;
+var Kl2bis3 = EKlassen.Klassen2bis3;
+var Kl2bis4 = EKlassen.Klassen2bis4;
+var Kl3 = EKlassen.Klassen3;
+var Kl3bis4 = EKlassen.Klassen3bis4;
+var KlNurEine = EKlassen.KlassenNurEine;
+var _klassen = "_Klassen_";
+var k1b3 = EKlassen.Klassen1bis3;
+var k2b4 = EKlassen.Klassen2bis4;
+var k2b3 = EKlassen.Klassen2bis3;
+var k3b4 = EKlassen.Klassen3bis4;
 System.register("SaxBaseTypes", [], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -2749,18 +2767,10 @@ System.register("SaxBaseTypes", [], function (exports_1, context_1) {
         throw new Error("Unexpected object: " + x);
     }
     exports_1("assertNever", assertNever);
-    var EKlassen, FAHRPREIS_T, GesternHeuteMorgen, ETimeValid, ZEIT_ROH, ZEIT_24, GUELTIG_T, FAEHRT_T;
+    var FAHRPREIS_T, GesternHeuteMorgen, ETimeValid, ZEIT_ROH, ZEIT_24, GUELTIG_T, FAEHRT_T;
     return {
         setters: [],
         execute: function () {
-            (function (EKlassen) {
-                EKlassen[EKlassen["NichtAngegeben"] = 0] = "NichtAngegeben";
-                EKlassen[EKlassen["Klassen1bis3"] = 1] = "Klassen1bis3";
-                EKlassen[EKlassen["Klassen2bis3"] = 2] = "Klassen2bis3";
-                EKlassen[EKlassen["Klassen2bis4"] = 3] = "Klassen2bis4";
-                EKlassen[EKlassen["Klassen3bis4"] = 4] = "Klassen3bis4";
-            })(EKlassen || (EKlassen = {}));
-            exports_1("EKlassen", EKlassen);
             (function (FAHRPREIS_T) {
                 FAHRPREIS_T["KEINE_ANGABE"] = "FAHRPREIS_KEINE_ANGABE";
                 FAHRPREIS_T["EINFACH"] = "FAHRPREIS_EINFACH";
@@ -2897,7 +2907,7 @@ System.register("SaxParsedTypes", [], function (exports_2, context_2) {
 System.register("SaxInputTypes", [], function (exports_3, context_3) {
     "use strict";
     var __moduleName = context_3 && context_3.id;
-    var defaultzug, restspalte, ab, an, zn, kl, _anschluss_aus, _anschluss_aus_ziel, _anschluss_nach_start, _anschluss_nach_in, _klassen, _zugnr, WaltersdfHst, MittwMrkb, SENKRECHT_PREFIX, WAAGERECHT_PREFIX, ORTPREFIX, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, nix, _, gnix, kHlt, ank, Ank, wa, sa, sb, sc, sd, se, sf, sg, sh, si, sk, sl, sj, sm, sp, wx, LE, CH, ZW, SC, JO, KA, AU, AN, LU, CT, CN, k2b4, k2b3, k3b4, k1b3, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, dick, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
+    var defaultzug, restspalte, ab, an, zn, kl, _anschluss_aus, _anschluss_aus_ziel, _anschluss_nach_start, _anschluss_nach_in, _zugnr, WaltersdfHst, MittwMrkb, SENKRECHT_PREFIX, WAAGERECHT_PREFIX, ORTPREFIX, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, nix, _, gnix, kHlt, ank, Ank, wa, sa, sb, sc, sd, se, sf, sg, sh, si, sk, sl, sj, sm, sp, wx, LE, CH, ZW, SC, JO, KA, AU, AN, LU, CT, CN, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, dick, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
     return {
         setters: [],
         execute: function () {
@@ -2911,7 +2921,6 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("_anschluss_aus_ziel", _anschluss_aus_ziel = "_Anschluss_aus_ankunft");
             exports_3("_anschluss_nach_start", _anschluss_nach_start = "_Anschluss_nach_abfahrt");
             exports_3("_anschluss_nach_in", _anschluss_nach_in = "_Anschluss_nach_in");
-            exports_3("_klassen", _klassen = "_Klassen_");
             exports_3("_zugnr", _zugnr = "_xZugnr");
             exports_3("WaltersdfHst", WaltersdfHst = "Waltersdorf Haltest.");
             exports_3("MittwMrkb", MittwMrkb = "Mittweida-Markrsb.");
@@ -2957,10 +2966,6 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("LU", LU = ORTPREFIX + "Lugau");
             exports_3("CT", CT = ORTPREFIX + "Chemnitz ü.Thalheim");
             exports_3("CN", CN = ORTPREFIX + "Chemnitz ü.Neu.");
-            exports_3("k2b4", k2b4 = "_Klassen_2_bis_4");
-            exports_3("k2b3", k2b3 = "_Klassen_2_bis_3");
-            exports_3("k3b4", k3b4 = "_Klassen_3_bis_4");
-            exports_3("k1b3", k1b3 = "_Klassen_1_bis_3");
             exports_3("fern", fern = "_VERWEISTYP_fern");
             exports_3("passend", passend = "_VERWEISTYP_passend");
             exports_3("global", global = "_VERWEISTYP_GLOBAL");
@@ -3494,23 +3499,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                         var tResultEntryB = Importer.createTBlockEintrag_single(tBlockKpl);
                                                         tResultZeile.Zeiteintraege.push(tResultEntryB);
                                                     }
-                                                    else if ((rawEntry.indexOf(SaxInput.k1b3) == 0)
-                                                        || (rawEntry.indexOf(SaxInput.k2b3) == 0)
-                                                        || (rawEntry.indexOf(SaxInput.k2b4) == 0)
-                                                        || (rawEntry.indexOf(SaxInput.k3b4) == 0)) {
-                                                        var kl_1 = Kl1bis3;
-                                                        if (rawEntry.indexOf(SaxInput.k2b3) == 0) {
-                                                            kl_1 = Kl2bis3;
-                                                        }
-                                                        if (rawEntry.indexOf(SaxInput.k2b4) == 0) {
-                                                            kl_1 = Kl2bis4;
-                                                        }
-                                                        if (rawEntry.indexOf(SaxInput.k3b4) == 0) {
-                                                            kl_1 = Kl3bis4;
-                                                        }
+                                                    else if ((Object.keys(EKlassen).map(function (k) { return EKlassen[k]; }).indexOf(rawEntry) > -1)) {
+                                                        console.warn("todo trace to check 2: ", rawEntry);
                                                         var tBlockKpl = {
                                                             Verweistyp: ZI_Creator.createTVerweisEmbedded(),
-                                                            Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, Klasse: kl_1 } } },
+                                                            Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, Klasse: rawEntry } } },
                                                             TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                                         };
                                                         var tResultEntryB = Importer.createTBlockEintrag_single(tBlockKpl);
@@ -3574,14 +3567,14 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     tResult.Zeilen.push(tResultZeile);
                                 }
                                 if (("string" == typeof zeile[0]) && ((zeile[0].indexOf(SaxInput._zugnr) == 0)
-                                    || (zeile[0].indexOf(SaxInput._klassen) == 0)
+                                    || (zeile[0].indexOf(_klassen) == 0)
                                     || (zeile[1].indexOf(SaxInput.kl) == 0))) {
                                     var tResultZeileNrn = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ZUGNR,
                                         ZugNummern: [],
                                         ZeitZeileZusatzInfo: undefined
                                     };
-                                    if ((zeile[0].indexOf(SaxInput._klassen) == 0) || zeile[1].indexOf(SaxInput.kl) == 0) {
+                                    if ((zeile[0].indexOf(_klassen) == 0) || zeile[1].indexOf(SaxInput.kl) == 0) {
                                         var x = {
                                             kind: SaxParsedTypes_1.ZEILE_T.KLASSEN,
                                             KlassenNummern: [],
@@ -3611,6 +3604,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         }
                                     }
                                     for (var zi = 2; zi < zeile.length; zi++) {
+                                        var zeile_zi = zeile[zi];
                                         if ("number" == typeof zeile[zi]) {
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
@@ -3657,23 +3651,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
-                                        else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && ((zeile[zi].indexOf(SaxInput.k1b3) == 0)
-                                            || (zeile[zi].indexOf(SaxInput.k2b3) == 0)
-                                            || (zeile[zi].indexOf(SaxInput.k2b4) == 0)
-                                            || (zeile[zi].indexOf(SaxInput.k3b4) == 0))) {
-                                            var kl = Kl1bis3;
-                                            if (zeile[zi].indexOf(SaxInput.k2b3) == 0) {
-                                                kl = Kl2bis3;
-                                            }
-                                            if (zeile[zi].indexOf(SaxInput.k2b4) == 0) {
-                                                kl = Kl2bis4;
-                                            }
-                                            if (zeile[zi].indexOf(SaxInput.k3b4) == 0) {
-                                                kl = Kl3bis4;
-                                            }
+                                        else if (("string" == typeof zeile_zi) && (zeile_zi != null) && (Object.keys(EKlassen).map(function (k) { return EKlassen[k]; }).indexOf(zeile_zi) > -1)) {
+                                            console.warn("todo trace to check: ", zeile_zi);
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
-                                                Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, Klasse: kl } } },
+                                                Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, Klasse: zeile_zi } } },
                                                 TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
                                             };
                                             var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
@@ -3784,25 +3766,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     };
                 };
                 ZI_Creator.parseKlassenString = function (Klassenstring) {
-                    var tKlassen = SaxBaseTypes_1.EKlassen.NichtAngegeben;
+                    var tKlassen = EKlassen.NichtAngegeben;
                     if (Klassenstring != undefined) {
-                        switch (Klassenstring) {
-                            case SaxInput.k1b3:
-                                tKlassen = SaxBaseTypes_1.EKlassen.Klassen1bis3;
-                                break;
-                            case SaxInput.k2b3:
-                                tKlassen = SaxBaseTypes_1.EKlassen.Klassen2bis3;
-                                break;
-                            case SaxInput.k2b4:
-                                tKlassen = SaxBaseTypes_1.EKlassen.Klassen2bis4;
-                                break;
-                            case SaxInput.k3b4:
-                                tKlassen = SaxBaseTypes_1.EKlassen.Klassen3bis4;
-                                break;
-                            case null:
-                                tKlassen = SaxBaseTypes_1.EKlassen.NichtAngegeben;
-                                break;
-                            default: console.warn("UnbekannterKlassenstring: " + Klassenstring);
+                        if ((Object.keys(EKlassen).map(function (k) { return EKlassen[k]; }).indexOf(Klassenstring) > -1)) {
+                            tKlassen = Klassenstring;
+                            console.warn("trace check 3 ", Klassenstring, " -> ", tKlassen);
                         }
                     }
                     return tKlassen;
@@ -5037,28 +5005,28 @@ System.register("SaxInput", ["SaxInputTypes", "SaxParsedTypes"], function (expor
                         zeilen: [
                             [SaxInputTypes_2._anschluss_aus, SaxInputTypes_2.CH, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 639, SaxInputTypes_2._, 902, SaxInputTypes_2._, SaxInputTypes_2._, 1212, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 242, 505, SaxInputTypes_2._, 715, { ort: "Chemnitz", nr: 85 }],
                             [SaxInputTypes_2._zugnr, SaxInputTypes_2.zn, SaxInputTypes_2.gnix, 1951, SaxInputTypes_2.gnix, 1861, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, 1931, 1867, 1933, SaxInputTypes_2.gnix, 1995, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, 1935, 1869, 1937, SaxInputTypes_2._, 1997, 1939, 1871, 1999],
-                            [SaxInputTypes_2._klassen, SaxInputTypes_2.kl, SaxInputTypes_2.gnix, SaxInputTypes_2.k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b3, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b3, SaxInputTypes_2.k2b4],
+                            [_klassen, SaxInputTypes_2.kl, SaxInputTypes_2.gnix, k2b4, SaxInputTypes_2.gnix, k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, k2b4, k2b4, k2b4, SaxInputTypes_2.gnix, k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, k2b4, k2b4, k2b3, SaxInputTypes_2._, k2b4, k2b4, k2b3, k2b4],
                             ["Annaberg", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 605, SaxInputTypes_2._, 918, SaxInputTypes_2._, 1126, SaxInputTypes_2._, SaxInputTypes_2._, 226, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 607, 736, SaxInputTypes_2._, 944],
                             [2.7, "Buchholz", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 613, SaxInputTypes_2._, 930, SaxInputTypes_2._, 1136, SaxInputTypes_2._, SaxInputTypes_2._, 237, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 619, 749, SaxInputTypes_2._, 954, { nr: 85 }],
                             [8.6, SaxInputTypes_2.WaltersdfHst, SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 630, SaxInputTypes_2._, 947, SaxInputTypes_2._, 1153, SaxInputTypes_2._, SaxInputTypes_2._, 256, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 636, 808, SaxInputTypes_2._, 1011],
                             ["Schlettau", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 635, SaxInputTypes_2._, 952, SaxInputTypes_2._, 1158, SaxInputTypes_2._, SaxInputTypes_2._, 301, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 641, 813, SaxInputTypes_2._, 1016, { nr: "99b" }],
                             [9.9, "Schlettau", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 525, SaxInputTypes_2._, SaxInputTypes_2._, 640, 853, 957, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 306, 320, 610, SaxInputTypes_2.Z1971, SaxInputTypes_2._, 818, 830, SaxInputTypes_2._],
-                            [18.3, "Scheibenberg", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 540, SaxInputTypes_2._, SaxInputTypes_2._, 651, 903, 1008, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 317, 341, 621, SaxInputTypes_2.k2b3, SaxInputTypes_2._, 830, 840, SaxInputTypes_2._],
+                            [18.3, "Scheibenberg", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 540, SaxInputTypes_2._, SaxInputTypes_2._, 651, 903, 1008, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 317, 341, 621, k2b3, SaxInputTypes_2._, 830, 840, SaxInputTypes_2._],
                             [20.8, SaxInputTypes_2.MittwMrkb, SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 710, SaxInputTypes_2.ank, 1027, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 336, SaxInputTypes_2.sf, 639, SaxInputTypes_2.sh, SaxInputTypes_2._, 848, SaxInputTypes_2.ank, SaxInputTypes_2._],
                             [22.2, "Raschau", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 716, SaxInputTypes_2._, 1033, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 342, SaxInputTypes_2.sf, 645, SaxInputTypes_2.sh, SaxInputTypes_2._, 854, SaxInputTypes_2.sk, SaxInputTypes_2._],
                             [24.1, "Grünstädtel", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 723, SaxInputTypes_2._, 1040, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 349, SaxInputTypes_2.sf, 651, SaxInputTypes_2.sh, SaxInputTypes_2._, 901, SaxInputTypes_2.sk, SaxInputTypes_2._],
                             ["Grünstädtel", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 724, SaxInputTypes_2._, 1042, SaxInputTypes_2._, SaxInputTypes_2.Z2045, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 354, SaxInputTypes_2.sf, 652, SaxInputTypes_2.sh, SaxInputTypes_2.Z1967, 903, SaxInputTypes_2.sk, SaxInputTypes_2.Z2065, { nr: "99c" }],
-                            [28.8, "Schwarzenberg Bf.", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 732, SaxInputTypes_2._, 1050, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 402, SaxInputTypes_2.sf, 659, SaxInputTypes_2.sh, SaxInputTypes_2.k2b4, 911, SaxInputTypes_2.sk, SaxInputTypes_2.k2b4, { nr: "100a" }],
+                            [28.8, "Schwarzenberg Bf.", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 732, SaxInputTypes_2._, 1050, SaxInputTypes_2._, k2b4, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 402, SaxInputTypes_2.sf, 659, SaxInputTypes_2.sh, k2b4, 911, SaxInputTypes_2.sk, k2b4, { nr: "100a" }],
                             ["Schwarzenberg Bf.", SaxInputTypes_2.ab, SaxInputTypes_2._, 435, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 739, SaxInputTypes_2._, 1056, SaxInputTypes_2._, 1256, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 416, SaxInputTypes_2.sf, SaxInputTypes_2._, 649, 704, 916, SaxInputTypes_2.sk, 1125],
                             [29.3, "Neuwelt", SaxInputTypes_2.ab, SaxInputTypes_2._, 442, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 746, SaxInputTypes_2._, 1103, SaxInputTypes_2._, SaxInputTypes_2.kHlt, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 423, SaxInputTypes_2.sf, SaxInputTypes_2._, 656, 711, 923, SaxInputTypes_2.sk, 1132],
                             [31.2, "Lauter", SaxInputTypes_2.ab, SaxInputTypes_2._, 548, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 752, SaxInputTypes_2._, 1110, SaxInputTypes_2._, 106, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 429, SaxInputTypes_2.sf, SaxInputTypes_2._, 702, 717, 930, SaxInputTypes_2.sk, 1138],
                             [37.3, "Aue", SaxInputTypes_2.an, SaxInputTypes_2._, 500, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 804, SaxInputTypes_2._, 1122, SaxInputTypes_2._, 117, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 441, SaxInputTypes_2.sf, SaxInputTypes_2._, 713, 728, 942, SaxInputTypes_2.sk, 1150],
                             [SaxInputTypes_2._zugnr, SaxInputTypes_2.zn, SaxInputTypes_2._, 1951, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 1953, SaxInputTypes_2._, 1959, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 1865, SaxInputTypes_2._, SaxInputTypes_2._, 1971, 1967, 1969, SaxInputTypes_2.sk, SaxInputTypes_2._],
-                            [SaxInputTypes_2._klassen, SaxInputTypes_2.kl, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.k2b3, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2.sk, SaxInputTypes_2._],
+                            [_klassen, SaxInputTypes_2.kl, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, k2b3, k2b4, k2b4, SaxInputTypes_2.sk, SaxInputTypes_2._],
                             ["Aue", SaxInputTypes_2.ab, SaxInputTypes_2._, 507, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 817, SaxInputTypes_2._, 1141, SaxInputTypes_2._, 118, SaxInputTypes_2._, SaxInputTypes_2._, 505, SaxInputTypes_2._, SaxInputTypes_2._, 715, 732, 1004, SaxInputTypes_2.sk, SaxInputTypes_2._],
                             [41.6, "Niederschlema", SaxInputTypes_2.an, SaxInputTypes_2._, 516, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 826, SaxInputTypes_2._, 1150, SaxInputTypes_2._, 126, SaxInputTypes_2._, SaxInputTypes_2._, 514, SaxInputTypes_2._, SaxInputTypes_2._, 723, 741, 1013, SaxInputTypes_2._, SaxInputTypes_2._],
                             [SaxInputTypes_2._zugnr, SaxInputTypes_2.zn, 1978, SaxInputTypes_2._, 2043, 205, 2051, 2053, SaxInputTypes_2._, 2055, SaxInputTypes_2._, 2057, SaxInputTypes_2._, 2059, 2061, SaxInputTypes_2._, 1975, 2047, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [SaxInputTypes_2._klassen, SaxInputTypes_2.kl, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2.k1b3, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2.k2b4, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2.k3b4, SaxInputTypes_2.k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._],
+                            [_klassen, SaxInputTypes_2.kl, k2b4, SaxInputTypes_2._, k2b4, k1b3, k2b4, k2b4, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, k2b4, k2b4, SaxInputTypes_2._, k3b4, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._],
                             ["Niederschlema", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 518, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 830, SaxInputTypes_2.sd, 1155, SaxInputTypes_2._, 128, SaxInputTypes_2._, SaxInputTypes_2._, 517, SaxInputTypes_2.si, SaxInputTypes_2._, 724, 742, 1019, SaxInputTypes_2._, SaxInputTypes_2._],
                             [47.4, "Stein-Hartenstein", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 528, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 840, SaxInputTypes_2.sd, 1206, SaxInputTypes_2._, 139, SaxInputTypes_2._, SaxInputTypes_2._, 527, SaxInputTypes_2.si, SaxInputTypes_2._, 734, 755, 1029, SaxInputTypes_2._, SaxInputTypes_2._],
                             ["Fährbrücke", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 538, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 849, SaxInputTypes_2.sd, 1216, SaxInputTypes_2._, 148, SaxInputTypes_2._, SaxInputTypes_2._, 537, SaxInputTypes_2.si, SaxInputTypes_2._, 743, 804, 1038, SaxInputTypes_2._, SaxInputTypes_2._],

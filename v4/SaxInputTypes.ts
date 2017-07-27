@@ -66,7 +66,6 @@ export var _anschluss_aus_ziel = "_Anschluss_aus_ankunft"; // aus Karlsbad in Jo
 export var _anschluss_nach_start = "_Anschluss_nach_abfahrt"; // nach Karlsbad ab Johanngeorgenstadt
 export var _anschluss_nach_in = "_Anschluss_nach_in"; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
 
-export var _klassen = "_Klassen_";
 
 export var _zugnr = "_xZugnr";
 
@@ -129,10 +128,8 @@ export var LU = ORTPREFIX + "Lugau";
 export var CT = ORTPREFIX + "Chemnitz ü.Thalheim";
 export var CN = ORTPREFIX + "Chemnitz ü.Neu.";
 
-export var k2b4 = "_Klassen_2_bis_4";
-export var k2b3 = "_Klassen_2_bis_3";
-export var k3b4 = "_Klassen_3_bis_4";
-export var k1b3 = "_Klassen_1_bis_3";
+
+
 
 //var rundvoll = "_MARKER_rundvoll";
 

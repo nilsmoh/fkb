@@ -1,4 +1,4 @@
-import { EKlassen, TFahrpreisAngabe, TEchteZeit, TGueltigkeit, TFahrtage } from "./SaxBaseTypes";
+import { /*EKlassen,*/ TFahrpreisAngabe, TEchteZeit, TGueltigkeit, TFahrtage } from "./SaxBaseTypes";
 import { IZellenEigenschaft } from "./SaxInputTypes";
 
     // stark typisierte, geparste Tabelle - noch unbearbeitet !!!
