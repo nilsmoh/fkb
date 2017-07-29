@@ -1,25 +1,20 @@
 import {
-    TVerweisEmbedded, KBS_ABWEICHUNG_T, TVerweisPassend, TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
-    TBlockEintrag, TAnkunftEintrag, TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, TBlockinhaltBase, TAnschlussZubringerAbZeile, TDickerStrichEintrag, TAnschlussZubringerInZeile,
-    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt,
-    // TGueltigkeit, GUELTIG_IMMER, 
-    TError, TEXTORT_T,
-    TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, EScope, BlockRaw_ok, TPfeilZiel,
+    KBS_ABWEICHUNG_T,    TKbsAbweichung_Keine, TBlockInhaltZugnummerOderKlasse,
+   TAnschlussWeiterAbZeile, TAnschlussWeiterInZeile, /*TBlockinhaltBase,*/ TAnschlussZubringerAbZeile,  TAnschlussZubringerInZeile,
+    TBlockInhaltRawOk, TBlockInhaltRawUnbekannt, 
+    TError, TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL, /*EScope,*/ BlockRaw_ok, TPfeilZiel,
     TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach,
 
-    BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
+    BlockRawUnbekannt, 
+    TKbsAbweichung, TPfeilInfo, 
+    EBahnverwaltung,
 
-    VERWEIS_T,
-    //BLOCK_T,
     ZEILE_T,
-    //FAHRPREIS_T,
-    //ZEIT_24, ZEIT_ROH, TZeit24,
-    //ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, 
-    //GesternHeuteMorgen, 
+ 
     TZeiteintrag,
     EAnAb, EQuelle, SingleDirectionScheduleTyped,
     //ETimeValid, 
-    ZeitZeileZusatzInfo, TNormalzeile, /*TLeerEintrag,*/ /*TKeinHalt,*/ TZugNrZeile, TKlassenNrZeile, TBlockinhaltBaseV2
+    ZeitZeileZusatzInfo, TNormalzeile, TZugNrZeile, TKlassenNrZeile 
 
 
 
@@ -460,7 +455,7 @@ export class Importer {
             var tNextAbIsFirst = true;   // erste ab speziell speichern, damit "aus " in die tabelle gerendert werden kann
 
             for (var i = 0; i < input.zeilen.length; i++) {
-                var zeile: Array<(string | number | SaxInput.IZeilenZusatzInfo | TKeinHalt | TLeerEintrag)> = input.zeilen[i];
+                var zeile: Array<(string | number | SaxInput.IZeilenZusatzInfo | TKeinHalt | TLeerEintrag | TAnkunftEintrag | TDickerStrichEintrag | TBlockEintrag )> = input.zeilen[i];
                 if ((zeile != null) && (zeile.length >= 2)) {
                     //ab, an, oder eine form von anschlusszeile (anschluss_aus, _anschluss_aus_ziel, _anschluss_nach_start,  _anschluss_nach_in )
                     if ((("number" == typeof zeile[0]) ||  //KM Angabe
@@ -577,109 +572,11 @@ export class Importer {
                                     if (rawEntry.indexOf("_") == 0) {
                                         // irgendwas spezielles
                                         tIsTime == false;
-                                        /*
-                                        if (rawEntry == nix) {
-                                            var tResultEntryL: TLeerEintrag = {
-                                                kind: BLOCK_T.LEER,
-                                                MitStrich: true,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryL);
-                                        }
-                                        else 
-                                        */
-                                        if (rawEntry == gnix) {
-                                            var tResultEntryL: TLeerEintrag = {
-                                                kind: BLOCK_T.LEER,
-                                                MitStrich: false,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryL);
-                                        }
-
-
-                                        // hier ANK, waagerechte linie, 
-                                        else if (rawEntry.indexOf(ank) == 0) {
-
-                                            var tResultEntryAnk: TAnkunftEintrag = {
-                                                kind: BLOCK_T.ANKUNFT,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryAnk);
-
-                                        }
-
-
-
-
-                                        /*
-                                        else if (rawEntry == kHlt) {
-                                            var tResultEntryK: TKeinHalt = {
-                                                kind: BLOCK_T.KEINHALT,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-
-                                            };
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryK);
-                                        }
-                                        */
-                                        
-                                        else if (rawEntry == SaxInput.dick) {
-                                            var tResultEntryD: TDickerStrichEintrag = {
-                                                kind: BLOCK_T.DICKERSTRICH,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryD);
-                                        }
-                                        else if ((rawEntry.indexOf(SENKRECHT_PREFIX) == 0) || (rawEntry.indexOf(WAAGERECHT_PREFIX) == 0)) {
-
-                                            var senkleng = SENKRECHT_PREFIX.length;
-                                            var waagleng = WAAGERECHT_PREFIX.length;
-
-                                            var tResultEntryB: TBlockEintrag = {
-                                                kind: BLOCK_T.BLOCK,
-                                                Senkrecht: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0),
-                                                Valid: false, // false in first incarnation, true when width / height is known and blockinhalt is analyzed
-                                                Start: false,
-                                                Breite: 1,
-                                                Hoehe: 1,
-                                                Passend: true, // Gegenteil waere fern
-                                                Referenzkey: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0) ? rawEntry.substr(senkleng) : rawEntry.substr(waagleng),  // while invalid markers are letters
-                                                Blockinhalt: undefined,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryB);
-                                        }
-                                        else if (rawEntry.indexOf("_Z") == 0) { // Zugnummer Z1234
+                                       
+                                        if (rawEntry.indexOf("_Z") == 0) { // Zugnummer Z1234
 
                                             var tZugNr = rawEntry.substr(2);
-
-                                            //var tBlock: TBlockInhaltZugnummerOderKlasse = {
-                                            //    Zugnr: tZugNr,
-                                            //    Klassen: EKlassen.NichtAngegeben
-                                            //};
-
-                                            //var tOk: TBlockInhaltRawOk = {  kind: BlockRaw_ok  };
-                                            /*
-                                            var tBlockKpl: TBlockinhaltBase = {
-                                                Verweistyp: ZI_Creator.createTVerweisEmbedded(),
-                                                ZugNrOderKlasse: tBlock,                             // <--- relevant part
-                                                Gueltig: { kind: GUELTIG_T.IMMER },
-                                                KbsAbweichung: ZI_Creator.createKbsAbweichungKeine(),
-                                                Fahrtage: { kind: FAEHRT_T.IMMER },
-                                                TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
-                                                PfeilInfo: { kind: TKEINPFEIL },
-                                                //Scope: SaxSchedulesZusatzBase.EScope.KeineAngabe,
-                                                Unbekannt: ZI_Creator.createBlockInhaltRawOk(),
-                                                Bahnverwaltung: EBahnverwaltung.NichtAngegeben
-                                            }
-                                            */
-
+                                      
                                             var tBlockKpl: TBlockinhaltBaseV2 = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, ZugNr: tZugNr } } },
@@ -704,42 +601,11 @@ export class Importer {
 
                                             }
 
-
                                             var tResultEntryB: TBlockEintrag = Importer.createTBlockEintrag_single(tBlockKpl);
 
                                             tResultZeile.Zeiteintraege.push(tResultEntryB);
-
-
                                         }
-                                        /*
-                                        else if ((rawEntry.indexOf(k1b3) == 0)
-                                            || (rawEntry.indexOf(k2b3) == 0)
-                                            || (rawEntry.indexOf(k2b4) == 0)
-                                            || (rawEntry.indexOf(k3b4) == 0)) {
-
-                                           console.warn("TODO kompletiere klassen");
-
-                                            let kl = Kl1bis3;
-
-                                            if (rawEntry.indexOf(k2b3) == 0) {kl = Kl2bis3}
-                                            if (rawEntry.indexOf(k2b4) == 0) {kl = Kl2bis4}
-                                            if (rawEntry.indexOf(k3b4) == 0) {kl = Kl3bis4}
-
-
-                                             var tBlockKpl: TBlockinhaltBaseV2 = {
-                                                Verweistyp: ZI_Creator.createTVerweisEmbedded(),
-                                                Inhalt:{q:'', BLOCK:{Standard:{scope:{kind:'Zug'}, Klasse:kl}}},
-                                                                                       
-                                                TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
-                                               
-                                            }
-
-
-                                            var tResultEntryB: TBlockEintrag = Importer.createTBlockEintrag_single(tBlockKpl);
-
-                                            tResultZeile.Zeiteintraege.push(tResultEntryB);
-                                        }*/
-
+                                 
                                         else if ((rawEntry.indexOf("_") == 0) && (rawEntry.substr(1, 1) == rawEntry.substr(1, 1).toLowerCase())) {
 
                                             var tBuchstabe = rawEntry.substr(1, 1);
@@ -828,7 +694,19 @@ export class Importer {
                                         tResultZeile.Zeiteintraege.push(rawentryX);
 
                                         break;
-                                    
+                                    case  BLOCK_T.ANKUNFT:
+                                        tResultZeile.Zeiteintraege.push(rawentryX);
+
+                                        break;
+                                    case  BLOCK_T.DICKERSTRICH:
+                                        tResultZeile.Zeiteintraege.push(rawentryX);
+
+                                        break;
+                                    case  BLOCK_T.BLOCK:
+                                        tResultZeile.Zeiteintraege.push(rawentryX);
+
+                                        break;
+
                                     default:
                                         assertNever(rawentryX); 
                                         //console.error("unknown type not handled: ", rawentryX);
@@ -866,8 +744,7 @@ export class Importer {
 
                     //zugnr zeile  oder klassenzeile
                     if (("string" == typeof zeile[0]) && (((<string>zeile[0]).indexOf(_zugnr) == 0)
-                        || ((<string>zeile[0]).indexOf(_klassen) == 0)
-                        || ((<string>zeile[1]).indexOf(kl) == 0))) {
+                        || ((<string>zeile[0]).indexOf(_klassen) == 0) || ((<string>zeile[1]).indexOf(kl) == 0))) {
                         var tResultZeileNrn: TZugNrZeile | TKlassenNrZeile = {
                             kind: ZEILE_T.ZUGNR, // EZeilentyp.Zugnummer,
                             ZugNummern: [],
@@ -883,13 +760,14 @@ export class Importer {
                             };
                             tResultZeileNrn = x;
                             console.log("KLASSENZEILE ", i);
-
+                            /*
                             console.log("BLOCKK");
                             if (("string" == typeof zeile[0])
                                 && ((<string>zeile[1]).indexOf(kl) == 0)
                                 && ((<string>zeile[0]).indexOf(WAAGERECHT_PREFIX) == 0)) {
-                                var tKey = (<string>zeile[0]).substr(WAAGERECHT_PREFIX.length);
-                                console.log("BLOCKK2");
+                                
+                                    var tKey = (<string>zeile[0]).substr(WAAGERECHT_PREFIX.length);
+                                console.log("BLOCKK2 eintrag wa vorne in klassenzeile ");
                                 x.BlockEintrag = {
                                     kind: BLOCK_T.BLOCK,
                                     Start: true,
@@ -903,7 +781,11 @@ export class Importer {
                                     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
 
                                 };
-                            }
+                            }*/
+
+                            console.error("TODO implement      [wa,kl, ..]    vorne in KlassenNrZeile");
+
+
 
 
                         }
@@ -1015,44 +897,7 @@ export class Importer {
                                         break;
                                 }
                             }
-
-
-
-                            else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && (
-                                ((<string>zeile[zi]).indexOf(SENKRECHT_PREFIX) == 0)
-                                || ((<string>zeile[zi]).indexOf(WAAGERECHT_PREFIX) == 0)
-
-                            )) {
-                                //todo sa / wa or block support                         
-
-
-                                var senkleng = SENKRECHT_PREFIX.length;
-                                var waagleng = WAAGERECHT_PREFIX.length;
-
-                                var tResultEntryB: TBlockEintrag = {
-                                    kind: BLOCK_T.BLOCK,
-                                    Senkrecht: ((<string>zeile[zi]).indexOf(SENKRECHT_PREFIX) == 0),
-                                    Valid: false, // false in first incarnation, true when width / height is known and blockinhalt is analyzed
-                                    Start: false,
-                                    Breite: 1,
-                                    Hoehe: 1,
-                                    Passend: true, // Gegenteil waere fern
-                                    Referenzkey: ((<string>zeile[zi]).indexOf(SENKRECHT_PREFIX) == 0) ? (<string>zeile[zi]).substr(senkleng) : (<string>zeile[zi]).substr(waagleng),  // while invalid markers are letters
-                                    Blockinhalt: undefined,
-                                    BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                };
-
-                                //      tResultZeile.Zeiteintraege.push(tResultEntryB);
-
-                                switch (tResultZeileNrn.kind) {
-                                    case (ZEILE_T.ZUGNR):
-                                        tResultZeileNrn.ZugNummern.push(tResultEntryB);
-                                        break;
-                                    case (ZEILE_T.KLASSEN):
-                                        tResultZeileNrn.KlassenNummern.push(tResultEntryB);
-                                        break;
-                                }
-                            }
+                           
                             else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && (("string" == typeof zeile[0]) && (((<string>zeile[0]).indexOf(_zugnr) == 0)))) {
                                 //zugnr z.b. 1234a
 
@@ -1100,10 +945,26 @@ export class Importer {
                             }
                             else if ("string" == typeof zeile_zi){
                                 console.error("unknown string error in  klassen or zugnummerzeile: ", zeile_zi);
+
                             }
                             else if (!SaxInput.isIZeilenZusatzInfo(zeile_zi)) {
 
                                 console.error("unknown error in  klassen or zugnummerzeile: ", zeile_zi.kind);
+
+                                switch(zeile_zi.kind){
+                                    case BLOCK_T.BLOCK: //wa sa
+                                        switch (tResultZeileNrn.kind) {
+                                        case (ZEILE_T.ZUGNR):
+                                            tResultZeileNrn.ZugNummern.push(zeile_zi);
+                                            break;
+                                        case (ZEILE_T.KLASSEN):
+                                            tResultZeileNrn.KlassenNummern.push(zeile_zi);
+                                            break;
+                                    }
+                                    break;
+                                }
+
+
                             }
                             else 
                                 
@@ -1279,6 +1140,7 @@ export class ZI_Creator {
 
 export class ZI_Importer {
     // will be a very complex parser for all the weird additional stuff
+    /*
     public static parseIZellenEigenschaft(inp: SaxInput.IZellenEigenschaft): TBlockinhaltBase {
         //true heisst nicht vorhanden oder korrekt geparst und eingetragen
         var ok_inp_ab: boolean = false;         // alle info gilt erst ab der angegebenen station
@@ -1648,10 +1510,12 @@ export class ZI_Importer {
 
         return tBlockKpl;
     }
-
+    */
+    /*
     public static assertNever(x: never): never {
         throw new Error("Unexpected object: " + x);
     }
+    */
 
 }
 

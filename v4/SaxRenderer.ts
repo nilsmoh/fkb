@@ -130,7 +130,7 @@ export class Renderer{
               }  
             });    
 
-            var berechneStartEndString = function(ze: SaxSchedulesTyped.TZeiteintrag | SaxSchedulesTyped.TAnkunftEintrag | SaxSchedulesTyped.TDickerStrichEintrag | TKeinHalt | TLeerEintrag | SaxSchedulesTyped.TBlockEintrag){ 
+            var berechneStartEndString = function(ze: SaxSchedulesTyped.TZeiteintrag | TAnkunftEintrag | TDickerStrichEintrag | TKeinHalt | TLeerEintrag | TBlockEintrag){ 
                 var tResult = "";
                 if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)){
                    tResult = " isEnd ";
@@ -157,8 +157,8 @@ export class Renderer{
             
             // globale spalten
             input.ZusatzBloecke.forEach((zb)=>{
-                if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT){
-                    if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_T.GANZESPALTE){
+                if (zb.Verweistyp.kind == VERWEIS_T.GLOBAL_DEFAULT){
+                    if (zb.TextOrt.kind == TEXTORT_T.GANZESPALTE){
                         tSpaltenGesamtZahl += zb.TextOrt.Spaltenbreite;
                     }
                 }
@@ -195,11 +195,11 @@ export class Renderer{
 
 
             //zusatzspalten vorbereiten
-            var tSpalteNach: {[key: number]: {breite: number, bl: SaxSchedulesTyped.TBlockinhaltBaseV2} } = {};
+            var tSpalteNach: {[key: number]: {breite: number, bl: TBlockinhaltBaseV2} } = {};
             
             input.ZusatzBloecke.forEach((zb)=>{
-                if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT){
-                    if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_T.GANZESPALTE){
+                if (zb.Verweistyp.kind == VERWEIS_T.GLOBAL_DEFAULT){
+                    if (zb.TextOrt.kind == TEXTORT_T.GANZESPALTE){
                         //tSpaltenGesamtZahl += zb.TextOrt.Spaltenbreite;
                         tSpalteNach[zb.TextOrt.UebersprungeneSpalten] = {breite:zb.TextOrt.Spaltenbreite , bl : zb };
                         // FallsEinTextWirklichEineKompletteSpalteEinnimmt
@@ -523,7 +523,7 @@ export class Renderer{
                                     for (let i = 0; i < input.ZusatzBloecke.length; i++){
                                            
                                             let tVerweis = input.ZusatzBloecke[i].Verweistyp;
-                                            if (tVerweis.kind == SaxSchedulesTyped.VERWEIS_T.FERN ){
+                                            if (tVerweis.kind == VERWEIS_T.FERN ){
                                                if(tVerweis.ReferenzKey === ze.Referenzkey){
                                                     tOptical= tVerweis.OpticalMarker;
                                               }
@@ -770,9 +770,9 @@ export class Renderer{
             input.ZusatzBloecke.forEach((zb)=>{
 
                 switch( zb.Verweistyp.kind){
-                    case SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT:
+                    case VERWEIS_T.GLOBAL_DEFAULT:
                        switch (zb.TextOrt.kind){
-                           case SaxSchedulesTyped.TEXTORT_T.LINKSVONHEADER :
+                           case TEXTORT_T.LINKSVONHEADER :
                             console.log("x tHeadLeftDiv ", tHeadLeftDiv);
                             //tHeadLeftDiv.innerHTML += 'THL'; //   todo find out why jquery doesnt work here ???
                             var e:HTMLElement = document.getElementById(tHeadLeftDiv.getAttribute("id")!)!;
@@ -781,7 +781,7 @@ export class Renderer{
                                 // (input.Bahnverwaltung === EBahnverwaltung.KSaechsStsEB) ? "S�chs. Staatsb." : "";
                             }
                           break;
-                         case SaxSchedulesTyped.TEXTORT_T.RECHTSVONHEADER:
+                         case TEXTORT_T.RECHTSVONHEADER:
                             console.log("x tHeadRightDiv ", tHeadRightDiv);
                             //tHeadLeftDiv.innerHTML += 'THL'; //   todo find out why jquery doesnt work here ???
                             var e:HTMLElement = document.getElementById(tHeadRightDiv.getAttribute("id")!)!;
@@ -803,7 +803,7 @@ export class Renderer{
         }
   
         public static globalespalten(tr: HTMLTableRowElement, RealeSpaltenBisherRef : number, tErsteGlobalzeile: boolean, 
-                                    tSpalteNach:{[key:number]: {breite: number, bl: SaxSchedulesTyped.TBlockinhaltBaseV2}} ){
+                                    tSpalteNach:{[key:number]: {breite: number, bl: TBlockinhaltBaseV2}} ){
                        // globale spalten
                           // falls hinten globale spalten fehlen
                            var tTestg:boolean = true;

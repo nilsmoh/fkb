@@ -6,11 +6,12 @@ import {SingleDirectionScheduleInput,  /*sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl,  */
     /*k2b4,k1b3,k2b3,k3b4, _klassen, */ 
     passend, sonn_und_festtags, nur_werktags, headerlinks,  /*LE,*/
      WaltersdfHst, MittwMrkb, a510, s810, Z1967, Z1971, Z2045, Z2065, n822, m747, d1153, b355, s321, s550, s748, c510, s800
-     ,s113 ,s710, s845 , s1058 /*,wx,sj,sp,sm*/ , ZW, SC,AN, CT, AU, LU, CN, JO, KA, x135, x150, a644,a659,a818,a754,b233,c937,Z1960,dick,Z1991, Z1998, m149, cross,chooseown,nach9spalten
+     ,s113 ,s710, s845 , s1058 /*,wx,sj,sp,sm*/ , ZW, SC,AN, CT, AU, LU, CN, JO, KA, x135, x150, a644,a659,a818,a754,b233,c937,
+     Z1960,/*dick,*/ Z1991, Z1998, m149, cross,chooseown,nach9spalten
      ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten,a858,nach5spalten2spalten,nach4spalten2spalten, 
     } from "./SaxInputTypes";
 
-import { VERWEIS_T, TEXTORT_T } from "./SaxParsedTypes";    
+import { /*VERWEIS_T, TEXTORT_T*/ } from "./SaxParsedTypes";    
 
 export class InputData {
         public static einzelplaene: SingleDirectionScheduleInput[] = [
@@ -24,7 +25,7 @@ export class InputData {
                 zeilen: [
                     [_anschluss_aus,       CH,    _,    _,    _,   _,    _,    _,    _,    _, 639,    _, 902,    _,    _, 1212,    _,    _,    _, 242, 505,    _, 715, 
                         { ort: "Chemnitz", nr: 85 }],
-/*                    [_zugnr        ,       zn, gnix, 1951, gnix, 1861, gnix, gnix, 1931, 1867, 1933, gnix, 1995, gnix, gnix, 1935, 1869, 1937,    _, 1997, 1939, 1871, 1999],
+                    [_zugnr        ,       zn, gnix, 1951, gnix, 1861, gnix, gnix, 1931, 1867, 1933, gnix, 1995, gnix, gnix, 1935, 1869, 1937,    _, 1997, 1939, 1871, 1999],
                     [_klassen,             kl, gnix, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b3,    _, k2b4, k2b4, k2b3, k2b4],
                     ["Annaberg"    ,       ab,    _,    _,    _,    _,    _,    _, 605,    _, 918,    _, 1126,    _,    _, 226,    _, sg,    _, 607, 736,    _, 944],
                     [2.7, "Buchholz",      ab,    _,    _,    _,    _,    _,    _, 613,    _, 930,    _, 1136,    _,    _, 237,    _, sg,    _, 619, 749,    _, 954, { nr: 85 }],
@@ -60,7 +61,7 @@ export class InputData {
                     ["Lichtentanne",        ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125,    _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200,    _, _],
                     [76.8,"Werdau",         an, 530,  647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, 1208,    _,    _, { nr: 59 }],
                     [_anschluss_nach_in, LE, 749, s810, 925, 1019,    _,    _, 1232,    _, 341,    _, s550, 652, s748, s800,    _, 957,    _, 1205, s321,    _, _,{ort:"Leipzig", nr:56}]
-*/                
+                
                 ],
                 ZellenVerweise: [
 
@@ -323,7 +324,7 @@ export class InputData {
             }
 
 
- /*
+ 
             ,
 
             // seite 103
@@ -371,7 +372,7 @@ export class InputData {
                     [_anschluss_nach_in, CH, 1133, _, _, _, 205, _, _, _, _, 513, 829, _, _, 1202, _, 1202, _, _, _, _, _, { ort: "Chemnitz", nr: 85 }]
                 ],
                 ZellenVerweise: [
-                    {
+/*                    {
                         key: "x",
                         zugnr: 218,
                         klassen: k1b3,
@@ -451,10 +452,12 @@ export class InputData {
                         bahn: Sachs,
                         verweisort: headerlinks
                     }
+          */          
                     ]
 
 
             }
+/*                
             ,
 
             /// Seite 104

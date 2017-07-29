@@ -1,9 +1,9 @@
-import {TBlockEintrag, ZEILE_T, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, /* BLOCK_T,*/
- TNormalZeileEintrag, VERWEIS_T,
+import {/*TBlockEintrag,*/ ZEILE_T, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, /* BLOCK_T,*/
+ TNormalZeileEintrag, /*VERWEIS_T,*/
 
 SingleDirectionScheduleTyped,
-TBlockinhaltBase,
-TBlockinhaltBaseV2
+/*TBlockinhaltBase,*/
+//TBlockinhaltBaseV2
 
 } from "./SaxParsedTypes";
 

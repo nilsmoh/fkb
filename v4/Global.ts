@@ -264,17 +264,106 @@ interface TLeerEintrag {
         BerechneterZugLauf: TZugLaufInfo;
 }
 
+interface TAnkunftEintrag { //"Ank." in tabelle
+        kind: typeof BLOCK_T.ANKUNFT;
+        BerechneterZugLauf: TZugLaufInfo;
+}
+
+
+interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seite 103   Mittweida
+        kind: typeof BLOCK_T.DICKERSTRICH;
+        BerechneterZugLauf: TZugLaufInfo;
+}
+
+
+    //// TEXTORT //Text wird in z.b. links neben header geschrieben
+    type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
+    
+    enum TEXTORT_T {
+        NICHTANGEGEBEN = "TEXTORT_NICHTANGEGEBEN",
+        LINKSVONHEADER = "TEXTORT_LINKSVONHEADER",
+        RECHTSVONHEADER = "TEXTORT_RECHTSVONHEADER",
+        UNTERHEADER = "TEXTORT_UNTERHEADER",
+        GANZESPALTE = "TEXTORT_GANZESPALTE"
+    }
+
+    interface TTextOrtNichtAngegeben { kind: typeof TEXTORT_T.NICHTANGEGEBEN };
+    interface TTextOrtLinksVonHeader { kind: typeof TEXTORT_T.LINKSVONHEADER };
+    interface TTextOrtRechtsVonHeader { kind: typeof TEXTORT_T.RECHTSVONHEADER };
+    interface TTextOrtUnterHeader { kind: typeof TEXTORT_T.UNTERHEADER };
+    interface TTextOrtGanzeSpalte { kind: typeof TEXTORT_T.GANZESPALTE, UebersprungeneSpalten: number, Spaltenbreite: number };
+
+    //endregion
+
+    
+    enum EScope {
+        //KeineAngabe = 0,
+        DefaultZug = 1,   // nur die aktuelle Zugnummer vgl strecke 99
+        RestSpalte = 2    // auch darunter stehende Zuege vgl strecke 99
+    }
+
+ //// Typen fuer Verweis
+    type TVerweisTyp = TVerweisPassend | TVerweisFern | TVerweisEmbedded | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
+
+    enum VERWEIS_T{
+        PASSEND = "VERWEIS_PASSEND",
+        FERN = "VERWEIS_FERN" ,
+        EMBEDDED = "VERWEIS_EMBEDDED",
+        GLOBAL_DEFAULT = "VERWEIS_GLOBAL_DEFAULT"
+    }
+
+
+    // in richtiger Spalte, aber mit buchstabe referenziert
+    interface TVerweisPassend {
+        kind: typeof VERWEIS_T.PASSEND, // VERWEIS_PASSEND,
+        ReferenzKey: string,
+        Scope: EScope
+    }
+    interface TVerweisFern {
+        kind: typeof VERWEIS_T.FERN, // VERWEIS_FERN,
+        ReferenzKey: string,            // nur Verweistyp == Fern :  a..r, t..z
+        OpticalMarker: string
+    }
+    interface TVerweisEmbedded { //direkt 1*1 eingebettet
+        kind: typeof VERWEIS_T.EMBEDDED // VERWEIS_EMBEDDED
+    }
+    // z.b. alle zuege 2u3 klasse,  textort gibt die renderposition an
+    interface TVerweisGlobalDefault {
+        kind: typeof VERWEIS_T.GLOBAL_DEFAULT // VERWEIS_GLOBAL_DEFAULT
+    }
+
+
+interface TBlockinhaltBaseV2{
+        Verweistyp: TVerweisTyp; 
+        TextOrt: TTextOrt,
+
+        Inhalt: entry
+}
+
+ //block der tabelle, meist groesser als 1x1
+interface TBlockEintrag {
+        kind: typeof BLOCK_T.BLOCK;
+        Start: boolean;                   // true -> blockinhalt
+        Senkrecht: boolean;
+        Breite: number;
+        Hoehe: number;
+        Passend: boolean; // Gegenteil waere fern
+        Referenzkey: string | undefined;
+        Blockinhalt: TBlockinhaltBaseV2 | undefined;
+        Valid: boolean; // false in first incarnation, true when width / height is known and blockinhalt is analyzed
+        BerechneterZugLauf: TZugLaufInfo;
+}
+
 
 //MISC
 
 var _ : TLeerEintrag =   /*var tLeer: TLeerEintrag = */ { kind: BLOCK_T.LEER,    MitStrich: true,     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }     };
 var nix : TLeerEintrag = _; // waagerechter strich
-
-var gnix  = "_Nixleer"; // wirklich leer  var tResultEntryL: TLeerEintrag = { kind: BLOCK_T.LEER,     MitStrich: false,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }        };
-
+var gnix  /* =  "_Nixleer"; // wirklich leer  var tResultEntryL */ : TLeerEintrag = { kind: BLOCK_T.LEER,     MitStrich: false,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }        };
 var kHlt: TKeinHalt = /* "_Kein_Halt";  //  var tResultEntryK: TKeinHalt = */ {    kind: BLOCK_T.KEINHALT,     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };
-var ank = "_XZug_endet"; // zuege endet vorzeitig    var tResultEntryAnk: TAnkunftEintrag = { kind: BLOCK_T.ANKUNFT,    BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }       };
+var ank /*= "_XZug_endet"; // zuege endet vorzeitig    var tResultEntryAnk*/ : TAnkunftEintrag = { kind: BLOCK_T.ANKUNFT,    BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }       };
 var Ank = ank; // an fuer zuege die nur auf teilstrecke fahren
+var dick /* = "_CELL_dickerstrich";  //var tResultEntryD*/ : TDickerStrichEintrag = {       kind: BLOCK_T.DICKERSTRICH,       BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }      };
 
 //ZEILENSORTEN
 var _anschluss_aus = "_Anschluss_aus"; //  aus Zwickau  // Abfahrtszeit in Zwickau
@@ -285,29 +374,55 @@ var _anschluss_nach_start = "_Anschluss_nach_abfahrt"; // nach Karlsbad ab Johan
 var _anschluss_nach_in = "_Anschluss_nach_in"; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
 
 
-var SENKRECHT_PREFIX = "_senkrecht_";
-var WAAGERECHT_PREFIX = "_waagerecht_";
+//var SENKRECHT_PREFIX = "_senkrecht_";
+//var WAAGERECHT_PREFIX = "_waagerecht_";
 
-var wa = WAAGERECHT_PREFIX + "a";
-var wx = WAAGERECHT_PREFIX + "x";
+var wa:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"a",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var wx :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"x",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 
-var sa = SENKRECHT_PREFIX + "a";
-var sb = SENKRECHT_PREFIX + "b";
-var sc = SENKRECHT_PREFIX + "c";
-var sd = SENKRECHT_PREFIX + "d";
-var se = SENKRECHT_PREFIX + "e";
-var sf = SENKRECHT_PREFIX + "f";
-var sg = SENKRECHT_PREFIX + "g";
-var sh = SENKRECHT_PREFIX + "h";
-var si = SENKRECHT_PREFIX + "i";
-var sk = SENKRECHT_PREFIX + "k";
-var sl = SENKRECHT_PREFIX + "l";
+var sa :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"a",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sb :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"b",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 
-var sj = SENKRECHT_PREFIX + "j";
-var sm = SENKRECHT_PREFIX + "m";
-var sp = SENKRECHT_PREFIX + "p";
+var sc :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"c",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sd :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"d",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var se :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"e",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+
+var sf :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"f",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sg :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"g",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sh :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"h",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var si :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"i",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sk:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"k",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sl :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"l",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+
+var sj  :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"j",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sm :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"m",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sp :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"p",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 
 
+
+
+
+/*
+
+ if ((rawEntry.indexOf(SENKRECHT_PREFIX) == 0) || (rawEntry.indexOf(WAAGERECHT_PREFIX) == 0)) {
+
+                                            var senkleng = SENKRECHT_PREFIX.length;
+                                            var waagleng = WAAGERECHT_PREFIX.length;
+
+                                            var tResultEntryB: TBlockEintrag = {
+                                                kind: BLOCK_T.BLOCK,
+                                                Senkrecht: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0),
+                                                Valid: false, // false in first incarnation, true when width / height is known and blockinhalt is analyzed
+                                                Start: false,
+                                                Breite: 1,
+                                                Hoehe: 1,
+                                                Passend: true, // Gegenteil waere fern
+                                                Referenzkey: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0) ? rawEntry.substr(senkleng) : rawEntry.substr(waagleng),  // while invalid markers are letters
+                                                Blockinhalt: undefined,
+                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+                                            };
+
+*/
 
 
 

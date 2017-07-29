@@ -1,5 +1,5 @@
 import { /*EKlassen,*/ TFahrpreisAngabe, TEchteZeit } from "./SaxBaseTypes";
-import { IZellenEigenschaft } from "./SaxInputTypes";
+import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     // stark typisierte, geparste Tabelle - noch unbearbeitet !!!
     export interface SingleDirectionScheduleTyped {
@@ -19,11 +19,6 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
         KSaechsStsEB
     }
 
-    export enum EScope {
-        //KeineAngabe = 0,
-        DefaultZug = 1,   // nur die aktuelle Zugnummer vgl strecke 99
-        RestSpalte = 2    // auch darunter stehende Zuege vgl strecke 99
-    }
 
     // Header
     export enum EQuelle {
@@ -65,16 +60,8 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
 
     
 
-    export interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seite 103   Mittweida
-        kind: typeof BLOCK_T.DICKERSTRICH;
-        BerechneterZugLauf: TZugLaufInfo;
-    }
 
-    export interface TAnkunftEintrag  //"Ank." in tabelle
-    {
-        kind: typeof BLOCK_T.ANKUNFT;
-        BerechneterZugLauf: TZugLaufInfo;
-    }
+   
 
     export interface TError {
         kind: typeof BLOCK_T.ERROR;
@@ -97,19 +84,7 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
 
     
 
-    //block der tabelle, meist groesser als 1x1
-    export interface TBlockEintrag {
-        kind: typeof BLOCK_T.BLOCK;
-        Start: boolean;                   // true -> blockinhalt
-        Senkrecht: boolean;
-        Breite: number;
-        Hoehe: number;
-        Passend: boolean; // Gegenteil waere fern
-        Referenzkey: string | undefined;
-        Blockinhalt: TBlockinhaltBaseV2 | undefined;
-        Valid: boolean; // false in first incarnation, true when width / height is known and blockinhalt is analyzed
-        BerechneterZugLauf: TZugLaufInfo;
-    }
+   
 
     export interface TZugNrZeile {
         kind: typeof ZEILE_T.ZUGNR,
@@ -196,6 +171,7 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
 
 
     /*Inhalt eines Erlaeuterungstextes, entweder mit opticalMarker, oder senkrecht in ein en zuglauf geschrieben */
+   /*
     export interface TBlockinhaltBase {
         Verweistyp: TVerweisTyp; 
         TextOrt: TTextOrt,
@@ -209,66 +185,13 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
         Unbekannt: TBlockInhaltRawUnbekannt | TBlockInhaltRawOk;
         Bahnverwaltung: EBahnverwaltung;
     }
+*/
 
-    export interface TBlockinhaltBaseV2{
-        Verweistyp: TVerweisTyp; 
-        TextOrt: TTextOrt,
-
-        Inhalt: entry
-    }
 
     //region VERWEIS + TEXTORT
 
-    //// Typen fuer Verweis
-    export type TVerweisTyp = TVerweisPassend | TVerweisFern | TVerweisEmbedded | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
-
-    export enum VERWEIS_T{
-        PASSEND = "VERWEIS_PASSEND",
-        FERN = "VERWEIS_FERN" ,
-        EMBEDDED = "VERWEIS_EMBEDDED",
-        GLOBAL_DEFAULT = "VERWEIS_GLOBAL_DEFAULT"
-    }
-
-
-    // in richtiger Spalte, aber mit buchstabe referenziert
-    export interface TVerweisPassend {
-        kind: typeof VERWEIS_T.PASSEND, // VERWEIS_PASSEND,
-        ReferenzKey: string,
-        Scope: EScope
-    }
-    export interface TVerweisFern {
-        kind: typeof VERWEIS_T.FERN, // VERWEIS_FERN,
-        ReferenzKey: string,            // nur Verweistyp == Fern :  a..r, t..z
-        OpticalMarker: string
-    }
-    export interface TVerweisEmbedded { //direkt 1*1 eingebettet
-        kind: typeof VERWEIS_T.EMBEDDED // VERWEIS_EMBEDDED
-    }
-    // z.b. alle zuege 2u3 klasse,  textort gibt die renderposition an
-    export interface TVerweisGlobalDefault {
-        kind: typeof VERWEIS_T.GLOBAL_DEFAULT // VERWEIS_GLOBAL_DEFAULT
-    }
-
+   
     
-    //// TEXTORT //Text wird in z.b. links neben header geschrieben
-    export type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
-    
-    export enum TEXTORT_T {
-        NICHTANGEGEBEN = "TEXTORT_NICHTANGEGEBEN",
-        LINKSVONHEADER = "TEXTORT_LINKSVONHEADER",
-        RECHTSVONHEADER = "TEXTORT_RECHTSVONHEADER",
-        UNTERHEADER = "TEXTORT_UNTERHEADER",
-        GANZESPALTE = "TEXTORT_GANZESPALTE"
-    }
-
-    export interface TTextOrtNichtAngegeben { kind: typeof TEXTORT_T.NICHTANGEGEBEN };
-    export interface TTextOrtLinksVonHeader { kind: typeof TEXTORT_T.LINKSVONHEADER };
-    export interface TTextOrtRechtsVonHeader { kind: typeof TEXTORT_T.RECHTSVONHEADER };
-    export interface TTextOrtUnterHeader { kind: typeof TEXTORT_T.UNTERHEADER };
-    export interface TTextOrtGanzeSpalte { kind: typeof TEXTORT_T.GANZESPALTE, UebersprungeneSpalten: number, Spaltenbreite: number };
-
-    //endregion
-
     // ZugNrOderKlasse
     export interface TBlockInhaltZugnummerOderKlasse {
         Zugnr: string | null;
@@ -320,7 +243,7 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
 
     export interface TBlockInhaltRawUnbekannt {
         kind: typeof BlockRawUnbekannt;
-        Eingabedaten: IZellenEigenschaft;
+        Eingabedaten: any /*IZellenEigenschaft*/;  //TODO change to v2 input
     }
 
 

@@ -2831,36 +2831,60 @@ var BLOCK_T;
     BLOCK_T["ZEITEINTRAG"] = "BLOCK_ZEITEINTRAG";
     BLOCK_T["ANKUNFT"] = "BLOCK_ANKUNFT";
 })(BLOCK_T || (BLOCK_T = {}));
+var TEXTORT_T;
+(function (TEXTORT_T) {
+    TEXTORT_T["NICHTANGEGEBEN"] = "TEXTORT_NICHTANGEGEBEN";
+    TEXTORT_T["LINKSVONHEADER"] = "TEXTORT_LINKSVONHEADER";
+    TEXTORT_T["RECHTSVONHEADER"] = "TEXTORT_RECHTSVONHEADER";
+    TEXTORT_T["UNTERHEADER"] = "TEXTORT_UNTERHEADER";
+    TEXTORT_T["GANZESPALTE"] = "TEXTORT_GANZESPALTE";
+})(TEXTORT_T || (TEXTORT_T = {}));
+;
+;
+;
+;
+;
+var EScope;
+(function (EScope) {
+    EScope[EScope["DefaultZug"] = 1] = "DefaultZug";
+    EScope[EScope["RestSpalte"] = 2] = "RestSpalte";
+})(EScope || (EScope = {}));
+var VERWEIS_T;
+(function (VERWEIS_T) {
+    VERWEIS_T["PASSEND"] = "VERWEIS_PASSEND";
+    VERWEIS_T["FERN"] = "VERWEIS_FERN";
+    VERWEIS_T["EMBEDDED"] = "VERWEIS_EMBEDDED";
+    VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
+})(VERWEIS_T || (VERWEIS_T = {}));
 var _ = { kind: BLOCK_T.LEER, MitStrich: true, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var nix = _;
-var gnix = "_Nixleer";
+var gnix = { kind: BLOCK_T.LEER, MitStrich: false, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var kHlt = { kind: BLOCK_T.KEINHALT, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
-var ank = "_XZug_endet";
+var ank = { kind: BLOCK_T.ANKUNFT, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var Ank = ank;
+var dick = { kind: BLOCK_T.DICKERSTRICH, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var _anschluss_aus = "_Anschluss_aus";
 var _anschluss_aus_ziel = "_Anschluss_aus_ankunft";
 var _zugnr = "_xZugnr";
 var _klassen = "_Klassen_";
 var _anschluss_nach_start = "_Anschluss_nach_abfahrt";
 var _anschluss_nach_in = "_Anschluss_nach_in";
-var SENKRECHT_PREFIX = "_senkrecht_";
-var WAAGERECHT_PREFIX = "_waagerecht_";
-var wa = WAAGERECHT_PREFIX + "a";
-var wx = WAAGERECHT_PREFIX + "x";
-var sa = SENKRECHT_PREFIX + "a";
-var sb = SENKRECHT_PREFIX + "b";
-var sc = SENKRECHT_PREFIX + "c";
-var sd = SENKRECHT_PREFIX + "d";
-var se = SENKRECHT_PREFIX + "e";
-var sf = SENKRECHT_PREFIX + "f";
-var sg = SENKRECHT_PREFIX + "g";
-var sh = SENKRECHT_PREFIX + "h";
-var si = SENKRECHT_PREFIX + "i";
-var sk = SENKRECHT_PREFIX + "k";
-var sl = SENKRECHT_PREFIX + "l";
-var sj = SENKRECHT_PREFIX + "j";
-var sm = SENKRECHT_PREFIX + "m";
-var sp = SENKRECHT_PREFIX + "p";
+var wa = { kind: BLOCK_T.BLOCK, Senkrecht: false, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "a", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var wx = { kind: BLOCK_T.BLOCK, Senkrecht: false, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "x", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sa = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "a", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sb = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "b", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sc = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "c", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sd = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "d", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var se = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "e", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sf = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "f", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sg = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "g", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sh = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "h", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var si = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "i", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sk = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "k", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sl = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "l", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sj = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "j", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sm = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "m", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var sp = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "p", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var ORTPREFIX = "_Ort_";
 var CH = ORTPREFIX + "Chemnitz";
 var LE = ORTPREFIX + "Leipzig";
@@ -3702,7 +3726,7 @@ System.register("SaxBaseTypes", [], function (exports_1, context_1) {
 System.register("SaxParsedTypes", [], function (exports_2, context_2) {
     "use strict";
     var __moduleName = context_2 && context_2.id;
-    var EBahnverwaltung, EScope, EQuelle, ZEILE_T, EAnAb, VERWEIS_T, TEXTORT_T, KBS_ABWEICHUNG_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt;
+    var EBahnverwaltung, EQuelle, ZEILE_T, EAnAb, KBS_ABWEICHUNG_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt;
     return {
         setters: [],
         execute: function () {
@@ -3711,11 +3735,6 @@ System.register("SaxParsedTypes", [], function (exports_2, context_2) {
                 EBahnverwaltung[EBahnverwaltung["KSaechsStsEB"] = 1] = "KSaechsStsEB";
             })(EBahnverwaltung || (EBahnverwaltung = {}));
             exports_2("EBahnverwaltung", EBahnverwaltung);
-            (function (EScope) {
-                EScope[EScope["DefaultZug"] = 1] = "DefaultZug";
-                EScope[EScope["RestSpalte"] = 2] = "RestSpalte";
-            })(EScope || (EScope = {}));
-            exports_2("EScope", EScope);
             (function (EQuelle) {
                 EQuelle[EQuelle["FritzscheSommer1900"] = 0] = "FritzscheSommer1900";
             })(EQuelle || (EQuelle = {}));
@@ -3736,26 +3755,6 @@ System.register("SaxParsedTypes", [], function (exports_2, context_2) {
                 EAnAb[EAnAb["FollowAb"] = 2] = "FollowAb";
             })(EAnAb || (EAnAb = {}));
             exports_2("EAnAb", EAnAb);
-            (function (VERWEIS_T) {
-                VERWEIS_T["PASSEND"] = "VERWEIS_PASSEND";
-                VERWEIS_T["FERN"] = "VERWEIS_FERN";
-                VERWEIS_T["EMBEDDED"] = "VERWEIS_EMBEDDED";
-                VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
-            })(VERWEIS_T || (VERWEIS_T = {}));
-            exports_2("VERWEIS_T", VERWEIS_T);
-            (function (TEXTORT_T) {
-                TEXTORT_T["NICHTANGEGEBEN"] = "TEXTORT_NICHTANGEGEBEN";
-                TEXTORT_T["LINKSVONHEADER"] = "TEXTORT_LINKSVONHEADER";
-                TEXTORT_T["RECHTSVONHEADER"] = "TEXTORT_RECHTSVONHEADER";
-                TEXTORT_T["UNTERHEADER"] = "TEXTORT_UNTERHEADER";
-                TEXTORT_T["GANZESPALTE"] = "TEXTORT_GANZESPALTE";
-            })(TEXTORT_T || (TEXTORT_T = {}));
-            exports_2("TEXTORT_T", TEXTORT_T);
-            ;
-            ;
-            ;
-            ;
-            ;
             (function (KBS_ABWEICHUNG_T) {
                 KBS_ABWEICHUNG_T["KEINE"] = "KBS_ABWEICHUNG_KEINE";
                 KBS_ABWEICHUNG_T["AUS"] = "KBS_ABWEICHUNG_AUS";
@@ -3783,7 +3782,7 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
         return (test != null && test.kind == undefined);
     }
     exports_3("isIZeilenZusatzInfo", isIZeilenZusatzInfo);
-    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, ZW, SC, JO, KA, AU, AN, LU, CT, CN, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, dick, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
+    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, ZW, SC, JO, KA, AU, AN, LU, CT, CN, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
     return {
         setters: [],
         execute: function () {
@@ -3813,7 +3812,6 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("pfeilstart", pfeilstart = "_VERWEISTYP_pfeilstart");
             exports_3("sonn_und_festtags", sonn_und_festtags = "_TAGTYP_sonn_und_festtags");
             exports_3("nur_werktags", nur_werktags = "_TAGTYP_nur_werktags");
-            exports_3("dick", dick = "_CELL_dickerstrich");
             exports_3("headerlinks", headerlinks = "_headerleft");
             exports_3("headerrechts", headerrechts = "_headerright");
             exports_3("nach9spalten", nach9spalten = "_nach9spalten");
@@ -4275,51 +4273,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             if (("string" == typeof rawEntry)) {
                                                 if (rawEntry.indexOf("_") == 0) {
                                                     tIsTime == false;
-                                                    if (rawEntry == gnix) {
-                                                        var tResultEntryL = {
-                                                            kind: BLOCK_T.LEER,
-                                                            MitStrich: false,
-                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                                        };
-                                                        tResultZeile.Zeiteintraege.push(tResultEntryL);
-                                                    }
-                                                    else if (rawEntry.indexOf(ank) == 0) {
-                                                        var tResultEntryAnk = {
-                                                            kind: BLOCK_T.ANKUNFT,
-                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                                        };
-                                                        tResultZeile.Zeiteintraege.push(tResultEntryAnk);
-                                                    }
-                                                    else if (rawEntry == SaxInput.dick) {
-                                                        var tResultEntryD = {
-                                                            kind: BLOCK_T.DICKERSTRICH,
-                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                                        };
-                                                        tResultZeile.Zeiteintraege.push(tResultEntryD);
-                                                    }
-                                                    else if ((rawEntry.indexOf(SENKRECHT_PREFIX) == 0) || (rawEntry.indexOf(WAAGERECHT_PREFIX) == 0)) {
-                                                        var senkleng = SENKRECHT_PREFIX.length;
-                                                        var waagleng = WAAGERECHT_PREFIX.length;
-                                                        var tResultEntryB = {
-                                                            kind: BLOCK_T.BLOCK,
-                                                            Senkrecht: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0),
-                                                            Valid: false,
-                                                            Start: false,
-                                                            Breite: 1,
-                                                            Hoehe: 1,
-                                                            Passend: true,
-                                                            Referenzkey: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0) ? rawEntry.substr(senkleng) : rawEntry.substr(waagleng),
-                                                            Blockinhalt: undefined,
-                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                                        };
-                                                        tResultZeile.Zeiteintraege.push(tResultEntryB);
-                                                    }
-                                                    else if (rawEntry.indexOf("_Z") == 0) {
+                                                    if (rawEntry.indexOf("_Z") == 0) {
                                                         var tZugNr = rawEntry.substr(2);
                                                         var tBlockKpl = {
                                                             Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                             Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, ZugNr: tZugNr } } },
-                                                            TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
+                                                            TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                                         };
                                                         var tResultEntryB = Importer.createTBlockEintrag_single(tBlockKpl);
                                                         tResultZeile.Zeiteintraege.push(tResultEntryB);
@@ -4329,7 +4288,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                         var tBlockKpl = {
                                                             Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                             Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, Klasse: rawEntry } } },
-                                                            TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
+                                                            TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                                         };
                                                         var tResultEntryB = Importer.createTBlockEintrag_single(tBlockKpl);
                                                         tResultZeile.Zeiteintraege.push(tResultEntryB);
@@ -4385,6 +4344,15 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                 case BLOCK_T.LEER:
                                                     tResultZeile.Zeiteintraege.push(rawentryX);
                                                     break;
+                                                case BLOCK_T.ANKUNFT:
+                                                    tResultZeile.Zeiteintraege.push(rawentryX);
+                                                    break;
+                                                case BLOCK_T.DICKERSTRICH:
+                                                    tResultZeile.Zeiteintraege.push(rawentryX);
+                                                    break;
+                                                case BLOCK_T.BLOCK:
+                                                    tResultZeile.Zeiteintraege.push(rawentryX);
+                                                    break;
                                                 default:
                                                     SaxBaseTypes_1.assertNever(rawentryX);
                                                     break;
@@ -4407,8 +4375,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     tResult.Zeilen.push(tResultZeile);
                                 }
                                 if (("string" == typeof zeile[0]) && ((zeile[0].indexOf(_zugnr) == 0)
-                                    || (zeile[0].indexOf(_klassen) == 0)
-                                    || (zeile[1].indexOf(kl) == 0))) {
+                                    || (zeile[0].indexOf(_klassen) == 0) || (zeile[1].indexOf(kl) == 0))) {
                                     var tResultZeileNrn = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ZUGNR,
                                         ZugNummern: [],
@@ -4423,25 +4390,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         };
                                         tResultZeileNrn = x;
                                         console.log("KLASSENZEILE ", i);
-                                        console.log("BLOCKK");
-                                        if (("string" == typeof zeile[0])
-                                            && (zeile[1].indexOf(kl) == 0)
-                                            && (zeile[0].indexOf(WAAGERECHT_PREFIX) == 0)) {
-                                            var tKey = zeile[0].substr(WAAGERECHT_PREFIX.length);
-                                            console.log("BLOCKK2");
-                                            x.BlockEintrag = {
-                                                kind: BLOCK_T.BLOCK,
-                                                Start: true,
-                                                Senkrecht: false,
-                                                Breite: 1,
-                                                Hoehe: 1,
-                                                Passend: true,
-                                                Referenzkey: tKey,
-                                                Blockinhalt: undefined,
-                                                Valid: true,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-                                        }
+                                        console.error("TODO implement      [wa,kl, ..]    vorne in KlassenNrZeile");
                                     }
                                     for (var zi = 2; zi < zeile.length; zi++) {
                                         var zeile_zi = zeile[zi];
@@ -4449,7 +4398,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, ZugNr: zeile[zi].toString() } } },
-                                                TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
+                                                TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                             };
                                             var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
                                             switch (tResultZeileNrn.kind) {
@@ -4496,7 +4445,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, Klasse: zeile_zi } } },
-                                                TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
+                                                TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                             };
                                             var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
                                             switch (tResultZeileNrn.kind) {
@@ -4508,36 +4457,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
-                                        else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && ((zeile[zi].indexOf(SENKRECHT_PREFIX) == 0)
-                                            || (zeile[zi].indexOf(WAAGERECHT_PREFIX) == 0))) {
-                                            var senkleng = SENKRECHT_PREFIX.length;
-                                            var waagleng = WAAGERECHT_PREFIX.length;
-                                            var tResultEntryB = {
-                                                kind: BLOCK_T.BLOCK,
-                                                Senkrecht: (zeile[zi].indexOf(SENKRECHT_PREFIX) == 0),
-                                                Valid: false,
-                                                Start: false,
-                                                Breite: 1,
-                                                Hoehe: 1,
-                                                Passend: true,
-                                                Referenzkey: (zeile[zi].indexOf(SENKRECHT_PREFIX) == 0) ? zeile[zi].substr(senkleng) : zeile[zi].substr(waagleng),
-                                                Blockinhalt: undefined,
-                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                            };
-                                            switch (tResultZeileNrn.kind) {
-                                                case (SaxParsedTypes_1.ZEILE_T.ZUGNR):
-                                                    tResultZeileNrn.ZugNummern.push(tResultEntryB);
-                                                    break;
-                                                case (SaxParsedTypes_1.ZEILE_T.KLASSEN):
-                                                    tResultZeileNrn.KlassenNummern.push(tResultEntryB);
-                                                    break;
-                                            }
-                                        }
                                         else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && (("string" == typeof zeile[0]) && ((zeile[0].indexOf(_zugnr) == 0)))) {
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, ZugNr: zeile[zi].toString() } } },
-                                                TextOrt: { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN },
+                                                TextOrt: { kind: TEXTORT_T.NICHTANGEGEBEN },
                                             };
                                             var tWert = Importer.createTBlockEintrag_single(tBlockKpl);
                                             switch (tResultZeileNrn.kind) {
@@ -4554,6 +4478,18 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         }
                                         else if (!SaxInput.isIZeilenZusatzInfo(zeile_zi)) {
                                             console.error("unknown error in  klassen or zugnummerzeile: ", zeile_zi.kind);
+                                            switch (zeile_zi.kind) {
+                                                case BLOCK_T.BLOCK:
+                                                    switch (tResultZeileNrn.kind) {
+                                                        case (SaxParsedTypes_1.ZEILE_T.ZUGNR):
+                                                            tResultZeileNrn.ZugNummern.push(zeile_zi);
+                                                            break;
+                                                        case (SaxParsedTypes_1.ZEILE_T.KLASSEN):
+                                                            tResultZeileNrn.KlassenNummern.push(zeile_zi);
+                                                            break;
+                                                    }
+                                                    break;
+                                            }
                                         }
                                         else {
                                             var z = Importer.parseZeitZeileZusatzInfo(zeile_zi);
@@ -4596,12 +4532,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 }
                 ZI_Creator.createTVerweisEmbedded = function () {
                     return {
-                        kind: SaxParsedTypes_1.VERWEIS_T.EMBEDDED
+                        kind: VERWEIS_T.EMBEDDED
                     };
                 };
                 ZI_Creator.createTVerweisPassend = function (key, scope) {
                     return {
-                        kind: SaxParsedTypes_1.VERWEIS_T.PASSEND,
+                        kind: VERWEIS_T.PASSEND,
                         ReferenzKey: key,
                         Scope: scope
                     };
@@ -4638,308 +4574,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
             ZI_Importer = (function () {
                 function ZI_Importer() {
                 }
-                ZI_Importer.parseIZellenEigenschaft = function (inp) {
-                    var ok_inp_ab = false;
-                    var ok_inp_cellkey = false;
-                    var ok_inp_destcellkey = false;
-                    var ok_inp_key = false;
-                    var ok_inp_klassen = false;
-                    var ok_inp_marker = false;
-                    var ok_inp_nach = false;
-                    var ok_inp_sonnundfeiertagzeit = false;
-                    var ok_inp_srccellkey = false;
-                    var ok_inp_tage = false;
-                    var ok_inp_typ = false;
-                    var ok_inp_verweisort = false;
-                    var ok_inp_von = false;
-                    var ok_inp_zugnr = false;
-                    var ok_inp_scope = false;
-                    var ok_inp_bahn = false;
-                    var tGueltig = { kind: GUELTIG_T.IMMER };
-                    if (inp.ab) {
-                        tGueltig = {
-                            kind: GUELTIG_T.AB,
-                            bhf: inp.ab
-                        };
-                        ok_inp_ab = true;
-                    }
-                    else {
-                        ok_inp_ab = true;
-                    }
-                    var tCellKey = "";
-                    if (inp.cellkey) {
-                        tCellKey = inp.cellkey.substr(0, 1);
-                        ok_inp_cellkey = true;
-                    }
-                    else {
-                        ok_inp_cellkey = true;
-                    }
-                    var tReferenzkey = "";
-                    if (inp.key) {
-                        tReferenzkey = inp.key;
-                        ok_inp_key = true;
-                    }
-                    else {
-                        ok_inp_key = true;
-                    }
-                    var tMarker = "";
-                    if (inp.marker) {
-                        tMarker = inp.marker;
-                        ok_inp_marker = true;
-                    }
-                    else {
-                        ok_inp_marker = true;
-                    }
-                    var tFahrtage = {
-                        kind: FAEHRT_T.IMMER
-                    };
-                    if (inp.tage) {
-                        switch (inp.tage) {
-                            case SaxInput.sonn_und_festtags:
-                                tFahrtage = {
-                                    kind: FAEHRT_T.SONNUNDFESTTAGS
-                                };
-                                break;
-                            case SaxInput.nur_werktags:
-                                tFahrtage = {
-                                    kind: FAEHRT_T.WERKTAGS
-                                };
-                                break;
-                            default: console.warn("unbekannte Fahrtage: ", inp.tage);
-                        }
-                        ok_inp_tage = true;
-                    }
-                    else {
-                        ok_inp_tage = true;
-                    }
-                    var tPfeilInfo = { kind: SaxParsedTypes_1.TKEINPFEIL };
-                    var tTyp = ZI_Creator.createTVerweisEmbedded();
-                    if (inp.typ) {
-                        switch (inp.typ) {
-                            case SaxInput.passend:
-                                var tScopePassend = SaxParsedTypes_1.EScope.DefaultZug;
-                                if (inp.scope) {
-                                    if (inp.scope == SaxInput.restspalte) {
-                                        tScopePassend = SaxParsedTypes_1.EScope.RestSpalte;
-                                        ok_inp_scope = true;
-                                    }
-                                    if (inp.scope == SaxInput.defaultzug) {
-                                        tScopePassend = SaxParsedTypes_1.EScope.DefaultZug;
-                                        ok_inp_scope = true;
-                                    }
-                                }
-                                else {
-                                    ok_inp_scope = true;
-                                }
-                                tTyp = ZI_Creator.createTVerweisPassend(tReferenzkey, tScopePassend);
-                                ok_inp_typ = true;
-                                ok_inp_key = true;
-                                ok_inp_marker = true;
-                                break;
-                            case SaxInput.fern:
-                                tTyp = {
-                                    kind: SaxParsedTypes_1.VERWEIS_T.FERN,
-                                    ReferenzKey: (tReferenzkey.length > 0) ? tReferenzkey : tCellKey,
-                                    OpticalMarker: tMarker
-                                };
-                                ok_inp_typ = true;
-                                break;
-                            case SaxInput.pfeilstart:
-                                if (inp.destcellkey) {
-                                    var tPfeilStart = {
-                                        kind: SaxParsedTypes_1.TPFEIL_START, ReferenzKey: inp.destcellkey.substr(0, 1)
-                                    };
-                                    tPfeilInfo = tPfeilStart;
-                                    ok_inp_destcellkey = true;
-                                    tTyp = {
-                                        kind: SaxParsedTypes_1.VERWEIS_T.FERN,
-                                        ReferenzKey: (tReferenzkey.length > 0) ? tReferenzkey : tCellKey,
-                                        OpticalMarker: ""
-                                    };
-                                    ok_inp_typ = true;
-                                }
-                                else {
-                                    console.warn("ERROR: pfeilstart ohne destcellkey !!!");
-                                }
-                                break;
-                            case SaxInput.pfeilziel:
-                                if (inp.srccellkey) {
-                                    var tPfeilZiel = {
-                                        kind: SaxParsedTypes_1.TPFEIL_ZIEL, ReferenzKey: inp.srccellkey.substr(0, 1)
-                                    };
-                                    tPfeilInfo = tPfeilZiel;
-                                    ok_inp_srccellkey = true;
-                                    tTyp = {
-                                        kind: SaxParsedTypes_1.VERWEIS_T.FERN,
-                                        ReferenzKey: (tReferenzkey.length > 0) ? tReferenzkey : tCellKey,
-                                        OpticalMarker: ""
-                                    };
-                                    ok_inp_typ = true;
-                                }
-                                else {
-                                    console.warn("ERROR: pfeilziel ohne srccellkey !!!");
-                                }
-                                break;
-                            case SaxInput.global:
-                                tTyp = {
-                                    kind: SaxParsedTypes_1.VERWEIS_T.GLOBAL_DEFAULT
-                                };
-                                ok_inp_typ = true;
-                                break;
-                            default:
-                                console.warn("typ must be there, unknown: " + inp.typ);
-                        }
-                    }
-                    else {
-                        console.warn("typ must be there !!!");
-                    }
-                    var tBlockZugKlasse = {
-                        Zugnr: (inp.zugnr != undefined) ? inp.zugnr.toString() : null,
-                        Klassen: ZI_Creator.parseKlassenString(inp.klassen)
-                    };
-                    ok_inp_klassen = true;
-                    ok_inp_zugnr = true;
-                    if (inp.sonnundfeiertagzeit) {
-                        console.error("SaxSchedulesZusatzBase.ts :  sonnundfeiertagszeit parser not implemented");
-                    }
-                    else {
-                        ok_inp_sonnundfeiertagzeit = true;
-                    }
-                    var tTextOrt = { kind: SaxParsedTypes_1.TEXTORT_T.NICHTANGEGEBEN };
-                    if (inp.verweisort) {
-                        switch (inp.verweisort) {
-                            case SaxInput.headerlinks:
-                                tTextOrt = { kind: SaxParsedTypes_1.TEXTORT_T.LINKSVONHEADER };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.headerrechts:
-                                tTextOrt = { kind: SaxParsedTypes_1.TEXTORT_T.RECHTSVONHEADER };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.nach9spalten:
-                                tTextOrt = {
-                                    kind: SaxParsedTypes_1.TEXTORT_T.GANZESPALTE,
-                                    UebersprungeneSpalten: 9,
-                                    Spaltenbreite: 1
-                                };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.nach4spalten:
-                                tTextOrt = {
-                                    kind: SaxParsedTypes_1.TEXTORT_T.GANZESPALTE,
-                                    UebersprungeneSpalten: 4,
-                                    Spaltenbreite: 1
-                                };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.nach4spalten2spalten:
-                                tTextOrt = {
-                                    kind: SaxParsedTypes_1.TEXTORT_T.GANZESPALTE,
-                                    UebersprungeneSpalten: 4,
-                                    Spaltenbreite: 2
-                                };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.nach5spalten2spalten:
-                                tTextOrt = {
-                                    kind: SaxParsedTypes_1.TEXTORT_T.GANZESPALTE,
-                                    UebersprungeneSpalten: 5,
-                                    Spaltenbreite: 2
-                                };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.nach6spalten:
-                                tTextOrt = {
-                                    kind: SaxParsedTypes_1.TEXTORT_T.GANZESPALTE,
-                                    UebersprungeneSpalten: 6,
-                                    Spaltenbreite: 1
-                                };
-                                ok_inp_verweisort = true;
-                                break;
-                            case SaxInput.nach10spalten4spalten:
-                                tTextOrt = {
-                                    kind: SaxParsedTypes_1.TEXTORT_T.GANZESPALTE,
-                                    UebersprungeneSpalten: 10,
-                                    Spaltenbreite: 4
-                                };
-                                ok_inp_verweisort = true;
-                                break;
-                            default:
-                                console.warn("verweisort unbekannt: ", inp.verweisort);
-                        }
-                    }
-                    else {
-                        ok_inp_verweisort = true;
-                    }
-                    var tKbsAbweichung = ZI_Creator.createKbsAbweichungKeine();
-                    if (inp.von) {
-                        var tKbsAbweichungA = {
-                            kind: SaxParsedTypes_1.KBS_ABWEICHUNG_T.AUS,
-                            bhf: inp.von,
-                            KBS: "",
-                            SchonKomplettiert: false
-                        };
-                        tKbsAbweichung = tKbsAbweichungA;
-                        ok_inp_von = true;
-                    }
-                    else {
-                        ok_inp_von = true;
-                    }
-                    if (inp.nach) {
-                        var tKbsAbweichungN = {
-                            kind: SaxParsedTypes_1.KBS_ABWEICHUNG_T.NACH,
-                            bhf: inp.nach,
-                            KBS: "",
-                            SchonKomplettiert: false
-                        };
-                        tKbsAbweichung = tKbsAbweichungN;
-                        ok_inp_nach = true;
-                    }
-                    else {
-                        ok_inp_nach = true;
-                    }
-                    var tBahn = SaxParsedTypes_1.EBahnverwaltung.NichtAngegeben;
-                    if (inp.bahn) {
-                        if (inp.bahn == SaxInput.Sachs) {
-                            tBahn = SaxParsedTypes_1.EBahnverwaltung.KSaechsStsEB;
-                            ok_inp_bahn = true;
-                        }
-                        else {
-                        }
-                    }
-                    else {
-                        ok_inp_bahn = true;
-                    }
-                    var tBRT = {
-                        kind: SaxParsedTypes_1.BlockRaw_ok
-                    };
-                    if (!(ok_inp_ab && ok_inp_cellkey && ok_inp_destcellkey && ok_inp_key && ok_inp_klassen && ok_inp_marker && ok_inp_nach
-                        && ok_inp_sonnundfeiertagzeit && ok_inp_srccellkey && ok_inp_tage && ok_inp_typ && ok_inp_verweisort && ok_inp_von && ok_inp_zugnr
-                        && ok_inp_scope && ok_inp_bahn)) {
-                        tBRT = {
-                            kind: SaxParsedTypes_1.BlockRawUnbekannt,
-                            Eingabedaten: inp
-                        };
-                    }
-                    var tBlockKpl = {
-                        Verweistyp: tTyp,
-                        ZugNrOderKlasse: tBlockZugKlasse,
-                        Gueltig: tGueltig,
-                        KbsAbweichung: tKbsAbweichung,
-                        Fahrtage: tFahrtage,
-                        TextOrt: tTextOrt,
-                        PfeilInfo: tPfeilInfo,
-                        Unbekannt: tBRT,
-                        Bahnverwaltung: tBahn
-                    };
-                    console.log(JSON.stringify(inp));
-                    console.log("wird zu:");
-                    console.log(JSON.stringify(tBlockKpl));
-                    return tBlockKpl;
-                };
-                ZI_Importer.assertNever = function (x) {
-                    throw new Error("Unexpected object: " + x);
-                };
                 return ZI_Importer;
             }());
             exports_4("ZI_Importer", ZI_Importer);
@@ -5125,7 +4759,7 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                     var nextFreeMarkerIdx = 0;
                     var freemarker = ["\u26B4", "\u26B5", "\u26B6"];
                     s.ZusatzBloecke.forEach(function (z, idx, arr) {
-                        if (z.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.FERN) {
+                        if (z.Verweistyp.kind == VERWEIS_T.FERN) {
                             if (z.Verweistyp.OpticalMarker == SaxInputTypes_1.chooseown) {
                                 z.Verweistyp.OpticalMarker = freemarker[nextFreeMarkerIdx];
                                 nextFreeMarkerIdx++;
@@ -5151,9 +4785,9 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                         var tFound = null;
                                         for (var i = 0; i < s.ZusatzBloecke.length; i++) {
                                             var tBlockZusatz = s.ZusatzBloecke[i];
-                                            if (tBlockZusatz.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.EMBEDDED) {
+                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.EMBEDDED) {
                                             }
-                                            if (tBlockZusatz.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.PASSEND) {
+                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_T.PASSEND) {
                                                 if (tBlockZusatz.Verweistyp.ReferenzKey === z.BlockEintrag.Referenzkey) {
                                                     if (tFound == null) {
                                                         tFound = tBlockZusatz;
@@ -5186,9 +4820,9 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                                 var tFound = null;
                                                 for (var i = 0; i < s.ZusatzBloecke.length; i++) {
                                                     var tBlockZusatz = s.ZusatzBloecke[i];
-                                                    if (tBlockZusatz.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.EMBEDDED) {
+                                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.EMBEDDED) {
                                                     }
-                                                    if (tBlockZusatz.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == SaxParsedTypes_2.VERWEIS_T.PASSEND) {
+                                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_T.PASSEND) {
                                                         if (tBlockZusatz.Verweistyp.ReferenzKey === zi.Referenzkey) {
                                                             if (tFound == null) {
                                                                 tFound = tBlockZusatz;
@@ -5383,8 +5017,8 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                         tSpaltenGesamtZahl += tZeile0.Zeiteintraege.length;
                     }
                     input.ZusatzBloecke.forEach(function (zb) {
-                        if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT) {
-                            if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_T.GANZESPALTE) {
+                        if (zb.Verweistyp.kind == VERWEIS_T.GLOBAL_DEFAULT) {
+                            if (zb.TextOrt.kind == TEXTORT_T.GANZESPALTE) {
                                 tSpaltenGesamtZahl += zb.TextOrt.Spaltenbreite;
                             }
                         }
@@ -5408,8 +5042,8 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                     tTbody.appendChild(tErzeugeTrennzeile("TRENN durchgehend", tSpaltenGesamtZahl));
                     var tSpalteNach = {};
                     input.ZusatzBloecke.forEach(function (zb) {
-                        if (zb.Verweistyp.kind == SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT) {
-                            if (zb.TextOrt.kind == SaxSchedulesTyped.TEXTORT_T.GANZESPALTE) {
+                        if (zb.Verweistyp.kind == VERWEIS_T.GLOBAL_DEFAULT) {
+                            if (zb.TextOrt.kind == TEXTORT_T.GANZESPALTE) {
                                 tSpalteNach[zb.TextOrt.UebersprungeneSpalten] = { breite: zb.TextOrt.Spaltenbreite, bl: zb };
                             }
                         }
@@ -5614,7 +5248,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 var tOptical = "";
                                                 for (var i_1 = 0; i_1 < input.ZusatzBloecke.length; i_1++) {
                                                     var tVerweis = input.ZusatzBloecke[i_1].Verweistyp;
-                                                    if (tVerweis.kind == SaxSchedulesTyped.VERWEIS_T.FERN) {
+                                                    if (tVerweis.kind == VERWEIS_T.FERN) {
                                                         if (tVerweis.ReferenzKey === ze.Referenzkey) {
                                                             tOptical = tVerweis.OpticalMarker;
                                                         }
@@ -5773,16 +5407,16 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                     parentToAppendTo.appendChild(tDiv);
                     input.ZusatzBloecke.forEach(function (zb) {
                         switch (zb.Verweistyp.kind) {
-                            case SaxSchedulesTyped.VERWEIS_T.GLOBAL_DEFAULT:
+                            case VERWEIS_T.GLOBAL_DEFAULT:
                                 switch (zb.TextOrt.kind) {
-                                    case SaxSchedulesTyped.TEXTORT_T.LINKSVONHEADER:
+                                    case TEXTORT_T.LINKSVONHEADER:
                                         console.log("x tHeadLeftDiv ", tHeadLeftDiv);
                                         var e = document.getElementById(tHeadLeftDiv.getAttribute("id"));
                                         if ((e) && (e)) {
                                             e.innerHTML += SaxParser_1.ZI_Renderer.TBlockInhaltNachRenderKomplex(zb, false);
                                         }
                                         break;
-                                    case SaxSchedulesTyped.TEXTORT_T.RECHTSVONHEADER:
+                                    case TEXTORT_T.RECHTSVONHEADER:
                                         console.log("x tHeadRightDiv ", tHeadRightDiv);
                                         var e = document.getElementById(tHeadRightDiv.getAttribute("id"));
                                         if ((e) && (e)) {
@@ -5827,14 +5461,14 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
         }
     };
 });
-System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) {
+System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
     "use strict";
     var __moduleName = context_7 && context_7.id;
-    var SaxParsedTypes_3, InputData;
+    var SaxInputTypes_2, InputData;
     return {
         setters: [
-            function (SaxParsedTypes_3_1) {
-                SaxParsedTypes_3 = SaxParsedTypes_3_1;
+            function (SaxInputTypes_2_1) {
+                SaxInputTypes_2 = SaxInputTypes_2_1;
             }
         ],
         execute: function () {
@@ -5849,15 +5483,51 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                         zeilen: [
                             [_anschluss_aus, CH, _, _, _, _, _, _, _, _, 639, _, 902, _, _, 1212, _, _, _, 242, 505, _, 715,
                                 { ort: "Chemnitz", nr: 85 }],
+                            [_zugnr, zn, gnix, 1951, gnix, 1861, gnix, gnix, 1931, 1867, 1933, gnix, 1995, gnix, gnix, 1935, 1869, 1937, _, 1997, 1939, 1871, 1999],
+                            [_klassen, kl, gnix, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b3, _, k2b4, k2b4, k2b3, k2b4],
+                            ["Annaberg", ab, _, _, _, _, _, _, 605, _, 918, _, 1126, _, _, 226, _, sg, _, 607, 736, _, 944],
+                            [2.7, "Buchholz", ab, _, _, _, _, _, _, 613, _, 930, _, 1136, _, _, 237, _, sg, _, 619, 749, _, 954, { nr: 85 }],
+                            [8.6, SaxInputTypes_2.WaltersdfHst, ab, _, _, _, _, _, _, 630, _, 947, _, 1153, _, _, 256, _, sg, _, 636, 808, _, 1011],
+                            ["Schlettau", an, _, _, _, _, _, _, 635, _, 952, _, 1158, _, _, 301, _, sg, _, 641, 813, _, 1016, { nr: "99b" }],
+                            [9.9, "Schlettau", ab, _, _, _, 525, _, _, 640, 853, 957, _, _, _, _, 306, 320, 610, SaxInputTypes_2.Z1971, _, 818, 830, _],
+                            [18.3, "Scheibenberg", ab, _, _, _, 540, _, _, 651, 903, 1008, _, _, _, _, 317, 341, 621, k2b3, _, 830, 840, _],
+                            [20.8, SaxInputTypes_2.MittwMrkb, ab, _, _, _, se, _, _, 710, ank, 1027, _, _, _, _, 336, sf, 639, sh, _, 848, ank, _],
+                            [22.2, "Raschau", ab, _, _, _, se, _, _, 716, _, 1033, _, _, _, _, 342, sf, 645, sh, _, 854, sk, _],
+                            [24.1, "Grünstädtel", an, _, _, _, se, _, _, 723, _, 1040, _, _, _, _, 349, sf, 651, sh, _, 901, sk, _],
+                            ["Grünstädtel", ab, _, _, _, se, _, _, 724, _, 1042, _, SaxInputTypes_2.Z2045, sb, sc, 354, sf, 652, sh, SaxInputTypes_2.Z1967, 903, sk, SaxInputTypes_2.Z2065, { nr: "99c" }],
+                            [28.8, "Schwarzenberg Bf.", an, _, _, _, se, _, _, 732, _, 1050, _, k2b4, sb, sc, 402, sf, 659, sh, k2b4, 911, sk, k2b4, { nr: "100a" }],
+                            ["Schwarzenberg Bf.", ab, _, 435, _, se, _, _, 739, _, 1056, _, 1256, sb, sc, 416, sf, _, 649, 704, 916, sk, 1125],
+                            [29.3, "Neuwelt", ab, _, 442, _, se, _, _, 746, _, 1103, _, kHlt, sb, sc, 423, sf, _, 656, 711, 923, sk, 1132],
+                            [31.2, "Lauter", ab, _, 548, _, se, _, _, 752, _, 1110, _, 106, sb, sc, 429, sf, _, 702, 717, 930, sk, 1138],
+                            [37.3, "Aue", an, _, 500, _, se, _, _, 804, _, 1122, _, 117, sb, sc, 441, sf, _, 713, 728, 942, sk, 1150],
+                            [_zugnr, zn, _, 1951, _, _, _, _, 1953, _, 1959, _, _, _, _, 1865, _, _, 1971, 1967, 1969, sk, _],
+                            [_klassen, kl, _, k2b4, _, _, _, _, k2b4, _, k2b4, _, _, _, _, k2b4, _, _, k2b3, k2b4, k2b4, sk, _],
+                            ["Aue", ab, _, 507, _, _, _, _, 817, _, 1141, _, 118, _, _, 505, _, _, 715, 732, 1004, sk, _],
+                            [41.6, "Niederschlema", an, _, 516, _, _, _, _, 826, _, 1150, _, 126, _, _, 514, _, _, 723, 741, 1013, _, _],
+                            [_zugnr, zn, 1978, _, 2043, 205, 2051, 2053, _, 2055, _, 2057, _, 2059, 2061, _, 1975, 2047, _, _, _, _, _],
+                            [_klassen, kl, k2b4, _, k2b4, k1b3, k2b4, k2b4, _, k2b4, _, k2b4, _, k2b4, k2b4, _, k3b4, k2b4, _, _, _, _, _],
+                            ["Niederschlema", ab, sl, 518, _, _, _, _, 830, sd, 1155, _, 128, _, _, 517, si, _, 724, 742, 1019, _, _],
+                            [47.4, "Stein-Hartenstein", ab, sl, 528, _, _, _, _, 840, sd, 1206, _, 139, _, _, 527, si, _, 734, 755, 1029, _, _],
+                            ["Fährbrücke", ab, sl, 538, _, _, _, _, 849, sd, 1216, _, 148, _, _, 537, si, _, 743, 804, 1038, _, _],
+                            [55.7, "Wiesenburg", ab, sl, 548, _, _, 717, _, 900, sd, 1228, _, 157, 319, _, 547, si, 635, 752, 813, 1048, _, _],
+                            ["Silberstrasse", ab, sl, kHlt, _, _, 723, _, kHlt, sd, kHlt, _, 203, 325, _, kHlt, si, 641, kHlt, kHlt, kHlt, _, _],
+                            [61.8, "Wilkau Bf.", ab, 445, 600, 631, _, 731, 818, 912, 1042, 1242, 124, 212, 334, 443, 600, si, 650, 804, 826, 1102, _, _, { nr: 96 }],
+                            ["Cainsdorf", ab, 452, 606, 637, _, 736, 824, 917, 1048, 1247, 130, 217, 339, 448, 605, si, 655, 809, 831, 1108, _, _],
+                            ["Schedewitz", ab, 459, 612, 642, _, 741, 829, 922, 1053, 1252, 135, 222, 344, 453, 610, si, 700, 814, 836, 1114, _, _],
+                            [67.2, "Zwickau", an, 505, 618, 649, _, SaxInputTypes_2.m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120, _, _, { nr: 54 }],
+                            ["Zwickau", ab, SaxInputTypes_2.a510, 632, 656, SaxInputTypes_2.n822, _, _, 948, SaxInputTypes_2.d1153, 115, _, 235, SaxInputTypes_2.b355, SaxInputTypes_2.c510, 620, 628, 710, 825, 908, 1150, _, _, { nrn: [54, 68] }],
+                            ["Lichtentanne", ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125, _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200, _, _],
+                            [76.8, "Werdau", an, 530, 647, 716, 835, wa, wa, 1008, 1212, 135, _, 254, 416, 529, 635, 655, 730, 845, 925, 1208, _, _, { nr: 59 }],
+                            [_anschluss_nach_in, LE, 749, SaxInputTypes_2.s810, 925, 1019, _, _, 1232, _, 341, _, SaxInputTypes_2.s550, 652, SaxInputTypes_2.s748, SaxInputTypes_2.s800, _, 957, _, 1205, SaxInputTypes_2.s321, _, _, { ort: "Leipzig", nr: 56 }]
                         ],
                         ZellenVerweise: [
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.FERN,
+                                    "kind": VERWEIS_T.FERN,
                                     "ReferenzKey": "a",
                                     "OpticalMarker": "*"
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: " *Zug2041 II-IV",
                                     BLOCK: { Standard: { scope: Zug, ZugNr: 2041, Klasse: Kl2bis4 } }
@@ -5865,11 +5535,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.FERN,
+                                    "kind": VERWEIS_T.FERN,
                                     "ReferenzKey": "b",
                                     "OpticalMarker": "_markerAussehen_fatdot"
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "(rund) Zug 1961",
                                     BLOCK: { Standard: { scope: Zug, ZugNr: 1961 } }
@@ -5877,11 +5547,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.FERN,
+                                    "kind": VERWEIS_T.FERN,
                                     "ReferenzKey": "c",
                                     "OpticalMarker": "?"
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "? Zug 1963",
                                     BLOCK: { Standard: { scope: Zug, ZugNr: 1963 } }
@@ -5889,11 +5559,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.FERN,
+                                    "kind": VERWEIS_T.FERN,
                                     "ReferenzKey": "d",
                                     "OpticalMarker": "!"
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "! Zug 1957",
                                     BLOCK: { Standard: { scope: Zug, ZugNr: 1957 } }
@@ -5901,11 +5571,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "e",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "nach Stollberg",
                                     BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
@@ -5913,11 +5583,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "f",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "nach Stollberg",
                                     BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
@@ -5925,11 +5595,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "g",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Sonn und Festtags",
                                     BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -5937,11 +5607,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "h",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Sonn und Festtags",
                                     BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -5949,11 +5619,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "i",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Nur Werktags.",
                                     BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
@@ -5961,11 +5631,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "k",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Sonn und Festtags",
                                     BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -5973,11 +5643,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.PASSEND,
+                                    "kind": VERWEIS_T.PASSEND,
                                     "ReferenzKey": "l",
                                     "Scope": 1
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Nur Werktags.",
                                     BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
@@ -5985,11 +5655,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.FERN,
+                                    "kind": VERWEIS_T.FERN,
                                     "ReferenzKey": "m",
                                     "OpticalMarker": ""
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Pfeil",
                                     BLOCK: { Standard: { scope: Zelle, PfeilStart: true } }
@@ -5997,25 +5667,69 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
                             },
                             {
                                 "Verweistyp": {
-                                    "kind": SaxParsedTypes_3.VERWEIS_T.FERN,
+                                    "kind": VERWEIS_T.FERN,
                                     "ReferenzKey": "n",
                                     "OpticalMarker": ""
                                 },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.NICHTANGEGEBEN },
+                                "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "Pfeil",
                                     BLOCK: { Standard: { scope: Zelle, PfeilZiel: true } }
                                 }
                             },
                             {
-                                "Verweistyp": { "kind": SaxParsedTypes_3.VERWEIS_T.GLOBAL_DEFAULT },
-                                "TextOrt": { "kind": SaxParsedTypes_3.TEXTORT_T.LINKSVONHEADER },
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
                                 Inhalt: {
                                     q: "Saechs Staatsb",
                                     BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
                                 }
                             }
                         ]
+                    },
+                    {
+                        todo: "fehlende sa-sl texte/bedeutungen",
+                        route1900: 99,
+                        seite: 103,
+                        caption: "Werdau--Aue--Annaberg",
+                        "zeilen": [
+                            [_anschluss_aus, LE, 1140, SaxInputTypes_2.s113, _, _, 500, SaxInputTypes_2.s710, _, SaxInputTypes_2.s845, _, _, SaxInputTypes_2.s1058, _, 108, _, _, _, 350, _, SaxInputTypes_2.s748, 720, _, { ort: "Leipzig", nr: 56 }],
+                            [_zugnr, zn, 1952, 2042, 2052, 1954, 1956, 1958, 2056, 2044, 2058, _, 1962, "1962a", 1964, 1966, 2062, 2046, 1968, 1976, 2048, 1972, 1970],
+                            [wx, kl, k2b4, k2b4, k2b4, k2b3, k2b4, k2b4, k2b4, k2b4, k2b4, _, k2b4, k2b4, k2b4, k2b4, k2b4, k2b4, k2b4, k3b4, k2b4, k2b4, k2b4],
+                            ["Werdau", ab, SaxInputTypes_2.x135, 545, _, sp, 726, 834, _, 1005, _, _, 1222, 126, 311, 426, _, 504, 622, 736, 912, 940, 1029],
+                            ["Lichtentanne", ab, kHlt, 556, _, sp, 739, kHlt, _, 1017, _, _, 1233, 135, 320, kHlt, _, 515, 635, 748, 923, 951, 1039],
+                            [9.6, "Zwickau", an, SaxInputTypes_2.x150, 605, _, sp, 749, 848, _, 1026, _, _, 1243, 142, 327, 444, _, 524, 645, 757, 932, 1000, 1048, { nr: 54 }],
+                            ["Zwickau", ab, 515, 608, 635, 644, SaxInputTypes_2.a754, 858, 1018, 1114, 1220, _, 123, SaxInputTypes_2.b233, 335, _, 422, 558, 701, 759, SaxInputTypes_2.c937, 1053, sc, { nrn: [54, 68] }],
+                            ["Schedewitz", ab, 522, 615, 642, 653, 801, 905, 1025, 1121, 1227, _, 131, 240, 342, _, 429, 605, 709, 807, 944, 1059, sc],
+                            ["Cainsdorf", ab, 528, 620, 647, 659, 806, 911, 1030, 1126, 1232, _, 137, 245, 348, _, 434, 610, 716, 814, 949, 1104, sc],
+                            [15.2, "Wilkau", ab, 535, 625, 652, 706, 811, 919, 1035, 1131, 1237, _, 145, 250, 355, _, 438, 615, 723, 819, 955, 1111, sc, { nr: 96 }],
+                            ["Silberstrasse", ab, kHlt, Ank, 701, kHlt, Ank, kHlt, Ank, 1140, Ank, _, kHlt, 259, kHlt, _, Ank, 623, kHlt, Ank, 1004, kHlt, sc],
+                            [21.1, "Wiesenburg", ab, 550, _, 706, 719, sa, 932, _, 1146, _, _, 159, 304, 408, _, _, 628, 735, sf, 1010, 1122, sc],
+                            ["Fährbrücke", ab, 600, _, Ank, 729, sa, 942, _, 1155, _, _, 210, ank, 418, _, _, Ank, 744, sf, 1019, 1132, sc],
+                            [29.4, "Stein-Hartenstein", ab, 610, _, _, 739, sa, 953, SaxInputTypes_2.Z1960, 1204, _, _, 221, sb, 428, _, _, _, 754, sf, 1028, 1141, sc],
+                            [35.2, "Niederschlema", an, 621, _, _, 749, sa, 1004, k2b4, 1214, _, _, 232, sb, 439, _, _, _, 804, sf, 1038, 1151, _],
+                            ["Niederschlema", ab, 625, _, _, 754, sa, 1008, 1110, 1216, _, _, 236, sb, 443, _, _, _, 808, sf, 1039, 1155, _, { nr: "99a" }],
+                            [39.5, "Aue", an, 635, _, _, 805, sa, 1017, 1118, 1224, _, _, 246, sb, 453, _, _, _, 818, sf, 1047, 1203, _, { nr: 94 }],
+                            [_zugnr, zn, 1932, gnix, 1862, gnix, sa, 1934, gnix, 2044, 1936, 1868, 1938, sb, 1964, 5658, 1870, gnix, 1940, gnix, 2064, 1972, 1872],
+                            [_klassen, kl, k2b4, gnix, k2b4, gnix, sa, k2b4, gnix, k2b4, k2b3, k2b4, k2b4, sb, k2b4, k2b3, k2b3, gnix, k2b4, gnix, k2b4, k2b4, k2b4],
+                            ["Aue", ab, 642, _, _, 816, sa, 1025, _, 1225, sh, sj, 302, sb, 501, _, sk, _, 833, _, 1050, 1208, sl, { nr: 94 }],
+                            [45.6, "Lauter", ab, 655, _, _, 829, sa, 1037, _, 1237, sh, sj, 315, sb, 514, _, sk, _, 846, _, 1103, 1222, sl],
+                            [47.5, "Neuwelt", ab, 701, _, _, 835, sa, 1044, _, kHlt, sh, sj, 322, sb, 520, _, sk, _, 853, _, 1109, 1228, sl],
+                            [50.0, "Schwarzenberg", an, 708, _, _, 842, sa, 1052, _, 1246, sh, sj, 330, sb, 527, _, sk, _, 901, _, 1117, 1235, sl],
+                            ["Schwarzenberg", ab, 714, _, _, _, sa, 1058, _, _, 1251, sj, 336, sb, _, 532, sk, _, 911, _, _, _, sl, { nr: "110a" }],
+                            [52.7, "Gruenstaedtel", an, 722, _, _, _, sa, 1106, _, _, 1258, sj, 344, sb, _, 540, sk, _, 919, _, _, _, sl],
+                            ["Gruenstaedtel", ab, 723, _, _, _, _, 1107, _, _, 1259, sj, 349, sb, _, 541, sk, _, 921, _, _, _, sl, { nr: "99c" }],
+                            [54.6, "Raschau", ab, 731, _, _, _, _, 1115, _, _, 105, sj, 358, sb, _, 549, sk, _, 929, _, _, _, sl],
+                            [56.0, "Mittweida", ab, 737, _, _, _, dick, 1121, _, _, 111, gnix, 406, sb, _, 557, sk, dick, 937, _, _, _, sl],
+                            [63.5, "Scheibenberg", ab, 800, _, 830, _, SaxInputTypes_2.Z1991, 1145, _, _, 128, 132, 431, _, _, 630, 750, SaxInputTypes_2.Z1998, 1002, _, _, _, 1055, { nr: 100 }],
+                            [68.9, "Schlettau", an, 810, _, 840, _, k2b4, 1155, _, _, Ank, 142, 442, _, _, 642, 800, k2b4, 1012, _, _, _, 1105],
+                            ["Schlettau", ab, 818, _, _, _, 955, 1200, _, _, sm, SaxInputTypes_2.m149, 447, _, _, 654, _, 815, 1017, _, _, _, _, { nr: "99b" }],
+                            [68.2, "Waltersdorf Hst", ab, 824, _, _, _, 1001, 1206, _, _, sm, 155, 453, _, _, 700, _, 821, 1023, _, _, _, _],
+                            [74.1, "Buchholz", ab, 843, _, _, _, 1020, 1225, _, _, sm, 214, 516, _, _, 724, _, 840, 1044, _, _, _, _, { nr: 85 }],
+                            [76.8, "Annaberg", an, 850, _, _, _, 1027, 1232, _, _, sm, 222, 524, _, _, 736, _, 847, 1052, _, _, _, _],
+                            [_anschluss_nach_in, CH, 1133, _, _, _, 205, _, _, _, _, 513, 829, _, _, 1202, _, 1202, _, _, _, _, _, { ort: "Chemnitz", nr: 85 }]
+                        ],
+                        ZellenVerweise: []
                     }
                 ];
                 return InputData;
@@ -6027,11 +5741,11 @@ System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) 
 System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], function (exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
-    var SaxParsedTypes_4, SaxBaseTypes_4, Nachberechnung;
+    var SaxParsedTypes_3, SaxBaseTypes_4, Nachberechnung;
     return {
         setters: [
-            function (SaxParsedTypes_4_1) {
-                SaxParsedTypes_4 = SaxParsedTypes_4_1;
+            function (SaxParsedTypes_3_1) {
+                SaxParsedTypes_3 = SaxParsedTypes_3_1;
             },
             function (SaxBaseTypes_4_1) {
                 SaxBaseTypes_4 = SaxBaseTypes_4_1;
@@ -6045,15 +5759,15 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                     var tLen = 0;
                     s.Zeilen.forEach(function (z) {
                         switch (z.kind) {
-                            case SaxParsedTypes_4.ZEILE_T.NORMAL:
+                            case SaxParsedTypes_3.ZEILE_T.NORMAL:
                                 tLen = z.Zeiteintraege.length;
                                 break;
-                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                            case SaxParsedTypes_4.ZEILE_T.KLASSEN:
-                            case SaxParsedTypes_4.ZEILE_T.ZUGNR:
+                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                            case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                            case SaxParsedTypes_3.ZEILE_T.KLASSEN:
+                            case SaxParsedTypes_3.ZEILE_T.ZUGNR:
                                 break;
                             default:
                                 return SaxBaseTypes_4.assertNever(z);
@@ -6066,7 +5780,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                         var tZugZweiterStern = false;
                         s.Zeilen.forEach(function (z) {
                             switch (z.kind) {
-                                case SaxParsedTypes_4.ZEILE_T.ZUGNR:
+                                case SaxParsedTypes_3.ZEILE_T.ZUGNR:
                                     var tZNEintrag = z.ZugNummern[sp];
                                     switch (tZNEintrag.kind) {
                                         case BLOCK_T.BLOCK:
@@ -6105,14 +5819,14 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                             };
                                     }
                                     break;
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.KLASSEN:
-                                case SaxParsedTypes_4.ZEILE_T.NORMAL:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.KLASSEN:
+                                case SaxParsedTypes_3.ZEILE_T.NORMAL:
                                     var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
-                                    if (z.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
+                                    if (z.kind == SaxParsedTypes_3.ZEILE_T.KLASSEN) {
                                         tEintrag = z.KlassenNummern[sp];
                                     }
                                     else {
@@ -6124,7 +5838,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                 var tZeitEintrag = tEintrag;
                                                 s.ZusatzBloecke.forEach(function (fe) {
                                                     switch (fe.Verweistyp.kind) {
-                                                        case SaxParsedTypes_4.VERWEIS_T.FERN:
+                                                        case VERWEIS_T.FERN:
                                                             if (fe.Verweistyp.ReferenzKey === tZeitEintrag.Referenzkey) {
                                                                 if (tZugNrRefKey != null) {
                                                                     tZugZweiterStern = true;
@@ -6156,8 +5870,8 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                         case BLOCK_T.BLOCK:
                                             if (tEintrag.kind === BLOCK_T.BLOCK) {
                                                 if (tEintrag.Blockinhalt) {
-                                                    if ((tEintrag.Blockinhalt.Verweistyp.kind === SaxParsedTypes_4.VERWEIS_T.PASSEND) ||
-                                                        (tEintrag.Blockinhalt.Verweistyp.kind === SaxParsedTypes_4.VERWEIS_T.EMBEDDED)) {
+                                                    if ((tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.PASSEND) ||
+                                                        (tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.EMBEDDED)) {
                                                         if (tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.ZugNr) {
                                                             tZugNr = '' + tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.ZugNr;
                                                         }
@@ -6195,14 +5909,14 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                         for (var zei = tZeilenZahl - 1; zei >= 0; zei--) {
                             var tZeile = s.Zeilen[zei];
                             switch (tZeile.kind) {
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.NORMAL:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.KLASSEN:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.NORMAL:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.KLASSEN:
                                     var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
-                                    if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
+                                    if (tZeile.kind == SaxParsedTypes_3.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
                                     else {
@@ -6218,7 +5932,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                         }
                                     }
                                     break;
-                                case SaxParsedTypes_4.ZEILE_T.ZUGNR:
+                                case SaxParsedTypes_3.ZEILE_T.ZUGNR:
                             }
                         }
                     }
@@ -6228,18 +5942,18 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                         for (var zei = 0; zei < tZeilenZahl; zei++) {
                             var tZeile = s.Zeilen[zei];
                             switch (tZeile.kind) {
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.NORMAL:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.KLASSEN:
-                                case SaxParsedTypes_4.ZEILE_T.ZUGNR:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.NORMAL:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.KLASSEN:
+                                case SaxParsedTypes_3.ZEILE_T.ZUGNR:
                                     var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
-                                    if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
+                                    if (tZeile.kind == SaxParsedTypes_3.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
-                                    else if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.ZUGNR) {
+                                    else if (tZeile.kind == SaxParsedTypes_3.ZEILE_T.ZUGNR) {
                                         tEintrag = tZeile.ZugNummern[sp];
                                     }
                                     else {
@@ -6263,14 +5977,14 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                         for (var zei = tZeilenZahl - 1; zei >= 0; zei--) {
                             var tZeile = s.Zeilen[zei];
                             switch (tZeile.kind) {
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.NORMAL:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                case SaxParsedTypes_4.ZEILE_T.KLASSEN:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.NORMAL:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                case SaxParsedTypes_3.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                case SaxParsedTypes_3.ZEILE_T.KLASSEN:
                                     var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
-                                    if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
+                                    if (tZeile.kind == SaxParsedTypes_3.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
                                     else {
@@ -6308,14 +6022,14 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
 System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], function (exports_9, context_9) {
     "use strict";
     var __moduleName = context_9 && context_9.id;
-    var SaxBaseTypes_5, SaxParsedTypes_5, LAUFEINTRAG_NORMAL, LAUFEINTRAG_KEINHALT, LAUFEINTRAG_AN, LAUFEINTRAG_GELOESCHT, LAUFEINTRAG_KOMMEAUSKBS, LAUFEINTRAG_VERLASSENACHKBS, ZugExtraktor;
+    var SaxBaseTypes_5, SaxParsedTypes_4, LAUFEINTRAG_NORMAL, LAUFEINTRAG_KEINHALT, LAUFEINTRAG_AN, LAUFEINTRAG_GELOESCHT, LAUFEINTRAG_KOMMEAUSKBS, LAUFEINTRAG_VERLASSENACHKBS, ZugExtraktor;
     return {
         setters: [
             function (SaxBaseTypes_5_1) {
                 SaxBaseTypes_5 = SaxBaseTypes_5_1;
             },
-            function (SaxParsedTypes_5_1) {
-                SaxParsedTypes_5 = SaxParsedTypes_5_1;
+            function (SaxParsedTypes_4_1) {
+                SaxParsedTypes_4 = SaxParsedTypes_4_1;
             }
         ],
         execute: function () {
@@ -6384,15 +6098,15 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                     var tLen = 0;
                     s.Zeilen.forEach(function (z) {
                         switch (z.kind) {
-                            case SaxParsedTypes_5.ZEILE_T.NORMAL:
+                            case SaxParsedTypes_4.ZEILE_T.NORMAL:
                                 tLen = z.Zeiteintraege.length;
                                 break;
-                            case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                            case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                            case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                            case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                            case SaxParsedTypes_5.ZEILE_T.KLASSEN:
-                            case SaxParsedTypes_5.ZEILE_T.ZUGNR:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                            case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                            case SaxParsedTypes_4.ZEILE_T.KLASSEN:
+                            case SaxParsedTypes_4.ZEILE_T.ZUGNR:
                                 break;
                             default:
                                 return SaxBaseTypes_5.assertNever(z);
@@ -6408,18 +6122,18 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                         for (var zei = 0; zei < tZeilenZahl; zei++) {
                             var tZeile = s.Zeilen[zei];
                             switch (tZeile.kind) {
-                                case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
-                                case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                case SaxParsedTypes_5.ZEILE_T.NORMAL:
-                                case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_WEITER_AB:
-                                case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                case SaxParsedTypes_5.ZEILE_T.KLASSEN:
-                                case SaxParsedTypes_5.ZEILE_T.ZUGNR:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                case SaxParsedTypes_4.ZEILE_T.NORMAL:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                case SaxParsedTypes_4.ZEILE_T.KLASSEN:
+                                case SaxParsedTypes_4.ZEILE_T.ZUGNR:
                                     var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
-                                    if (tZeile.kind == SaxParsedTypes_5.ZEILE_T.KLASSEN) {
+                                    if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
-                                    else if (tZeile.kind == SaxParsedTypes_5.ZEILE_T.ZUGNR) {
+                                    else if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.ZUGNR) {
                                         tEintrag = tZeile.ZugNummern[sp];
                                     }
                                     else {
@@ -6466,7 +6180,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                         switch (tEintrag.kind) {
                                             case BLOCK_T.ZEITEINTRAG:
                                                 switch (tZeile.kind) {
-                                                    case SaxParsedTypes_5.ZEILE_T.NORMAL:
+                                                    case SaxParsedTypes_4.ZEILE_T.NORMAL:
                                                         var tEnt = {
                                                             kind: LAUFEINTRAG_NORMAL,
                                                             BhfTag: tZeile.BhfTag,
@@ -6474,10 +6188,10 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                             AbZeit: null
                                                         };
                                                         if (tEintrag.Zeit.kind == SaxBaseTypes_5.ZEIT_24) {
-                                                            if ((tZeile.AnAb == SaxParsedTypes_5.EAnAb.FirstAb) || (tZeile.AnAb == SaxParsedTypes_5.EAnAb.FollowAb)) {
+                                                            if ((tZeile.AnAb == SaxParsedTypes_4.EAnAb.FirstAb) || (tZeile.AnAb == SaxParsedTypes_4.EAnAb.FollowAb)) {
                                                                 tEnt.AbZeit = tEintrag.Zeit;
                                                             }
-                                                            if ((tZeile.AnAb == SaxParsedTypes_5.EAnAb.An)) {
+                                                            if ((tZeile.AnAb == SaxParsedTypes_4.EAnAb.An)) {
                                                                 tEnt.AnZeit = tEintrag.Zeit;
                                                             }
                                                         }
@@ -6492,7 +6206,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                 break;
                                             case BLOCK_T.KEINHALT:
                                                 switch (tZeile.kind) {
-                                                    case SaxParsedTypes_5.ZEILE_T.NORMAL:
+                                                    case SaxParsedTypes_4.ZEILE_T.NORMAL:
                                                         var tEntK = {
                                                             kind: LAUFEINTRAG_KEINHALT,
                                                             BhfTag: tZeile.BhfTag

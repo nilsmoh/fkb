@@ -3,7 +3,7 @@
  */
 
 
-import { TBlockinhaltBaseV2  } from "./SaxParsedTypes";
+import { /*TBlockinhaltBaseV2 */  } from "./SaxParsedTypes";
 
 export interface SingleDirectionScheduleInput {
     route1900: string | number;
@@ -12,7 +12,7 @@ export interface SingleDirectionScheduleInput {
     seite: number; // seite in FKB wie gedruckt
     klassen?: string;
     caption: string;
-    zeilen: Array<Array<(string | number | IZeilenZusatzInfo  | TKeinHalt | TLeerEintrag )>>;
+    zeilen: Array<Array<(string | number | IZeilenZusatzInfo  | TKeinHalt | TLeerEintrag | TAnkunftEintrag | TDickerStrichEintrag | TBlockEintrag )>>;
     ZellenVerweise?: Array< TBlockinhaltBaseV2  /*IZellenEigenschaft*/ >;
 }
 
@@ -38,6 +38,7 @@ export function isIZeilenZusatzInfo(test: any): test is IZeilenZusatzInfo {
 
 
 // zusatzinformation untern
+/*
 export interface IZellenEigenschaft {
     cellkey?: string;                         //z.B. a812 bei verweis aus einer zelle heraus
     typ: string;                                //fern = verlinkt mit * oder ! oder so;     passend = direkt in korrekter spalte, pfeilstart, pfeilziel, Zeitaenderung
@@ -57,6 +58,7 @@ export interface IZellenEigenschaft {
     sonnundfeiertagzeit?: string | number; //abweichende zeit sonnundfeiertags
     bahn?: string;
 }
+*/
 
 //scope
 export var defaultzug = "defaultzug";
@@ -114,7 +116,7 @@ export var pfeilstart = "_VERWEISTYP_pfeilstart";
 export var sonn_und_festtags = "_TAGTYP_sonn_und_festtags";
 export var nur_werktags = "_TAGTYP_nur_werktags";
 
-export var dick = "_CELL_dickerstrich";
+
 
 //verweisort
 export var headerlinks = "_headerleft";
