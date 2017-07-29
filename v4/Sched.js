@@ -45,47 +45,6 @@ var Global = { kind: "Global" };
 var Tabelle = { kind: "Tabelle" };
 var Zelle = { kind: "Zelle" };
 var Zug = { kind: "Zug" };
-var SonnUndFesttags = "";
-var Sonnabends = "";
-var SonnabendsSonnUndFesttags = "";
-var Freitags = "";
-var Werktags = "";
-var WerktageAusserSonnabends = "";
-var InDerAufEinenSonnOderFesttagFolgendenNacht = "";
-var MontagsFallsMontagEinFesttagDannDienstag = "";
-var MontagsFallsMontagEinFesttagDannDienstagSowieSonnabends = "";
-var nachtsNachDemErstenMittwochJedenMonats = "";
-var MittwochsUndSonnabends = "";
-var InDerNachtVonMittwochZuDonnerstagUndSonnabendZuSonntag = "";
-var WerktageVorSonnUndFesttagen = "";
-var WerktagsMitAusnahmeDerSonnabendeUndDes23Mai = "";
-var vom25JuniBis31August = "";
-var SonnabendsInJuniJuliUndAugust = "";
-var ersterMittwochJedenMonatsDH2mai6juni4juli1august5september = "";
-var Vom1JuniBis15September = "";
-var Vom15JuniBis15September = "";
-var MontagsUndDonnerstagsUndAb1JuniTaeglich = "";
-var SonnUndFesttagsSowie1624mai1429juni15aug828sept = "";
-var DonnerstagOderWennDieserFesttagDannMittwochVorher = "";
-var MontagsUndSonnabends = "";
-var DonnerstagUndSonntag = "";
-var JuliUndAugust = "";
-var Mai21BisEndeAugust = "";
-var SonnUndFesttagsBisEndeAugust = "";
-var MaiJuniSeptember = "";
-var SonnUndFesttags20MaiBisEndeAugust = "";
-var DienstagsUndSonntags = "";
-var bis15September = "";
-var vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni = "";
-var SonnUndFesttags20MaiBis16SeptSowie5Juni = "";
-var vom16maibis16sept = "";
-var vom15junibis15august = "";
-var SonnUndFesttagsSowieMittwochs = "";
-var SonnUndFesttagsSowie5Juni = "";
-var SonnUndFesttagsInJuniJuliUndAugust = "";
-var MaiUndSeptemberTaeglichSonstWerktags = "";
-var Montags = "";
-var Vom15MaiBis15September = "";
 var HN1105 = "";
 var HN305 = "";
 var HN946 = "";
@@ -2755,11 +2714,955 @@ var Kl2bis4 = EKlassen.Klassen2bis4;
 var Kl3 = EKlassen.Klassen3;
 var Kl3bis4 = EKlassen.Klassen3bis4;
 var KlNurEine = EKlassen.KlassenNurEine;
-var _klassen = "_Klassen_";
 var k1b3 = EKlassen.Klassen1bis3;
 var k2b4 = EKlassen.Klassen2bis4;
 var k2b3 = EKlassen.Klassen2bis3;
 var k3b4 = EKlassen.Klassen3bis4;
+var GUELTIG_T;
+(function (GUELTIG_T) {
+    GUELTIG_T["IMMER"] = "GUELTIG_IMMER";
+    GUELTIG_T["NIE"] = "GUELTIG_NIE";
+    GUELTIG_T["AB"] = "GUELTIG_AB";
+})(GUELTIG_T || (GUELTIG_T = {}));
+;
+;
+;
+var FAEHRT_T;
+(function (FAEHRT_T) {
+    FAEHRT_T["IMMER"] = "FAEHRT_IMMER";
+    FAEHRT_T["WERKTAGS"] = "FAEHRT_WERKTAGS";
+    FAEHRT_T["SONNUNDFESTTAGS"] = "FAEHRT_SONNUNDFESTTAGS";
+    FAEHRT_T["Montags"] = "FAEHRT_Montags";
+    FAEHRT_T["MontagsFallsMontagEinFesttagDannDienstag"] = "FAEHRT_MontagsFallsMontagEinFesttagDannDienstag";
+    FAEHRT_T["MontagsFallsMontagEinFesttagDannDienstagSowieSonnabends"] = "FAEHRT_MontagsFallsMontagEinFesttagDannDienstagSowieSonnabends";
+    FAEHRT_T["MontagsUndDonnerstagsUndAb1JuniTaeglich"] = "FAEHRT_MontagsUndDonnerstagsUndAb1JuniTaeglich";
+    FAEHRT_T["MontagsUndSonnabends"] = "FAEHRT_MontagsUndSonnabends";
+    FAEHRT_T["DienstagsUndSonntags"] = "FAEHRT_DienstagsUndSonntags";
+    FAEHRT_T["MittwochsUndSonnabends"] = "FAEHRT_MittwochsUndSonnabends";
+    FAEHRT_T["ersterMittwochJedenMonatsDH2mai6juni4juli1august5september"] = "FAEHRT_ersterMittwochJedenMonatsDH2mai6juni4juli1august5september";
+    FAEHRT_T["InDerNachtVonMittwochZuDonnerstagUndSonnabendZuSonntag"] = "FAEHRT_InDerNachtVonMittwochZuDonnerstagUndSonnabendZuSonntag";
+    FAEHRT_T["nachtsNachDemErstenMittwochJedenMonats"] = "FAEHRT_nachtsNachDemErstenMittwochJedenMonats";
+    FAEHRT_T["DonnerstagOderWennDieserFesttagDannMittwochVorher"] = "FAEHRT_DonnerstagOderWennDieserFesttagDannMittwochVorher";
+    FAEHRT_T["DonnerstagUndSonntag"] = "FAEHRT_DonnerstagUndSonntag ";
+    FAEHRT_T["Freitags"] = "FAEHRT_Freitags";
+    FAEHRT_T["Sonnabends"] = "FAEHRT_Sonnabends";
+    FAEHRT_T["SonnabendsSonnUndFesttags"] = "FAEHRT_SonnabendsSonnUndFesttags";
+    FAEHRT_T["SonnabendsInJuniJuliUndAugust"] = "FAEHRT_SonnabendsInJuniJuliUndAugust";
+    FAEHRT_T["SonnUndFesttagsBisEndeAugust"] = "FAEHRT_SonnUndFesttagsBisEndeAugust";
+    FAEHRT_T["SonnUndFesttags20MaiBis16SeptSowie5Juni"] = "FAEHRT_SonnUndFesttags20MaiBis16SeptSowie5Juni";
+    FAEHRT_T["SonnUndFesttags20MaiBisEndeAugust"] = "FAEHRT_SonnUndFesttags20MaiBisEndeAugust";
+    FAEHRT_T["SonnUndFesttagsSowieMittwochs"] = "FAEHRT_SonnUndFesttagsSowieMittwochs";
+    FAEHRT_T["SonnUndFesttagsSowie5Juni"] = "FAEHRT_SonnUndFesttagsSowie5Juni";
+    FAEHRT_T["SonnUndFesttagsSowie1624mai1429juni15aug828sept"] = "FAEHRT_SonnUndFesttagsSowie1624mai1429juni15aug828sept";
+    FAEHRT_T["SonnUndFesttagsInJuniJuliUndAugust"] = "FAEHRT_SonnUndFesttagsInJuniJuliUndAugust";
+    FAEHRT_T["InDerAufEinenSonnOderFesttagFolgendenNacht"] = "FAEHRT_InDerAufEinenSonnOderFesttagFolgendenNacht";
+    FAEHRT_T["WerktageAusserSonnabends"] = "FAEHRT_WerktageAusserSonnabends";
+    FAEHRT_T["WerktageVorSonnUndFesttagen"] = "FAEHRT_WerktageVorSonnUndFesttagen";
+    FAEHRT_T["WerktagsMitAusnahmeDerSonnabendeUndDes23Mai"] = "FAEHRT_WerktagsMitAusnahmeDerSonnabendeUndDes23Mai";
+    FAEHRT_T["MaiUndSeptemberTaeglichSonstWerktags"] = "FAEHRT_MaiUndSeptemberTaeglichSonstWerktags";
+    FAEHRT_T["vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni"] = "FAEHRT_vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni";
+    FAEHRT_T["Vom15MaiBis15September"] = "FAEHRT_Vom15MaiBis15September";
+    FAEHRT_T["vom16maibis16sept"] = "FAEHRT_vom16maibis16sept";
+    FAEHRT_T["Mai21BisEndeAugust"] = "FAEHRT_Mai21BisEndeAugust";
+    FAEHRT_T["MaiJuniSeptember"] = "FAEHRT_MaiJuniSeptember";
+    FAEHRT_T["Vom1JuniBis15September"] = "FAEHRT_Vom1JuniBis15September";
+    FAEHRT_T["vom15junibis15august"] = "FAEHRT_vom15junibis15august";
+    FAEHRT_T["Vom15JuniBis15September"] = "FAEHRT_Vom15JuniBis15September";
+    FAEHRT_T["vom25JuniBis31August"] = "FAEHRT_vom25JuniBis31August";
+    FAEHRT_T["JuliUndAugust"] = "FAEHRT_JuliUndAugust ";
+    FAEHRT_T["bis15September"] = "FAEHRT_bis15September";
+})(FAEHRT_T || (FAEHRT_T = {}));
+;
+;
+;
+{
+    var Montags = FAEHRT_T.Montags;
+    var MontagsFallsMontagEinFesttagDannDienstag = FAEHRT_T.MontagsFallsMontagEinFesttagDannDienstag;
+    var MontagsFallsMontagEinFesttagDannDienstagSowieSonnabends = FAEHRT_T.MontagsFallsMontagEinFesttagDannDienstagSowieSonnabends;
+    var MontagsUndDonnerstagsUndAb1JuniTaeglich = FAEHRT_T.MontagsUndDonnerstagsUndAb1JuniTaeglich;
+    var MontagsUndSonnabends = FAEHRT_T.MontagsUndSonnabends;
+    var DienstagsUndSonntags = FAEHRT_T.DienstagsUndSonntags;
+    var MittwochsUndSonnabends = FAEHRT_T.MittwochsUndSonnabends;
+    var ersterMittwochJedenMonatsDH2mai6juni4juli1august5september = FAEHRT_T.ersterMittwochJedenMonatsDH2mai6juni4juli1august5september;
+    var InDerNachtVonMittwochZuDonnerstagUndSonnabendZuSonntag = FAEHRT_T.InDerNachtVonMittwochZuDonnerstagUndSonnabendZuSonntag;
+    var nachtsNachDemErstenMittwochJedenMonats = FAEHRT_T.nachtsNachDemErstenMittwochJedenMonats;
+    var DonnerstagOderWennDieserFesttagDannMittwochVorher = FAEHRT_T.DonnerstagOderWennDieserFesttagDannMittwochVorher;
+    var DonnerstagUndSonntag = FAEHRT_T.DonnerstagUndSonntag;
+    var Freitags = FAEHRT_T.Freitags;
+    var Sonnabends = FAEHRT_T.Sonnabends;
+    var SonnabendsSonnUndFesttags = FAEHRT_T.SonnabendsSonnUndFesttags;
+    var SonnabendsInJuniJuliUndAugust = FAEHRT_T.SonnabendsInJuniJuliUndAugust;
+    var SonnUndFesttags = FAEHRT_T.SONNUNDFESTTAGS;
+    var SonnUndFesttagsBisEndeAugust = FAEHRT_T.SonnUndFesttagsBisEndeAugust;
+    var SonnUndFesttags20MaiBis16SeptSowie5Juni = FAEHRT_T.SonnUndFesttags20MaiBis16SeptSowie5Juni;
+    var SonnUndFesttags20MaiBisEndeAugust = FAEHRT_T.SonnUndFesttags20MaiBisEndeAugust;
+    var SonnUndFesttagsSowieMittwochs = FAEHRT_T.SonnUndFesttagsSowieMittwochs;
+    var SonnUndFesttagsSowie5Juni = FAEHRT_T.SonnUndFesttagsSowie5Juni;
+    var SonnUndFesttagsSowie1624mai1429juni15aug828sept = FAEHRT_T.SonnUndFesttagsSowie1624mai1429juni15aug828sept;
+    var SonnUndFesttagsInJuniJuliUndAugust = FAEHRT_T.SonnUndFesttagsInJuniJuliUndAugust;
+    var InDerAufEinenSonnOderFesttagFolgendenNacht = FAEHRT_T.InDerAufEinenSonnOderFesttagFolgendenNacht;
+    var Werktags = FAEHRT_T.WERKTAGS;
+    var WerktageAusserSonnabends = FAEHRT_T.WerktageAusserSonnabends;
+    var WerktageVorSonnUndFesttagen = FAEHRT_T.WerktageVorSonnUndFesttagen;
+    var WerktagsMitAusnahmeDerSonnabendeUndDes23Mai = FAEHRT_T.WerktagsMitAusnahmeDerSonnabendeUndDes23Mai;
+    var MaiUndSeptemberTaeglichSonstWerktags = FAEHRT_T.MaiUndSeptemberTaeglichSonstWerktags;
+    var vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni = FAEHRT_T.vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni;
+    var Vom15MaiBis15September = FAEHRT_T.Vom15MaiBis15September;
+    var vom16maibis16sept = FAEHRT_T.vom16maibis16sept;
+    var Mai21BisEndeAugust = FAEHRT_T.Mai21BisEndeAugust;
+    var MaiJuniSeptember = FAEHRT_T.MaiJuniSeptember;
+    var Vom1JuniBis15September = FAEHRT_T.Vom1JuniBis15September;
+    var vom15junibis15august = FAEHRT_T.vom15junibis15august;
+    var Vom15JuniBis15September = FAEHRT_T.Vom15JuniBis15September;
+    var vom25JuniBis31August = FAEHRT_T.vom25JuniBis31August;
+    var JuliUndAugust = FAEHRT_T.JuliUndAugust;
+    var bis15September = FAEHRT_T.bis15September;
+}
+var ZUGLAUF_UNBEKANNT = "ZUGLAUF_UNBEKANNT";
+var ZUGLAUF_BERECHNET = "ZUGLAUF_BERECHNET";
+var BLOCK_T;
+(function (BLOCK_T) {
+    BLOCK_T["ZUG_NR_WERT"] = "ZUG_NR_WERT";
+    BLOCK_T["LEER"] = "LEER";
+    BLOCK_T["BLOCK"] = "BLOCKEINTRAG";
+    BLOCK_T["ERROR"] = "BLOCKERROR";
+    BLOCK_T["KEINHALT"] = "BLOCKKEINHALT";
+    BLOCK_T["DICKERSTRICH"] = "BLOCK_DICKERSTRICH";
+    BLOCK_T["ZEITEINTRAG"] = "BLOCK_ZEITEINTRAG";
+    BLOCK_T["ANKUNFT"] = "BLOCK_ANKUNFT";
+})(BLOCK_T || (BLOCK_T = {}));
+var _ = { kind: BLOCK_T.LEER, MitStrich: true, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var nix = _;
+var gnix = "_Nixleer";
+var kHlt = { kind: BLOCK_T.KEINHALT, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var ank = "_XZug_endet";
+var Ank = ank;
+var _anschluss_aus = "_Anschluss_aus";
+var _anschluss_aus_ziel = "_Anschluss_aus_ankunft";
+var _zugnr = "_xZugnr";
+var _klassen = "_Klassen_";
+var _anschluss_nach_start = "_Anschluss_nach_abfahrt";
+var _anschluss_nach_in = "_Anschluss_nach_in";
+var SENKRECHT_PREFIX = "_senkrecht_";
+var WAAGERECHT_PREFIX = "_waagerecht_";
+var wa = WAAGERECHT_PREFIX + "a";
+var wx = WAAGERECHT_PREFIX + "x";
+var sa = SENKRECHT_PREFIX + "a";
+var sb = SENKRECHT_PREFIX + "b";
+var sc = SENKRECHT_PREFIX + "c";
+var sd = SENKRECHT_PREFIX + "d";
+var se = SENKRECHT_PREFIX + "e";
+var sf = SENKRECHT_PREFIX + "f";
+var sg = SENKRECHT_PREFIX + "g";
+var sh = SENKRECHT_PREFIX + "h";
+var si = SENKRECHT_PREFIX + "i";
+var sk = SENKRECHT_PREFIX + "k";
+var sl = SENKRECHT_PREFIX + "l";
+var sj = SENKRECHT_PREFIX + "j";
+var sm = SENKRECHT_PREFIX + "m";
+var sp = SENKRECHT_PREFIX + "p";
+var ORTPREFIX = "_Ort_";
+var CH = ORTPREFIX + "Chemnitz";
+var LE = ORTPREFIX + "Leipzig";
+var ab = "_Ab";
+var an = "_An";
+var zn = "_xZugnr";
+var kl = "_xKlassen";
+{
+    var Adorf = { kind: "BHFTAG", "station": "Adorf", "lines": ["PE", "CA"], "upperCase": "ADORF", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 690, "c3b": 460, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 450, "z3c": 300, "viac": "Voigtsgrün", "comment": "schwer lesbar" };
+    var Affalter = { kind: "BHFTAG", "station": "Affalter", "lines": ["ZC"], "upperCase": "AFFALTER", "dd2": 0, "dd3": 0, "c2": 220, "c3": 150, "z2": 0, "z3": 0, "via": "Neukirchen i.E.", "dd2b": 0, "dd3b": 0, "c2b": 260, "c3b": 170, "z2b": 0, "z3b": 0, "viab": "Einsiedel" };
+    var Altchemnitz = { kind: "BHFTAG", "station": "Altchemnitz", "lines": ["CA", "ZC"], "upperCase": "ALTCHEMNITZ", "dd2": 500, "dd3": 340, "c2": 20, "c3": 15, "z2": 310, "z3": 210 };
+    var Altenbach = { kind: "BHFTAG", "station": "Altenbach", "lines": ["LD"], "upperCase": "ALTENBACH", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Altenburg = { kind: "BHFTAG", "station": "Altenburg", "lines": ["LH", "ZA"], "upperCase": "ALTENBURG i.S.=A.", "dd2": 880, "dd3": 590, "c2": 410, "c3": 270, "z2": 0, "z3": 0, "via": "Gössnitz", "dd2b": 990, "dd3b": 680, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": ["Borsdorf", "Gaschwitz"], "dd2c": 0, "dd3c": 0, "c2c": 480, "c3c": 320, "z2c": 0, "z3c": 0, "viac": "Borna", "z2d": 290, "z3d": 200, "viad": "Werdau" };
+    var Altenhain_b_Br = { kind: "BHFTAG", "station": "Altenhain b.Br.", "lines": ["BSt"], "upperCase": "ALTENHAIN b.BRANDIS", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Altmittweida = { kind: "BHFTAG", "station": "Altmittweida", "lines": ["RC"], "upperCase": "ALTMITTWEIDA", "dd2": 0, "dd3": 0, "c2": 100, "c3": 65, "z2": 390, "z3": 260 };
+    var Altmügeln = { kind: "BHFTAG", "station": "Altmügeln", "lines": ["MN"], "upperCase": "ALTMÜGELN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Altosch_Ros = { kind: "BHFTAG", "station": "Altosch.-Ros.", "lines": ["OD"], "upperCase": "ALTOSCHATZ-ROSENTHAL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Altwarnsdorf = { kind: "BHFTAG", "station": "Altwarnsdorf", "lines": ["SE"], "upperCase": "ALTWARNSDORF i.Bö.", "dd2": 590, "dd3": 400, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Amerika = { kind: "BHFTAG", "station": "Amerika", "lines": ["GW"], "upperCase": "AMERIKA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ammelshain = { kind: "BHFTAG", "station": "Ammelshain", "lines": ["BSt"], "upperCase": "AMMELSHAIN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Annaberg = { kind: "BHFTAG", "station": "Annaberg", "lines": ["AF", "WA"], "upperCase": "ANNABERG i.S.", "dd2": 670, "dd3": 450, "c2": 340, "c3": 230, "z2": 630, "z3": 420, "via": "Flöha", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 410, "z3b": 280, "viab": "Aue" };
+    var Antonsthal = { kind: "BHFTAG", "station": "Antonsthal", "lines": ["JS"], "upperCase": "ANTONSTHAL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 290, "z3": 200 };
+    var Arnsdorf = { kind: "BHFTAG", "station": "Arnsdorf", "lines": ["GD", "KP"], "upperCase": "ARNSDORF i.S.", "dd2": 160, "dd3": 110, "c2": 640, "c3": 430, "z2": 930, "z3": 620 };
+    var Arras = { kind: "BHFTAG", "station": "Arras", "lines": ["WR"], "upperCase": "ARRAS", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Aue = { kind: "BHFTAG", "station": "Aue", "lines": ["SZ", "CA"], "upperCase": "AUE i.Sachsen", "dd2": 790, "dd3": 530, "c2": 310, "c3": 210, "z2": 0, "z3": 0, "via": "Thalheim", "dd2b": 0, "dd3b": 0, "c2b": 480, "c3b": 320, "z2b": 180, "z3b": 120, "viab": "Zwickau" };
+    var Auerbach_ob_Bhf = { kind: "BHFTAG", "station": "Auerbach ob. Bhf.", "lines": ["HOe"], "upperCase": "AUERBACH ob.Bf.", "dd2": 1080, "dd3": 720, "c2": 600, "c3": 400, "z2": 310, "z3": 210, "via": "Herlasgrün", "comment": "via by NM - funktioniert !!!" };
+    var Auerbach_unt_Bf = { kind: "BHFTAG", "station": "Auerbach, unt.Bf.", "lines": ["ZF"], "upperCase": "AUERBACH unt.Bf.", "dd2": 960, "dd3": 640, "c2": 480, "c3": 320, "z2": 190, "z3": 130 };
+    var Bad_Elster = { kind: "BHFTAG", "station": "Bad Elster", "lines": ["PE"], "upperCase": "", "dd2": 1280, "dd3": 860, "c2": 800, "c3": 540, "z2": 510, "z3": 340, "via": "Plauen i.V.", "comment": "dd2 erfunden, fkb passt dort nicht zu dd3!", "dd2b": 0, "dd3b": 0, "c2b": 710, "c3b": 480, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 470, "z3c": 310, "viac": "Voigtsgrün" };
+    var Bad_Jonsdorf = { kind: "BHFTAG", "station": "Bad Jonsdorf", "lines": ["BJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Barthmühle = { kind: "BHFTAG", "station": "Barthmühle", "lines": ["PWz"], "upperCase": "BARTHMÜHLE", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Bauernsteig = { kind: "BHFTAG", "station": "Bauernsteig", "lines": ["WM"], "upperCase": "BAUERNSTEIG", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 95, "z3": 65 };
+    var Bautzen = { kind: "BHFTAG", "station": "Bautzen", "lines": ["GD", "BK", "BS"], "upperCase": "BAUTZEN", "dd2": 370, "dd3": 250, "c2": 840, "c3": 560, "z2": 1140, "z3": 760 };
+    var Beerwalde = { kind: "BHFTAG", "station": "Beerwalde", "lines": ["MR"], "upperCase": "BEERWALDE i.S.A.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Beierfeld = { kind: "BHFTAG", "station": "Beierfeld", "lines": ["ZS"], "upperCase": "BEIERFELD", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Beiersdorf_Oberl = { kind: "BHFTAG", "station": "Beiersdorf (Oberl.)", "lines": ["TD"], "upperCase": "BEIERSDORF, Oberlausitz", "dd2": 470, "dd3": 310, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Belgershain = { kind: "BHFTAG", "station": "Belgershain", "lines": ["LG"], "upperCase": "BELGERSHAIN", "dd2": 0, "dd3": 0, "c2": 370, "c3": 250, "z2": 0, "z3": 0 };
+    var Berbersdorf = { kind: "BHFTAG", "station": "Berbersdorf", "lines": ["RW"], "upperCase": "BERBERSDORF", "dd2": 0, "dd3": 0, "c2": 210, "c3": 140, "z2": 0, "z3": 0 };
+    var Berbisdorf = { kind: "BHFTAG", "station": "Berbisdorf", "lines": ["RRg"], "upperCase": "BERBISDORF", "dd2": 150, "dd3": 100, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Berga_a_d_E = { kind: "BHFTAG", "station": "Berga a.d.E.", "lines": ["PWz"], "upperCase": "BERGA a.d.Elster (i.S.=W.)", "dd2": 1020, "dd3": 680, "c2": 540, "c3": 360, "z2": 250, "z3": 170 };
+    var Bergen = { kind: "BHFTAG", "station": "Bergen", "lines": ["HOe"], "upperCase": "BERGEN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 260, "z3": 170 };
+    var Berggiesshübel = { kind: "BHFTAG", "station": "Berggiesshübel", "lines": ["PB"], "upperCase": "BERGGIESSHÜBEL", "dd2": 200, "dd3": 130, "c2": 680, "c3": 450, "z2": 0, "z3": 0 };
+    var Bernsbach = { kind: "BHFTAG", "station": "Bernsbach", "lines": ["ZS"], "upperCase": "BERNSBACH", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Bernsgrün = { kind: "BHFTAG", "station": "Bernsgrün", "lines": ["WM"], "upperCase": "BERNSGRÜN i.R.ä.L.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 380, "z3": 250 };
+    var Bernstadt_i_O_L = { kind: "BHFTAG", "station": "Bernstadt i.O.L", "lines": ["HB"], "upperCase": "BERNSTADT i.O.=L.", "dd2": 650, "dd3": 440, "c2": 1130, "c3": 750, "z2": 0, "z3": 0, "via": "Löbau" };
+    var Berthelsd_b_Hrrnh = { kind: "BHFTAG", "station": "Berthelsd.b.Hrrnh.", "lines": ["HB"], "upperCase": "BERTHELSDORF b.Herrnhut" };
+    var Berthelsdorf = { kind: "BHFTAG", "station": "Berthelsdorf", "lines": ["NM", "BGh"], "upperCase": "BERTHELSDORF i.Erzgeb.", "dd2": 280, "dd3": 190, "c2": 270, "c3": 180, "z2": 0, "z3": 0 };
+    var Bertsdorf = { kind: "BHFTAG", "station": "Bertsdorf", "lines": ["ZO", "BJ"], "upperCase": "BERTSDORF" };
+    var Beucha_b_Br = { kind: "BHFTAG", "station": "Beucha b.Br.", "lines": ["BC", "BSt"], "upperCase": "BEUCHA b.Brandis", "dd2": 710, "dd3": 480, "c2": 560, "c3": 370, "z2": 0, "z3": 0, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 480, "c3b": 330, "z2b": 0, "z3b": 0, "viab": "Narsdorf" };
+    var Bienenmühle = { kind: "BHFTAG", "station": "Bienenmühle", "lines": ["NM"], "upperCase": "BIENENMÜHLE", "dd2": 410, "dd3": 270, "c2": 400, "c3": 270, "z2": 690, "z3": 460 };
+    var Birkenhain_Limb = { kind: "BHFTAG", "station": "Birkenhain-Limb.", "lines": ["PNo"], "upperCase": "BIRKENHAIN-LIMBACH" };
+    var Bischheim = { kind: "BHFTAG", "station": "Bischheim", "lines": ["KP"], "upperCase": "BISCHHEIM", "dd2": 270, "dd3": 180, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Bischofswerda = { kind: "BHFTAG", "station": "Bischofswerda", "lines": ["GD", "NnB"], "upperCase": "BISCHOFSWERDA", "dd2": 250, "dd3": 170, "c2": 730, "c3": 490, "z2": 1020, "z3": 680 };
+    var Blauenthal = { kind: "BHFTAG", "station": "Blauenthal", "lines": ["CA"], "upperCase": "BLAUENTHAL", "dd2": 860, "dd3": 580, "c2": 390, "c3": 260, "z2": 260, "z3": 180 };
+    var Blechhammer = { kind: "BHFTAG", "station": "Blechhammer", "lines": ["WCd"], "upperCase": "BLECHHAMMER" };
+    var Blumenau = { kind: "BHFTAG", "station": "Blumenau", "lines": ["PN"], "upperCase": "BLUMENAU" };
+    var Bockau = { kind: "BHFTAG", "station": "Bockau", "lines": ["CA"], "upperCase": "BOCKAU", "dd2": 840, "dd3": 560, "c2": 360, "c3": 240, "z2": 240, "z3": 160 };
+    var Boden_b_W = { kind: "BHFTAG", "station": "Boden b.W.", "lines": ["WJ"], "upperCase": "BODEN b.Wolkenstein" };
+    var Bodenbach = { kind: "BHFTAG", "station": "Bodenbach", "lines": ["BD"], "upperCase": "BODENBACH i.Bö.", "dd2": 380, "dd3": 250, "c2": 860, "c3": 570, "z2": 1150, "z3": 770 };
+    var Borna = { kind: "BHFTAG", "station": "Borna", "lines": ["KC"], "upperCase": "BORNA", "dd2": 810, "dd3": 540, "c2": 330, "c3": 220, "z2": 0, "z3": 0, "via": "Chemnitz", "comment": "z weggelassen" };
+    var Bornitz = { kind: "BHFTAG", "station": "Bornitz", "lines": ["LD"], "upperCase": "BORNITZ", "dd2": 380, "dd3": 250, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Borsdorf = { kind: "BHFTAG", "station": "Borsdorf", "lines": ["LD", "BC"], "upperCase": "BORSDORF", "dd2": 650, "dd3": 440, "c2c": 570, "c3c": 380, "viac": "Leipzig Dr.Bf.", "z2b": 630, "z3b": 440, "viab": ["Tautenhain"], "comment": "ueber erfunden" };
+    var Brambach = { kind: "BHFTAG", "station": "Brambach", "lines": ["PE"], "upperCase": "BRAMBACH", "dd2": 1360, "dd3": 910, "c2": 890, "c3": 590, "z2": 590, "z3": 400, "via": "Plauen i.V." };
+    var Brand = { kind: "BHFTAG", "station": "Brand", "lines": ["BGh", "BL"], "upperCase": "BRAND b.Freiberg", "dd2": 300, "dd3": 200, "c2": 300, "c3": 200, "z2": 590, "z3": 390 };
+    var Brandis = { kind: "BHFTAG", "station": "Brandis", "lines": ["BSt"], "upperCase": "BRANDIS", "dd2": 730, "dd3": 490, "c2": 570, "c3": 380, "z2": 0, "z3": 0, "via": "Döbeln Bhf.", "comment": "NM via wie Beucha hinzugefuegt,   strecke unklar" };
+    var Braunsdorf = { kind: "BHFTAG", "station": "Braunsdorf", "lines": ["RW"], "upperCase": "BRAUNSDORF", "dd2": 0, "dd3": 0, "c2": 75, "c3": 50, "z2": 0, "z3": 0 };
+    var Breitenborn = { kind: "BHFTAG", "station": "Breitenborn", "lines": ["RP"], "upperCase": "BREITENBORN", "dd2": 0, "dd3": 0, "c2": 200, "c3": 140, "z2": 0, "z3": 0 };
+    var Breitenhof = { kind: "BHFTAG", "station": "Breitenhof", "lines": ["JS"], "upperCase": "BREITENHOF", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 310, "z3": 210 };
+    var Breitingen = { kind: "BHFTAG", "station": "Breitingen", "lines": ["LH"], "upperCase": "BREITINGEN", "dd2": 0, "dd3": 0, "c2": 420, "c3": 280, "z2b": 350, "z3b": 240, "viab": "Werdau" };
+    var Brunn = { kind: "BHFTAG", "station": "Brunn", "lines": ["BG"], "upperCase": "BRUNN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 100, "z3": 70 };
+    var Buchholz = { kind: "BHFTAG", "station": "Buchholz", "lines": ["WA", "BSg"], "upperCase": "BUCHHOLZ", "dd2": 680, "dd3": 460, "c2": 360, "c3": 240, "z2": 390, "z3": 260 };
+    var Buchholz_Friedew = { kind: "BHFTAG", "station": "Buchholz-Friedew.", "lines": ["RRg"], "upperCase": "BUCHHOLZ-FRIEDEWALD", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Burgstädt = { kind: "BHFTAG", "station": "Burgstädt", "lines": ["KC"], "upperCase": "BURGSTÄDT", "dd2": 570, "dd3": 380, "c2": 90, "c3": 60, "z2": 390, "z3": 260, "via": "Wittgensdorf", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 350, "z3b": 240, "viab": "Limbach" };
+    var Burkersdorf_b_Fr = { kind: "BHFTAG", "station": "Burkersdorf b.Fr.", "lines": ["KF"], "upperCase": "BURKERSDORF b.Frauenstein", "dd2": 250, "dd3": 170, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Burkhardtsdorf = { kind: "BHFTAG", "station": "Burkhardtsdorf", "lines": ["CA"], "upperCase": "BURKHARDTSDORF", "dd2": 600, "dd3": 400, "c2": 120, "c3": 80, "z2": 380, "z3": 250 };
+    var Burkhardtsw_Maxen = { kind: "BHFTAG", "station": "Burkhardtsw.-Maxen", "lines": ["MG"], "upperCase": "BURKHARDTSWALDE-MAXEN", "dd2": 130, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Buschmühle = { kind: "BHFTAG", "station": "Buschmühle", "lines": ["HK"], "upperCase": "BUSCHMÜHLE", "dd2": 210, "dd3": 140, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Bärenhecke_Johnsb = { kind: "BHFTAG", "station": "Bärenhecke-Johnsb.", "lines": ["MG"], "upperCase": "BÄRENHECKE-JOHNSBACH", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Bärenstein = { kind: "BHFTAG", "station": "Bärenstein", "lines": ["WA"], "upperCase": "BÄRENSTEIN b.Weipert", "dd2": 780, "dd3": 520, "c2": 450, "c3": 300, "z2": 0, "z3": 0 };
+    var Bärenstein_b_Glash = { kind: "BHFTAG", "station": "Bärenstein b. Glash.", "lines": ["MG"], "upperCase": "BÄRENSTEIN b.Glashütte", "dd2": 240, "dd3": 160, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Bärenwalde_i_S = { kind: "BHFTAG", "station": "Bärenwalde i.S.", "lines": ["WCd"], "upperCase": "BÄRENWALDE i.S.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 130, "z3": 90 };
+    var Bärnsdorf = { kind: "BHFTAG", "station": "Bärnsdorf", "lines": ["RRg"], "upperCase": "BÄRNSDORF", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Böhla = { kind: "BHFTAG", "station": "Böhla", "lines": ["DE"], "upperCase": "BÖHLA", "dd2": 190, "dd3": 130, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Böhlen_Rötha = { kind: "BHFTAG", "station": "Böhlen (Rötha)", "lines": ["LH"], "upperCase": "BÖHLEN (RÖTHA)", "dd2": 0, "dd3": 0, "c2": 410, "c3": 280, "z2b": 440, "z3b": 290, "viab": "Werdau" };
+    var Böhlitz_Roda = { kind: "BHFTAG", "station": "Böhlitz-Roda", "lines": ["MN"], "upperCase": "BÖHLITZ-RODA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Böhringen = { kind: "BHFTAG", "station": "Böhringen", "lines": ["RW"], "upperCase": "BÖHRINGEN", "dd2": 400, "dd3": 270, "c2": 230, "c3": 150, "z2": 0, "z3": 0 };
+    var Cainsdorf = { kind: "BHFTAG", "station": "Cainsdorf", "lines": ["SZ"], "upperCase": "CAINSDORF", "dd2": 800, "dd3": 540, "c2": 320, "c3": 220, "z2": 25, "z3": 20 };
+    var Cannewitz = { kind: "BHFTAG", "station": "Cannewitz", "lines": ["MN"], "upperCase": "CANNEWITZ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Carlsfeld = { kind: "BHFTAG", "station": "Carlsfeld", "lines": ["WCd"], "upperCase": "CARLSFELD", "dd2": 990, "dd3": 660, "c2": 510, "c3": 340, "z2": 390, "z3": 260, "via": "Aue", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 290, "z3b": 200, "viab": "Kirchberg" };
+    var Chemnitz = { kind: "BHFTAG", "station": "Chemnitz", "lines": ["DW", "CA", "KC", "RC"], "upperCase": "CHEMNITZ", "dd2": 480, "dd3": 320, "c2": 0, "c3": 0, "z2": 300, "z3": 200 };
+    var Chursdorf = { kind: "BHFTAG", "station": "Chursdorf", "lines": ["WM"], "upperCase": "CHURSDORF", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 150, "z3": 100 };
+    var Colditz = { kind: "BHFTAG", "station": "Colditz", "lines": ["GW"], "upperCase": "COLDITZ", "dd2": 0, "dd3": 0, "c2": 300, "c3": 200, "z2": 0, "z3": 0, "via": "Narsdorf", "dd2b": 620, "dd3b": 420, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Meissen-Cölln", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 400, "z3c": 270, "viac": "Lunzenau", "viac2": "Narsdorf" };
+    var Cossebaude = { kind: "BHFTAG", "station": "Cossebaude", "lines": ["DE"], "upperCase": "COSSEBAUDE", "dd2": 55, "dd3": 30, "c2": 540, "c3": 360, "z2": 0, "z3": 0 };
+    var Cossen = { kind: "BHFTAG", "station": "Cossen", "lines": ["KC"], "upperCase": "COSSEN", "dd2": 620, "dd3": 410, "c2": 140, "c3": 90, "z2": 0, "z3": 0 };
+    var Cossmannsdorf = { kind: "BHFTAG", "station": "Cossmannsdorf", "lines": ["HK"], "upperCase": "COSSMANNSDORF", "dd2": 75, "dd3": 50, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Coswig = { kind: "BHFTAG", "station": "Coswig", "lines": ["LD", "BC", "DEC"], "upperCase": "COSWIG i.Sachsen", "dd2": 105, "dd3": 70, "c2": 550, "c3": 70, "z2": 0, "z3": 0 };
+    var Cotta_b_Dresden = { kind: "BHFTAG", "station": "Cotta b.Dresden", "lines": ["DE"], "upperCase": "COTTA b.Dresden", "dd2": 30, "dd3": 20, "c2": 510, "c3": 340, "z2": 800, "z3": 540 };
+    var Cranzahl = { kind: "BHFTAG", "station": "Cranzahl", "lines": ["WA", "CW"], "upperCase": "CRANZAHL", "dd2": 720, "dd3": 480, "c2": 390, "c3": 260, "z2": 430, "z3": 290 };
+    var Crimmitschau = { kind: "BHFTAG", "station": "Crimmitschau", "lines": ["LH"], "upperCase": "CRIMMITSCHAU", "dd2": 830, "dd3": 560, "c2": 360, "c3": 240, "z2": 130, "z3": 90 };
+    var Culitzsch = { kind: "BHFTAG", "station": "Culitzsch", "lines": ["WCd"], "upperCase": "CULITZSCH", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 55, "z3": 40 };
+    var Culten = { kind: "BHFTAG", "station": "Culten", "lines": ["LH"], "upperCase": "CULTEN", "dd2": 0, "dd3": 0, "c2": 360, "c3": 240, "z2": 105, "z3": 70 };
+    var Cunersdorf = { kind: "BHFTAG", "station": "Cunersdorf", "lines": ["WCd"], "upperCase": "CUNERSDORF", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Cunewalde = { kind: "BHFTAG", "station": "Cunewalde", "lines": ["GC"], "upperCase": "CUNEWALDE", "dd2": 450, "dd3": 300, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Bautzen", "comment": "Via frei erfunden" };
+    var Cunnersdorf_b_M = { kind: "BHFTAG", "station": "Cunnersdorf b. M.", "lines": ["KS"], "upperCase": "CUNNERSDORF b.Medingen", "dd2": 115, "dd3": 75, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Cunnertswalde = { kind: "BHFTAG", "station": "Cunnertswalde", "lines": ["RRg"], "upperCase": "CUNNERTSWALDE", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dahlen = { kind: "BHFTAG", "station": "Dahlen", "lines": ["LD"], "upperCase": "DAHLEN", "dd2": 460, "dd3": 310, "c2": 540, "c3": 360, "z2b": 820, "z3b": 560, "viab": ["Leipzig Dr.Bf."] };
+    var Demitz = { kind: "BHFTAG", "station": "Demitz", "lines": ["GD"], "upperCase": "DEMITZ Haltestelle", "dd2": 280, "dd3": 190, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Denkwitz = { kind: "BHFTAG", "station": "Denkwitz", "lines": ["MN"], "upperCase": "DENKWITZ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dennheritz = { kind: "BHFTAG", "station": "Dennheritz", "lines": ["SG"], "upperCase": "DENNHERITZ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 90, "z3": 60, "via": "Schönbörnchen", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 140, "z3b": 100, "viab": "Glauchau", "comment": "stationsverz 1899 Denheritz" };
+    var Deuben = { kind: "BHFTAG", "station": "Deuben", "lines": ["DW"], "upperCase": "DEUBEN", "dd2": 55, "dd3": 35, "c2": 440, "c3": 290, "z2": 720, "z3": 480 };
+    var Deutschenbora = { kind: "BHFTAG", "station": "Deutschenbora", "lines": ["BC"], "upperCase": "DEUTSCHENBORA", "dd2": 270, "dd3": 180, "c2": 390, "c3": 260, "z2": 680, "z3": 460 };
+    var Dippelsdorf = { kind: "BHFTAG", "station": "Dippelsdorf", "lines": ["RRg"], "upperCase": "DIPPELSDORF", "dd2": 95, "dd3": 65, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dippoldiswalde = { kind: "BHFTAG", "station": "Dippoldiswalde", "lines": ["HK"], "upperCase": "DIPPOLDISWALDE", "dd2": 150, "dd3": 100, "c2": 510, "c3": 340, "z2": 0, "z3": 0 };
+    var Dittersb_Seiffen = { kind: "BHFTAG", "station": "Dittersb.-Seiffen", "lines": ["PN"], "upperCase": "DITTERSBACH-SEIFFEN", "dd2": 0, "dd3": 0, "c2": 360, "c3": 240, "z2": 0, "z3": 0 };
+    var Dittersbach = { kind: "BHFTAG", "station": "Dittersbach", "lines": ["RW"], "upperCase": "DITTERBACH b.Frankenberg", "dd2": 0, "dd3": 0, "c2": 120, "c3": 80, "z2": 0, "z3": 0 };
+    var Dittersbach_b_D = { kind: "BHFTAG", "station": "Dittersbach b. D.", "lines": ["KP"], "upperCase": "DITTERSBACH b.Dürrröhrsdorf", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dittersdorf = { kind: "BHFTAG", "station": "Dittersdorf", "lines": ["CA"], "upperCase": "DITTERSDORF b.Chemnitz", "dd2": 560, "dd3": 380, "c2": 80, "c3": 55, "z2": 380, "z3": 250 };
+    var Dittersdorf_b_Gl = { kind: "BHFTAG", "station": "Dittersdorf b. Gl.", "lines": ["MG"], "upperCase": "DITTERSDORF b.Glashütte", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dobitschen = { kind: "BHFTAG", "station": "Dobitschen", "lines": ["MR"], "upperCase": "DOBITSCHEN i.S.=A.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dohma = { kind: "BHFTAG", "station": "Dohma", "lines": ["PGc"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dohna = { kind: "BHFTAG", "station": "Dohna", "lines": ["MG"], "upperCase": "", "dd2": 85, "dd3": 55, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dorfchemnitz = { kind: "BHFTAG", "station": "Dorfchemnitz", "lines": ["CA"], "upperCase": "DORFCHEMNITZ b.Zwönitz", "dd2": 0, "dd3": 0, "c2": 200, "c3": 130, "z2": 300, "z3": 200 };
+    var Dorfchemnitz_b_S = { kind: "BHFTAG", "station": "Dorfchemnitz b. S.", "lines": ["MS"], "upperCase": "DORFCHEMNITZ b.Sayda", "dd2": 380, "dd3": 250, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dornreichenbach = { kind: "BHFTAG", "station": "Dornreichenbach", "lines": ["LD"], "upperCase": "DORNREICHENBACH", "dd2": 510, "dd3": 340, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dresd_Wettinerstr = { kind: "BHFTAG", "station": "Dresd. Wettinerstr.", "lines": ["BD"], "upperCase": "DRESDEN Wettinerstraße", "dd2": 15, "dd3": 10, "c2": 510, "c3": 340, "z2": 800, "z3": 530, "comment": "laut stat verz GD" };
+    var Dresden_Hptbf = { kind: "BHFTAG", "station": "Dresden Hptbf.", "lines": ["BD", "DW", "DFA"], "upperCase": "DRESDEN Hauptbhf.", "dd2": 0, "dd3": 0, "c2": 480, "c3": 320, "z2": 780, "z3": 520 };
+    var Dresden_Fr = { kind: "BHFTAG", "station": "Dresden-Fr.", "lines": ["DE", "DFA"], "upperCase": "DRESDEN-Friedrst.", "dd2": 15, "dd3": 10, "c2": 500, "c3": 340, "z2": 800, "z3": 530 };
+    var Dresden_Neust_Leip_Bf = { kind: "BHFTAG", "station": "Dresden-Neust.Leip.Bf.", "lines": ["LD", "BD"], "upperCase": "", "dd2": 25, "dd3": 15, "c2": 510, "c3": 340, "z2": 800, "z3": 530 };
+    var Dresden_Neust_Schl_Bf = { kind: "BHFTAG", "station": "Dresden-Neust.Schl.Bf.", "lines": ["GD", "BD"], "upperCase": "", "dd2": 25, "dd3": 15, "c2": 510, "c3": 340, "z2": 800, "z3": 530 };
+    var Döbeln_Bhf = { kind: "BHFTAG", "station": "Döbeln Bhf.", "lines": ["RC", "BC"], "upperCase": "Döbeln Bahnhof", "dd2": 410, "dd3": 270, "c2": 250, "c3": 170, "z2": 540, "z3": 360 };
+    var Döbeln_Haltep = { kind: "BHFTAG", "station": "Döbeln Haltep.", "lines": ["BC"], "upperCase": "DÖBELN Haltepunkt", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Döhlen_b_Rochl = { kind: "BHFTAG", "station": "Döhlen b.Rochl.", "lines": ["WR"], "upperCase": "DÖHLEN b.Rochlitz", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dölau_bGreiz = { kind: "BHFTAG", "station": "Dölau b.Greiz", "lines": ["PWz"], "upperCase": "DÖLAU b.Greiz i.R.ä.L.", "dd2": 0, "dd3": 0, "c2": 480, "c3": 320, "z2": 190, "z3": 130 };
+    var Döschütz = { kind: "BHFTAG", "station": "Döschütz", "lines": ["OD"], "upperCase": "DÖSCHÜTZ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dürrhennersdorf = { kind: "BHFTAG", "station": "Dürrhennersdorf", "lines": ["EL", "TD"], "upperCase": "DÜRRHENNERSDORF", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Dürrröhrsdorf = { kind: "BHFTAG", "station": "Dürrröhrsdorf", "lines": ["KP", "ND"], "upperCase": "DÜRRRÖHRSDORF", "dd2": 180, "dd3": 120, "c2": 680, "c3": 450, "z2": 0, "z3": 0, "via": "Pirna Bf.", "comment": "via falsch in FKB" };
+    var Ebersbach = { kind: "BHFTAG", "station": "Ebersbach", "lines": ["OW", "EL"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 960, "c3": 640, "z2": 1250, "z3": 840, "via": "Putzkau" };
+    var Ebersbrunn = { kind: "BHFTAG", "station": "Ebersbrunn", "lines": ["ZF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 70, "z3": 45 };
+    var Edle_Krone = { kind: "BHFTAG", "station": "Edle Krone", "lines": ["DW"], "upperCase": "", "dd2": 110, "dd3": 75, "c2": 380, "c3": 250, "z2": 670, "z3": 450 };
+    var Eger = { kind: "BHFTAG", "station": "Eger", "lines": ["PE"], "upperCase": "", "dd2": 1510, "dd3": 1010, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Plauen i.V." };
+    var Ehrenfriedersdorf = { kind: "BHFTAG", "station": "Ehrenfriedersdorf", "lines": ["WE"], "upperCase": "", "dd2": 610, "dd3": 410, "c2": 280, "c3": 190, "z2": 0, "z3": 0 };
+    var Eibau = { kind: "BHFTAG", "station": "Eibau", "lines": ["OW", "SE"], "upperCase": "", "dd2": 530, "dd3": 350, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Eibenstock = { kind: "BHFTAG", "station": "Eibenstock", "lines": ["CA"], "upperCase": "", "dd2": 900, "dd3": 600, "c2": 420, "c3": 280, "z2": 290, "z3": 200 };
+    var Eich = { kind: "BHFTAG", "station": "Eich", "lines": ["HOe"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Einsiedel = { kind: "BHFTAG", "station": "Einsiedel", "lines": ["CA"], "upperCase": "", "dd2": 550, "dd3": 370, "c2": 65, "c3": 45, "z2": 360, "z3": 240 };
+    var Ellefeld = { kind: "BHFTAG", "station": "Ellefeld", "lines": ["ZF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Elsterberg = { kind: "BHFTAG", "station": "Elsterberg", "lines": ["PWz"], "upperCase": "", "dd2": 980, "dd3": 650, "c2": 500, "c3": 330, "z2": 210, "z3": 140, "via": "Greiz" };
+    var Elsterwerda_B_D_B = { kind: "BHFTAG", "station": "Elsterwerda B.-D.-B.", "lines": ["DF", "DE", "ZE"], "upperCase": "", "dd2": 350, "dd3": 230, "c2": 540, "c3": 360, "z2": 0, "z3": 0 };
+    var Elsterwerda_O_B = { kind: "BHFTAG", "station": "Elsterwerda O.-B.", "lines": ["ZE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Elstra = { kind: "BHFTAG", "station": "Elstra", "lines": ["KE"], "upperCase": "", "dd2": 360, "dd3": 240, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Elterlein = { kind: "BHFTAG", "station": "Elterlein", "lines": ["ZS"], "upperCase": "", "dd2": 810, "dd3": 540, "c2": 330, "c3": 220, "z2": 0, "z3": 0, "via": "Zwönitz", "comment": "via frei erfunden" };
+    var Endschütz = { kind: "BHFTAG", "station": "Endschütz", "lines": ["WM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 200, "z3": 140 };
+    var Eppendorf = { kind: "BHFTAG", "station": "Eppendorf", "lines": ["HE"], "upperCase": "", "dd2": 500, "dd3": 340, "c2": 170, "c3": 120, "z2": 390, "z3": 260 };
+    var Erbisdorf = { kind: "BHFTAG", "station": "Erbisdorf", "lines": ["BL"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Erdmannsdorf = { kind: "BHFTAG", "station": "Erdmannsdorf", "lines": ["AF"], "upperCase": "", "dd2": 440, "dd3": 290, "c2": 100, "c3": 70, "z2": 390, "z3": 260 };
+    var Erfenschlag = { kind: "BHFTAG", "station": "Erfenschlag", "lines": ["CA"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 40, "c3": 30, "z2": 0, "z3": 0 };
+    var Erla = { kind: "BHFTAG", "station": "Erla", "lines": ["JS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 270, "z3": 180 };
+    var Erlabrunn = { kind: "BHFTAG", "station": "Erlabrunn", "lines": ["JS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 330, "z3": 220 };
+    var Erlau = { kind: "BHFTAG", "station": "Erlau", "lines": ["RC"], "upperCase": "", "dd2": 530, "dd3": 350, "c2": 130, "c3": 90, "z2": 0, "z3": 0 };
+    var Falkenau = { kind: "BHFTAG", "station": "Falkenau", "lines": ["DW"], "upperCase": "", "dd2": 390, "dd3": 260, "c2": 95, "c3": 65, "z2": 390, "z3": 260 };
+    var Falkenstein = { kind: "BHFTAG", "station": "Falkenstein", "lines": ["ZF", "HOe", "FM"], "upperCase": "", "dd2": 990, "dd3": 660, "c2": 510, "c3": 340, "z2": 220, "z3": 150 };
+    var Feilitzsch = { kind: "BHFTAG", "station": "Feilitzsch", "lines": ["LH"], "upperCase": "", "dd2": 1310, "dd3": 880, "c2": 830, "c3": 560, "z2": 540, "z3": 360 };
+    var Flossmühle = { kind: "BHFTAG", "station": "Flossmühle", "lines": ["RF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Flossplatz = { kind: "BHFTAG", "station": "Flossplatz", "lines": ["AF"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Flöha = { kind: "BHFTAG", "station": "Flöha", "lines": ["DW", "AF", "RF"], "upperCase": "", "dd2": 410, "dd3": 280, "c2": 75, "c3": 50, "z2": 370, "z3": 250 };
+    var Frankenau = { kind: "BHFTAG", "station": "Frankenau", "lines": ["MR"], "upperCase": "FRANKENAU i.S.=A." };
+    var Frankenberg = { kind: "BHFTAG", "station": "Frankenberg", "lines": ["RW"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 105, "c3": 70, "z2": 400, "z3": 270, "via": "Niederwiesa" };
+    var Frankenstein = { kind: "BHFTAG", "station": "Frankenstein", "lines": ["DW"], "upperCase": "", "dd2": 300, "dd3": 200, "c2": 180, "c3": 120, "z2": 480, "z3": 320 };
+    var Franzensbad = { kind: "BHFTAG", "station": "Franzensbad", "lines": ["PE"], "upperCase": "", "dd2": 1470, "dd3": 980, "c2": 990, "c3": 660, "z2": 700, "z3": 470, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 660, "z3b": 440, "viab": "Voigtsgrün" };
+    var Frauendorf = { kind: "BHFTAG", "station": "Frauendorf", "lines": ["KC"], "upperCase": "", "dd2": 740, "dd3": 500, "c2": 260, "c3": 180, "z2": 0, "z3": 0 };
+    var Frauenhain = { kind: "BHFTAG", "station": "Frauenhain", "lines": ["DE"], "upperCase": "", "dd2": 290, "dd3": 200, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Frauenstein = { kind: "BHFTAG", "station": "Frauenstein", "lines": ["KF"], "upperCase": "", "dd2": 280, "dd3": 190, "c2": 450, "c3": 300, "z2": 740, "z3": 500 };
+    var Freiberg = { kind: "BHFTAG", "station": "Freiberg", "lines": ["DW", "FH", "NM"], "upperCase": "FREIBERG i.S.", "dd2": 250, "dd3": 170, "c2": 240, "c3": 160, "z2": 540, "z3": 360 };
+    var Freiberg_Schachtbhf = { kind: "BHFTAG", "station": "Freiberg Schachtbhf.", "lines": ["FH"], "upperCase": "", "dd2": 260, "dd3": 180, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Friedebach = { kind: "BHFTAG", "station": "Friedebach", "lines": ["MS"], "upperCase": "", "dd2": 410, "dd3": 270, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Friedersdorf_b_Fr = { kind: "BHFTAG", "station": "Friedersdorf b.Fr.", "lines": ["KF"], "upperCase": "", "dd2": 220, "dd3": 150, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Frohburg = { kind: "BHFTAG", "station": "Frohburg", "lines": ["KC"], "upperCase": "", "dd2": 770, "dd3": 510, "c2": 290, "c3": 190, "z2": 380, "z3": 260 };
+    var Fährbrücke = { kind: "BHFTAG", "station": "Fährbrücke", "lines": ["SZ"], "upperCase": "", "dd2": 870, "dd3": 580, "c2": 390, "c3": 260, "z2": 95, "z3": 65, "comment": "todo   via zwickau od thalheim" };
+    var Gadewitz = { kind: "BHFTAG", "station": "Gadewitz", "lines": ["OD", "GM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Gaschwitz = { kind: "BHFTAG", "station": "Gaschwitz", "lines": ["LH", "GM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 450, "c3": 300, "z2b": 470, "z3b": 310, "viab": "Werdau" };
+    var Gauern = { kind: "BHFTAG", "station": "Gauern", "lines": ["WM"], "upperCase": "GAUERN i.S.=A.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 180, "z3": 120 };
+    var Geising_Altenb = { kind: "BHFTAG", "station": "Geising-Altenb.", "lines": ["MG"], "upperCase": "", "dd2": 290, "dd3": 200, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Geithain = { kind: "BHFTAG", "station": "Geithain", "lines": ["KC", "LG"], "upperCase": "", "dd2": 710, "dd3": 470, "c2": 230, "c3": 150, "z2": 320, "z3": 220, "comment": "todo langweg fehlt" };
+    var Gelenau = { kind: "BHFTAG", "station": "Gelenau", "lines": ["WE"], "upperCase": "", "dd2": 560, "dd3": 380, "c2": 240, "c3": 160, "z2": 0, "z3": 0 };
+    var Gelobtland = { kind: "BHFTAG", "station": "Gelobtland", "lines": ["RF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 370, "c3": 250, "z2": 0, "z3": 0 };
+    var Gera_R_Pr_St_B = { kind: "BHFTAG", "station": "Gera (R.) Pr.St.B.", "lines": ["GGa"], "upperCase": "", "dd2": 990, "dd3": 660, "c2": 510, "c3": 340, "z2": 390, "z3": 260, "via": "Gössnitz", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 300, "z3b": 200, "viab": "Seelingstädt", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 370, "z3c": 250, "viac": "Greiz" };
+    var Gera_Reuss_S_St_B = { kind: "BHFTAG", "station": "Gera (Reuss) S.St.B.", "lines": ["GGa", "PWz"], "upperCase": "", "dd2": 980, "dd3": 650, "c2": 500, "c3": 330, "z2": 390, "z3": 260, "via": "Gössnitz", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 290, "z3b": 190, "viab": "Seelingstädt", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 360, "z3c": 240, "viac": "Greiz" };
+    var Gerichshain = { kind: "BHFTAG", "station": "Gerichshain", "lines": ["LD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Geringswalde = { kind: "BHFTAG", "station": "Geringswalde", "lines": ["WR"], "upperCase": "", "dd2": 520, "dd3": 350, "c2": 250, "c3": 170, "z2b": 410, "z3b": 270, "via": "Waldheim" };
+    var Gersberg = { kind: "BHFTAG", "station": "Gersberg", "lines": ["HE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Gersdorf = { kind: "BHFTAG", "station": "Gersdorf", "lines": ["GD"], "upperCase": "GERSDORF i.Pr.", "dd2": 590, "dd3": 390, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Geyer_Bhf = { kind: "BHFTAG", "station": "Geyer Bhf.", "lines": ["SGr"], "upperCase": "", "dd2": 700, "dd3": 470, "c2": 380, "c3": 250, "z2": 0, "z3": 0 };
+    var Geyer_Haltepunkt = { kind: "BHFTAG", "station": "Geyer Haltepunkt", "lines": ["SGr"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Glashütte = { kind: "BHFTAG", "station": "Glashütte", "lines": ["MG"], "upperCase": "", "dd2": 200, "dd3": 130, "c2": 680, "c3": 450, "z2": 0, "z3": 0 };
+    var Glauchau = { kind: "BHFTAG", "station": "Glauchau", "lines": ["DW", "GW"], "upperCase": "", "dd2": 680, "dd3": 460, "c2": 200, "c3": 140, "z2": 100, "z3": 65 };
+    var Glossen_b_L = { kind: "BHFTAG", "station": "Glossen b.L.", "lines": ["LWg"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Glossen_b_O = { kind: "BHFTAG", "station": "Glossen b.O.", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Golzern = { kind: "BHFTAG", "station": "Golzern", "lines": ["GW"], "upperCase": "", "dd2": 650, "dd3": 440, "c2": 420, "c3": 280, "z2": 510, "z3": 340 };
+    var Gr_Voigtsbg = { kind: "BHFTAG", "station": "Gr.-Voigtsbg.", "lines": ["NM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "freiberg" };
+    var Greiz = { kind: "BHFTAG", "station": "Greiz", "lines": ["PWz", "BG"], "upperCase": "GREIZ  i.R.ä.L.", "dd2": 950, "dd3": 630, "c2": 470, "c3": 310, "z2": 180, "z3": 120 };
+    var Greiz_Aubachth = { kind: "BHFTAG", "station": "Greiz-Aubachth.", "lines": ["BG"], "upperCase": "GREIZ-AUBACHTHAL i.R.ä.L.", "dd2": 950, "dd3": 630, "c2": 470, "c3": 310, "z2": 180, "z3": 120 };
+    var Griesbach = { kind: "BHFTAG", "station": "Griesbach", "lines": ["WE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grimma_ob_Bhf = { kind: "BHFTAG", "station": "Grimma ob.Bhf.", "lines": ["BC"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 460, "c3": 310, "z2": 0, "z3": 0, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 390, "c3b": 260, "z2b": 490, "z3b": 330, "viab": "Rochlitz" };
+    var Grimma_unt_Bhf = { kind: "BHFTAG", "station": "Grimma unt. Bhf.", "lines": ["GW"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 460, "c3": 310, "z2": 0, "z3": 0, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 390, "c3b": 260, "z2b": 490, "z3b": 330, "viab": "Rochlitz" };
+    var Groitzsch = { kind: "BHFTAG", "station": "Groitzsch", "lines": ["GM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 530, "c3": 350, "z2": 450, "z3": 300 };
+    var Gross_Steinberg = { kind: "BHFTAG", "station": "Gross-Steinberg", "lines": ["BC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grossbauchlitz = { kind: "BHFTAG", "station": "Grossbauchlitz", "lines": ["RC", "OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 260, "c3": 170, "z2": 540, "z3": 360 };
+    var Grossbothen = { kind: "BHFTAG", "station": "Grossbothen", "lines": ["BC", "GW"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 420, "c3": 280, "z2": 0, "z3": 0, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 350, "c3b": 240, "z2b": 440, "z3b": 300, "viab": "Rochlitz" };
+    var Grossbraunshain = { kind: "BHFTAG", "station": "Grossbraunshain", "lines": ["MR"], "upperCase": "GROSSBRAUNSHAIN i.S.=A." };
+    var Grosscotta = { kind: "BHFTAG", "station": "Grosscotta", "lines": ["PGc"], "upperCase": "", "dd2": 160, "dd3": 110, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grossenhain = { kind: "BHFTAG", "station": "Grossenhain", "lines": ["DE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "unklar" };
+    var Grossenhain_C_G = { kind: "BHFTAG", "station": "Grossenhain C.-G.", "lines": ["GP"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "ignoriert da via unklar" };
+    var Grossenstein = { kind: "BHFTAG", "station": "Grossenstein", "lines": ["MR"], "upperCase": "GROSSENSTEIN i.S.=A." };
+    var Grossharthau = { kind: "BHFTAG", "station": "Grossharthau", "lines": ["GD"], "upperCase": "", "dd2": 210, "dd3": 140, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grosshartmannsdorf = { kind: "BHFTAG", "station": "Grosshartmannsdorf", "lines": ["BGh"], "upperCase": "", "dd2": 350, "dd3": 230, "c2": 350, "c3": 230, "z2": 640, "z3": 430 };
+    var Grosspostw = { kind: "BHFTAG", "station": "Grosspostw.", "lines": ["BS", "GC"], "upperCase": "", "dd2": 420, "dd3": 280, "c2": 890, "c3": 600, "z2": 0, "z3": 0, "via": "Bautzen", "comment": "todo via bautzen or putzkau" };
+    var Grossröda = { kind: "BHFTAG", "station": "Grossröda", "lines": ["MR"], "upperCase": "ISA" };
+    var Grossröhrsdorf = { kind: "BHFTAG", "station": "Grossröhrsdorf", "lines": ["KP"], "upperCase": "", "dd2": 210, "dd3": 140, "c2": 690, "c3": 460, "z2": 980, "z3": 660 };
+    var Grossschirma = { kind: "BHFTAG", "station": "Grossschirma", "lines": ["NM"], "upperCase": "", "dd2": 310, "dd3": 210, "c2": 310, "c3": 210, "z2": 0, "z3": 0, "via": "Freiberg" };
+    var Grossschönau = { kind: "BHFTAG", "station": "Grossschönau", "lines": ["SE"], "upperCase": "", "dd2": 620, "dd3": 420, "c2": 1100, "c3": 740, "z2": 1390, "z3": 930, "via": "Warnsdorf" };
+    var Grosssermuth = { kind: "BHFTAG", "station": "Grosssermuth", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grossstöbnitz = { kind: "BHFTAG", "station": "Grossstöbnitz", "lines": ["GGa"], "upperCase": "ISA" };
+    var Grottau = { kind: "BHFTAG", "station": "Grottau", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 675, "dd3": 450, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Oberoderwitz", "dd2b": 745, "dd3b": 500, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Warnsdorf", "comment": "unklar oder viaherrnhut" };
+    var Grumbach = { kind: "BHFTAG", "station": "Grumbach", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grunau = { kind: "BHFTAG", "station": "Grunau", "lines": ["RW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Gröditz = { kind: "BHFTAG", "station": "Gröditz", "lines": ["ZE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "riesa" };
+    var Gröppendorf = { kind: "BHFTAG", "station": "Gröppendorf", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Grüna = { kind: "BHFTAG", "station": "Grüna", "lines": ["DW"], "upperCase": "", "dd2": 560, "dd3": 370, "c2": 70, "c3": 50, "z2": 230, "z3": 150 };
+    var Grünbach = { kind: "BHFTAG", "station": "Grünbach", "lines": ["FM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "via unklar" };
+    var Grünhain = { kind: "BHFTAG", "station": "Grünhain", "lines": ["ZS"], "upperCase": "", "dd2": 780, "dd3": 520, "c2": 300, "c3": 200, "z2": 0, "z3": 0, "via": "Thalheim", "dd2b": 830, "dd3b": 560, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Annaberg" };
+    var Grünhainichen = { kind: "BHFTAG", "station": "Grünhainichen", "lines": ["RF"], "upperCase": "", "dd2": 500, "dd3": 340, "c2": 170, "c3": 120, "z2": 470, "z3": 310 };
+    var Grünstädtel = { kind: "BHFTAG", "station": "Grünstädtel", "lines": ["BSg", "GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 390, "c3": 260, "z2": 270, "z3": 180 };
+    var Gutenfürst = { kind: "BHFTAG", "station": "Gutenfürst", "lines": ["LH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 500, "z3": 330 };
+    var Görlitz = { kind: "BHFTAG", "station": "Görlitz", "lines": ["GD"], "upperCase": "GÖRLITZ i.Pr.", "dd2": 640, "dd3": 430, "c2": 1120, "c3": 750, "z2": 1410, "z3": 940 };
+    var Görlitz_b_O = { kind: "BHFTAG", "station": "Görlitz b.O.", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Gössnitz = { kind: "BHFTAG", "station": "Gössnitz", "lines": ["LH", "GGa", "SG"], "upperCase": "GÖSSNITZ i.S.=A.", "dd2": 780, "dd3": 520, "c2": 300, "c3": 200, "z2": 0, "z3": 0, "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 150, "z3b": 100, "viab": "Schönbörnchen" };
+    var Göttengrün = { kind: "BHFTAG", "station": "Göttengrün", "lines": ["SH"], "upperCase": "GÖTTENGRÜN i.R.j.L.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 480, "z3": 320 };
+    var Hainewalde = { kind: "BHFTAG", "station": "Hainewalde", "lines": ["SE"], "upperCase": "", "dd2": 650, "dd3": 430, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Warnsdorf", "comment": "via frei erfunden" };
+    var Hainichen = { kind: "BHFTAG", "station": "Hainichen", "lines": ["RW"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 170, "c3": 110, "z2": 450, "z3": 300, "via": "Niederwiesa", "dd2b": 460, "dd3b": 310, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Meissen-Cölln" };
+    var Hainsberg = { kind: "BHFTAG", "station": "Hainsberg", "lines": ["DW", "HK"], "upperCase": "", "dd2": 65, "dd3": 45, "c2": 420, "c3": 280, "z2": 710, "z3": 480 };
+    var Halbendorf = { kind: "BHFTAG", "station": "Halbendorf", "lines": ["GC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Halsbrücke = { kind: "BHFTAG", "station": "Halsbrücke", "lines": ["FH"], "upperCase": "", "dd2": 290, "dd3": 200, "c2": 290, "c3": 200, "z2": 580, "z3": 390 };
+    var Hammer_Leubsdorf = { kind: "BHFTAG", "station": "Hammer-Leubsdorf", "lines": ["HE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 150, "c3": 100, "z2": 0, "z3": 0 };
+    var Hammer_Unterwiesenthal = { kind: "BHFTAG", "station": "Hammer-Unterwiesenthal", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hammerbrücke = { kind: "BHFTAG", "station": "Hammerbrücke", "lines": ["CA"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hartha_b_Waldh = { kind: "BHFTAG", "station": "Hartha b. Waldh.", "lines": ["WR"], "upperCase": "", "dd2": 490, "dd3": 330, "c2": 210, "c3": 140, "z2": 440, "z3": 300, "via": "Waldheim" };
+    var Harthau_i_E = { kind: "BHFTAG", "station": "Harthau i.E.", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 55, "c3": 35, "z2": 350, "z3": 240 };
+    var Hartmannmühle = { kind: "BHFTAG", "station": "Hartmannmühle", "lines": ["MG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hartmannsdorf = { kind: "BHFTAG", "station": "Hartmannsdorf", "lines": ["LW"], "upperCase": "", "dd2": 560, "dd3": 380, "c2": 80, "c3": 55, "z2": 380, "z3": 250, "via": "Wittgensdorf", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 300, "z3b": 200, "viab": "Limbach" };
+    var Hartmannsdorf_b_S = { kind: "BHFTAG", "station": "Hartmannsdorf b. S.", "lines": ["WCd"], "upperCase": " b saup", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 100, "z3": 65 };
+    var Heidenau = { kind: "BHFTAG", "station": "Heidenau", "lines": ["BD"], "upperCase": "", "dd2": 0, "dd3": 60, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "dd2 price unreadable" };
+    var Helbigsdorf = { kind: "BHFTAG", "station": "Helbigsdorf", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hennersdorf = { kind: "BHFTAG", "station": "Hennersdorf", "lines": ["AF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 140, "c3": 90, "z2": 0, "z3": 0 };
+    var Herlasgrün = { kind: "BHFTAG", "station": "Herlasgrün", "lines": ["LH", "HOe"], "upperCase": "", "dd2": 980, "dd3": 650, "c2": 500, "c3": 340, "z2": 210, "z3": 140 };
+    var Hermannsdorf = { kind: "BHFTAG", "station": "Hermannsdorf", "lines": ["ZS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hermsdf_Rhf = { kind: "BHFTAG", "station": "Hermsdf.-Rhf.", "lines": ["NM"], "upperCase": "", "dd2": 470, "dd3": 310, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hermsdorf = { kind: "BHFTAG", "station": "Hermsdorf", "lines": ["KS"], "upperCase": "", "dd2": 105, "dd3": 70, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Herrnhut = { kind: "BHFTAG", "station": "Herrnhut", "lines": ["ZL", "HB"], "upperCase": "", "dd2": 590, "dd3": 390, "c2": 1070, "c3": 710, "z2": 0, "z3": 0, "via": "Löbau" };
+    var Herzogswalde = { kind: "BHFTAG", "station": "Herzogswalde", "lines": ["PNo"], "upperCase": "", "dd2": 170, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hetzdorf_b_Oe = { kind: "BHFTAG", "station": "Hetzdorf b.Oe.", "lines": ["RF", "HE"], "upperCase": "", "dd2": 440, "dd3": 300, "c2": 110, "c3": 75, "z2": 410, "z3": 270 };
+    var Hilbersdorf = { kind: "BHFTAG", "station": "Hilbersdorf", "lines": ["DW"], "upperCase": "", "dd2": 470, "dd3": 310, "c2": 20, "c3": 15, "z2": 320, "z3": 210 };
+    var Himmelsfürst = { kind: "BHFTAG", "station": "Himmelsfürst", "lines": ["BL"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hirschberg_a_d_S = { kind: "BHFTAG", "station": "Hirschberg a.d.S.", "lines": ["SH"], "upperCase": "IRJL", "dd2": 1290, "dd3": 860, "c2": 810, "c3": 540, "z2": 520, "z3": 350 };
+    var Hirschfelde = { kind: "BHFTAG", "station": "Hirschfelde", "lines": ["ZN"], "upperCase": "", "dd2": 680, "dd3": 450, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Hof = { kind: "BHFTAG", "station": "Hof", "lines": ["LH"], "upperCase": "", "dd2": 1360, "dd3": 910, "c2": 880, "c3": 590, "z2": 590, "z3": 390 };
+    var Hohenfichte = { kind: "BHFTAG", "station": "Hohenfichte", "lines": ["RF"], "upperCase": "", "dd2": 460, "dd3": 310, "c2": 140, "c3": 90, "z2": 0, "z3": 0 };
+    var Hohenstein_E = { kind: "BHFTAG", "station": "Hohenstein-E.", "lines": ["DW"], "upperCase": "", "dd2": 600, "dd3": 400, "c2": 115, "c3": 75, "z2": 180, "z3": 120 };
+    var Hohnstein_b_Sch = { kind: "BHFTAG", "station": "Hohnstein b.Sch.", "lines": ["KH"], "upperCase": "", "dd2": 350, "dd3": 240, "c2": 830, "c3": 550, "z2": 1120, "z3": 750 };
+    var Holzhau = { kind: "BHFTAG", "station": "Holzhau", "lines": ["NM"], "upperCase": "", "dd2": 430, "dd3": 290, "c2": 430, "c3": 290, "z2": 0, "z3": 0 };
+    var Holzhausen = { kind: "BHFTAG", "station": "Holzhausen", "lines": ["LG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 440, "c3": 290, "z2": 0, "z3": 0 };
+    var Hopfgarten_i_S = { kind: "BHFTAG", "station": "Hopfgarten i.S.", "lines": ["LG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 270, "c3": 190, "z2": 0, "z3": 0 };
+    var Hundsgrün = { kind: "BHFTAG", "station": "Hundsgrün", "lines": ["PE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Häselich = { kind: "BHFTAG", "station": "Häselich", "lines": ["MG"], "upperCase": "", "dd2": 140, "dd3": 100, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Höhlteich = { kind: "BHFTAG", "station": "Höhlteich", "lines": ["StE", "HW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Irfersgrün = { kind: "BHFTAG", "station": "Irfersgrün", "lines": ["ZF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 105, "z3": 70 };
+    var Jahnsdorf_i_E = { kind: "BHFTAG", "station": "Jahnsdorf i.E.", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 90, "c3": 60, "z2": 320, "z3": 210 };
+    var Jocketa = { kind: "BHFTAG", "station": "Jocketa", "lines": ["LH"], "upperCase": "", "dd2": 1020, "dd3": 680, "c2": 540, "c3": 360, "z2": 250, "z3": 170 };
+    var Johanngeorgenstadt = { kind: "BHFTAG", "station": "Johanngeorgenstadt", "lines": ["JS"], "upperCase": "", "dd2": 960, "dd3": 640, "c2": 480, "c3": 320, "z2b": 350, "z3b": 240, "via": "Thalheim", "comment": "Todo via" };
+    var Jonsdorf = { kind: "BHFTAG", "station": "Jonsdorf", "lines": ["BJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Jägersgrün = { kind: "BHFTAG", "station": "Jägersgrün", "lines": ["CA"], "upperCase": "", "dd2": 980, "dd3": 650, "c2": 500, "c3": 340, "z2": 380, "z3": 250, "via": "Aue", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 320, "z3b": 220, "viab": "Voigtsgrün" };
+    var Jöhstadt_Bhf = { kind: "BHFTAG", "station": "Jöhstadt Bhf.", "lines": ["WJ"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 390, "c3": 260, "z2": 0, "z3": 0 };
+    var Kamenz = { kind: "BHFTAG", "station": "Kamenz", "lines": ["KP", "KE"], "upperCase": "KAMENZ i.S.", "dd2": 310, "dd3": 210, "c2": 790, "c3": 530, "z2": 1080, "z3": 720 };
+    var Kemnitz, Dorf = { kind: "BHFTAG", "station": "Kemnitz, Dorf", "lines": ["DE"], "upperCase": "", "dd2": 40, "dd3": 20, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kesselsdorf = { kind: "BHFTAG", "station": "Kesselsdorf", "lines": ["PNo"], "upperCase": "", "dd2": 85, "dd3": 55, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ketten = { kind: "BHFTAG", "station": "Ketten", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kieritzsch = { kind: "BHFTAG", "station": "Kieritzsch", "lines": ["LH", "KC"], "upperCase": "", "dd2": 860, "dd3": 570, "c2": 380, "c3": 250, "z2b": 390, "z3b": 260, "viab": "Werdau", "comment": "weg unklar" };
+    var Kipsdorf = { kind: "BHFTAG", "station": "Kipsdorf", "lines": ["HK"], "upperCase": "", "dd2": 230, "dd3": 150, "c2": 570, "c3": 380, "z2": 0, "z3": 0 };
+    var Kirchberg_Bhf = { kind: "BHFTAG", "station": "Kirchberg Bhf.", "lines": ["WCd"], "upperCase": "", "dd2": 850, "dd3": 570, "c2": 370, "c3": 250, "z2": 75, "z3": 50 };
+    var Kirchberg_Hltept = { kind: "BHFTAG", "station": "Kirchberg Hltept.", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 85, "z3": 55 };
+    var Kirchberg_b_St = { kind: "BHFTAG", "station": "Kirchberg b.St.", "lines": ["HW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 140, "c3": 90, "z2": 0, "z3": 0 };
+    var Kittlitz_i_S = { kind: "BHFTAG", "station": "Kittlitz i.S.", "lines": ["LWg"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kl_Waltersdf = { kind: "BHFTAG", "station": "Kl. Waltersdf.", "lines": ["NM"], "upperCase": "", "dd2": 280, "dd3": 190, "c2": 280, "c3": 190, "z2": 0, "z3": 0 };
+    var Klein_Schirma = { kind: "BHFTAG", "station": "Klein-Schirma", "lines": ["DW"], "upperCase": "", "dd2": 280, "dd3": 190, "c2": 210, "c3": 140, "z2": 0, "z3": 0 };
+    var Kleinradmeritz = { kind: "BHFTAG", "station": "Kleinradmeritz", "lines": ["LWg"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kleinrügeln = { kind: "BHFTAG", "station": "Kleinrügeln", "lines": ["OS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kleinschönau = { kind: "BHFTAG", "station": "Kleinschönau", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kleinwelka = { kind: "BHFTAG", "station": "Kleinwelka", "lines": ["BK"], "upperCase": "", "dd2": 410, "dd3": 270, "c2": 880, "c3": 590, "z2": 0, "z3": 0 };
+    var Klingenberg_Colmn = { kind: "BHFTAG", "station": "Klingenberg-Colmn.", "lines": ["DW", "KF"], "upperCase": "", "dd2": 160, "dd3": 110, "c2": 330, "c3": 220, "z2": 620, "z3": 420 };
+    var Klingenthal = { kind: "BHFTAG", "station": "Klingenthal", "lines": ["ZK"], "upperCase": "", "dd2": 1140, "dd3": 760, "c2": 660, "c3": 440, "z2": 0, "z3": 0, "via": "Thalheim", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 410, "z3b": 270, "viab": "Voigtsgrün" };
+    var Klosterbuch = { kind: "BHFTAG", "station": "Klosterbuch", "lines": ["BC"], "upperCase": "", "dd2": 450, "dd3": 300, "c2": 300, "c3": 200, "z2": 0, "z3": 0, "via": "Döbeln Bhf." };
+    var Klotzsche = { kind: "BHFTAG", "station": "Klotzsche", "lines": ["GD", "KS"], "upperCase": "", "dd2": 65, "dd3": 45, "c2": 550, "c3": 370, "z2": 840, "z3": 560 };
+    var Kohlmühle = { kind: "BHFTAG", "station": "Kohlmühle", "lines": ["BS", "KH"], "upperCase": "", "dd2": 280, "dd3": 190, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Schandau" };
+    var Kostitz = { kind: "BHFTAG", "station": "Kostitz", "lines": ["MR"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kratzau = { kind: "BHFTAG", "station": "Kratzau", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 735, "dd3": 490, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Oberoderwitz", "dd2b": 805, "dd3b": 540, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Warnsdorf" };
+    var Kratzmühle = { kind: "BHFTAG", "station": "Kratzmühle", "lines": ["RW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kreischa_Slh = { kind: "BHFTAG", "station": "Kreischa-Slh.", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0 };
+    var Kretscham_Rothensehma = { kind: "BHFTAG", "station": "Kretscham-Rothensehma", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kriebethal = { kind: "BHFTAG", "station": "Kriebethal", "lines": ["WK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kriebitzsch = { kind: "BHFTAG", "station": "Kriebitzsch", "lines": ["ZA"], "upperCase": "???", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Krippen = { kind: "BHFTAG", "station": "Krippen", "lines": ["BD"], "upperCase": "", "dd2": 260, "dd3": 170, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Krumhermsdorf = { kind: "BHFTAG", "station": "Krumhermsdorf", "lines": ["BS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kubschütz = { kind: "BHFTAG", "station": "Kubschütz", "lines": ["GD"], "upperCase": "", "dd2": 410, "dd3": 270, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kunnersdf_a_d_Eig = { kind: "BHFTAG", "station": "Kunnersdf.a.d.Eig.", "lines": ["HB"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kupferh_Grünthal = { kind: "BHFTAG", "station": "Kupferh. Grünthal", "lines": ["PN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Käferhain = { kind: "BHFTAG", "station": "Käferhain", "lines": ["GM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kändler = { kind: "BHFTAG", "station": "Kändler", "lines": ["LWd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 110, "c3": 75, "z2": 0, "z3": 0, "via": "Wittgensdorf", "dd2b": 0, "dd3b": 0, "c2b": 160, "c3b": 110, "z2b": 0, "z3b": 0, "viab": "Wüstenbrand" };
+    var Köblitz = { kind: "BHFTAG", "station": "Köblitz", "lines": ["GC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Königsbr_Haltest = { kind: "BHFTAG", "station": "Königsbr. Haltest.", "lines": ["KS"], "upperCase": "", "dd2": 200, "dd3": 130, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Königsbrück_B = { kind: "BHFTAG", "station": "Königsbrück B.", "lines": ["KS"], "upperCase": "", "dd2": 190, "dd3": 130, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Königstein = { kind: "BHFTAG", "station": "Königstein", "lines": ["BD"], "upperCase": "", "dd2": 210, "dd3": 140, "c2": 690, "c3": 460, "z2": 990, "z3": 660 };
+    var Königswalde = { kind: "BHFTAG", "station": "Königswalde", "lines": ["WA"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Königswartha = { kind: "BHFTAG", "station": "Königswartha", "lines": ["BK"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Köttewitz = { kind: "BHFTAG", "station": "Köttewitz", "lines": ["MG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Köttwitzsch = { kind: "BHFTAG", "station": "Köttwitzsch", "lines": ["RP"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 230, "c3": 150, "z2": 0, "z3": 0 };
+    var Kötzschenbroda = { kind: "BHFTAG", "station": "Kötzschenbroda", "lines": ["LD", "DEK"], "upperCase": "", "dd2": 80, "dd3": 55, "c2": 570, "c3": 380, "z2": 860, "z3": 570 };
+    var Kühberg = { kind: "BHFTAG", "station": "Kühberg", "lines": ["WA"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Kürbitz = { kind: "BHFTAG", "station": "Kürbitz", "lines": ["PWz"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Langebrück = { kind: "BHFTAG", "station": "Langebrück", "lines": ["GD"], "upperCase": "", "dd2": 95, "dd3": 65, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Langenau = { kind: "BHFTAG", "station": "Langenau", "lines": ["BL"], "upperCase": "", "dd2": 320, "dd3": 220, "c2": 320, "c3": 220, "z2": 0, "z3": 0 };
+    var Langenberg_b_R = { kind: "BHFTAG", "station": "Langenberg b.R.", "lines": ["LD"], "upperCase": "", "dd2": 290, "dd3": 190, "c2": 440, "c3": 300, "z2": 0, "z3": 0 };
+    var Langenbuch = { kind: "BHFTAG", "station": "Langenbuch", "lines": ["SSz"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Langenhennersdf = { kind: "BHFTAG", "station": "Langenhennersdf", "lines": ["PB"], "upperCase": "", "comment": "BP in statVerz ??? ", "dd2": 180, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Langenleuba = { kind: "BHFTAG", "station": "Langenleuba", "lines": ["RP"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 220, "c3": 150, "z2": 0, "z3": 0 };
+    var Langenwolmsdorf = { kind: "BHFTAG", "station": "Langenwolmsdorf", "lines": ["ND"], "upperCase": "", "dd2": 250, "dd3": 170, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Pirna Bf." };
+    var Lastau = { kind: "BHFTAG", "station": "Lastau", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 370, "z3": 250 };
+    var Lauenstein = { kind: "BHFTAG", "station": "Lauenstein", "lines": ["MG"], "upperCase": "", "dd2": 270, "dd3": 180, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lausa = { kind: "BHFTAG", "station": "Lausa", "lines": ["KS"], "upperCase": "", "dd2": 90, "dd3": 60, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lausigk = { kind: "BHFTAG", "station": "Lausigk", "lines": ["LG"], "upperCase": "", "dd2": 770, "dd3": 520, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Chemnitz", "dd2b": 0, "dd3b": 0, "c2b": 300, "c3b": 200, "z2b": 0, "z3b": 0, "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 390, "z3c": 260, "viac": "Narsdorf" };
+    var Laussnitz = { kind: "BHFTAG", "station": "Laussnitz", "lines": ["KS"], "upperCase": "", "dd2": 170, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lauter = { kind: "BHFTAG", "station": "Lauter", "lines": ["SZ"], "upperCase": "", "dd2": 830, "dd3": 550, "c2": 350, "c3": 240, "z2": 230, "z3": 150 };
+    var Lauterbach_Steinbach = { kind: "BHFTAG", "station": "Lauterbach-Steinbach", "lines": ["LG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 320, "c3": 220, "z2": 0, "z3": 0 };
+    var Lautitz = { kind: "BHFTAG", "station": "Lautitz", "lines": ["LWg"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lehndorf = { kind: "BHFTAG", "station": "Lehndorf", "lines": ["LH"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 330, "c3": 220, "z2b": 220, "z3b": 150, "viab": "Werdau" };
+    var Leipzig_Bayr_Bf = { kind: "BHFTAG", "station": "Leipzig Bayr.Bf.", "lines": ["LH", "LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 630, "c3": 420, "z2b": 520, "z3b": 350, "via": "Gössnitz", "viab": "Werdau" };
+    var Leipzig_Berl_Bf = { kind: "BHFTAG", "station": "Leipzig Berl.Bf.", "lines": ["LHV"], "upperCase": "", "comment": "line by NM", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Leipzig_Dr_Bf = { kind: "BHFTAG", "station": "Leipzig Dr.Bf.", "lines": ["LD"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Riesa" };
+    var Leipzig_Stötteritz = { kind: "BHFTAG", "station": "Leipzig Stötteritz", "lines": ["LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Leipzig_Connewitz = { kind: "BHFTAG", "station": "Leipzig-Connewitz", "lines": ["LH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "laut stat verz LP, weil strecke nach plagwitz hier abzweigt" };
+    var Leisnig = { kind: "BHFTAG", "station": "Leisnig", "lines": ["BC"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 330, "c3": 220, "z2": 620, "z3": 410, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 540, "z3b": 360, "viab": "Lunzenau" };
+    var Lengenfeld = { kind: "BHFTAG", "station": "Lengenfeld", "lines": ["ZF"], "upperCase": "", "dd2": 910, "dd3": 610, "c2": 430, "c3": 290, "z2": 0, "z3": 0 };
+    var Leuben = { kind: "BHFTAG", "station": "Leuben", "lines": ["RN"], "upperCase": "", "dd2": 380, "dd3": 260, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Meissen-Cölln" };
+    var Leubsdorf = { kind: "BHFTAG", "station": "Leubsdorf", "lines": ["RF"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 150, "c3": 100, "z2": 440, "z3": 300 };
+    var Leutersdorf = { kind: "BHFTAG", "station": "Leutersdorf", "lines": ["SE"], "upperCase": "", "dd2": 550, "dd3": 370, "c2": 1030, "c3": 690, "z2": 1320, "z3": 880 };
+    var Lichtenberg = { kind: "BHFTAG", "station": "Lichtenberg", "lines": ["NM"], "upperCase": "LICHTENBERG B FREIBERG", "dd2": 310, "dd3": 210, "c2": 300, "c3": 200, "z2": 600, "z3": 400 };
+    var Lichtentanne = { kind: "BHFTAG", "station": "Lichtentanne", "lines": ["DW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 330, "c3": 220, "z2": 30, "z3": 20 };
+    var Lichtst_Callnb = { kind: "BHFTAG", "station": "Lichtst.-Callnb.", "lines": ["StE"], "upperCase": "", "dd2": 660, "dd3": 440, "c2": 180, "c3": 120, "z2": 170, "z3": 120 };
+    var Liebertwolkwitz = { kind: "BHFTAG", "station": "Liebertwolkwitz", "lines": ["LG"], "upperCase": "", "dd2": 800, "dd3": 530, "c2b": 420, "c3b": 280, "z2": 0, "z3": 0, "via": "Leipzig Dr.Bf.", "comment": "raetselhaft, via frei erfunden" };
+    var Liebschwitz = { kind: "BHFTAG", "station": "Liebschwitz", "lines": ["PWz"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 260, "z3": 180 };
+    var Limbach = { kind: "BHFTAG", "station": "Limbach", "lines": ["LW", "LWd"], "upperCase": "", "dd2": 590, "dd3": 390, "c2": 105, "c3": 70, "z2": 400, "z3": 270, "via": "Wittgensdorf", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 290, "z3b": 190, "viab": "Wüstenbrand" };
+    var Limmritz = { kind: "BHFTAG", "station": "Limmritz", "lines": ["RC"], "upperCase": "", "dd2": 430, "dd3": 290, "c2": 230, "c3": 150, "z2": 520, "z3": 350 };
+    var Lobstädt = { kind: "BHFTAG", "station": "Lobstädt", "lines": ["KC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 360, "c3": 240, "z2": 420, "z3": 280 };
+    var Lohmen = { kind: "BHFTAG", "station": "Lohmen", "lines": ["KP"], "upperCase": "", "dd2": 150, "dd3": 100, "c2": 630, "c3": 420, "z2": 0, "z3": 0, "via": "Pirna Bf." };
+    var Lohsdorf = { kind: "BHFTAG", "station": "Lohsdorf", "lines": ["KH"], "upperCase": "", "dd2": 300, "dd3": 200, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Loitzsch_Hohenl = { kind: "BHFTAG", "station": "Loitzsch-Hohenl.", "lines": ["WM"], "upperCase": "ISW", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lommatzsch = { kind: "BHFTAG", "station": "Lommatzsch", "lines": ["RN"], "upperCase": "", "dd2": 410, "dd3": 280, "c2": 490, "c3": 330, "z2b": 780, "z3b": 520, "comment": "via riesa unklar" };
+    var Lottengrün = { kind: "BHFTAG", "station": "Lottengrün", "lines": ["HOe"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 290, "z3": 190 };
+    var Lucka_i_S_A = { kind: "BHFTAG", "station": "Lucka i. S.-A.", "lines": ["GM"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 570, "c3": 380, "z2c": 410, "z3c": 280, "via": "Gaschwitz", "dd2b": 0, "dd3b": 0, "c2b": 530, "c3b": 350, "z2b": 0, "z3b": 0, "viab": "Meuselwitz" };
+    var Lugau = { kind: "BHFTAG", "station": "Lugau", "lines": ["HW"], "upperCase": "", "dd2": 630, "dd3": 420, "c2": 150, "c3": 100, "z2": 270, "z3": 180 };
+    var Lunzenau = { kind: "BHFTAG", "station": "Lunzenau", "lines": ["GW"], "upperCase": "", "dd2": 750, "dd3": 500, "c2": 0, "c3": 0, "z2": 270, "z3": 180, "comment": "via erfunden" };
+    var Löbau = { kind: "BHFTAG", "station": "Löbau", "lines": ["GD", "ZL", "LWg", "EL"], "upperCase": "ISACHSEN", "dd2": 500, "dd3": 330, "c2": 980, "c3": 650, "z2": 1260, "z3": 840 };
+    var Lössau = { kind: "BHFTAG", "station": "Lössau", "lines": ["SSz"], "upperCase": "IRJL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lössnitz_Bhf = { kind: "BHFTAG", "station": "Lössnitz Bhf. ", "lines": ["CA"], "upperCase": "", "dd2": 740, "dd3": 490, "c2": 260, "c3": 180, "z2": 0, "z3": 0, "via": "Thalheim", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 240, "z3b": 160, "viab": "Aue" };
+    var Lössnitz_Haltest = { kind: "BHFTAG", "station": "Lössnitz Haltest.", "lines": ["CA"], "upperCase": "", "dd2": 770, "dd3": 510, "c2": 290, "c3": 190, "z2": 210, "z3": 140 };
+    var Lössnitzgrund = { kind: "BHFTAG", "station": "Lössnitzgrund", "lines": ["RRg"], "upperCase": "", "dd2": 80, "dd3": 55, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Lössnitzthal = { kind: "BHFTAG", "station": "Lössnitzthal", "lines": ["HE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 140, "c3": 90, "z2": 0, "z3": 0 };
+    var Lüttnitz = { kind: "BHFTAG", "station": "Lüttnitz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Machendorf = { kind: "BHFTAG", "station": "Machendorf", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Machern = { kind: "BHFTAG", "station": "Machern", "lines": ["LD"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mahlis = { kind: "BHFTAG", "station": "Mahlis", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Malter = { kind: "BHFTAG", "station": "Malter", "lines": ["HK"], "upperCase": "", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Maltitz = { kind: "BHFTAG", "station": "Maltitz", "lines": ["LWg"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Marienberg = { kind: "BHFTAG", "station": "Marienberg", "lines": ["RF"], "upperCase": "", "dd2": 650, "dd3": 430, "c2": 320, "c3": 210, "z2": 600, "z3": 400 };
+    var Markersdorf = { kind: "BHFTAG", "station": "Markersdorf", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Markneukirchen = { kind: "BHFTAG", "station": "Markneukirchen", "lines": ["CA"], "upperCase": "", "dd2": 1150, "dd3": 770, "c2": 670, "c3": 450, "z2": 0, "z3": 0, "via": "Thalheim", "comment": "achtungviadiverse", "dd2b": 1280, "dd3b": 860, "c2b": 810, "c3b": 540, "z2b": 510, "z3b": 340, "viab": "Plauen i.V." };
+    var Meerane = { kind: "BHFTAG", "station": "Meerane", "lines": ["SG"], "upperCase": "", "dd2": 740, "dd3": 500, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "goessnitz ist doch totaler quatsch fuer DD  achtungviadiverse", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 115, "z3b": 80, "viab": "Schönbörnchen", "dd2c": 0, "dd3c": 0, "c2c": 260, "c3c": 180, "z2c": 180, "z3c": 120, "viac": "Gössnitz" };
+    var Mehltheuer = { kind: "BHFTAG", "station": "Mehltheuer", "lines": ["LH", "WM"], "upperCase": "", "dd2": 1130, "dd3": 760, "c2": 650, "c3": 440, "z2": 360, "z3": 240 };
+    var Meinersdorf = { kind: "BHFTAG", "station": "Meinersdorf", "lines": ["CA"], "upperCase": "", "dd2": 620, "dd3": 420, "c2": 150, "c3": 100, "z2": 350, "z3": 240 };
+    var Meiss_Triebischthal = { kind: "BHFTAG", "station": "Meiss.-Triebischthal", "lines": ["BC"], "upperCase": "", "dd2": 150, "dd3": 100, "c2": 500, "c3": 300, "z2": 780, "z3": 520, "comment": "meissen allgemein todo   viadiverse trieb hbf abstand 0" };
+    var Meissen_Cölln = { kind: "BHFTAG", "station": "Meissen-Cölln", "lines": ["BC"], "upperCase": "", "dd2": 150, "dd3": 100, "c2": 500, "c3": 300, "z2": 780, "z3": 520, "comment": "viadiverse hbf abstand 0" };
+    var Metzdorf = { kind: "BHFTAG", "station": "Metzdorf", "lines": ["HE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 130, "c3": 90, "z2": 0, "z3": 0 };
+    var Meuselwitz = { kind: "BHFTAG", "station": "Meuselwitz", "lines": ["ZA", "GM", "MR"], "upperCase": "ISA", "dd2": 960, "dd3": 640, "c2": 480, "c3": 320, "z2b": 370, "z3b": 250, "viab": "Werdau" };
+    var Miltitz_Roitzschen = { kind: "BHFTAG", "station": "Miltitz-Roitzschen", "lines": ["BC"], "upperCase": "", "dd2": 210, "dd3": 140, "c2": 440, "c3": 300, "z2": 0, "z3": 0 };
+    var Mitt_Wittgsdrf = { kind: "BHFTAG", "station": "Mitt.-Wittgsdrf.", "lines": ["KC"], "upperCase": "", "dd2": 530, "dd3": 360, "c2": 45, "c3": 30, "z2": 340, "z3": 230 };
+    var Mitte_Langenwolmsdf = { kind: "BHFTAG", "station": "Mitte Langenwolmsdf.", "lines": ["ND"], "upperCase": "", "dd2": 240, "dd3": 160, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mittelbach = { kind: "BHFTAG", "station": "Mittelbach", "lines": ["HW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 110, "c3": 75, "z2": 0, "z3": 0 };
+    var Mittelcrottendorf = { kind: "BHFTAG", "station": "Mittelcrottendorf", "lines": ["WC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mittelcunew = { kind: "BHFTAG", "station": "Mittelcunew.", "lines": ["GC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mittelherold = { kind: "BHFTAG", "station": "Mittelherold", "lines": ["WE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mitteloderwitz = { kind: "BHFTAG", "station": "Mitteloderwitz", "lines": ["ZL"], "upperCase": "", "dd2": 580, "dd3": 390, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mittweida = { kind: "BHFTAG", "station": "Mittweida", "lines": ["RC"], "upperCase": "", "dd2": 590, "dd3": 400, "c2": 110, "c3": 75, "z2": 410, "z3": 270, "via": "Chemnitz", "dd2b": 540, "dd3b": 360, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Döbeln Bhf." };
+    var Mittweida_Markrsb = { kind: "BHFTAG", "station": "Mittweida-Markrsb.", "lines": ["BSg"], "upperCase": "", "dd2": 800, "dd3": 530, "c2": 410, "c3": 280, "z2": 290, "z3": 190, "comment": "viadiv weg unklar" };
+    var Mockr_Jessn = { kind: "BHFTAG", "station": "Mockr.-Jessn.", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mohlsdorf = { kind: "BHFTAG", "station": "Mohlsdorf", "lines": ["BG"], "upperCase": "IRÄL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 130, "z3": 0, "comment": "z3 nicht lesbar" };
+    var Mohorn = { kind: "BHFTAG", "station": "Mohorn", "lines": ["PNo"], "upperCase": "", "dd2": 180, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Moldau = { kind: "BHFTAG", "station": "Moldau", "lines": ["NM"], "upperCase": "IBÖ", "dd2": 480, "dd3": 320, "c2": 480, "c3": 320, "z2": 770, "z3": 520 };
+    var Moritzburg_Eisenb = { kind: "BHFTAG", "station": "Moritzburg-Eisenb.", "lines": ["RRg"], "upperCase": "", "dd2": 110, "dd3": 75, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Moritzdorf = { kind: "BHFTAG", "station": "Moritzdorf", "lines": ["KS"], "upperCase": "", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mosel = { kind: "BHFTAG", "station": "Mosel", "lines": ["DW", "MO"], "upperCase": "", "dd2": 730, "dd3": 490, "c2": 250, "c3": 170, "z2": 50, "z3": 35 };
+    var Mulda = { kind: "BHFTAG", "station": "Mulda", "lines": ["NM", "MS"], "upperCase": "", "dd2": 330, "dd3": 220, "c2": 330, "c3": 220, "z2": 620, "z3": 420 };
+    var Muldenberg = { kind: "BHFTAG", "station": "Muldenberg", "lines": ["CA", "FM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 550, "c3": 370, "z2": 280, "z3": 190 };
+    var Muldenhütten = { kind: "BHFTAG", "station": "Muldenhütten", "lines": ["DW"], "upperCase": "", "dd2": 220, "dd3": 150, "c2": 270, "c3": 180, "z2": 0, "z3": 0 };
+    var Mutzschen = { kind: "BHFTAG", "station": "Mutzschen", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mylau, Bahnhof = { kind: "BHFTAG", "station": "Mylau, Bahnhof", "lines": ["RM"], "upperCase": "", "dd2": 940, "dd3": 630, "c2": 460, "c3": 310, "z2": 170, "z3": 120 };
+    var Mylau, Haltestelle = { kind: "BHFTAG", "station": "Mylau, Haltestelle", "lines": ["RM"], "upperCase": "", "dd2": 945, "dd3": 635, "c2": 465, "c3": 315, "z2": 175, "z3": 125, "comment": "todo spezial:vmtl pauschal 5pfg ab myl bhf" };
+    var Müdisdorf = { kind: "BHFTAG", "station": "Müdisdorf", "lines": ["BGh"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Mügeln_b_O = { kind: "BHFTAG", "station": "Mügeln b.O.", "lines": ["OD", "MN"], "upperCase": "", "dd2": 470, "dd3": 320, "c2": 370, "c3": 250, "z2": 0, "z3": 0 };
+    var Mügeln_b_P = { kind: "BHFTAG", "station": "Mügeln b.P.", "lines": ["BD", "MG"], "upperCase": "", "dd2": 70, "dd3": 50, "c2": 560, "c3": 370, "z2": 840, "z3": 560 };
+    var Mühltroff = { kind: "BHFTAG", "station": "Mühltroff", "lines": ["SSz"], "upperCase": "", "dd2": 1190, "dd3": 790, "c2": 710, "c3": 470, "z2": 420, "z3": 280 };
+    var Mülsen_St_Jacob = { kind: "BHFTAG", "station": "Mülsen St. Jacob", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 105, "z3": 70, "comment": "abstand 0 diese drei" };
+    var Mülsen_St_Mich = { kind: "BHFTAG", "station": "Mülsen St. Mich", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 105, "z3": 70, "comment": "abstand 0 diese drei" };
+    var Mülsen_St_Niclas = { kind: "BHFTAG", "station": "Mülsen St. Niclas", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 105, "z3": 70, "comment": " spezial fuer diese 3 ?" };
+    var Narsdorf = { kind: "BHFTAG", "station": "Narsdorf", "lines": ["KC", "RP"], "upperCase": "", "dd2": 670, "dd3": 450, "c2": 190, "c3": 130, "z2": 290, "z3": 190 };
+    var Nassau = { kind: "BHFTAG", "station": "Nassau", "lines": ["NM"], "upperCase": "", "dd2": 380, "dd3": 250, "c2": 380, "c3": 250, "z2": 0, "z3": 0 };
+    var Naundorf_b_Dr = { kind: "BHFTAG", "station": "Naundorf b. Dr.", "lines": ["DE", "DEC"], "upperCase": "", "dd2": 80, "dd3": 40, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Naundorf_b_O = { kind: "BHFTAG", "station": "Naundorf b.O", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Naundorf_b_Schm = { kind: "BHFTAG", "station": "Naundorf b.Schm.", "lines": ["HK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Naunhof = { kind: "BHFTAG", "station": "Naunhof", "lines": ["BC"], "upperCase": "", "dd2": 680, "dd3": 460, "c2": 530, "c3": 350, "z2": 0, "z3": 0 };
+    var Ndr_Olbersdorf = { kind: "BHFTAG", "station": "Ndr.-Olbersdorf", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nebitzschen = { kind: "BHFTAG", "station": "Nebitzschen", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nennigmühle = { kind: "BHFTAG", "station": "Nennigmühle", "lines": ["PN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nerch_Gornewitz = { kind: "BHFTAG", "station": "Nerch.-Gornewitz", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nerchau_Haltept = { kind: "BHFTAG", "station": "Nerchau Haltept.", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nerchau_Trebsen = { kind: "BHFTAG", "station": "Nerchau-Trebsen", "lines": ["GW", "MN"], "upperCase": "", "dd2": 620, "dd3": 420, "c2": 0, "c3": 0, "z2": 540, "z3": 360 };
+    var Neschwitz = { kind: "BHFTAG", "station": "Neschwitz", "lines": ["BK"], "upperCase": "", "dd2": 450, "dd3": 300, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Netzschkau = { kind: "BHFTAG", "station": "Netzschkau", "lines": ["LH"], "upperCase": "", "dd2": 960, "dd3": 630, "c2": 470, "c3": 310, "z2": 180, "z3": 120 };
+    var Neucunnersdorf = { kind: "BHFTAG", "station": "Neucunnersdorf", "lines": ["ZL"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 1030, "c3": 680, "z2": 0, "z3": 0 };
+    var Neudorf_i_E = { kind: "BHFTAG", "station": "Neudorf i.E.", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 420, "c3": 280, "z2": 0, "z3": 0 };
+    var Neugersdorf = { kind: "BHFTAG", "station": "Neugersdorf", "lines": ["OW"], "upperCase": "", "dd2": 510, "dd3": 340, "c2": 990, "c3": 660, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Neuhausen_i_S = { kind: "BHFTAG", "station": "Neuhausen i.S.", "lines": ["PN"], "upperCase": "", "dd2": 700, "dd3": 470, "c2": 380, "c3": 250, "z2": 660, "z3": 440 };
+    var Neuheide = { kind: "BHFTAG", "station": "Neuheide", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Neukirchen_i_E = { kind: "BHFTAG", "station": "Neukirchen i.E.", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 70, "c3": 50, "z2": 330, "z3": 220 };
+    var Neumark = { kind: "BHFTAG", "station": "Neumark", "lines": ["LH", "BG", "DW"], "upperCase": "", "dd2": 860, "dd3": 580, "c2": 380, "c3": 260, "z2": 90, "z3": 60, "comment": "BG = Brunn Greiz lt stat verz, lt. www auch NG, preuss: dw bis neumark?" };
+    var Neumühle = { kind: "BHFTAG", "station": "Neumühle", "lines": ["PWz"], "upperCase": "IRÄL", "dd3": 0, "c2": 510, "c3": 340, "z2": 210, "z3": 140 };
+    var Neundorf_b_P = { kind: "BHFTAG", "station": "Neundorf b. P.", "lines": ["PB"], "upperCase": "", "dd2": 150, "dd3": 100, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Neundorf_i_V = { kind: "BHFTAG", "station": "Neundorf i.V.", "lines": ["PE"], "upperCase": "", "dd2": 1080, "dd3": 720, "c2": 600, "c3": 400, "z2": 310, "z3": 210 };
+    var Neusalza_Sprmb = { kind: "BHFTAG", "station": "Neusalza-Sprmb.", "lines": ["OW"], "upperCase": "", "dd2": 450, "dd3": 300, "c2": 930, "c3": 620, "z2": 0, "z3": 0 };
+    var Neustadt_i_S = { kind: "BHFTAG", "station": "Neustadt i.S.", "lines": ["BS", "ND"], "upperCase": "", "dd2": 410, "dd3": 280, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Schandau", "dd2b": 280, "dd3b": 190, "c2b": 760, "c3b": 510, "z2b": 0, "z3b": 0, "viab": "Pirna Bf.", "dd2c": 0, "dd3c": 0, "c2c": 780, "c3c": 520, "z2c": 0, "z3c": 0, "viac": "Arnsdorf" };
+    var Neusörnewitz = { kind: "BHFTAG", "station": "Neusörnewitz", "lines": ["BC"], "upperCase": "", "dd2": 130, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Neuwelt = { kind: "BHFTAG", "station": "Neuwelt", "lines": ["SZ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 360, "c3": 240, "z2": 230, "z3": 160 };
+    var Nickritz = { kind: "BHFTAG", "station": "Nickritz", "lines": ["RN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nicolai_Vorst = { kind: "BHFTAG", "station": "Nicolai-Vorst", "lines": ["DW"], "upperCase": "", "dd2": 500, "dd3": 340, "c2": 20, "c3": 15, "z2": 280, "z3": 190 };
+    var Nied_Dittmannsd = { kind: "BHFTAG", "station": "Nied.-Dittmannsd", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nieder_Mülsen = { kind: "BHFTAG", "station": "Nieder-Mülsen", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 75, "z3": 50 };
+    var Niederau = { kind: "BHFTAG", "station": "Niederau", "lines": ["LD"], "upperCase": "", "dd2": 150, "dd3": 100, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederdorf = { kind: "BHFTAG", "station": "Niederdorf", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 140, "c3": 90, "z2": 280, "z3": 190 };
+    var Niederglobenstein = { kind: "BHFTAG", "station": "Niederglobenstein", "lines": ["GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niedergrund = { kind: "BHFTAG", "station": "Niedergrund", "lines": ["BD"], "upperCase": "IBÖ", "dd2": 320, "dd3": 220, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederharthau = { kind: "BHFTAG", "station": "Niederharthau", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 45, "c3": 30, "z2": 0, "z3": 0 };
+    var Niederhermsdorf = { kind: "BHFTAG", "station": "Niederhermsdorf", "lines": ["PNo"], "upperCase": "", "dd2": 60, "dd3": 40, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederneukirch = { kind: "BHFTAG", "station": "Niederneukirch", "lines": ["BS", "NnB"], "upperCase": "", "dd2": 310, "dd3": 210, "c2": 790, "c3": 530, "z2": 0, "z3": 0 };
+    var Niederreinsberg = { kind: "BHFTAG", "station": "Niederreinsberg", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederrennersd = { kind: "BHFTAG", "station": "Niederrennersd.", "lines": ["HB"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederschlag = { kind: "BHFTAG", "station": "Niederschlag", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederschlema = { kind: "BHFTAG", "station": "Niederschlema", "lines": ["SZ", "SN"], "upperCase": "", "dd2": 810, "dd3": 540, "c2": 340, "c3": 230, "z2": 0, "z3": 0, "via": "Thalheim", "dd2b": 930, "dd3b": 620, "c2b": 450, "c3b": 300, "z2b": 0, "z3b": 0, "viab": "Zwickau" };
+    var Niederschlottwitz = { kind: "BHFTAG", "station": "Niederschlottwitz", "lines": ["MG"], "upperCase": "", "dd2": 0, "dd3": 110, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "teil nicht lesbar" };
+    var Niederschmiedeberg = { kind: "BHFTAG", "station": "Niederschmiedeberg", "lines": ["WJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niedersedlitz = { kind: "BHFTAG", "station": "Niedersedlitz", "lines": ["BD"], "upperCase": "", "dd2": 50, "dd3": 35, "c2": 540, "c3": 360, "z2": 830, "z3": 550 };
+    var Niederseiffenbach = { kind: "BHFTAG", "station": "Niederseiffenbach", "lines": ["PN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederstrahwlde = { kind: "BHFTAG", "station": "Niederstrahwlde", "lines": ["HB"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederstriegis = { kind: "BHFTAG", "station": "Niederstriegis", "lines": ["BC"], "upperCase": "", "dd2": 360, "dd3": 240, "c2": 290, "c3": 200, "z2": 0, "z3": 0 };
+    var Niederwartha = { kind: "BHFTAG", "station": "Niederwartha", "lines": ["DE"], "upperCase": "", "dd2": 70, "dd3": 30, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niederwiesa = { kind: "BHFTAG", "station": "Niederwiesa", "lines": ["DW", "RW"], "upperCase": "", "dd2": 440, "dd3": 290, "c2": 55, "c3": 35, "z2": 350, "z3": 230 };
+    var Niederwürschnitz = { kind: "BHFTAG", "station": "Niederwürschnitz", "lines": ["StE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 190, "c3": 130, "z2": 0, "z3": 0 };
+    var Niedrbobritzsch = { kind: "BHFTAG", "station": "Niedrbobritzsch", "lines": ["DW"], "upperCase": "", "dd2": 190, "dd3": 130, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Niedrpretzschend = { kind: "BHFTAG", "station": "Niedrpretzschend.", "lines": ["KF"], "upperCase": "NIEDERPRETZSCHENDORF", "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nikrisch = { kind: "BHFTAG", "station": "Nikrisch", "lines": ["ZN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nimbschen = { kind: "BHFTAG", "station": "Nimbschen", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nossen = { kind: "BHFTAG", "station": "Nossen", "lines": ["BC", "RN", "NM", "PNo"], "upperCase": "", "dd2": 290, "dd3": 200, "c2": 360, "c3": 240, "z2d": 650, "z3d": 400, "via": "Meissen-Cölln", "comment": "cc via meissen, via Doebeln dd selbe strecke meissen", "dd2b": 0, "dd3b": 0, "c2b": 330, "c3b": 220, "z2b": 0, "z3b": 0, "viab": "Hainichen", "dd2c": 0, "dd3c": 0, "c2c": 390, "c3c": 260, "z2c": 0, "z3c": 0, "viac": "Freiberg" };
+    var Nossen_Haltep = { kind: "BHFTAG", "station": "Nossen Haltep.", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Nöbdenitz = { kind: "BHFTAG", "station": "Nöbdenitz", "lines": ["GGa"], "upperCase": "ISA", "dd2": 880, "dd3": 590, "c2": 400, "c3": 270, "z2": 0, "z3": 0 };
+    var Ober_Altchemnitz = { kind: "BHFTAG", "station": "Ober-Altchemnitz", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 35, "c3": 25, "z2": 0, "z3": 0 };
+    var Ober_Dittmannsd = { kind: "BHFTAG", "station": "Ober-Dittmannsd.", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ober_Schönbach = { kind: "BHFTAG", "station": "Ober-Schönbach", "lines": ["TD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ober_Tannenberg = { kind: "BHFTAG", "station": "Ober-Tannenberg", "lines": ["SGr"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberbobritzsch = { kind: "BHFTAG", "station": "Oberbobritzsch", "lines": ["KF"], "upperCase": "", "dd2": 230, "dd3": 160, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obercarsdorf = { kind: "BHFTAG", "station": "Obercarsdorf", "lines": ["HK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "siehe ulberndorf" };
+    var Obercolmnitz = { kind: "BHFTAG", "station": "Obercolmnitz", "lines": ["KF"], "upperCase": "", "dd2": 180, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obercrinitz = { kind: "BHFTAG", "station": "Obercrinitz", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 140, "z3": 100 };
+    var Obercrottendorf = { kind: "BHFTAG", "station": "Obercrottendorf", "lines": ["WC"], "upperCase": "", "dd2": 750, "dd3": 500, "c2": 420, "c3": 280, "z2b": 390, "z3b": 260, "via": "Annaberg" };
+    var Obercunewalde = { kind: "BHFTAG", "station": "Obercunewalde", "lines": ["GC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obercunnersdorf = { kind: "BHFTAG", "station": "Obercunnersdorf", "lines": ["ZL"], "upperCase": "", "dd2": 560, "dd3": 370, "c2": 1040, "c3": 690, "z2": 0, "z3": 0 };
+    var Oberdorf_Beutha = { kind: "BHFTAG", "station": "Oberdorf-Beutha", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 180, "c3": 120, "z2": 0, "z3": 0, "via": "Neukirchen i.E.", "comment": "neukirchen korrekt? anderer weg unklar" };
+    var Oberdorf_Oberoderwitz = { kind: "BHFTAG", "station": "Oberdorf-Oberoderwitz", "lines": ["OW"], "upperCase": "", "dd2": 550, "dd3": 370, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberehrenberg = { kind: "BHFTAG", "station": "Oberehrenberg", "lines": ["KH"], "upperCase": "", "dd2": 330, "dd3": 220, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberglobenstein = { kind: "BHFTAG", "station": "Oberglobenstein", "lines": ["GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obergruna_Bieberstein = { kind: "BHFTAG", "station": "Obergruna-Bieberstein", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obergrund = { kind: "BHFTAG", "station": "Obergrund", "lines": ["BD"], "upperCase": "IBÖ", "dd2": 370, "dd3": 250, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obergrüna = { kind: "BHFTAG", "station": "Obergrüna", "lines": ["LWd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 105, "c3": 70, "z2": 230, "z3": 150 };
+    var Oberhartmannsdf = { kind: "BHFTAG", "station": "Oberhartmannsdf.", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 130, "z3": 90 };
+    var Oberhelmsdorf = { kind: "BHFTAG", "station": "Oberhelmsdorf", "lines": ["ND"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberherold = { kind: "BHFTAG", "station": "Oberherold", "lines": ["WE", "HT"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 270, "c3": 180, "z2": 0, "z3": 0 };
+    var Oberholz = { kind: "BHFTAG", "station": "Oberholz", "lines": ["LG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 390, "c3": 260, "z2": 0, "z3": 0 };
+    var Oberlichtenau = { kind: "BHFTAG", "station": "Oberlichtenau", "lines": ["RC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 55, "c3": 40, "z2": 350, "z3": 240 };
+    var Obermolbitz = { kind: "BHFTAG", "station": "Obermolbitz", "lines": ["ZA"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberneukirch = { kind: "BHFTAG", "station": "Oberneukirch", "lines": ["BS"], "upperCase": "", "dd2": 330, "dd3": 220, "c2": 810, "c3": 540, "z2": 1100, "z3": 740, "via": "Putzkau" };
+    var Oberoderwitz = { kind: "BHFTAG", "station": "Oberoderwitz", "lines": ["ZL", "OW"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 1040, "c3": 700, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Oberreichenbach = { kind: "BHFTAG", "station": "Oberreichenbach", "lines": ["RM"], "upperCase": "IV", "dd2": 930, "dd3": 620, "c2": 450, "c3": 300, "z2": 160, "z3": 110 };
+    var Oberreinsberg = { kind: "BHFTAG", "station": "Oberreinsberg", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberrennersdorf = { kind: "BHFTAG", "station": "Oberrennersdorf", "lines": ["HB"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberrittersgrün = { kind: "BHFTAG", "station": "Oberrittersgrün", "lines": ["GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 450, "c3": 300, "z2": 320, "z3": 220 };
+    var Oberrothenbach = { kind: "BHFTAG", "station": "Oberrothenbach", "lines": ["DW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 35, "z3": 25 };
+    var Oberschlema = { kind: "BHFTAG", "station": "Oberschlema", "lines": ["SN"], "upperCase": "", "dd2": 940, "dd3": 630, "c2": 470, "c3": 310, "z2": 170, "z3": 120, "via": "Zwickau", "dd2b": 0, "dd3b": 0, "c2b": 350, "c3b": 240, "z2b": 0, "z3b": 0, "viab": "Thalheim" };
+    var Oberschlottwitz = { kind: "BHFTAG", "station": "Oberschlottwitz", "lines": ["MG"], "upperCase": "", "dd2": 170, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberschmiedeberg = { kind: "BHFTAG", "station": "Oberschmiedeberg", "lines": ["WJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberschönheide = { kind: "BHFTAG", "station": "Oberschönheide", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 210, "z3": 140 };
+    var Oberstützengrün = { kind: "BHFTAG", "station": "Oberstützengrün", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 180, "z3": 120 };
+    var Oberullersdorf = { kind: "BHFTAG", "station": "Oberullersdorf", "lines": ["RZ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Obervogelgesang = { kind: "BHFTAG", "station": "Obervogelgesang", "lines": ["BD"], "upperCase": "", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oberwiesenthal = { kind: "BHFTAG", "station": "Oberwiesenthal", "lines": ["CW"], "upperCase": "", "dd2": 830, "dd3": 550, "c2": 500, "c3": 330, "z2": 0, "z3": 0 };
+    var Obstmühle = { kind: "BHFTAG", "station": "Obstmühle", "lines": ["WR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oederan = { kind: "BHFTAG", "station": "Oederan", "lines": ["DW"], "upperCase": "", "dd2": 350, "dd3": 240, "c2": 140, "c3": 100, "z2": 440, "z3": 290 };
+    var Oelschütz = { kind: "BHFTAG", "station": "Oelschütz", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Oelsnitz_i_E = { kind: "BHFTAG", "station": "Oelsnitz i.E.", "lines": ["StE"], "upperCase": "", "dd2": 700, "dd3": 470, "c2": 220, "c3": 150, "z2": 210, "z3": 140, "via": "St. Egidien" };
+    var Oelsnitz_i_V = { kind: "BHFTAG", "station": "Oelsnitz i.V.", "lines": ["PE", "HOe"], "upperCase": "", "dd2": 1180, "dd3": 790, "c2": 710, "c3": 470, "z2": 410, "z3": 280, "via": "Plauen i.V.", "dd2b": 1140, "dd3b": 760, "c2b": 660, "c3b": 440, "z2b": 370, "z3b": 250, "viab": "Voigtsgrün" };
+    var Oetzsch = { kind: "BHFTAG", "station": "Oetzsch", "lines": ["LH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Olbernhau = { kind: "BHFTAG", "station": "Olbernhau", "lines": ["PN"], "upperCase": "", "dd2": 630, "dd3": 420, "c2": 300, "c3": 200, "z2": 600, "z3": 400 };
+    var Oppach = { kind: "BHFTAG", "station": "Oppach", "lines": ["TD"], "upperCase": "", "dd2": 450, "dd3": 300, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ortmannsdorf = { kind: "BHFTAG", "station": "Ortmannsdorf", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 330, "c3": 220, "z2": 140, "z3": 90 };
+    var Oschatz_Bf = { kind: "BHFTAG", "station": "Oschatz Bf.", "lines": ["LD", "OS", "OD"], "upperCase": "", "dd2": 410, "dd3": 270, "c2": 480, "c3": 320, "z2": 0, "z3": 0, "via": "Riesa", "comment": "sehr komplex", "dd2b": 0, "dd3b": 0, "c2b": 440, "c3b": 290, "z2b": 0, "z3b": 0, "viab": "Mügeln", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 770, "z3c": 520, "viac": "Riesa", "dd2d": 0, "dd3d": 0, "c2d": 0, "c3d": 0, "z2d": 880, "z3d": 600, "viad": "Leipzig Bayr.Bf." };
+    var Oschatz_Haltest = { kind: "BHFTAG", "station": "Oschatz, Haltest.", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ostrau = { kind: "BHFTAG", "station": "Ostrau", "lines": ["RC"], "upperCase": "", "dd2": 440, "dd3": 300, "c2": 310, "c3": 210, "z2": 600, "z3": 400, "comment": "via frei erfunden" };
+    var Ostritz = { kind: "BHFTAG", "station": "Ostritz", "lines": ["ZN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ottendorf_b_Med = { kind: "BHFTAG", "station": "Ottendorf b.Med.", "lines": ["KS"], "upperCase": "", "dd2": 120, "dd3": 80, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ottendorf_b_Mitt = { kind: "BHFTAG", "station": "Ottendorf b.Mitt.", "lines": ["RC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 75, "c3": 50, "z2": 0, "z3": 0 };
+    var Ottendorf_b_Neu = { kind: "BHFTAG", "station": "Ottendorf b.Neu.", "lines": ["BS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Otterwisch = { kind: "BHFTAG", "station": "Otterwisch", "lines": ["LG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 340, "c3": 230, "z2": 0, "z3": 0 };
+    var Oybin = { kind: "BHFTAG", "station": "Oybin", "lines": ["ZO"], "upperCase": "", "dd2": 730, "dd3": 485, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "  anmerkung oder jonsdorf" };
+    var Paunsdorf_Stünz = { kind: "BHFTAG", "station": "Paunsdorf-Stünz", "lines": ["LG", "LD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 460, "c3": 310, "z2": 0, "z3": 0 };
+    var Pausa = { kind: "BHFTAG", "station": "Pausa", "lines": ["WM"], "upperCase": "", "dd2": 1170, "dd3": 780, "c2": 690, "c3": 460, "z2": 410, "z3": 270, "via": "Mehltheuer" };
+    var Penig = { kind: "BHFTAG", "station": "Penig", "lines": ["GW", "RP"], "upperCase": "", "dd2": 740, "dd3": 490, "c2": 260, "c3": 180, "z2": 0, "z3": 0, "via": "Narsdorf", "dd2b": 790, "dd3b": 530, "c2b": 310, "c3b": 210, "z2b": 210, "z3b": 140, "viab": "Waldenburg" };
+    var Pfaffenhain = { kind: "BHFTAG", "station": "Pfaffenhain", "lines": ["ZC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 105, "c3": 70, "z2": 0, "z3": 0 };
+    var Pirk = { kind: "BHFTAG", "station": "Pirk", "lines": ["PE"], "upperCase": "", "dd2": 1140, "dd3": 760, "c2": 660, "c3": 440, "z2": 380, "z3": 250, "via": "Plauen i.V." };
+    var Pirna_Bf = { kind: "BHFTAG", "station": "Pirna Bf.", "lines": ["BD", "KP", "PB"], "upperCase": "", "dd2": 105, "dd3": 70, "c2": 590, "c3": 380, "z2": 880, "z3": 590 };
+    var Pirna_Haltep = { kind: "BHFTAG", "station": "Pirna Haltep.", "lines": ["PB", "PGc"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Plauen_b_Dr = { kind: "BHFTAG", "station": "Plauen b. Dr.", "lines": ["DW"], "upperCase": "", "dd2": 25, "dd3": 15, "c2": 470, "c3": 310, "z2": 750, "z3": 500 };
+    var Plauen_i_V = { kind: "BHFTAG", "station": "Plauen i.V.", "lines": ["LH", "PE"], "upperCase": "", "dd2": 1070, "dd3": 710, "c2": 590, "c3": 390, "z2": 300, "z3": 200, "comment": "dd2 geaendert, passt in fkb nicht zu dd3 und auch sinst nicht" };
+    var Plauen_i_V_u_B = { kind: "BHFTAG", "station": "Plauen i.V. u.B.", "lines": ["PWz"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Pockau_Lengef = { kind: "BHFTAG", "station": "Pockau-Lengef.", "lines": ["RF", "PN"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 240, "c3": 160, "z2": 530, "z3": 360 };
+    var Pommritz = { kind: "BHFTAG", "station": "Pommritz", "lines": ["GD"], "upperCase": "", "dd2": 440, "dd3": 290, "c2": 920, "c3": 610, "z2": 0, "z3": 0 };
+    var Ponitz = { kind: "BHFTAG", "station": "Ponitz", "lines": ["LH"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 160, "z3": 110 };
+    var Porschdorf = { kind: "BHFTAG", "station": "Porschdorf", "lines": ["BS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Potschappel = { kind: "BHFTAG", "station": "Potschappel", "lines": ["DW", "PNo"], "upperCase": "", "dd2": 45, "dd3": 30, "c2": 440, "c3": 300, "z2": 740, "z3": 490 };
+    var Prausitz = { kind: "BHFTAG", "station": "Prausitz", "lines": ["RN"], "upperCase": "", "dd2": 380, "dd3": 250, "c2": 450, "c3": 300, "z2": 0, "z3": 0, "via": "Riesa" };
+    var Pretzschendorf = { kind: "BHFTAG", "station": "Pretzschendorf", "lines": ["KF"], "upperCase": "", "dd2": 200, "dd3": 140, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Priestewitz = { kind: "BHFTAG", "station": "Priestewitz", "lines": ["LD", "GP"], "upperCase": "", "dd2": 210, "dd3": 140, "c2": 510, "c3": 340, "z2": 0, "z3": 0 };
+    var Prösen_Wainsd = { kind: "BHFTAG", "station": "Prösen-Wainsd.", "lines": ["DE"], "upperCase": "", "dd2": 320, "dd3": 220, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Pulsnitz = { kind: "BHFTAG", "station": "Pulsnitz", "lines": ["KP"], "upperCase": "", "dd2": 240, "dd3": 160, "c2": 720, "c3": 480, "z2": 1010, "z3": 670 };
+    var Putzkau = { kind: "BHFTAG", "station": "Putzkau", "lines": ["NnB"], "upperCase": "", "dd2": 290, "dd3": 190, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Pöhla = { kind: "BHFTAG", "station": "Pöhla", "lines": ["GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 410, "c3": 270, "z2": 280, "z3": 190 };
+    var Pöllwitz = { kind: "BHFTAG", "station": "Pöllwitz", "lines": ["WM"], "upperCase": "IRÄL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Pötzscha_Wehlen = { kind: "BHFTAG", "station": "Pötzscha (Wehlen)", "lines": ["BD"], "upperCase": "", "dd2": 160, "dd3": 110, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Quoos = { kind: "BHFTAG", "station": "Quoos", "lines": ["BK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rabenau = { kind: "BHFTAG", "station": "Rabenau", "lines": ["HK"], "upperCase": "", "dd2": 95, "dd3": 65, "c2": 450, "c3": 300, "z2": 0, "z3": 0 };
+    var Rabenstein = { kind: "BHFTAG", "station": "Rabenstein", "lines": ["LWd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 120, "c3": 80, "z2": 0, "z3": 0, "via": "Wüstenbrand", "dd2b": 0, "dd3b": 0, "c2b": 150, "c3b": 100, "z2b": 0, "z3b": 0, "viab": "Wittgensdorf" };
+    var Radeberg = { kind: "BHFTAG", "station": "Radeberg", "lines": ["GD"], "upperCase": "", "dd2": 130, "dd3": 90, "c2": 610, "c3": 410, "z2": 900, "z3": 600 };
+    var Radebeul = { kind: "BHFTAG", "station": "Radebeul", "lines": ["LD", "RRg"], "upperCase": "", "dd2": 60, "dd3": 40, "c2": 540, "c3": 360, "z2": 0, "z3": 0 };
+    var Radeburg = { kind: "BHFTAG", "station": "Radeburg", "lines": ["RRg"], "upperCase": "", "dd2": 170, "dd3": 110, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Radibor = { kind: "BHFTAG", "station": "Radibor", "lines": ["BK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Raschau = { kind: "BHFTAG", "station": "Raschau", "lines": ["BSg"], "upperCase": "", "dd2": 800, "dd3": 540, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Annaberg", "dd2b": 880, "dd3b": 590, "c2b": 410, "c3b": 270, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 270, "z3c": 180, "viac": "Aue" };
+    var Rathen = { kind: "BHFTAG", "station": "Rathen", "lines": ["BD"], "upperCase": "", "dd2": 180, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rattwitz = { kind: "BHFTAG", "station": "Rattwitz", "lines": ["BK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rauenstein = { kind: "BHFTAG", "station": "Rauenstein", "lines": ["RF"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 210, "c3": 140, "z2": 0, "z3": 0 };
+    var Raun = { kind: "BHFTAG", "station": "Raun", "lines": ["PE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rauschenthal = { kind: "BHFTAG", "station": "Rauschenthal", "lines": ["WK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rautenkranz = { kind: "BHFTAG", "station": "Rautenkranz", "lines": ["CA"], "upperCase": "", "dd2": 960, "dd3": 640, "c2": 480, "c3": 320, "z2": 360, "z3": 240, "via": "Aue" };
+    var Rechenberg = { kind: "BHFTAG", "station": "Rechenberg", "lines": ["NM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reckwitz = { kind: "BHFTAG", "station": "Reckwitz", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rehmsdorf = { kind: "BHFTAG", "station": "Rehmsdorf", "lines": ["ZA"], "upperCase": "IPR", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reibersdorf = { kind: "BHFTAG", "station": "Reibersdorf", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reichenau = { kind: "BHFTAG", "station": "Reichenau", "lines": ["ZM"], "upperCase": "", "dd2": 710, "dd3": 470, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reichenb_Karolinenstr = { kind: "BHFTAG", "station": "Reichenb., Karolinenstr.", "lines": ["RM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reichenbach_i_L = { kind: "BHFTAG", "station": "Reichenbach i.L.", "lines": ["GD"], "upperCase": "ILIPR", "dd2": 560, "dd3": 370, "c2": 1040, "c3": 690, "z2": 1330, "z3": 890 };
+    var Reichenbach_i_V = { kind: "BHFTAG", "station": "Reichenbach i.V.", "lines": ["LH", "RM"], "upperCase": "OB BHF", "dd2": 920, "dd3": 610, "c2": 440, "c3": 290, "z2": 150, "z3": 100, "comment": "NM via frei erfunden um hauptstrecke zu erzwingen, dd2 war falsch abgetippt" };
+    var Reichenbach_i_V_u_B = { kind: "BHFTAG", "station": "Reichenbach i.V., u.B.", "lines": ["RM"], "upperCase": "", "dd2": 935, "dd3": 625, "c2": 455, "c3": 305, "z2": 165, "z3": 115, "comment": "todo sonderregelungplusfuenfzehn" };
+    var Reichenberg = { kind: "BHFTAG", "station": "Reichenberg", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 800, "dd3": 540, "c2": 1280, "c3": 860, "z2": 0, "z3": 0, "via": "Putzkau", "dd2b": 870, "dd3b": 590, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Herrnhut" };
+    var Reichenfels = { kind: "BHFTAG", "station": "Reichenfels", "lines": ["WM"], "upperCase": "IRJL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reifland = { kind: "BHFTAG", "station": "Reifland", "lines": ["RF"], "upperCase": "", "dd2": 530, "dd3": 360, "c2": 210, "c3": 140, "z2": 500, "z3": 330 };
+    var Reitzenhain = { kind: "BHFTAG", "station": "Reitzenhain", "lines": ["RF"], "upperCase": "", "dd2": 750, "dd3": 500, "c2": 420, "c3": 280, "z2": 710, "z3": 480 };
+    var Remse = { kind: "BHFTAG", "station": "Remse", "lines": ["GW"], "upperCase": "", "dd2": 710, "dd3": 470, "c2": 230, "c3": 150, "z2": 130, "z3": 90 };
+    var Rentzschmühle = { kind: "BHFTAG", "station": "Rentzschmühle", "lines": ["PWz"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Reuth = { kind: "BHFTAG", "station": "Reuth", "lines": ["LH"], "upperCase": "", "dd2": 1220, "dd3": 810, "c2": 740, "c3": 490, "z2": 450, "z3": 300 };
+    var Riesa = { kind: "BHFTAG", "station": "Riesa", "lines": ["LD", "RC", "RN", "RRV", "ZE"], "upperCase": "", "dd2": 330, "dd3": 220, "c2": 410, "c3": 270, "z2": 690, "z3": 460, "comment": "ZE beginnt wohl Zeithain Bogendreick an LD" };
+    var Rochlitz = { kind: "BHFTAG", "station": "Rochlitz", "lines": ["GW", "RP", "WR"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 240, "c3": 160, "z2": 0, "z3": 0, "via": "Narsdorf", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 340, "z3b": 230, "viab": "Lunzenau", "comment": "weg B auch ueber narsdorf", "dd2c": 680, "dd3c": 460, "c2c": 0, "c3c": 0, "z2c": 0, "z3c": 0, "viac": "Grossbothen", "dd2d": 590, "dd3d": 400, "c2d": 0, "c3d": 0, "z2d": 0, "z3d": 0, "viad": "Hartha b. Waldh." };
+    var Rochsburg = { kind: "BHFTAG", "station": "Rochsburg", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 250, "z3": 170 };
+    var Rodewisch = { kind: "BHFTAG", "station": "Rodewisch", "lines": ["ZF"], "upperCase": "", "dd2": 950, "dd3": 630, "c2": 470, "c3": 310, "z2": 180, "z3": 120 };
+    var Rodewitz = { kind: "BHFTAG", "station": "Rodewitz", "lines": ["BS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rohnau = { kind: "BHFTAG", "station": "Rohnau", "lines": ["ZN"], "upperCase": "", "dd2": 690, "dd3": 460, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ronneburg = { kind: "BHFTAG", "station": "Ronneburg", "lines": ["GGa", "MR"], "upperCase": "ISA", "dd2": 920, "dd3": 620, "c2": 450, "c3": 300, "z2": 330, "z3": 220 };
+    var Rosenthal = { kind: "BHFTAG", "station": "Rosenthal", "lines": ["ZN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Rositz = { kind: "BHFTAG", "station": "Rositz", "lines": ["ZA"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2b": 340, "z3b": 230, "viab": "Werdau" };
+    var Rosswein = { kind: "BHFTAG", "station": "Rosswein", "lines": ["BC", "RW"], "upperCase": "", "dd2": 350, "dd3": 230, "c2": 320, "c3": 210, "z2": 600, "z3": 400, "via": "Nossen", "comment": "TODO via geraten!!!", "dd2b": 0, "dd3b": 0, "c2b": 280, "c3b": 190, "z2b": 0, "z3b": 0, "viab": "Hainichen" };
+    var Rothenkirchen_i_V = { kind: "BHFTAG", "station": "Rothenkirchen i.V.", "lines": ["WCd"], "upperCase": "", "dd2": 940, "dd3": 630, "c2": 460, "c3": 310, "z2": 170, "z3": 120, "via": "Zwickau", "dd2b": 0, "dd3b": 0, "c2b": 540, "c3b": 360, "z2b": 0, "z3b": 0, "viab": "Wilzschhaus" };
+    var Rottwerndorf = { kind: "BHFTAG", "station": "Rottwerndorf", "lines": ["PB"], "upperCase": "", "dd2": 150, "dd3": 100, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ruppersdorf = { kind: "BHFTAG", "station": "Ruppersdorf", "lines": ["ZL"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Russdorf = { kind: "BHFTAG", "station": "Russdorf", "lines": ["ZN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Röderau = { kind: "BHFTAG", "station": "Röderau", "lines": ["RRV"], "upperCase": "", "comment": "linie laut buch von  preuss", "dd2": 310, "dd3": 210, "c2": 420, "c3": 280, "z2": 720, "z3": 480 };
+    var Rödlitz = { kind: "BHFTAG", "station": "Rödlitz", "lines": ["StE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 200, "c3": 140, "z2": 190, "z3": 130 };
+    var Röhrsdorf_b_Chemn = { kind: "BHFTAG", "station": "Röhrsdorf b.Chemn.", "lines": ["LWd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 120, "c3": 80, "z2": 0, "z3": 0, "via": "Wittgensdorf", "dd2b": 0, "dd3b": 0, "c2b": 150, "c3b": 100, "z2b": 0, "z3b": 0, "viab": "Wüstenbrand" };
+    var Rüssen = { kind: "BHFTAG", "station": "Rüssen", "lines": ["GM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Saupersdorf_Bhf = { kind: "BHFTAG", "station": "Saupersdorf Bhf.", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "unklarwas i und ii ist" };
+    var Saupersdorf_Hltst = { kind: "BHFTAG", "station": "Saupersdorf Hltst.", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "unklarwas i und ii ist" };
+    var Sayda = { kind: "BHFTAG", "station": "Sayda", "lines": ["MS"], "upperCase": "", "dd2": 420, "dd3": 280, "c2": 420, "c3": 280, "z2": 0, "z3": 0 };
+    var Schandau = { kind: "BHFTAG", "station": "Schandau", "lines": ["BD", "BS"], "upperCase": "", "dd2": 240, "dd3": 160, "c2": 720, "c3": 480, "z2": 1010, "z3": 680 };
+    var Scharfenstein = { kind: "BHFTAG", "station": "Scharfenstein", "lines": ["AF"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 210, "c3": 140, "z2": 0, "z3": 0 };
+    var Schedewitz = { kind: "BHFTAG", "station": "Schedewitz", "lines": ["SZ"], "upperCase": "", "dd2": 790, "dd3": 530, "c2": 320, "c3": 210, "z2": 20, "z3": 15 };
+    var Scheibe = { kind: "BHFTAG", "station": "Scheibe", "lines": ["SE", "ZL"], "upperCase": "", "dd2": 600, "dd3": 400, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Scheibenberg = { kind: "BHFTAG", "station": "Scheibenberg", "lines": ["BSg", "ZS"], "upperCase": "", "dd2": 750, "dd3": 500, "c2": 420, "c3": 280, "z2c": 330, "z3c": 220, "via": "Annaberg", "dd2b": 0, "dd3b": 0, "c2b": 380, "c3b": 260, "z2b": 0, "z3b": 0, "viab": "Thalheim" };
+    var Schirgiswalde = { kind: "BHFTAG", "station": "Schirgiswalde", "lines": ["OW"], "upperCase": "", "dd2": 390, "dd3": 260, "c2": 860, "c3": 580, "z2": 0, "z3": 0 };
+    var Schlauroth = { kind: "BHFTAG", "station": "Schlauroth", "lines": ["GD"], "upperCase": "IPR", "dd2": 620, "dd3": 410, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schleiz = { kind: "BHFTAG", "station": "Schleiz", "lines": ["SSz"], "upperCase": "IRJL", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "comment": "schlecht lesbar" };
+    var Schlettau = { kind: "BHFTAG", "station": "Schlettau", "lines": ["BSg"], "upperCase": "", "dd2": 730, "dd3": 490, "c2": 400, "c3": 270, "z2c": 350, "z3c": 240, "via": "Annaberg", "dd2b": 0, "dd3b": 0, "c2b": 410, "c3b": 270, "z2b": 0, "z3b": 0, "viab": "Grünhain" };
+    var Schlössel = { kind: "BHFTAG", "station": "Schlössel", "lines": ["WJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schmalzgrube = { kind: "BHFTAG", "station": "Schmalzgrube", "lines": ["WJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schmiedeberg = { kind: "BHFTAG", "station": "Schmiedeberg", "lines": ["HK"], "upperCase": "", "dd2": 200, "dd3": 130, "c2": 550, "c3": 370, "z2": 0, "z3": 0 };
+    var Schmorkau_b_K = { kind: "BHFTAG", "station": "Schmorkau b.K.", "lines": ["KS"], "upperCase": "", "dd2": 220, "dd3": 150, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schmorkau_b_O = { kind: "BHFTAG", "station": "Schmorkau b.O.", "lines": ["OS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schmölln = { kind: "BHFTAG", "station": "Schmölln", "lines": ["NnB"], "upperCase": "", "dd2": 270, "dd3": 180, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schmölln_S_A = { kind: "BHFTAG", "station": "Schmölln S.-A.", "lines": ["GGa"], "upperCase": "", "dd2": 840, "dd3": 560, "c2": 360, "c3": 240, "z2": 250, "z3": 170 };
+    var Schneeberg_Neust = { kind: "BHFTAG", "station": "Schneeberg-Neust.", "lines": ["SN"], "upperCase": "", "dd2": 850, "dd3": 570, "c2": 370, "c3": 250, "z2c": 190, "z3c": 130, "via": "Thalheim", "comment": "ausserdem ueber Wilkau", "dd2b": 960, "dd3b": 640, "c2b": 480, "c3b": 320, "z2b": 0, "z3b": 0, "viab": "Zwickau" };
+    var Schrebitz = { kind: "BHFTAG", "station": "Schrebitz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schwarzenberg_Bf = { kind: "BHFTAG", "station": "Schwarzenberg Bf.", "lines": ["SZ", "JS", "BSg"], "upperCase": "", "dd2": 830, "dd3": 560, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Annaberg", "dd2b": 860, "dd3b": 570, "c2b": 380, "c3b": 250, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 1020, "dd3c": 680, "c2c": 540, "c3c": 360, "z2c": 250, "z3c": 170, "viac": "Zwickau" };
+    var Schwarzenberg_Hltp = { kind: "BHFTAG", "station": "Schwarzenberg Hltp.", "lines": ["JS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schweikershain = { kind: "BHFTAG", "station": "Schweikershain", "lines": ["RC"], "upperCase": "", "dd2": 510, "dd3": 340, "c2": 150, "c3": 100, "z2": 440, "z3": 300 };
+    var Schweinitzthal = { kind: "BHFTAG", "station": "Schweinitzthal", "lines": ["PN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schwepnitz = { kind: "BHFTAG", "station": "Schwepnitz", "lines": ["KS"], "upperCase": "", "dd2": 240, "dd3": 160, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schweta = { kind: "BHFTAG", "station": "Schweta", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schöna = { kind: "BHFTAG", "station": "Schöna", "lines": ["BD"], "upperCase": "", "dd2": 300, "dd3": 200, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schönbach = { kind: "BHFTAG", "station": "Schönbach", "lines": ["TD"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schönberg = { kind: "BHFTAG", "station": "Schönberg", "lines": ["LH", "SH", "SSz"], "upperCase": "", "dd2": 1170, "dd3": 780, "c2": 690, "c3": 460, "z2": 400, "z3": 270 };
+    var Schönbörnchen = { kind: "BHFTAG", "station": "Schönbörnchen", "lines": ["DW", "SG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 75, "z3": 50 };
+    var Schöneck = { kind: "BHFTAG", "station": "Schöneck", "lines": ["CA"], "upperCase": "", "dd2": 1070, "dd3": 710, "c2": 590, "c3": 390, "z2b": 320, "z3b": 220, "via": "Thalheim", "comment": "weg oder Voigtsgruen ?!" };
+    var Schönefeld = { kind: "BHFTAG", "station": "Schönefeld", "lines": ["LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Schönfeld_Bf = { kind: "BHFTAG", "station": "Schönfeld Bf.", "lines": ["AF", "SGr"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "schoenfeld unklar" };
+    var Schönfeld_Haltepkt = { kind: "BHFTAG", "station": "Schönfeld Haltepkt.", "lines": ["SGr"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "schoenfeld unklar" };
+    var Schönh_Hammer = { kind: "BHFTAG", "station": "Schönh.Hammer", "lines": ["CA"], "upperCase": "", "dd2": 920, "dd3": 610, "c2": 440, "c3": 290, "z2": 310, "z3": 210 };
+    var Schönheide = { kind: "BHFTAG", "station": "Schönheide", "lines": ["WCd"], "upperCase": "", "dd2": 980, "dd3": 660, "c2": 870, "c3": 510, "z2": 210, "z3": 140, "comment": "auch oberschoeneheide" };
+    var Schüllermühle = { kind: "BHFTAG", "station": "Schüllermühle", "lines": ["MG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Sebnitz = { kind: "BHFTAG", "station": "Sebnitz", "lines": ["BS"], "upperCase": "", "dd2": 340, "dd3": 230, "c2": 810, "c3": 540, "z2": 0, "z3": 0, "via": "Schandau" };
+    var Seelingstädt = { kind: "BHFTAG", "station": "Seelingstädt", "lines": ["WM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "welches ?" };
+    var Seelingstädt_b_Br = { kind: "BHFTAG", "station": "Seelingstädt b.Br.", "lines": ["BSt"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Seerhausen = { kind: "BHFTAG", "station": "Seerhausen", "lines": ["RC"], "upperCase": "", "dd2": 360, "dd3": 240, "c2": 370, "c3": 250, "z2": 0, "z3": 0 };
+    var Sehma = { kind: "BHFTAG", "station": "Sehma", "lines": ["WA"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Seidau = { kind: "BHFTAG", "station": "Seidau", "lines": ["BK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Seifersdorf = { kind: "BHFTAG", "station": "Seifersdorf", "lines": ["HK"], "upperCase": "", "dd2": 115, "dd3": 80, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Seifhennersdorf = { kind: "BHFTAG", "station": "Seifhennersdorf", "lines": ["SE"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 1050, "c3": 700, "z2": 0, "z3": 0 };
+    var Seitschen = { kind: "BHFTAG", "station": "Seitschen", "lines": ["GD"], "upperCase": "", "dd2": 320, "dd3": 210, "c2": 800, "c3": 530, "z2": 0, "z3": 0 };
+    var Siebenhöfen = { kind: "BHFTAG", "station": "Siebenhöfen", "lines": ["SGr"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Siebenlehn = { kind: "BHFTAG", "station": "Siebenlehn", "lines": ["PNo"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Siegelhof = { kind: "BHFTAG", "station": "Siegelhof", "lines": ["GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 290, "z3": 190 };
+    var Siegmar = { kind: "BHFTAG", "station": "Siegmar", "lines": ["DW"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 55, "c3": 35, "z2": 250, "z3": 170 };
+    var Silberstrasse = { kind: "BHFTAG", "station": "Silberstrasse", "lines": ["SZ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 60, "z3": 40 };
+    var Singwitz = { kind: "BHFTAG", "station": "Singwitz", "lines": ["BS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Sohland = { kind: "BHFTAG", "station": "Sohland", "lines": ["OW"], "upperCase": "", "dd2": 410, "dd3": 270, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Sommerfeld = { kind: "BHFTAG", "station": "Sommerfeld", "lines": ["LD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Spechtritz = { kind: "BHFTAG", "station": "Spechtritz", "lines": ["HK"], "upperCase": "", "dd2": 105, "dd3": 70, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var St_Egidien = { kind: "BHFTAG", "station": "St. Egidien", "lines": ["DW", "StE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Stangendorf = { kind: "BHFTAG", "station": "Stangendorf", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 90, "z3": 60 };
+    var Starrbach = { kind: "BHFTAG", "station": "Starrbach", "lines": ["RN"], "upperCase": "", "dd2": 330, "dd3": 220, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Nossen" };
+    var Stauchitz = { kind: "BHFTAG", "station": "Stauchitz", "lines": ["RC"], "upperCase": "", "dd2": 380, "dd3": 260, "c2": 350, "c3": 230, "z2": 630, "z3": 420 };
+    var Stein_Hartenstein = { kind: "BHFTAG", "station": "Stein-Hartenstein", "lines": ["SZ"], "upperCase": "", "dd2": 890, "dd3": 600, "c2": 420, "c3": 280, "z2": 120, "z3": 80, "via": "Zwickau", "dd2b": 850, "dd3b": 570, "c2b": 380, "c3b": 250, "z2b": 0, "z3b": 0, "viab": "Thalheim" };
+    var Steina = { kind: "BHFTAG", "station": "Steina", "lines": ["RC"], "upperCase": "", "dd2": 450, "dd3": 300, "c2": 210, "c3": 140, "z2": 500, "z3": 340 };
+    var Steinbach_b_J = { kind: "BHFTAG", "station": "Steinbach b.J.", "lines": ["WJ"], "upperCase": "", "dd2": 680, "dd3": 450, "c2": 350, "c3": 230, "z2": 0, "z3": 0 };
+    var Stenn = { kind: "BHFTAG", "station": "Stenn", "lines": ["ZF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 50, "z3": 35 };
+    var Stetzsch = { kind: "BHFTAG", "station": "Stetzsch", "lines": ["DE"], "upperCase": "", "dd2": 50, "dd3": 30, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Steudten = { kind: "BHFTAG", "station": "Steudten", "lines": ["GW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 320, "z3": 210 };
+    var Stollberg = { kind: "BHFTAG", "station": "Stollberg", "lines": ["ZC", "StE"], "upperCase": "", "dd2": 630, "dd3": 420, "c2": 150, "c3": 100, "z2b": 260, "z3b": 180, "via": "Neukirchen i.E." };
+    var Stolpen = { kind: "BHFTAG", "station": "Stolpen", "lines": ["ND"], "upperCase": "", "dd2": 220, "dd3": 150, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Pirna Bf." };
+    var Streckewalde = { kind: "BHFTAG", "station": "Streckewalde", "lines": ["WJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 280, "c3": 190, "z2": 0, "z3": 0 };
+    var Strehla = { kind: "BHFTAG", "station": "Strehla", "lines": ["OS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Syrau = { kind: "BHFTAG", "station": "Syrau", "lines": ["LH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Tanna = { kind: "BHFTAG", "station": "Tanna", "lines": ["SH"], "upperCase": "IRJL", "dd3": 0, "c2": 0, "c3": 0, "z2": 450, "z3": 300 };
+    var Tanndorf = { kind: "BHFTAG", "station": "Tanndorf", "lines": ["BC"], "upperCase": "", "dd2": 530, "dd3": 350, "c2": 370, "c3": 250, "z2": 0, "z3": 0 };
+    var Tannenberg = { kind: "BHFTAG", "station": "Tannenberg", "lines": ["SGr"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Taubenheim = { kind: "BHFTAG", "station": "Taubenheim", "lines": ["OW", "TD"], "upperCase": "", "dd2": 430, "dd3": 290, "c2": 910, "c3": 610, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Tautenhain = { kind: "BHFTAG", "station": "Tautenhain", "lines": ["LG"], "upperCase": "", "dd2": 730, "dd3": 490, "c2": 260, "c3": 170, "z2": 0, "z3": 0, "via": "Narsdorf" };
+    var Techwitz = { kind: "BHFTAG", "station": "Techwitz", "lines": ["ZA"], "upperCase": "IPR", "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Teichwolframsdorf = { kind: "BHFTAG", "station": "Teichwolframsdorf", "lines": ["WM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 110, "z3": 75 };
+    var Tetschen = { kind: "BHFTAG", "station": "Tetschen", "lines": ["BD"], "upperCase": "IBÖ", "dd2": 380, "dd3": 250, "c2": 860, "c3": 570, "z2": 0, "z3": 0 };
+    var Teufelsmühle = { kind: "BHFTAG", "station": "Teufelsmühle", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Thalheim = { kind: "BHFTAG", "station": "Thalheim", "lines": ["CA"], "upperCase": "", "dd2": 650, "dd3": 440, "c2": 170, "c3": 120, "z2": 330, "z3": 220 };
+    var Tharandt = { kind: "BHFTAG", "station": "Tharandt", "lines": ["DW"], "upperCase": "", "dd2": 85, "dd3": 60, "c2": 410, "c3": 270, "z2": 690, "z3": 460 };
+    var Thonberg_Prietitz = { kind: "BHFTAG", "station": "Thonberg-Prietitz", "lines": ["KE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Thossfell = { kind: "BHFTAG", "station": "Thossfell", "lines": ["HOe"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Thum = { kind: "BHFTAG", "station": "Thum", "lines": ["HT"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 280, "c3": 190, "z2": 0, "z3": 0 };
+    var Thurm = { kind: "BHFTAG", "station": "Thurm", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 90, "z3": 60 };
+    var Trebanz_Treben = { kind: "BHFTAG", "station": "Trebanz-Treben", "lines": ["LH"], "upperCase": "ISA", "dd3": 0, "c2": 440, "c3": 300, "z2b": 330, "z3b": 220, "viab": "Werdau" };
+    var Treuen = { kind: "BHFTAG", "station": "Treuen", "lines": ["HOe"], "upperCase": "", "dd2": 1020, "dd3": 680, "c2": 540, "c3": 360, "z2": 260, "z3": 170 };
+    var Triebes = { kind: "BHFTAG", "station": "Triebes", "lines": ["WM"], "upperCase": "IRJL", "dd3": 0, "c2": 0, "c3": 0, "z2": 350, "z3": 230 };
+    var Tronitz = { kind: "BHFTAG", "station": "Tronitz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Tuttendorf = { kind: "BHFTAG", "station": "Tuttendorf", "lines": ["FH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Töllschütz = { kind: "BHFTAG", "station": "Töllschütz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ulberndorf = { kind: "BHFTAG", "station": "Ulberndorf", "lines": ["HK"], "upperCase": "", "dd2": 180, "dd3": 120, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "oder obercarsdorf" };
+    var Ulbersdorf = { kind: "BHFTAG", "station": "Ulbersdorf", "lines": ["BS"], "upperCase": "", "dd2": 300, "dd3": 200, "c2": 780, "c3": 520, "z2": 1070, "z3": 720, "via": "Schandau" };
+    var Unter_Neudorf = { kind: "BHFTAG", "station": "Unter-Neudorf", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Unter_Schönbach = { kind: "BHFTAG", "station": "Unter-Schönbach", "lines": ["TD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Unterehrenberg = { kind: "BHFTAG", "station": "Unterehrenberg", "lines": ["KH"], "upperCase": "", "dd2": 320, "dd3": 220, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Unterfriedebach = { kind: "BHFTAG", "station": "Unterfriedebach", "lines": ["MS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Unterherold = { kind: "BHFTAG", "station": "Unterherold", "lines": ["WE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Unterkoskau = { kind: "BHFTAG", "station": "Unterkoskau", "lines": ["SH"], "upperCase": "IRJL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Untermarxgrün = { kind: "BHFTAG", "station": "Untermarxgrün", "lines": ["HOe"], "upperCase": "", "dd2": 1100, "dd3": 740, "c2": 620, "c3": 420, "z2": 330, "z3": 220 };
+    var Unterrittersgrün = { kind: "BHFTAG", "station": "Unterrittersgrün", "lines": ["GR"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 440, "c3": 290, "z2": 0, "z3": 0 };
+    var Unterwiesenthal = { kind: "BHFTAG", "station": "Unterwiesenthal", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Unterzwota = { kind: "BHFTAG", "station": "Unterzwota", "lines": ["ZK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Ursprung = { kind: "BHFTAG", "station": "Ursprung", "lines": ["HW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Venusberg = { kind: "BHFTAG", "station": "Venusberg", "lines": ["WE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Vierenstrasse = { kind: "BHFTAG", "station": "Vierenstrasse", "lines": ["CW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Voigtsdorf_i_S = { kind: "BHFTAG", "station": "Voigtsdorf i. S.", "lines": ["MS"], "upperCase": "", "dd2": 390, "dd3": 260, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Voigtsgrün = { kind: "BHFTAG", "station": "Voigtsgrün", "lines": ["ZF"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 380, "c3": 260, "z2": 85, "z3": 55 };
+    var Voitersreuth = { kind: "BHFTAG", "station": "Voitersreuth", "lines": ["PE"], "upperCase": "IBÖ", "dd2": 1420, "dd3": 950, "c2": 950, "c3": 630, "z2": 650, "z3": 440, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 610, "z3b": 410, "viab": "Oelsnitz i.V.", "comment": " i.V. annahme NM" };
+    var Wagelwitz = { kind: "BHFTAG", "station": "Wagelwitz", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wald_Oppelsdorf = { kind: "BHFTAG", "station": "Wald-Oppelsdorf", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Waldenburg = { kind: "BHFTAG", "station": "Waldenburg", "lines": ["GW"], "upperCase": "IS", "dd2": 720, "dd3": 480, "c2": 240, "c3": 160, "z2": 150, "z3": 100, "via": "Glauchau" };
+    var Waldheim = { kind: "BHFTAG", "station": "Waldheim", "lines": ["RC", "WK", "WR"], "upperCase": "", "dd2": 470, "dd3": 310, "c2": 190, "c3": 130, "z2": 480, "z3": 320 };
+    var Waldkirchen = { kind: "BHFTAG", "station": "Waldkirchen", "lines": ["AF"], "upperCase": "BZ", "dd2": 490, "dd3": 330, "c2": 160, "c3": 110, "z2": 450, "z3": 300 };
+    var Waltersdorf_Haltept = { kind: "BHFTAG", "station": "Waltersdorf Haltept.", "lines": ["WC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "unklar welche" };
+    var Waltersdorf_Haltest = { kind: "BHFTAG", "station": "Waltersdorf Haltest.", "lines": ["BSg", "WC"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Warnsdorf = { kind: "BHFTAG", "station": "Warnsdorf", "lines": ["SE"], "upperCase": "IBÖ", "dd2": 600, "dd3": 400, "c2": 1080, "c3": 720, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Wechselburg = { kind: "BHFTAG", "station": "Wechselburg", "lines": ["GW"], "upperCase": "", "dd2": 630, "dd3": 420, "c2": 0, "c3": 0, "z2": 300, "z3": 200, "comment": "unklar via diverse" };
+    var Weesenstein = { kind: "BHFTAG", "station": "Weesenstein", "lines": ["MG"], "upperCase": "", "dd2": 110, "dd3": 75, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "oder koettewitz" };
+    var Weida_Altst = { kind: "BHFTAG", "station": "Weida Altst.", "lines": ["WM"], "upperCase": "ISW", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "unklar welches" };
+    var Weida_Bf = { kind: "BHFTAG", "station": "Weida Bf.", "lines": ["WM"], "upperCase": "ISW", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weinböhla = { kind: "BHFTAG", "station": "Weinböhla", "lines": ["DE", "DEK"], "upperCase": "", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "schlecht lesbar" };
+    var Weintraube = { kind: "BHFTAG", "station": "Weintraube", "lines": ["LD"], "upperCase": "", "dd2": 70, "dd3": 50, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weipert = { kind: "BHFTAG", "station": "Weipert", "lines": ["WA"], "upperCase": "IBÖ", "dd2": 780, "dd3": 520, "c2": 450, "c3": 300, "z2": 750, "z3": 500, "via": "Flöha", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 490, "z3b": 330, "viab": "Aue" };
+    var Weischlitz = { kind: "BHFTAG", "station": "Weischlitz", "lines": ["PE", "PWz"], "upperCase": "", "dd2": 1130, "dd3": 750, "c2": 640, "c3": 430, "z2": 350, "z3": 240, "via": "Plauen i.V.", "comment": "schlecht lesbar" };
+    var Weissbach_b_K = { kind: "BHFTAG", "station": "Weissbach b.K.", "lines": ["KS"], "upperCase": "", "dd2": 210, "dd3": 140, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weissbach_b_Zsch = { kind: "BHFTAG", "station": "Weissbach b.Zsch.", "lines": ["WE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weissenberg_i_S = { kind: "BHFTAG", "station": "Weissenberg i.S.", "lines": ["LWg"], "upperCase": "", "dd2": 590, "dd3": 400, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weisses_Ross = { kind: "BHFTAG", "station": "Weisses Ross", "lines": ["RRg"], "upperCase": "", "dd2": 70, "dd3": 45, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weissig_b_Gr = { kind: "BHFTAG", "station": "Weissig b.Gr.", "lines": ["LD"], "upperCase": "", "dd2": 260, "dd3": 170, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weisskirch_b_Kr = { kind: "BHFTAG", "station": "Weisskirch b.Kr.", "lines": ["RZ"], "upperCase": "WEISSKIRCHEN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Weixdorf = { kind: "BHFTAG", "station": "Weixdorf", "lines": ["KS"], "upperCase": "", "dd2": 85, "dd3": 55, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wendischfähre = { kind: "BHFTAG", "station": "Wendischfähre", "lines": ["BS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Werdau = { kind: "BHFTAG", "station": "Werdau", "lines": ["LH", "DW", "WM"], "upperCase": "", "dd2": 830, "dd3": 500, "c2": 360, "c3": 240, "z2": 60, "z3": 40, "comment": "schlecht lesbar" };
+    var Wermsdorf = { kind: "BHFTAG", "station": "Wermsdorf", "lines": ["MN"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 440, "c3": 290, "z2": 0, "z3": 0 };
+    var Westewitz_Hochw = { kind: "BHFTAG", "station": "Westewitz-Hochw.", "lines": ["BC"], "upperCase": "", "dd2": 440, "dd3": 290, "c2": 280, "c3": 190, "z2": 0, "z3": 0 };
+    var Wiesa = { kind: "BHFTAG", "station": "Wiesa", "lines": ["KE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wiesenbad = { kind: "BHFTAG", "station": "Wiesenbad", "lines": ["AF"], "upperCase": "", "dd2": 620, "dd3": 420, "c2": 290, "c3": 200, "z2": 580, "z3": 390 };
+    var Wiesenburg = { kind: "BHFTAG", "station": "Wiesenburg", "lines": ["SZ"], "upperCase": "", "dd2": 840, "dd3": 560, "c2": 360, "c3": 240, "z2": 70, "z3": 50, "via": "Zwickau" };
+    var Wilischthal = { kind: "BHFTAG", "station": "Wilischthal", "lines": ["AF", "WE"], "upperCase": "", "dd2": 530, "dd3": 350, "c2": 200, "c3": 130, "z2": 490, "z3": 330 };
+    var Wilkau_Bf = { kind: "BHFTAG", "station": "Wilkau Bf.", "lines": ["SZ", "WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "unklar" };
+    var Wilkau_Haltept = { kind: "BHFTAG", "station": "Wilkau Haltept.", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wilsdruff = { kind: "BHFTAG", "station": "Wilsdruff", "lines": ["PNo"], "upperCase": "", "dd2": 110, "dd3": 75, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wilthen = { kind: "BHFTAG", "station": "Wilthen", "lines": ["BS", "OW"], "upperCase": "", "dd2": 360, "dd3": 240, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Putzkau" };
+    var Wilzschhaus = {
+        kind: "BHFTAG", "station": "Wilzschhaus", "lines": ["CA", "WCd"], "upperCase": "", "dd2": 950, "dd3": 630, "c2": 470, "c3": 310, "z2": 340, "z3": 230,
+        "via": "Aue", "comment": "(fehlend via kirchberg) "
+    };
+    var Wilzschmühle = { kind: "BHFTAG", "station": "Wilzschmühle", "lines": ["WCd"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wintersdorf = { kind: "BHFTAG", "station": "Wintersdorf", "lines": ["GM"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wittgensdorf = { kind: "BHFTAG", "station": "Wittgensdorf", "lines": ["KC", "LW"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 65, "c3": 45, "z2": 360, "z3": 240, "via": "Chemnitz", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 320, "z3b": 220, "viab": "Limbach" };
+    var Wittigschenke = { kind: "BHFTAG", "station": "Wittigschenke", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Witzschdorf = { kind: "BHFTAG", "station": "Witzschdorf", "lines": ["AF"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 150, "c3": 100, "z2": 0, "z3": 0 };
+    var Wolfsgrund = { kind: "BHFTAG", "station": "Wolfsgrund", "lines": ["MS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wolfsgrün = { kind: "BHFTAG", "station": "Wolfsgrün", "lines": ["CA"], "upperCase": "", "dd2": 870, "dd3": 580, "c2": 390, "c3": 260, "z2b": 270, "z3b": 180, "via": "Thalheim" };
+    var Wolkenburg = { kind: "BHFTAG", "station": "Wolkenburg", "lines": ["GW"], "upperCase": "", "dd2": 760, "dd3": 510, "c2": 280, "c3": 190, "z2": 180, "z3": 120, "comment": "via frei erfunden" };
+    var Wolkenstein = { kind: "BHFTAG", "station": "Wolkenstein", "lines": ["AF", "WJ"], "upperCase": "", "dd2": 590, "dd3": 390, "c2": 260, "c3": 170, "z2": 550, "z3": 370, "via": "Flöha" };
+    var Wuitz_Mumsdorf = { kind: "BHFTAG", "station": "Wuitz-Mumsdorf", "lines": ["ZA"], "upperCase": "IPR", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wulm = { kind: "BHFTAG", "station": "Wulm", "lines": ["MO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 60, "z3": 40 };
+    var Wurzen = { kind: "BHFTAG", "station": "Wurzen", "lines": ["LD", "GW"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 650, "c3": 430, "z2": 0, "z3": 0, "via": "Riesa", "dd2b": 0, "dd3b": 0, "c2b": 500, "c3b": 340, "z2b": 600, "z3b": 400, "viab": "Rochlitz", "dd2c": 0, "dd3c": 0, "c2c": 700, "c3c": 480, "z2c": 720, "z3c": 490, "viac": "Leipzig Bayr.Bf." };
+    var Wülknitz = { kind: "BHFTAG", "station": "Wülknitz", "lines": ["ZE"], "upperCase": "", "dd2": 360, "dd3": 240, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Wünschendorf = { kind: "BHFTAG", "station": "Wünschendorf", "lines": ["PWz", "WM"], "upperCase": "ISW", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 230, "z3": 160 };
+    var Wüstenbrand = { kind: "BHFTAG", "station": "Wüstenbrand", "lines": ["DW", "HW", "LWd"], "upperCase": "", "dd2": 570, "dd3": 380, "c2": 90, "c3": 60, "z2": 210, "z3": 140 };
+    var Wüstendittersdorf = { kind: "BHFTAG", "station": "Wüstendittersdorf", "lines": ["SSz"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zabeltitz = { kind: "BHFTAG", "station": "Zabeltitz", "lines": ["DE"], "upperCase": "", "dd2": 270, "dd3": 180, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zaschwitz = { kind: "BHFTAG", "station": "Zaschwitz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zauckerode = { kind: "BHFTAG", "station": "Zauckerode", "lines": ["PNo"], "upperCase": "", "dd2": 55, "dd3": 40, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zausswitz = { kind: "BHFTAG", "station": "Zausswitz", "lines": ["OS"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zehista = { kind: "BHFTAG", "station": "Zehista", "lines": ["PGc"], "upperCase": "", "dd2": 130, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zeisigschenke = { kind: "BHFTAG", "station": "Zeisigschenke", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zeithain = { kind: "BHFTAG", "station": "Zeithain", "lines": ["ZE"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zeitz = { kind: "BHFTAG", "station": "Zeitz", "lines": ["ZA"], "upperCase": "IPR", "dd2": 0, "dd3": 0, "c2": 560, "c3": 370, "z2b": 440, "z3b": 300, "via": "Altenburg", "viab": "Werdau" };
+    var Zescha = { kind: "BHFTAG", "station": "Zescha", "lines": ["BK"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zeulenroda = { kind: "BHFTAG", "station": "Zeulenroda", "lines": ["WM"], "upperCase": "IRÄL", "dd2": 1240, "dd3": 830, "c2": 760, "c3": 510, "z2": 470, "z3": 320, "via": "Mehltheuer", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 360, "z3b": 240, "viab": "Seelingstädt" };
+    var Ziegenhain = { kind: "BHFTAG", "station": "Ziegenhain", "lines": ["RN"], "upperCase": "", "dd2": 360, "dd3": 240, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Nossen" };
+    var Zittau_Bf = { kind: "BHFTAG", "station": "Zittau Bf.", "lines": ["ZL", "ZN", "ZO", "RZ"], "upperCase": "", "dd2": 630, "dd3": 420, "c2": 1110, "c3": 740, "z2": 1410, "z3": 940, "via": "Eibau", "dd2b": 700, "dd3b": 470, "c2b": 0, "c3b": 0, "z2b": 0, "z3b": 0, "viab": "Herrnhut" };
+    var Zittau_Haltepkt = { kind: "BHFTAG", "station": "Zittau Haltepkt.", "lines": ["ZM", "ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zittau_Schiesshaus = { kind: "BHFTAG", "station": "Zittau Schiesshaus", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zittau_Vorstadt = { kind: "BHFTAG", "station": "Zittau Vorstadt", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zittel = { kind: "BHFTAG", "station": "Zittel", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zoblitz = { kind: "BHFTAG", "station": "Zoblitz", "lines": ["GD"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zschaitz = { kind: "BHFTAG", "station": "Zschaitz", "lines": ["RC"], "upperCase": "", "dd2": 440, "dd3": 300, "c2": 290, "c3": 200, "z2": 0, "z3": 0 };
+    var Zschernitzsch = { kind: "BHFTAG", "station": "Zschernitzsch", "lines": ["ZA"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    var Zschopau = { kind: "BHFTAG", "station": "Zschopau", "lines": ["AF"], "upperCase": "", "dd2": 510, "dd3": 340, "c2": 180, "c3": 120, "z2": 470, "z3": 320 };
+    var Zweinaundorf = { kind: "BHFTAG", "station": "Zweinaundorf", "lines": ["LG"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 450, "c3": 300, "z2": 0, "z3": 0 };
+    var Zwenkau = { kind: "BHFTAG", "station": "Zwenkau", "lines": ["GM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 480, "c3": 320, "z2": 500, "z3": 330 };
+    var Zwickau = { kind: "BHFTAG", "station": "Zwickau", "lines": ["DW", "SZ", "ZF"], "upperCase": "", "dd2": 780, "dd3": 520, "c2": 300, "c3": 200, "z2": 0, "z3": 0, "comment": "schnellzug obere zeile fehlt S, preis passt" };
+    var Zwickau_Hpkt = { kind: "BHFTAG", "station": "Zwickau Hpkt.", "lines": ["DW"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 15, "z3": 10 };
+    var Zwota = { kind: "BHFTAG", "station": "Zwota", "lines": ["CA", "ZK"], "upperCase": "", "dd2": 1100, "dd3": 730, "c2": 620, "c3": 410, "z2": 350, "z3": 240 };
+    var Zwönitz = { kind: "BHFTAG", "station": "Zwönitz", "lines": ["CA", "ZC", "ZS"], "upperCase": "", "dd2": 710, "dd3": 470, "c2": 230, "c3": 150, "z2": 270, "z3": 180 };
+    var Zwötzen = { kind: "BHFTAG", "station": "Zwötzen", "lines": ["PWz"], "upperCase": "IRJL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 270, "z3": 180 };
+    var Zöblitz = { kind: "BHFTAG", "station": "Zöblitz", "lines": ["RF"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 290, "c3": 190, "z2": 570, "z3": 380 };
+}
 System.register("SaxBaseTypes", [], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -2767,7 +3670,7 @@ System.register("SaxBaseTypes", [], function (exports_1, context_1) {
         throw new Error("Unexpected object: " + x);
     }
     exports_1("assertNever", assertNever);
-    var FAHRPREIS_T, GesternHeuteMorgen, ETimeValid, ZEIT_ROH, ZEIT_24, GUELTIG_T, FAEHRT_T;
+    var FAHRPREIS_T, GesternHeuteMorgen, ETimeValid, ZEIT_ROH, ZEIT_24;
     return {
         setters: [],
         execute: function () {
@@ -2793,31 +3696,13 @@ System.register("SaxBaseTypes", [], function (exports_1, context_1) {
             exports_1("ETimeValid", ETimeValid);
             exports_1("ZEIT_ROH", ZEIT_ROH = "ZEIT_ROH");
             exports_1("ZEIT_24", ZEIT_24 = "ZEIT_24");
-            (function (GUELTIG_T) {
-                GUELTIG_T["IMMER"] = "GUELTIG_IMMER";
-                GUELTIG_T["NIE"] = "GUELTIG_NIE";
-                GUELTIG_T["AB"] = "GUELTIG_AB";
-            })(GUELTIG_T || (GUELTIG_T = {}));
-            exports_1("GUELTIG_T", GUELTIG_T);
-            ;
-            ;
-            ;
-            (function (FAEHRT_T) {
-                FAEHRT_T["IMMER"] = "FAEHRT_IMMER";
-                FAEHRT_T["WERKTAGS"] = "FAEHRT_WERKTAGS";
-                FAEHRT_T["SONNUNDFESTTAGS"] = "FAEHRT_SONNUNDFESTTAGS";
-            })(FAEHRT_T || (FAEHRT_T = {}));
-            exports_1("FAEHRT_T", FAEHRT_T);
-            ;
-            ;
-            ;
         }
     };
 });
 System.register("SaxParsedTypes", [], function (exports_2, context_2) {
     "use strict";
     var __moduleName = context_2 && context_2.id;
-    var EBahnverwaltung, EScope, EQuelle, ZEILE_T, BLOCK_T, EAnAb, ZUGLAUF_UNBEKANNT, ZUGLAUF_BERECHNET, VERWEIS_T, TEXTORT_T, KBS_ABWEICHUNG_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt;
+    var EBahnverwaltung, EScope, EQuelle, ZEILE_T, EAnAb, VERWEIS_T, TEXTORT_T, KBS_ABWEICHUNG_T, TKEINPFEIL, TPFEIL_START, TPFEIL_ZIEL, BlockRaw_ok, BlockRawUnbekannt;
     return {
         setters: [],
         execute: function () {
@@ -2845,25 +3730,12 @@ System.register("SaxParsedTypes", [], function (exports_2, context_2) {
                 ZEILE_T["ANSCHLUSS_WEITER_IN"] = "ANSCHLUSS_WEITER_IN";
             })(ZEILE_T || (ZEILE_T = {}));
             exports_2("ZEILE_T", ZEILE_T);
-            (function (BLOCK_T) {
-                BLOCK_T["ZUG_NR_WERT"] = "ZUG_NR_WERT";
-                BLOCK_T["LEER"] = "LEER";
-                BLOCK_T["BLOCK"] = "BLOCKEINTRAG";
-                BLOCK_T["ERROR"] = "BLOCKERROR";
-                BLOCK_T["KEINHALT"] = "BLOCKKEINHALT";
-                BLOCK_T["DICKERSTRICH"] = "BLOCK_DICKERSTRICH";
-                BLOCK_T["ZEITEINTRAG"] = "BLOCK_ZEITEINTRAG";
-                BLOCK_T["ANKUNFT"] = "BLOCK_ANKUNFT";
-            })(BLOCK_T || (BLOCK_T = {}));
-            exports_2("BLOCK_T", BLOCK_T);
             (function (EAnAb) {
                 EAnAb[EAnAb["An"] = 0] = "An";
                 EAnAb[EAnAb["FirstAb"] = 1] = "FirstAb";
                 EAnAb[EAnAb["FollowAb"] = 2] = "FollowAb";
             })(EAnAb || (EAnAb = {}));
             exports_2("EAnAb", EAnAb);
-            exports_2("ZUGLAUF_UNBEKANNT", ZUGLAUF_UNBEKANNT = "ZUGLAUF_UNBEKANNT");
-            exports_2("ZUGLAUF_BERECHNET", ZUGLAUF_BERECHNET = "ZUGLAUF_BERECHNET");
             (function (VERWEIS_T) {
                 VERWEIS_T["PASSEND"] = "VERWEIS_PASSEND";
                 VERWEIS_T["FERN"] = "VERWEIS_FERN";
@@ -2907,56 +3779,24 @@ System.register("SaxParsedTypes", [], function (exports_2, context_2) {
 System.register("SaxInputTypes", [], function (exports_3, context_3) {
     "use strict";
     var __moduleName = context_3 && context_3.id;
-    var defaultzug, restspalte, ab, an, zn, kl, _anschluss_aus, _anschluss_aus_ziel, _anschluss_nach_start, _anschluss_nach_in, _zugnr, WaltersdfHst, MittwMrkb, SENKRECHT_PREFIX, WAAGERECHT_PREFIX, ORTPREFIX, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, nix, _, gnix, kHlt, ank, Ank, wa, sa, sb, sc, sd, se, sf, sg, sh, si, sk, sl, sj, sm, sp, wx, LE, CH, ZW, SC, JO, KA, AU, AN, LU, CT, CN, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, dick, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
+    function isIZeilenZusatzInfo(test) {
+        return (test != null && test.kind == undefined);
+    }
+    exports_3("isIZeilenZusatzInfo", isIZeilenZusatzInfo);
+    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, ZW, SC, JO, KA, AU, AN, LU, CT, CN, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, dick, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
     return {
         setters: [],
         execute: function () {
             exports_3("defaultzug", defaultzug = "defaultzug");
             exports_3("restspalte", restspalte = "restspalte");
-            exports_3("ab", ab = "_Ab");
-            exports_3("an", an = "_An");
-            exports_3("zn", zn = "_xZugnr");
-            exports_3("kl", kl = "_xKlassen");
-            exports_3("_anschluss_aus", _anschluss_aus = "_Anschluss_aus");
-            exports_3("_anschluss_aus_ziel", _anschluss_aus_ziel = "_Anschluss_aus_ankunft");
-            exports_3("_anschluss_nach_start", _anschluss_nach_start = "_Anschluss_nach_abfahrt");
-            exports_3("_anschluss_nach_in", _anschluss_nach_in = "_Anschluss_nach_in");
-            exports_3("_zugnr", _zugnr = "_xZugnr");
             exports_3("WaltersdfHst", WaltersdfHst = "Waltersdorf Haltest.");
             exports_3("MittwMrkb", MittwMrkb = "Mittweida-Markrsb.");
-            exports_3("SENKRECHT_PREFIX", SENKRECHT_PREFIX = "_senkrecht_");
-            exports_3("WAAGERECHT_PREFIX", WAAGERECHT_PREFIX = "_waagerecht_");
-            ORTPREFIX = "_Ort_";
             exports_3("MARKERPREFIX", MARKERPREFIX = "_markerAussehen_");
             exports_3("fatdot", fatdot = MARKERPREFIX + "fatdot");
             exports_3("cross", cross = MARKERPREFIX + "christlichesKreuz");
             exports_3("chooseown", chooseown = MARKERPREFIX + "selbstEinenFreienAussuchen");
             BAHNVERWALTUNGPREFIX = "_bahnverwaltung_";
             exports_3("Sachs", Sachs = BAHNVERWALTUNGPREFIX + "Sachs");
-            exports_3("nix", nix = "_Nix");
-            exports_3("_", _ = "_Nix");
-            exports_3("gnix", gnix = "_Nixleer");
-            exports_3("kHlt", kHlt = "_Kein_Halt");
-            exports_3("ank", ank = "_XZug_endet");
-            exports_3("Ank", Ank = "_XZug_endet");
-            exports_3("wa", wa = WAAGERECHT_PREFIX + "a");
-            exports_3("sa", sa = SENKRECHT_PREFIX + "a");
-            exports_3("sb", sb = SENKRECHT_PREFIX + "b");
-            exports_3("sc", sc = SENKRECHT_PREFIX + "c");
-            exports_3("sd", sd = SENKRECHT_PREFIX + "d");
-            exports_3("se", se = SENKRECHT_PREFIX + "e");
-            exports_3("sf", sf = SENKRECHT_PREFIX + "f");
-            exports_3("sg", sg = SENKRECHT_PREFIX + "g");
-            exports_3("sh", sh = SENKRECHT_PREFIX + "h");
-            exports_3("si", si = SENKRECHT_PREFIX + "i");
-            exports_3("sk", sk = SENKRECHT_PREFIX + "k");
-            exports_3("sl", sl = SENKRECHT_PREFIX + "l");
-            exports_3("sj", sj = SENKRECHT_PREFIX + "j");
-            exports_3("sm", sm = SENKRECHT_PREFIX + "m");
-            exports_3("sp", sp = SENKRECHT_PREFIX + "p");
-            exports_3("wx", wx = WAAGERECHT_PREFIX + "x");
-            exports_3("LE", LE = ORTPREFIX + "Leipzig");
-            exports_3("CH", CH = ORTPREFIX + "Chemnitz");
             exports_3("ZW", ZW = ORTPREFIX + "Zwickau");
             exports_3("SC", SC = ORTPREFIX + "Schwarzenberg");
             exports_3("JO", JO = ORTPREFIX + "Johangeorgenstadt");
@@ -3090,12 +3930,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                 case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                     var tEintrag = z.Zeiteintraege[sp];
                                     switch (tEintrag.kind) {
-                                        case SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG:
+                                        case BLOCK_T.ZEITEINTRAG:
                                             var tFestgelegt = false;
                                             for (var i = sp - 1; i >= 0; i--) {
                                                 var tVorgaenger = z.Zeiteintraege[i];
                                                 switch (tVorgaenger.kind) {
-                                                    case SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG:
+                                                    case BLOCK_T.ZEITEINTRAG:
                                                         if ((tVorgaenger.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) || (tVorgaenger.Zeit.Valid == SaxBaseTypes_1.ETimeValid.Nein)) {
                                                             console.error(" LINKS SOLLTE VALIDE SEIN !!!!");
                                                         }
@@ -3120,13 +3960,13 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                             }
                                                         }
                                                         break;
-                                                    case SaxParsedTypes_1.BLOCK_T.LEER:
-                                                    case SaxParsedTypes_1.BLOCK_T.KEINHALT:
-                                                    case SaxParsedTypes_1.BLOCK_T.DICKERSTRICH:
-                                                    case SaxParsedTypes_1.BLOCK_T.KEINHALT:
-                                                    case SaxParsedTypes_1.BLOCK_T.ERROR:
-                                                    case SaxParsedTypes_1.BLOCK_T.ANKUNFT:
-                                                    case SaxParsedTypes_1.BLOCK_T.BLOCK:
+                                                    case BLOCK_T.LEER:
+                                                    case BLOCK_T.KEINHALT:
+                                                    case BLOCK_T.DICKERSTRICH:
+                                                    case BLOCK_T.KEINHALT:
+                                                    case BLOCK_T.ERROR:
+                                                    case BLOCK_T.ANKUNFT:
+                                                    case BLOCK_T.BLOCK:
                                                         break;
                                                     default:
                                                         return SaxBaseTypes_1.assertNever(tVorgaenger);
@@ -3138,13 +3978,13 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                 fill24(tEintrag, 0, SaxBaseTypes_1.GesternHeuteMorgen.Heute);
                                             }
                                             break;
-                                        case SaxParsedTypes_1.BLOCK_T.LEER:
-                                        case SaxParsedTypes_1.BLOCK_T.KEINHALT:
-                                        case SaxParsedTypes_1.BLOCK_T.DICKERSTRICH:
-                                        case SaxParsedTypes_1.BLOCK_T.KEINHALT:
-                                        case SaxParsedTypes_1.BLOCK_T.ERROR:
-                                        case SaxParsedTypes_1.BLOCK_T.ANKUNFT:
-                                        case SaxParsedTypes_1.BLOCK_T.BLOCK:
+                                        case BLOCK_T.LEER:
+                                        case BLOCK_T.KEINHALT:
+                                        case BLOCK_T.DICKERSTRICH:
+                                        case BLOCK_T.KEINHALT:
+                                        case BLOCK_T.ERROR:
+                                        case BLOCK_T.ANKUNFT:
+                                        case BLOCK_T.BLOCK:
                                             break;
                                         default:
                                             return SaxBaseTypes_1.assertNever(tEintrag);
@@ -3167,12 +4007,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                 case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
                                 case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                                     var tAnschlusszeit = z.Zeiteintraege[sp];
-                                    if (tAnschlusszeit.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
+                                    if (tAnschlusszeit.kind == BLOCK_T.ZEITEINTRAG) {
                                         for (var di = zidx + 1; di < s.Zeilen.length; di++) {
                                             var zzz_zeileDrunter = s.Zeilen[di];
                                             if (zzz_zeileDrunter.kind == SaxParsedTypes_1.ZEILE_T.NORMAL) {
                                                 var eee_drunterEintrag = zzz_zeileDrunter.Zeiteintraege[sp];
-                                                if (eee_drunterEintrag.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
+                                                if (eee_drunterEintrag.kind == BLOCK_T.ZEITEINTRAG) {
                                                     if (eee_drunterEintrag.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) {
                                                         console.error("NORMALZEILE SOLLTE SEIT OBEN KORREKT GEFUELLT SEIN?!");
                                                     }
@@ -3215,7 +4055,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
                             case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                                 z.Zeiteintraege.forEach(function (e) {
-                                    if (e.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
+                                    if (e.kind == BLOCK_T.ZEITEINTRAG) {
                                         if (e.Zeit.kind == SaxBaseTypes_1.ZEIT_ROH) {
                                             console.error("HIER SOLLTE ALLES ZEIT24 sein !!!");
                                         }
@@ -3243,7 +4083,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_AB:
                             case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 z.Zeiteintraege.forEach(function (e) {
-                                    if (e.kind == SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG) {
+                                    if (e.kind == BLOCK_T.ZEITEINTRAG) {
                                         if (e.Zeit.kind == SaxBaseTypes_1.ZEIT_24) {
                                             if (e.Zeit.Stunde24 >= 24 && e.Zeit.WelcherTag == SaxBaseTypes_1.GesternHeuteMorgen.Heute) {
                                                 e.Zeit.Stunde24 -= 24;
@@ -3261,7 +4101,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 };
                 Importer.createTBlockEintrag_single = function (BlockInhalt) {
                     var tResultEntryB = {
-                        kind: SaxParsedTypes_1.BLOCK_T.BLOCK,
+                        kind: BLOCK_T.BLOCK,
                         Senkrecht: false,
                         Valid: true,
                         Start: true,
@@ -3270,7 +4110,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         Passend: true,
                         Referenzkey: undefined,
                         Blockinhalt: BlockInhalt,
-                        BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                     };
                     return tResultEntryB;
                 };
@@ -3352,13 +4192,13 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             if ((zeile != null) && (zeile.length >= 2)) {
                                 if ((("number" == typeof zeile[0]) ||
                                     (("string" == typeof zeile[0]) && (zeile[0].indexOf("_") != 0))) ||
-                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_aus) == 0)) ||
-                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_aus_ziel) == 0)) ||
-                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_nach_start) == 0)) ||
-                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_nach_in) == 0))) {
+                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_aus) == 0)) ||
+                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_aus_ziel) == 0)) ||
+                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_nach_start) == 0)) ||
+                                    (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_nach_in) == 0))) {
                                     var tAnAbString = (("number" == typeof zeile[0]) ? zeile[2] : zeile[1]);
                                     var tAnAb = SaxParsedTypes_1.EAnAb.FirstAb;
-                                    if (tAnAbString == SaxInput.ab) {
+                                    if (tAnAbString == ab) {
                                         if (tNextAbIsFirst) {
                                             tAnAb = SaxParsedTypes_1.EAnAb.FirstAb;
                                             tNextAbIsFirst = false;
@@ -3368,7 +4208,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             tNextAbIsFirst = false;
                                         }
                                     }
-                                    if (tAnAbString == SaxInput.an) {
+                                    if (tAnAbString == an) {
                                         tAnAb = SaxParsedTypes_1.EAnAb.An;
                                         tNextAbIsFirst = true;
                                     }
@@ -3383,7 +4223,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     };
                                     var tResultZeile = tResultZeileN;
                                     console.log("parse Zeile ", zeile[0]);
-                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_nach_in) == 0)) {
+                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_nach_in) == 0)) {
                                         var tResultZeileX = {
                                             kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN,
                                             BhfTag: "",
@@ -3393,7 +4233,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         };
                                         tResultZeile = tResultZeileX;
                                     }
-                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_nach_start) == 0)) {
+                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_nach_start) == 0)) {
                                         var tResultZeileXD = {
                                             kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_AB,
                                             BhfTag: "",
@@ -3403,7 +4243,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         };
                                         tResultZeile = tResultZeileXD;
                                     }
-                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_aus) == 0)) {
+                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_aus) == 0)) {
                                         var tResultZeileY = {
                                             kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB,
                                             BhfTag: "",
@@ -3413,7 +4253,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         };
                                         tResultZeile = tResultZeileY;
                                     }
-                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(SaxInput._anschluss_aus_ziel) == 0)) {
+                                    if (("string" == typeof zeile[0]) && (zeile[0].indexOf(_anschluss_aus_ziel) == 0)) {
                                         var tResultZeileZ = {
                                             kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN,
                                             BhfTag: "",
@@ -3435,57 +4275,42 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             if (("string" == typeof rawEntry)) {
                                                 if (rawEntry.indexOf("_") == 0) {
                                                     tIsTime == false;
-                                                    if (rawEntry == SaxInput.nix) {
+                                                    if (rawEntry == gnix) {
                                                         var tResultEntryL = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.LEER,
-                                                            MitStrich: true,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
-                                                        };
-                                                        tResultZeile.Zeiteintraege.push(tResultEntryL);
-                                                    }
-                                                    else if (rawEntry == SaxInput.gnix) {
-                                                        var tResultEntryL = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.LEER,
+                                                            kind: BLOCK_T.LEER,
                                                             MitStrich: false,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                         };
                                                         tResultZeile.Zeiteintraege.push(tResultEntryL);
                                                     }
-                                                    else if (rawEntry.indexOf(SaxInput.ank) == 0) {
+                                                    else if (rawEntry.indexOf(ank) == 0) {
                                                         var tResultEntryAnk = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.ANKUNFT,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                            kind: BLOCK_T.ANKUNFT,
+                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                         };
                                                         tResultZeile.Zeiteintraege.push(tResultEntryAnk);
                                                     }
-                                                    else if (rawEntry == SaxInput.kHlt) {
-                                                        var tResultEntryK = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.KEINHALT,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
-                                                        };
-                                                        tResultZeile.Zeiteintraege.push(tResultEntryK);
-                                                    }
                                                     else if (rawEntry == SaxInput.dick) {
                                                         var tResultEntryD = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.DICKERSTRICH,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                            kind: BLOCK_T.DICKERSTRICH,
+                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                         };
                                                         tResultZeile.Zeiteintraege.push(tResultEntryD);
                                                     }
-                                                    else if ((rawEntry.indexOf(SaxInput.SENKRECHT_PREFIX) == 0) || (rawEntry.indexOf(SaxInput.WAAGERECHT_PREFIX) == 0)) {
-                                                        var senkleng = SaxInput.SENKRECHT_PREFIX.length;
-                                                        var waagleng = SaxInput.WAAGERECHT_PREFIX.length;
+                                                    else if ((rawEntry.indexOf(SENKRECHT_PREFIX) == 0) || (rawEntry.indexOf(WAAGERECHT_PREFIX) == 0)) {
+                                                        var senkleng = SENKRECHT_PREFIX.length;
+                                                        var waagleng = WAAGERECHT_PREFIX.length;
                                                         var tResultEntryB = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.BLOCK,
-                                                            Senkrecht: (rawEntry.indexOf(SaxInput.SENKRECHT_PREFIX) == 0),
+                                                            kind: BLOCK_T.BLOCK,
+                                                            Senkrecht: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0),
                                                             Valid: false,
                                                             Start: false,
                                                             Breite: 1,
                                                             Hoehe: 1,
                                                             Passend: true,
-                                                            Referenzkey: (rawEntry.indexOf(SaxInput.SENKRECHT_PREFIX) == 0) ? rawEntry.substr(senkleng) : rawEntry.substr(waagleng),
+                                                            Referenzkey: (rawEntry.indexOf(SENKRECHT_PREFIX) == 0) ? rawEntry.substr(senkleng) : rawEntry.substr(waagleng),
                                                             Blockinhalt: undefined,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                                         };
                                                         tResultZeile.Zeiteintraege.push(tResultEntryB);
                                                     }
@@ -3514,17 +4339,17 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                         var entry = parseFloat(rawEntry.substr(2));
                                                         console.warn("TAGESBEREICH NICHT BERECHNET");
                                                         var tZeiteintrag = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG,
+                                                            kind: BLOCK_T.ZEITEINTRAG,
                                                             Schnellzug: tBuchstabe == "s",
                                                             Referenzkey: (tBuchstabe != "s") ? tBuchstabe : null,
-                                                            BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT },
+                                                            BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT },
                                                             Zeit: { kind: SaxBaseTypes_1.ZEIT_ROH, RohZeit: entry }
                                                         };
                                                         tResultZeile.Zeiteintraege.push(tZeiteintrag);
                                                     }
                                                     else {
                                                         var tResultEntryE = {
-                                                            kind: SaxParsedTypes_1.BLOCK_T.ERROR,
+                                                            kind: BLOCK_T.ERROR,
                                                             Grund: "unknown string " + rawEntry
                                                         };
                                                         console.log("ELSE unknown string ", JSON.stringify(rawEntry));
@@ -3542,21 +4367,36 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             }
                                             if (tIsTime) {
                                                 var tZeiteintrag = {
-                                                    kind: SaxParsedTypes_1.BLOCK_T.ZEITEINTRAG,
+                                                    kind: BLOCK_T.ZEITEINTRAG,
                                                     Schnellzug: false,
                                                     Referenzkey: null,
-                                                    BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT },
+                                                    BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT },
                                                     Zeit: { kind: SaxBaseTypes_1.ZEIT_ROH, RohZeit: entry }
                                                 };
                                                 tResultZeile.Zeiteintraege.push(tZeiteintrag);
                                             }
+                                        }
+                                        else if (!SaxInput.isIZeilenZusatzInfo(rawEntry)) {
+                                            var rawentryX = rawEntry;
+                                            switch (rawentryX.kind) {
+                                                case BLOCK_T.KEINHALT:
+                                                    tResultZeile.Zeiteintraege.push(rawentryX);
+                                                    break;
+                                                case BLOCK_T.LEER:
+                                                    tResultZeile.Zeiteintraege.push(rawentryX);
+                                                    break;
+                                                default:
+                                                    SaxBaseTypes_1.assertNever(rawentryX);
+                                                    break;
+                                            }
+                                            console.warn();
                                         }
                                         else {
                                             console.log("Zusatzinfo, nicht Zeiteintrag");
                                             var z = Importer.parseZeitZeileZusatzInfo(rawEntry);
                                             if (!z.Valid) {
                                                 var tResultEntryE = {
-                                                    kind: SaxParsedTypes_1.BLOCK_T.ERROR,
+                                                    kind: BLOCK_T.ERROR,
                                                     Grund: "ZeitZeile ZeitZeilenZusatzInfo not fully implemented for " + JSON.stringify(rawEntry)
                                                 };
                                                 tResultZeile.Zeiteintraege.push(tResultEntryE);
@@ -3566,15 +4406,15 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     }
                                     tResult.Zeilen.push(tResultZeile);
                                 }
-                                if (("string" == typeof zeile[0]) && ((zeile[0].indexOf(SaxInput._zugnr) == 0)
+                                if (("string" == typeof zeile[0]) && ((zeile[0].indexOf(_zugnr) == 0)
                                     || (zeile[0].indexOf(_klassen) == 0)
-                                    || (zeile[1].indexOf(SaxInput.kl) == 0))) {
+                                    || (zeile[1].indexOf(kl) == 0))) {
                                     var tResultZeileNrn = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ZUGNR,
                                         ZugNummern: [],
                                         ZeitZeileZusatzInfo: undefined
                                     };
-                                    if ((zeile[0].indexOf(_klassen) == 0) || zeile[1].indexOf(SaxInput.kl) == 0) {
+                                    if ((zeile[0].indexOf(_klassen) == 0) || zeile[1].indexOf(kl) == 0) {
                                         var x = {
                                             kind: SaxParsedTypes_1.ZEILE_T.KLASSEN,
                                             KlassenNummern: [],
@@ -3585,12 +4425,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         console.log("KLASSENZEILE ", i);
                                         console.log("BLOCKK");
                                         if (("string" == typeof zeile[0])
-                                            && (zeile[1].indexOf(SaxInput.kl) == 0)
-                                            && (zeile[0].indexOf(SaxInput.WAAGERECHT_PREFIX) == 0)) {
-                                            var tKey = zeile[0].substr(SaxInput.WAAGERECHT_PREFIX.length);
+                                            && (zeile[1].indexOf(kl) == 0)
+                                            && (zeile[0].indexOf(WAAGERECHT_PREFIX) == 0)) {
+                                            var tKey = zeile[0].substr(WAAGERECHT_PREFIX.length);
                                             console.log("BLOCKK2");
                                             x.BlockEintrag = {
-                                                kind: SaxParsedTypes_1.BLOCK_T.BLOCK,
+                                                kind: BLOCK_T.BLOCK,
                                                 Start: true,
                                                 Senkrecht: false,
                                                 Breite: 1,
@@ -3599,13 +4439,13 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                 Referenzkey: tKey,
                                                 Blockinhalt: undefined,
                                                 Valid: true,
-                                                BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                             };
                                         }
                                     }
                                     for (var zi = 2; zi < zeile.length; zi++) {
                                         var zeile_zi = zeile[zi];
-                                        if ("number" == typeof zeile[zi]) {
+                                        if ("number" == typeof zeile_zi) {
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, ZugNr: zeile[zi].toString() } } },
@@ -3621,11 +4461,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
-                                        else if (SaxInput.gnix === zeile[zi]) {
+                                        else if (gnix === zeile_zi) {
                                             var tLeer = {
-                                                kind: SaxParsedTypes_1.BLOCK_T.LEER,
+                                                kind: BLOCK_T.LEER,
                                                 MitStrich: false,
-                                                BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                             };
                                             switch (tResultZeileNrn.kind) {
                                                 case (SaxParsedTypes_1.ZEILE_T.ZUGNR):
@@ -3636,11 +4476,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
-                                        else if (SaxInput._ === zeile[zi]) {
+                                        else if (_ === zeile_zi) {
                                             var tLeer = {
-                                                kind: SaxParsedTypes_1.BLOCK_T.LEER,
+                                                kind: BLOCK_T.LEER,
                                                 MitStrich: true,
-                                                BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                             };
                                             switch (tResultZeileNrn.kind) {
                                                 case (SaxParsedTypes_1.ZEILE_T.ZUGNR):
@@ -3668,21 +4508,21 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
-                                        else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && ((zeile[zi].indexOf(SaxInput.SENKRECHT_PREFIX) == 0)
-                                            || (zeile[zi].indexOf(SaxInput.WAAGERECHT_PREFIX) == 0))) {
-                                            var senkleng = SaxInput.SENKRECHT_PREFIX.length;
-                                            var waagleng = SaxInput.WAAGERECHT_PREFIX.length;
+                                        else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && ((zeile[zi].indexOf(SENKRECHT_PREFIX) == 0)
+                                            || (zeile[zi].indexOf(WAAGERECHT_PREFIX) == 0))) {
+                                            var senkleng = SENKRECHT_PREFIX.length;
+                                            var waagleng = WAAGERECHT_PREFIX.length;
                                             var tResultEntryB = {
-                                                kind: SaxParsedTypes_1.BLOCK_T.BLOCK,
-                                                Senkrecht: (zeile[zi].indexOf(SaxInput.SENKRECHT_PREFIX) == 0),
+                                                kind: BLOCK_T.BLOCK,
+                                                Senkrecht: (zeile[zi].indexOf(SENKRECHT_PREFIX) == 0),
                                                 Valid: false,
                                                 Start: false,
                                                 Breite: 1,
                                                 Hoehe: 1,
                                                 Passend: true,
-                                                Referenzkey: (zeile[zi].indexOf(SaxInput.SENKRECHT_PREFIX) == 0) ? zeile[zi].substr(senkleng) : zeile[zi].substr(waagleng),
+                                                Referenzkey: (zeile[zi].indexOf(SENKRECHT_PREFIX) == 0) ? zeile[zi].substr(senkleng) : zeile[zi].substr(waagleng),
                                                 Blockinhalt: undefined,
-                                                BerechneterZugLauf: { kind: SaxParsedTypes_1.ZUGLAUF_UNBEKANNT }
+                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
                                             };
                                             switch (tResultZeileNrn.kind) {
                                                 case (SaxParsedTypes_1.ZEILE_T.ZUGNR):
@@ -3693,7 +4533,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
-                                        else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && (("string" == typeof zeile[0]) && ((zeile[0].indexOf(SaxInput._zugnr) == 0)))) {
+                                        else if (("string" == typeof zeile[zi]) && (zeile[zi] != null) && (("string" == typeof zeile[0]) && ((zeile[0].indexOf(_zugnr) == 0)))) {
                                             var tBlockKpl = {
                                                 Verweistyp: ZI_Creator.createTVerweisEmbedded(),
                                                 Inhalt: { q: '', BLOCK: { Standard: { scope: { kind: 'Zug' }, ZugNr: zeile[zi].toString() } } },
@@ -3709,13 +4549,19 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                     break;
                                             }
                                         }
+                                        else if ("string" == typeof zeile_zi) {
+                                            console.error("unknown string error in  klassen or zugnummerzeile: ", zeile_zi);
+                                        }
+                                        else if (!SaxInput.isIZeilenZusatzInfo(zeile_zi)) {
+                                            console.error("unknown error in  klassen or zugnummerzeile: ", zeile_zi.kind);
+                                        }
                                         else {
-                                            var z = Importer.parseZeitZeileZusatzInfo(zeile[zi]);
+                                            var z = Importer.parseZeitZeileZusatzInfo(zeile_zi);
                                             tResultZeileNrn.ZeitZeileZusatzInfo = z;
                                             console.log(z);
                                             if (!z.Valid) {
                                                 var tResultEntryE = {
-                                                    kind: SaxParsedTypes_1.BLOCK_T.ERROR,
+                                                    kind: BLOCK_T.ERROR,
                                                     Grund: "ZeitZeile ZeitZeilenZusatzInfo not fully implemented for " + JSON.stringify(zeile[zi])
                                                 };
                                                 switch (tResultZeileNrn.kind) {
@@ -3809,10 +4655,10 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     var ok_inp_zugnr = false;
                     var ok_inp_scope = false;
                     var ok_inp_bahn = false;
-                    var tGueltig = { kind: SaxBaseTypes_1.GUELTIG_T.IMMER };
+                    var tGueltig = { kind: GUELTIG_T.IMMER };
                     if (inp.ab) {
                         tGueltig = {
-                            kind: SaxBaseTypes_1.GUELTIG_T.AB,
+                            kind: GUELTIG_T.AB,
                             bhf: inp.ab
                         };
                         ok_inp_ab = true;
@@ -3845,18 +4691,18 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         ok_inp_marker = true;
                     }
                     var tFahrtage = {
-                        kind: SaxBaseTypes_1.FAEHRT_T.IMMER
+                        kind: FAEHRT_T.IMMER
                     };
                     if (inp.tage) {
                         switch (inp.tage) {
                             case SaxInput.sonn_und_festtags:
                                 tFahrtage = {
-                                    kind: SaxBaseTypes_1.FAEHRT_T.SONNUNDFESTTAGS
+                                    kind: FAEHRT_T.SONNUNDFESTTAGS
                                 };
                                 break;
                             case SaxInput.nur_werktags:
                                 tFahrtage = {
-                                    kind: SaxBaseTypes_1.FAEHRT_T.WERKTAGS
+                                    kind: FAEHRT_T.WERKTAGS
                                 };
                                 break;
                             default: console.warn("unbekannte Fahrtage: ", inp.tage);
@@ -4172,16 +5018,16 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                 }
                                 tEintraege.forEach(function (zi, spalteidx) {
                                     switch (zi.kind) {
-                                        case SaxParsedTypes_2.BLOCK_T.BLOCK:
+                                        case BLOCK_T.BLOCK:
                                             tUnprocessedBlocks.push({ eintrag: zi, zeile: zeileidx, spalte: spalteidx, alreadyDone: false });
                                             console.log("push ", spalteidx, zeileidx);
                                             break;
-                                        case SaxParsedTypes_2.BLOCK_T.ANKUNFT:
-                                        case SaxParsedTypes_2.BLOCK_T.ZEITEINTRAG:
-                                        case SaxParsedTypes_2.BLOCK_T.LEER:
-                                        case SaxParsedTypes_2.BLOCK_T.KEINHALT:
-                                        case SaxParsedTypes_2.BLOCK_T.DICKERSTRICH:
-                                        case SaxParsedTypes_2.BLOCK_T.ERROR:
+                                        case BLOCK_T.ANKUNFT:
+                                        case BLOCK_T.ZEITEINTRAG:
+                                        case BLOCK_T.LEER:
+                                        case BLOCK_T.KEINHALT:
+                                        case BLOCK_T.DICKERSTRICH:
+                                        case BLOCK_T.ERROR:
                                             break;
                                         default:
                                             return SaxBaseTypes_2.assertNever(zi);
@@ -4253,17 +5099,17 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                             console.log("ermittelte Hoehe ", startblock.eintrag.Hoehe);
                             console.log("rechteck pruefen");
                             for (var z = startblock.zeile; z < startblock.zeile + startblock.eintrag.Hoehe; z++) {
-                                for (var sp = startblock.spalte; sp < startblock.spalte + startblock.eintrag.Breite; sp++) {
-                                    var tAnguck_1 = FindEntry(tUnprocessedBlocks, sp, z);
-                                    console.log(sp, z, tAnguck_1);
+                                for (var sp_1 = startblock.spalte; sp_1 < startblock.spalte + startblock.eintrag.Breite; sp_1++) {
+                                    var tAnguck_1 = FindEntry(tUnprocessedBlocks, sp_1, z);
+                                    console.log(sp_1, z, tAnguck_1);
                                     if ((tAnguck_1 != null) && (true) && (tAnguck_1.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck_1.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                                         tAnguck_1.alreadyDone = true;
                                         tAnguck_1.eintrag.Valid = true;
                                         tProcessedBlocks.push(tAnguck_1);
-                                        console.log("OK: ", sp, z);
+                                        console.log("OK: ", sp_1, z);
                                     }
                                     else {
-                                        console.error("Block validation failed: wrong entry (not wa / sa) in rectangluar area at Zeile ", z, " Spalte ", sp);
+                                        console.error("Block validation failed: wrong entry (not wa / sa) in rectangluar area at Zeile ", z, " Spalte ", sp_1);
                                     }
                                 }
                             }
@@ -4335,7 +5181,7 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                 }
                                 tEintraege.forEach(function (zi, spalteidx) {
                                     switch (zi.kind) {
-                                        case SaxParsedTypes_2.BLOCK_T.BLOCK:
+                                        case BLOCK_T.BLOCK:
                                             if (zi.Start && zi.Referenzkey) {
                                                 var tFound = null;
                                                 for (var i = 0; i < s.ZusatzBloecke.length; i++) {
@@ -4361,12 +5207,12 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                                 }
                                             }
                                             break;
-                                        case SaxParsedTypes_2.BLOCK_T.LEER:
-                                        case SaxParsedTypes_2.BLOCK_T.DICKERSTRICH:
-                                        case SaxParsedTypes_2.BLOCK_T.ERROR:
-                                        case SaxParsedTypes_2.BLOCK_T.ANKUNFT:
-                                        case SaxParsedTypes_2.BLOCK_T.ZEITEINTRAG:
-                                        case SaxParsedTypes_2.BLOCK_T.KEINHALT:
+                                        case BLOCK_T.LEER:
+                                        case BLOCK_T.DICKERSTRICH:
+                                        case BLOCK_T.ERROR:
+                                        case BLOCK_T.ANKUNFT:
+                                        case BLOCK_T.ZEITEINTRAG:
+                                        case BLOCK_T.KEINHALT:
                                             break;
                                         default:
                                             return SaxBaseTypes_2.assertNever(zi);
@@ -4517,10 +5363,10 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                     });
                     var berechneStartEndString = function (ze) {
                         var tResult = "";
-                        if ((ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)) {
+                        if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)) {
                             tResult = " isEnd ";
                         }
-                        if ((ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isStart)) {
+                        if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isStart)) {
                             tResult = " isStart ";
                         }
                         return tResult;
@@ -4682,7 +5528,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                 }
                                 tr.appendChild(tdkx);
                                 var tCalcRgba = function (zeb) {
-                                    if (zeb.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET) {
+                                    if (zeb.kind == ZUGLAUF_BERECHNET) {
                                         var num4 = parseInt(zeb.ZugNr);
                                         var r = Math.floor(num4 / 100);
                                         var g = Math.floor((num4 - r * 100) / 10);
@@ -4701,21 +5547,22 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                     var td = document.createElement("div");
                                     tdd.appendChild(td);
                                     switch (ze.kind) {
-                                        case SaxSchedulesTyped.BLOCK_T.LEER:
+                                        case BLOCK_T.LEER:
+                                            console.log(ze.MitStrich);
                                             td.innerHTML = ((ze.MitStrich == true) ? "-" : "");
-                                            td.title = " Z" + (ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
+                                            td.title = " Z" + (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                             break;
-                                        case SaxSchedulesTyped.BLOCK_T.KEINHALT:
+                                        case BLOCK_T.KEINHALT:
                                             td.innerHTML = " | ";
-                                            td.title = " Z" + (ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
+                                            td.title = " Z" + (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                             break;
-                                        case SaxSchedulesTyped.BLOCK_T.BLOCK:
+                                        case BLOCK_T.BLOCK:
                                             var tDebugString = "";
-                                            td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                            td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             if (ze.Valid == false) {
                                                 if (ze.Senkrecht) {
@@ -4748,14 +5595,14 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                             break;
-                                        case SaxSchedulesTyped.BLOCK_T.ERROR:
+                                        case BLOCK_T.ERROR:
                                             console.warn("NormalZeile Erroreintrag not yet implemented");
                                             td.setAttribute("class", "notImplemented");
                                             td.innerHTML = JSON.stringify(ze);
                                             break;
-                                        case SaxSchedulesTyped.BLOCK_T.ZEITEINTRAG:
+                                        case BLOCK_T.ZEITEINTRAG:
                                             if (ze.Zeit.kind == SaxBaseTypes_3.ZEIT_24) {
-                                                td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                                td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                                 td.setAttribute("class", ze.Zeit.WelcherTag == SaxBaseTypes_3.GesternHeuteMorgen.Gestern ? "Gestern" :
                                                     ze.Zeit.WelcherTag == SaxBaseTypes_3.GesternHeuteMorgen.Heute ? "Heute" :
                                                         ze.Zeit.WelcherTag == SaxBaseTypes_3.GesternHeuteMorgen.Morgen ? "Morgen" : "UnbekannterTag");
@@ -4795,16 +5642,16 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
                                             }
                                             break;
-                                        case SaxSchedulesTyped.BLOCK_T.DICKERSTRICH:
+                                        case BLOCK_T.DICKERSTRICH:
                                             td.innerHTML = "DICK";
                                             td.setAttribute("class", "DickStrich");
-                                            td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                            td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                             break;
-                                        case SaxSchedulesTyped.BLOCK_T.ANKUNFT:
+                                        case BLOCK_T.ANKUNFT:
                                             td.innerHTML = "Ank.";
-                                            td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                            td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                             break;
@@ -4980,15 +5827,12 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
         }
     };
 });
-System.register("SaxInput", ["SaxInputTypes", "SaxParsedTypes"], function (exports_7, context_7) {
+System.register("SaxInput", ["SaxParsedTypes"], function (exports_7, context_7) {
     "use strict";
     var __moduleName = context_7 && context_7.id;
-    var SaxInputTypes_2, SaxParsedTypes_3, InputData;
+    var SaxParsedTypes_3, InputData;
     return {
         setters: [
-            function (SaxInputTypes_2_1) {
-                SaxInputTypes_2 = SaxInputTypes_2_1;
-            },
             function (SaxParsedTypes_3_1) {
                 SaxParsedTypes_3 = SaxParsedTypes_3_1;
             }
@@ -5003,43 +5847,8 @@ System.register("SaxInput", ["SaxInputTypes", "SaxParsedTypes"], function (expor
                         seite: 102,
                         caption: "Annaberg -- Aue -- Werdau",
                         zeilen: [
-                            [SaxInputTypes_2._anschluss_aus, SaxInputTypes_2.CH, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 639, SaxInputTypes_2._, 902, SaxInputTypes_2._, SaxInputTypes_2._, 1212, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 242, 505, SaxInputTypes_2._, 715, { ort: "Chemnitz", nr: 85 }],
-                            [SaxInputTypes_2._zugnr, SaxInputTypes_2.zn, SaxInputTypes_2.gnix, 1951, SaxInputTypes_2.gnix, 1861, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, 1931, 1867, 1933, SaxInputTypes_2.gnix, 1995, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, 1935, 1869, 1937, SaxInputTypes_2._, 1997, 1939, 1871, 1999],
-                            [_klassen, SaxInputTypes_2.kl, SaxInputTypes_2.gnix, k2b4, SaxInputTypes_2.gnix, k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, k2b4, k2b4, k2b4, SaxInputTypes_2.gnix, k2b4, SaxInputTypes_2.gnix, SaxInputTypes_2.gnix, k2b4, k2b4, k2b3, SaxInputTypes_2._, k2b4, k2b4, k2b3, k2b4],
-                            ["Annaberg", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 605, SaxInputTypes_2._, 918, SaxInputTypes_2._, 1126, SaxInputTypes_2._, SaxInputTypes_2._, 226, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 607, 736, SaxInputTypes_2._, 944],
-                            [2.7, "Buchholz", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 613, SaxInputTypes_2._, 930, SaxInputTypes_2._, 1136, SaxInputTypes_2._, SaxInputTypes_2._, 237, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 619, 749, SaxInputTypes_2._, 954, { nr: 85 }],
-                            [8.6, SaxInputTypes_2.WaltersdfHst, SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 630, SaxInputTypes_2._, 947, SaxInputTypes_2._, 1153, SaxInputTypes_2._, SaxInputTypes_2._, 256, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 636, 808, SaxInputTypes_2._, 1011],
-                            ["Schlettau", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 635, SaxInputTypes_2._, 952, SaxInputTypes_2._, 1158, SaxInputTypes_2._, SaxInputTypes_2._, 301, SaxInputTypes_2._, SaxInputTypes_2.sg, SaxInputTypes_2._, 641, 813, SaxInputTypes_2._, 1016, { nr: "99b" }],
-                            [9.9, "Schlettau", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 525, SaxInputTypes_2._, SaxInputTypes_2._, 640, 853, 957, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 306, 320, 610, SaxInputTypes_2.Z1971, SaxInputTypes_2._, 818, 830, SaxInputTypes_2._],
-                            [18.3, "Scheibenberg", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 540, SaxInputTypes_2._, SaxInputTypes_2._, 651, 903, 1008, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 317, 341, 621, k2b3, SaxInputTypes_2._, 830, 840, SaxInputTypes_2._],
-                            [20.8, SaxInputTypes_2.MittwMrkb, SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 710, SaxInputTypes_2.ank, 1027, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 336, SaxInputTypes_2.sf, 639, SaxInputTypes_2.sh, SaxInputTypes_2._, 848, SaxInputTypes_2.ank, SaxInputTypes_2._],
-                            [22.2, "Raschau", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 716, SaxInputTypes_2._, 1033, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 342, SaxInputTypes_2.sf, 645, SaxInputTypes_2.sh, SaxInputTypes_2._, 854, SaxInputTypes_2.sk, SaxInputTypes_2._],
-                            [24.1, "Grünstädtel", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 723, SaxInputTypes_2._, 1040, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 349, SaxInputTypes_2.sf, 651, SaxInputTypes_2.sh, SaxInputTypes_2._, 901, SaxInputTypes_2.sk, SaxInputTypes_2._],
-                            ["Grünstädtel", SaxInputTypes_2.ab, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 724, SaxInputTypes_2._, 1042, SaxInputTypes_2._, SaxInputTypes_2.Z2045, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 354, SaxInputTypes_2.sf, 652, SaxInputTypes_2.sh, SaxInputTypes_2.Z1967, 903, SaxInputTypes_2.sk, SaxInputTypes_2.Z2065, { nr: "99c" }],
-                            [28.8, "Schwarzenberg Bf.", SaxInputTypes_2.an, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 732, SaxInputTypes_2._, 1050, SaxInputTypes_2._, k2b4, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 402, SaxInputTypes_2.sf, 659, SaxInputTypes_2.sh, k2b4, 911, SaxInputTypes_2.sk, k2b4, { nr: "100a" }],
-                            ["Schwarzenberg Bf.", SaxInputTypes_2.ab, SaxInputTypes_2._, 435, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 739, SaxInputTypes_2._, 1056, SaxInputTypes_2._, 1256, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 416, SaxInputTypes_2.sf, SaxInputTypes_2._, 649, 704, 916, SaxInputTypes_2.sk, 1125],
-                            [29.3, "Neuwelt", SaxInputTypes_2.ab, SaxInputTypes_2._, 442, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 746, SaxInputTypes_2._, 1103, SaxInputTypes_2._, SaxInputTypes_2.kHlt, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 423, SaxInputTypes_2.sf, SaxInputTypes_2._, 656, 711, 923, SaxInputTypes_2.sk, 1132],
-                            [31.2, "Lauter", SaxInputTypes_2.ab, SaxInputTypes_2._, 548, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 752, SaxInputTypes_2._, 1110, SaxInputTypes_2._, 106, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 429, SaxInputTypes_2.sf, SaxInputTypes_2._, 702, 717, 930, SaxInputTypes_2.sk, 1138],
-                            [37.3, "Aue", SaxInputTypes_2.an, SaxInputTypes_2._, 500, SaxInputTypes_2._, SaxInputTypes_2.se, SaxInputTypes_2._, SaxInputTypes_2._, 804, SaxInputTypes_2._, 1122, SaxInputTypes_2._, 117, SaxInputTypes_2.sb, SaxInputTypes_2.sc, 441, SaxInputTypes_2.sf, SaxInputTypes_2._, 713, 728, 942, SaxInputTypes_2.sk, 1150],
-                            [SaxInputTypes_2._zugnr, SaxInputTypes_2.zn, SaxInputTypes_2._, 1951, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 1953, SaxInputTypes_2._, 1959, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 1865, SaxInputTypes_2._, SaxInputTypes_2._, 1971, 1967, 1969, SaxInputTypes_2.sk, SaxInputTypes_2._],
-                            [_klassen, SaxInputTypes_2.kl, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, k2b3, k2b4, k2b4, SaxInputTypes_2.sk, SaxInputTypes_2._],
-                            ["Aue", SaxInputTypes_2.ab, SaxInputTypes_2._, 507, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 817, SaxInputTypes_2._, 1141, SaxInputTypes_2._, 118, SaxInputTypes_2._, SaxInputTypes_2._, 505, SaxInputTypes_2._, SaxInputTypes_2._, 715, 732, 1004, SaxInputTypes_2.sk, SaxInputTypes_2._],
-                            [41.6, "Niederschlema", SaxInputTypes_2.an, SaxInputTypes_2._, 516, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 826, SaxInputTypes_2._, 1150, SaxInputTypes_2._, 126, SaxInputTypes_2._, SaxInputTypes_2._, 514, SaxInputTypes_2._, SaxInputTypes_2._, 723, 741, 1013, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [SaxInputTypes_2._zugnr, SaxInputTypes_2.zn, 1978, SaxInputTypes_2._, 2043, 205, 2051, 2053, SaxInputTypes_2._, 2055, SaxInputTypes_2._, 2057, SaxInputTypes_2._, 2059, 2061, SaxInputTypes_2._, 1975, 2047, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [_klassen, SaxInputTypes_2.kl, k2b4, SaxInputTypes_2._, k2b4, k1b3, k2b4, k2b4, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, k2b4, SaxInputTypes_2._, k2b4, k2b4, SaxInputTypes_2._, k3b4, k2b4, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._],
-                            ["Niederschlema", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 518, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 830, SaxInputTypes_2.sd, 1155, SaxInputTypes_2._, 128, SaxInputTypes_2._, SaxInputTypes_2._, 517, SaxInputTypes_2.si, SaxInputTypes_2._, 724, 742, 1019, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [47.4, "Stein-Hartenstein", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 528, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 840, SaxInputTypes_2.sd, 1206, SaxInputTypes_2._, 139, SaxInputTypes_2._, SaxInputTypes_2._, 527, SaxInputTypes_2.si, SaxInputTypes_2._, 734, 755, 1029, SaxInputTypes_2._, SaxInputTypes_2._],
-                            ["Fährbrücke", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 538, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, SaxInputTypes_2._, 849, SaxInputTypes_2.sd, 1216, SaxInputTypes_2._, 148, SaxInputTypes_2._, SaxInputTypes_2._, 537, SaxInputTypes_2.si, SaxInputTypes_2._, 743, 804, 1038, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [55.7, "Wiesenburg", SaxInputTypes_2.ab, SaxInputTypes_2.sl, 548, SaxInputTypes_2._, SaxInputTypes_2._, 717, SaxInputTypes_2._, 900, SaxInputTypes_2.sd, 1228, SaxInputTypes_2._, 157, 319, SaxInputTypes_2._, 547, SaxInputTypes_2.si, 635, 752, 813, 1048, SaxInputTypes_2._, SaxInputTypes_2._],
-                            ["Silberstrasse", SaxInputTypes_2.ab, SaxInputTypes_2.sl, SaxInputTypes_2.kHlt, SaxInputTypes_2._, SaxInputTypes_2._, 723, SaxInputTypes_2._, SaxInputTypes_2.kHlt, SaxInputTypes_2.sd, SaxInputTypes_2.kHlt, SaxInputTypes_2._, 203, 325, SaxInputTypes_2._, SaxInputTypes_2.kHlt, SaxInputTypes_2.si, 641, SaxInputTypes_2.kHlt, SaxInputTypes_2.kHlt, SaxInputTypes_2.kHlt, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [61.8, "Wilkau Bf.", SaxInputTypes_2.ab, 445, 600, 631, SaxInputTypes_2._, 731, 818, 912, 1042, 1242, 124, 212, 334, 443, 600, SaxInputTypes_2.si, 650, 804, 826, 1102, SaxInputTypes_2._, SaxInputTypes_2._, { nr: 96 }],
-                            ["Cainsdorf", SaxInputTypes_2.ab, 452, 606, 637, SaxInputTypes_2._, 736, 824, 917, 1048, 1247, 130, 217, 339, 448, 605, SaxInputTypes_2.si, 655, 809, 831, 1108, SaxInputTypes_2._, SaxInputTypes_2._],
-                            ["Schedewitz", SaxInputTypes_2.ab, 459, 612, 642, SaxInputTypes_2._, 741, 829, 922, 1053, 1252, 135, 222, 344, 453, 610, SaxInputTypes_2.si, 700, 814, 836, 1114, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [67.2, "Zwickau", SaxInputTypes_2.an, 505, 618, 649, SaxInputTypes_2._, SaxInputTypes_2.m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, SaxInputTypes_2.si, 706, 820, 842, 1120, SaxInputTypes_2._, SaxInputTypes_2._, { nr: 54 }],
-                            ["Zwickau", SaxInputTypes_2.ab, SaxInputTypes_2.a510, 632, 656, SaxInputTypes_2.n822, SaxInputTypes_2._, SaxInputTypes_2._, 948, SaxInputTypes_2.d1153, 115, SaxInputTypes_2._, 235, SaxInputTypes_2.b355, SaxInputTypes_2.c510, 620, 628, 710, 825, 908, 1150, SaxInputTypes_2._, SaxInputTypes_2._, { nrn: [54, 68] }],
-                            ["Lichtentanne", SaxInputTypes_2.ab, 520, SaxInputTypes_2.kHlt, 707, SaxInputTypes_2.kHlt, SaxInputTypes_2.wa, SaxInputTypes_2.wa, 958, 1204, 125, SaxInputTypes_2._, 245, 406, 521, SaxInputTypes_2.kHlt, 640, 720, 836, 918, 1200, SaxInputTypes_2._, SaxInputTypes_2._],
-                            [76.8, "Werdau", SaxInputTypes_2.an, 530, 647, 716, 835, SaxInputTypes_2.wa, SaxInputTypes_2.wa, 1008, 1212, 135, SaxInputTypes_2._, 254, 416, 529, 635, 655, 730, 845, 925, 1208, SaxInputTypes_2._, SaxInputTypes_2._, { nr: 59 }],
-                            [SaxInputTypes_2._anschluss_nach_in, SaxInputTypes_2.LE, 749, SaxInputTypes_2.s810, 925, 1019, SaxInputTypes_2._, SaxInputTypes_2._, 1232, SaxInputTypes_2._, 341, SaxInputTypes_2._, SaxInputTypes_2.s550, 652, SaxInputTypes_2.s748, SaxInputTypes_2.s800, SaxInputTypes_2._, 957, SaxInputTypes_2._, 1205, SaxInputTypes_2.s321, SaxInputTypes_2._, SaxInputTypes_2._, { ort: "Leipzig", nr: 56 }]
+                            [_anschluss_aus, CH, _, _, _, _, _, _, _, _, 639, _, 902, _, _, 1212, _, _, _, 242, 505, _, 715,
+                                { ort: "Chemnitz", nr: 85 }],
                         ],
                         ZellenVerweise: [
                             {
@@ -5260,12 +6069,12 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                 case SaxParsedTypes_4.ZEILE_T.ZUGNR:
                                     var tZNEintrag = z.ZugNummern[sp];
                                     switch (tZNEintrag.kind) {
-                                        case SaxParsedTypes_4.BLOCK_T.BLOCK:
+                                        case BLOCK_T.BLOCK:
                                             if (tZNEintrag.Blockinhalt) {
                                                 console.warn("todo: error handling");
                                                 tZugNr = "" + tZNEintrag.Blockinhalt.Inhalt.BLOCK.Standard.ZugNr;
                                                 tZNEintrag.BerechneterZugLauf = {
-                                                    kind: SaxParsedTypes_4.ZUGLAUF_BERECHNET,
+                                                    kind: ZUGLAUF_BERECHNET,
                                                     isStart: false,
                                                     isEnd: false,
                                                     isDeleted: false,
@@ -5275,7 +6084,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                             }
                                             else {
                                                 tZNEintrag.BerechneterZugLauf = {
-                                                    kind: SaxParsedTypes_4.ZUGLAUF_BERECHNET,
+                                                    kind: ZUGLAUF_BERECHNET,
                                                     isStart: false,
                                                     isEnd: false,
                                                     isDeleted: false,
@@ -5284,10 +6093,10 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                 };
                                             }
                                             break;
-                                        case SaxParsedTypes_4.BLOCK_T.LEER:
-                                        case SaxParsedTypes_4.BLOCK_T.DICKERSTRICH:
+                                        case BLOCK_T.LEER:
+                                        case BLOCK_T.DICKERSTRICH:
                                             tZNEintrag.BerechneterZugLauf = {
-                                                kind: SaxParsedTypes_4.ZUGLAUF_BERECHNET,
+                                                kind: ZUGLAUF_BERECHNET,
                                                 isStart: false,
                                                 isEnd: false,
                                                 isDeleted: false,
@@ -5302,7 +6111,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                 case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 case SaxParsedTypes_4.ZEILE_T.KLASSEN:
                                 case SaxParsedTypes_4.ZEILE_T.NORMAL:
-                                    var tEintrag = { kind: SaxParsedTypes_4.BLOCK_T.ERROR, Grund: "temp" };
+                                    var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
                                     if (z.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
                                         tEintrag = z.KlassenNummern[sp];
                                     }
@@ -5310,7 +6119,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                         tEintrag = z.Zeiteintraege[sp];
                                     }
                                     switch (tEintrag.kind) {
-                                        case SaxParsedTypes_4.BLOCK_T.ZEITEINTRAG:
+                                        case BLOCK_T.ZEITEINTRAG:
                                             if (tEintrag.Referenzkey) {
                                                 var tZeitEintrag = tEintrag;
                                                 s.ZusatzBloecke.forEach(function (fe) {
@@ -5339,13 +6148,13 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                     }
                                                 });
                                             }
-                                        case SaxParsedTypes_4.BLOCK_T.LEER:
-                                        case SaxParsedTypes_4.BLOCK_T.KEINHALT:
-                                        case SaxParsedTypes_4.BLOCK_T.DICKERSTRICH:
-                                        case SaxParsedTypes_4.BLOCK_T.KEINHALT:
-                                        case SaxParsedTypes_4.BLOCK_T.ANKUNFT:
-                                        case SaxParsedTypes_4.BLOCK_T.BLOCK:
-                                            if (tEintrag.kind === SaxParsedTypes_4.BLOCK_T.BLOCK) {
+                                        case BLOCK_T.LEER:
+                                        case BLOCK_T.KEINHALT:
+                                        case BLOCK_T.DICKERSTRICH:
+                                        case BLOCK_T.KEINHALT:
+                                        case BLOCK_T.ANKUNFT:
+                                        case BLOCK_T.BLOCK:
+                                            if (tEintrag.kind === BLOCK_T.BLOCK) {
                                                 if (tEintrag.Blockinhalt) {
                                                     if ((tEintrag.Blockinhalt.Verweistyp.kind === SaxParsedTypes_4.VERWEIS_T.PASSEND) ||
                                                         (tEintrag.Blockinhalt.Verweistyp.kind === SaxParsedTypes_4.VERWEIS_T.EMBEDDED)) {
@@ -5356,7 +6165,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                 }
                                             }
                                             tEintrag.BerechneterZugLauf = {
-                                                kind: SaxParsedTypes_4.ZUGLAUF_BERECHNET,
+                                                kind: ZUGLAUF_BERECHNET,
                                                 isStart: false,
                                                 isEnd: false,
                                                 isDeleted: false,
@@ -5369,7 +6178,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                                 tZugNrRefKey = null;
                                             }
                                             break;
-                                        case SaxParsedTypes_4.BLOCK_T.ERROR:
+                                        case BLOCK_T.ERROR:
                                             break;
                                         default:
                                             return SaxBaseTypes_4.assertNever(tEintrag);
@@ -5392,14 +6201,14 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                 case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
                                 case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 case SaxParsedTypes_4.ZEILE_T.KLASSEN:
-                                    var tEintrag = { kind: SaxParsedTypes_4.BLOCK_T.ERROR, Grund: "temp" };
+                                    var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
                                     if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
                                     else {
                                         tEintrag = tZeile.Zeiteintraege[sp];
                                     }
-                                    if ((tEintrag.kind != SaxParsedTypes_4.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_4.ZUGLAUF_BERECHNET)) {
+                                    if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                         if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr)) {
                                             var TEb = tEintrag.BerechneterZugLauf;
                                             if (tEintrag.BerechneterZugLauf.ZugNr) {
@@ -5426,7 +6235,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                 case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 case SaxParsedTypes_4.ZEILE_T.KLASSEN:
                                 case SaxParsedTypes_4.ZEILE_T.ZUGNR:
-                                    var tEintrag = { kind: SaxParsedTypes_4.BLOCK_T.ERROR, Grund: "temp" };
+                                    var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
                                     if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
@@ -5436,7 +6245,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                     else {
                                         tEintrag = tZeile.Zeiteintraege[sp];
                                     }
-                                    if ((tEintrag.kind != SaxParsedTypes_4.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_4.ZUGLAUF_BERECHNET)) {
+                                    if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                         if (tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr) {
                                             if (tEintrag.BerechneterZugLauf.ZugNr) {
                                                 tEintrag.BerechneterZugLauf.isStart = true;
@@ -5460,18 +6269,18 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                 case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_AB:
                                 case SaxParsedTypes_4.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 case SaxParsedTypes_4.ZEILE_T.KLASSEN:
-                                    var tEintrag = { kind: SaxParsedTypes_4.BLOCK_T.ERROR, Grund: "temp" };
+                                    var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
                                     if (tZeile.kind == SaxParsedTypes_4.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
                                     else {
                                         tEintrag = tZeile.Zeiteintraege[sp];
                                     }
-                                    if ((tEintrag.kind != SaxParsedTypes_4.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_4.ZUGLAUF_BERECHNET)) {
+                                    if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                         var teb = tEintrag.BerechneterZugLauf;
                                         if (((teb.isEnd == true) || tNeedEnd) &&
-                                            ((tEintrag.kind == SaxParsedTypes_4.BLOCK_T.LEER)
-                                                || ((tEintrag.kind == SaxParsedTypes_4.BLOCK_T.BLOCK) && (tEintrag.Start == false)))) {
+                                            ((tEintrag.kind == BLOCK_T.LEER)
+                                                || ((tEintrag.kind == BLOCK_T.BLOCK) && (tEintrag.Start == false)))) {
                                             teb.isEnd = false;
                                             teb.isDeleted = true;
                                             tNeedEnd = true;
@@ -5592,7 +6401,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                     var tCurrentZugNr;
                     var tCurrentFolge = [];
                     var tCurrentFahrtage = {
-                        kind: SaxBaseTypes_5.FAEHRT_T.IMMER
+                        kind: FAEHRT_T.IMMER
                     };
                     for (var sp = 0; sp < tLen; sp++) {
                         var tZeilenZahl = s.Zeilen.length;
@@ -5606,7 +6415,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                 case SaxParsedTypes_5.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 case SaxParsedTypes_5.ZEILE_T.KLASSEN:
                                 case SaxParsedTypes_5.ZEILE_T.ZUGNR:
-                                    var tEintrag = { kind: SaxParsedTypes_5.BLOCK_T.ERROR, Grund: "temp" };
+                                    var tEintrag = { kind: BLOCK_T.ERROR, Grund: "temp" };
                                     if (tZeile.kind == SaxParsedTypes_5.ZEILE_T.KLASSEN) {
                                         tEintrag = tZeile.KlassenNummern[sp];
                                     }
@@ -5618,7 +6427,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                     }
                                     var tJetztSpeichern = false;
                                     if (tCurrentZugNr) {
-                                        if ((tEintrag.kind != SaxParsedTypes_5.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_5.ZUGLAUF_BERECHNET)) {
+                                        if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                             if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr)) {
                                                 tJetztSpeichern = true;
                                             }
@@ -5643,19 +6452,19 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                         tResult.push(tCurrentLauf);
                                         tCurrentFolge = [];
                                         tCurrentZugNr = undefined;
-                                        tCurrentFahrtage = { kind: SaxBaseTypes_5.FAEHRT_T.IMMER };
+                                        tCurrentFahrtage = { kind: FAEHRT_T.IMMER };
                                     }
-                                    if ((tEintrag.kind != SaxParsedTypes_5.BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == SaxParsedTypes_5.ZUGLAUF_BERECHNET)) {
+                                    if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
                                         if ((tCurrentZugNr == undefined)) {
                                             if ((tEintrag.BerechneterZugLauf.ZugNr != null) && (tEintrag.BerechneterZugLauf.ZugNr.length > 0)) {
                                                 tCurrentFolge = [];
-                                                tCurrentFahrtage = { kind: SaxBaseTypes_5.FAEHRT_T.IMMER };
+                                                tCurrentFahrtage = { kind: FAEHRT_T.IMMER };
                                                 tCurrentZugNr = tEintrag.BerechneterZugLauf.ZugNr;
                                                 console.log("start new ", tCurrentZugNr);
                                             }
                                         }
                                         switch (tEintrag.kind) {
-                                            case SaxParsedTypes_5.BLOCK_T.ZEITEINTRAG:
+                                            case BLOCK_T.ZEITEINTRAG:
                                                 switch (tZeile.kind) {
                                                     case SaxParsedTypes_5.ZEILE_T.NORMAL:
                                                         var tEnt = {
@@ -5679,9 +6488,9 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                         break;
                                                 }
                                                 break;
-                                            case SaxParsedTypes_5.BLOCK_T.LEER:
+                                            case BLOCK_T.LEER:
                                                 break;
-                                            case SaxParsedTypes_5.BLOCK_T.KEINHALT:
+                                            case BLOCK_T.KEINHALT:
                                                 switch (tZeile.kind) {
                                                     case SaxParsedTypes_5.ZEILE_T.NORMAL:
                                                         var tEntK = {
@@ -5692,7 +6501,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                         break;
                                                 }
                                                 break;
-                                            case SaxParsedTypes_5.BLOCK_T.ANKUNFT:
+                                            case BLOCK_T.ANKUNFT:
                                                 console.warn("Todo handle ankunft, soll vorherigen eintrag auf an wechseln");
                                                 if (tCurrentFolge) {
                                                     var tEntAn = {
@@ -5701,7 +6510,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                     tCurrentFolge.push(tEntAn);
                                                 }
                                                 break;
-                                            case SaxParsedTypes_5.BLOCK_T.BLOCK:
+                                            case BLOCK_T.BLOCK:
                                                 console.warn("todo auszulesender blockinhalt: ", tEintrag.Blockinhalt);
                                                 if (tEintrag.Passend) {
                                                     if (tEintrag.Blockinhalt) {
@@ -5723,7 +6532,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                     }
                                                 }
                                                 break;
-                                            case SaxParsedTypes_5.BLOCK_T.DICKERSTRICH:
+                                            case BLOCK_T.DICKERSTRICH:
                                                 break;
                                             default:
                                                 return SaxBaseTypes_5.assertNever(tEintrag);

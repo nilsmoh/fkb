@@ -134,7 +134,7 @@ type Block2Entry = {
     Fehler?: string,
     OhneNrNach?: string | Array<string>,
     OhneNrAus?: string | Array<string>,
-    Fahrtage?: string,
+    Fahrtage?: FAEHRT_T,
     GeltungsTag?: string, //falls scope zelle
     //Fortsetzung?: boolean,
     RedundanteZugNr?: Array<String | Number>,
@@ -194,50 +194,6 @@ type Block2Entry = {
 
 
 }
-
-
-
-var SonnUndFesttags = ""; //Fahrtage
-var Sonnabends = ""; //Fahrtage
-var SonnabendsSonnUndFesttags = ""; //Fahrtage
-var Freitags = "";
-var Werktags = "";
-var WerktageAusserSonnabends = ""; //Fahrtage
-var InDerAufEinenSonnOderFesttagFolgendenNacht = "";
-var MontagsFallsMontagEinFesttagDannDienstag = "";
-var MontagsFallsMontagEinFesttagDannDienstagSowieSonnabends = "";
-var nachtsNachDemErstenMittwochJedenMonats = "";
-var MittwochsUndSonnabends = "";
-var InDerNachtVonMittwochZuDonnerstagUndSonnabendZuSonntag = "";
-var WerktageVorSonnUndFesttagen = "";
-var WerktagsMitAusnahmeDerSonnabendeUndDes23Mai = "";
-var vom25JuniBis31August = "";
-var SonnabendsInJuniJuliUndAugust = "";
-var ersterMittwochJedenMonatsDH2mai6juni4juli1august5september = "";
-var Vom1JuniBis15September = "";
-var Vom15JuniBis15September = "";
-var MontagsUndDonnerstagsUndAb1JuniTaeglich = "";
-var SonnUndFesttagsSowie1624mai1429juni15aug828sept = "";
-var DonnerstagOderWennDieserFesttagDannMittwochVorher = "";
-var MontagsUndSonnabends = "";
-var DonnerstagUndSonntag = "";
-var JuliUndAugust = "";
-var Mai21BisEndeAugust = "";
-var SonnUndFesttagsBisEndeAugust = "";
-var MaiJuniSeptember = "";
-var SonnUndFesttags20MaiBisEndeAugust = "";
-var DienstagsUndSonntags = "";
-var bis15September = "";
-var vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni = "";
-var SonnUndFesttags20MaiBis16SeptSowie5Juni = "";
-var vom16maibis16sept = "";
-var vom15junibis15august = "";
-var SonnUndFesttagsSowieMittwochs = "";
-var SonnUndFesttagsSowie5Juni = "";
-var SonnUndFesttagsInJuniJuliUndAugust = "";
-var MaiUndSeptemberTaeglichSonstWerktags = "";
-var Montags = "";
-var Vom15MaiBis15September = "";
 
 
 

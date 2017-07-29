@@ -1,4 +1,4 @@
-import {TBlockEintrag, ZEILE_T, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, BLOCK_T,
+import {TBlockEintrag, ZEILE_T, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, /* BLOCK_T,*/
  TNormalZeileEintrag, VERWEIS_T,
 
 SingleDirectionScheduleTyped,

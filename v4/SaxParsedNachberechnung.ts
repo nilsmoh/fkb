@@ -7,18 +7,19 @@ import {
     TPFEIL_START, TPFEIL_ZIEL, TKEINPFEIL,  EScope, BlockRaw_ok, TPfeilZiel,
     TPfeilStart, TKbsAbweichung_Aus, TKbsAbweichung_Nach, 
     BlockRawUnbekannt, TVerweisTyp, TKbsAbweichung, TPfeilInfo, TTextOrt, EBahnverwaltung,
-    BLOCK_T, ZEILE_T, 
-    ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, 
+    /*BLOCK_T, ZEILE_T, 
+    ZUGLAUF_BERECHNET, ZUGLAUF_UNBEKANNT, */
     EAnAb, EQuelle, SingleDirectionScheduleTyped, 
     
-    ZeitZeileZusatzInfo, TNormalzeile, TLeerEintrag,TKeinHalt, TZugNrZeile, TKlassenNrZeile,
-    TNormalZeileEintrag
+    ZeitZeileZusatzInfo, TNormalzeile, /*TLeerEintrag, TKeinHalt,*/ TZugNrZeile, TKlassenNrZeile,
+    TNormalZeileEintrag,
+    ZEILE_T
      
 
      
 
 } from "./SaxParsedTypes"
-import { assertNever, TZeit24, FAEHRT_T, TFahrtage, ZEIT_24,  } from "./SaxBaseTypes";
+import { assertNever, TZeit24,  ZEIT_24,  } from "./SaxBaseTypes";
 
 
 // functions filling SingleDirectionScheduleTyped value

@@ -3,7 +3,7 @@
  */
 
 
-import { TBlockinhaltBaseV2 } from "./SaxParsedTypes";
+import { TBlockinhaltBaseV2  } from "./SaxParsedTypes";
 
 export interface SingleDirectionScheduleInput {
     route1900: string | number;
@@ -12,7 +12,7 @@ export interface SingleDirectionScheduleInput {
     seite: number; // seite in FKB wie gedruckt
     klassen?: string;
     caption: string;
-    zeilen: Array<Array<(string | number | IZeilenZusatzInfo)>>;
+    zeilen: Array<Array<(string | number | IZeilenZusatzInfo  | TKeinHalt | TLeerEintrag )>>;
     ZellenVerweise?: Array< TBlockinhaltBaseV2  /*IZellenEigenschaft*/ >;
 }
 
@@ -28,6 +28,14 @@ export interface IZeilenZusatzInfo {
     via?: string;
     lfd?: number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden
 }
+
+//typeguard
+
+export function isIZeilenZusatzInfo(test: any): test is IZeilenZusatzInfo {
+    return (test != null && test.kind == undefined);
+}
+
+
 
 // zusatzinformation untern
 export interface IZellenEigenschaft {
@@ -56,25 +64,16 @@ export var restspalte = "restspalte";
 
 
 //export var zn = "_zn";  //zugnummer for aliasing only
-export var ab = "_Ab";
-export var an = "_An";
-export var zn = "_xZugnr";
-export var kl = "_xKlassen";
-
-export var _anschluss_aus = "_Anschluss_aus"; //  aus Zwickau  // Abfahrtszeit in Zwickau
-export var _anschluss_aus_ziel = "_Anschluss_aus_ankunft"; // aus Karlsbad in Johanngeorgenstadt
-export var _anschluss_nach_start = "_Anschluss_nach_abfahrt"; // nach Karlsbad ab Johanngeorgenstadt
-export var _anschluss_nach_in = "_Anschluss_nach_in"; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
 
 
-export var _zugnr = "_xZugnr";
+
+
+
 
 export var WaltersdfHst = "Waltersdorf Haltest.";
 export var MittwMrkb = "Mittweida-Markrsb.";
 
-export var SENKRECHT_PREFIX = "_senkrecht_";
-export var WAAGERECHT_PREFIX = "_waagerecht_";
-var ORTPREFIX = "_Ort_";
+
 export var MARKERPREFIX = "_markerAussehen_";
 
 export var fatdot = MARKERPREFIX + "fatdot";  // dicker schwarzer runder punkt
@@ -87,37 +86,10 @@ export var Sachs = BAHNVERWALTUNGPREFIX + "Sachs";
 //s1= senkrecht start 1
 //se= senkrecht ende // letzter eintrag
 
-export var nix = "_Nix"; // waagerechter strich
-export var _ = "_Nix";
-export var gnix = "_Nixleer"; // wirklich leer
-
-export var kHlt = "_Kein_Halt";
-export var ank = "_XZug_endet"; // an fuer zuege die nur auf teilstrecke fahren
-export var Ank = "_XZug_endet"; // an fuer zuege die nur auf teilstrecke fahren
-
-export var wa = WAAGERECHT_PREFIX + "a";
-
-export var sa = SENKRECHT_PREFIX + "a";
-export var sb = SENKRECHT_PREFIX + "b";
-export var sc = SENKRECHT_PREFIX + "c";
-export var sd = SENKRECHT_PREFIX + "d";
-export var se = SENKRECHT_PREFIX + "e";
-export var sf = SENKRECHT_PREFIX + "f";
-export var sg = SENKRECHT_PREFIX + "g";
-export var sh = SENKRECHT_PREFIX + "h";
-export var si = SENKRECHT_PREFIX + "i";
-export var sk = SENKRECHT_PREFIX + "k";
-export var sl = SENKRECHT_PREFIX + "l";
-
-export var sj = SENKRECHT_PREFIX + "j";
-export var sm = SENKRECHT_PREFIX + "m";
-export var sp = SENKRECHT_PREFIX + "p";
 
 
-export var wx = WAAGERECHT_PREFIX + "x";
 
-export var LE = ORTPREFIX + "Leipzig";
-export var CH = ORTPREFIX + "Chemnitz";
+
 export var ZW = ORTPREFIX + "Zwickau";
 export var SC = ORTPREFIX + "Schwarzenberg";
 export var JO = ORTPREFIX + "Johangeorgenstadt";

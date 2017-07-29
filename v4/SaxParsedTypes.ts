@@ -1,4 +1,4 @@
-import { /*EKlassen,*/ TFahrpreisAngabe, TEchteZeit, TGueltigkeit, TFahrtage } from "./SaxBaseTypes";
+import { /*EKlassen,*/ TFahrpreisAngabe, TEchteZeit } from "./SaxBaseTypes";
 import { IZellenEigenschaft } from "./SaxInputTypes";
 
     // stark typisierte, geparste Tabelle - noch unbearbeitet !!!
@@ -56,28 +56,14 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
 
 
 
-    // EINTRAG in Zelle    
-    export enum BLOCK_T{
-        ZUG_NR_WERT = "ZUG_NR_WERT",
-        LEER = "LEER",
-        BLOCK = "BLOCKEINTRAG", //war BLOCKBLOCK
-        ERROR = "BLOCKERROR",
-        KEINHALT = "BLOCKKEINHALT",
-        DICKERSTRICH = "BLOCK_DICKERSTRICH",
-        ZEITEINTRAG = "BLOCK_ZEITEINTRAG",
-        ANKUNFT = "BLOCK_ANKUNFT"
-    }
+    
 
 
 
     export type TZugNrEintrag = TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError;
     export type TKlassenNrEintrag = TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError;
 
-    export interface TLeerEintrag {
-        kind: typeof BLOCK_T.LEER;
-        MitStrich: boolean;
-        BerechneterZugLauf: TZugLaufInfo;
-    }
+    
 
     export interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seite 103   Mittweida
         kind: typeof BLOCK_T.DICKERSTRICH;
@@ -109,11 +95,7 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
 
     }
 
-    // Zug faehrt durch, senkrechter strich in FKB
-    export interface TKeinHalt {
-        kind: typeof BLOCK_T.KEINHALT;
-        BerechneterZugLauf: TZugLaufInfo;
-    }
+    
 
     //block der tabelle, meist groesser als 1x1
     export interface TBlockEintrag {
@@ -149,24 +131,6 @@ import { IZellenEigenschaft } from "./SaxInputTypes";
     }
 
    
-    // ZUGLAUF , bezeichnet Zugnummer, start, taeglich.. wird zwecks Tabelle rendern nachtraeglich berechnet
-    export type TZugLaufInfo = TZugLaufUnbekannt | TZugLaufBerechnet;
-
-    export const ZUGLAUF_UNBEKANNT: "ZUGLAUF_UNBEKANNT" = "ZUGLAUF_UNBEKANNT";
-    export const ZUGLAUF_BERECHNET: "ZUGLAUF_BERECHNET" = "ZUGLAUF_BERECHNET";
-
-    export interface TZugLaufUnbekannt {
-        kind: typeof ZUGLAUF_UNBEKANNT;
-    }
-
-    export interface TZugLaufBerechnet {
-        kind: typeof ZUGLAUF_BERECHNET;
-        isStart: boolean;
-        isEnd: boolean;
-        isDeleted: boolean;
-        everyDay: boolean;
-        ZugNr: string;
-    }
 
 //region ZEILE
 

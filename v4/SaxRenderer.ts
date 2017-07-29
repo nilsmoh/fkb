@@ -1,6 +1,7 @@
 import * as SaxSchedulesTyped from "./SaxParsedTypes";   
 import { ZI_Renderer } from "./SaxParser";
 import { assertNever, FAHRPREIS_T, GesternHeuteMorgen, ZEIT_24, ETimeValid } from "./SaxBaseTypes";
+import { /*TLeerEintrag*/ } from "./SaxParsedTypes";
 
 export class Renderer{
  
@@ -129,12 +130,12 @@ export class Renderer{
               }  
             });    
 
-            var berechneStartEndString = function(ze: SaxSchedulesTyped.TZeiteintrag | SaxSchedulesTyped.TAnkunftEintrag | SaxSchedulesTyped.TDickerStrichEintrag | SaxSchedulesTyped.TKeinHalt | SaxSchedulesTyped.TLeerEintrag | SaxSchedulesTyped.TBlockEintrag){ 
+            var berechneStartEndString = function(ze: SaxSchedulesTyped.TZeiteintrag | SaxSchedulesTyped.TAnkunftEintrag | SaxSchedulesTyped.TDickerStrichEintrag | TKeinHalt | TLeerEintrag | SaxSchedulesTyped.TBlockEintrag){ 
                 var tResult = "";
-                if ((ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)){
+                if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)){
                    tResult = " isEnd ";
                 }
-                if ((ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isStart)){
+                if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isStart)){
                    tResult = " isStart ";
                 }
                 return tResult;
@@ -379,8 +380,8 @@ export class Renderer{
 
                         //util
 
-                        var tCalcRgba = function(zeb: SaxSchedulesTyped.TZugLaufInfo){
-                            if (zeb.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET) {
+                        var tCalcRgba = function(zeb: TZugLaufInfo){
+                            if (zeb.kind == ZUGLAUF_BERECHNET) {
                             var num4 = parseInt( zeb.ZugNr);
                             var r = Math.floor(num4 / 100);
                             var g = Math.floor((num4 -r*100) / 10);
@@ -413,33 +414,46 @@ export class Renderer{
                             var td = document.createElement("div");
                             
                             tdd.appendChild(td);
+
+                            //let ze = zex;
+
+                            /*
+                            switch (zex.kind){
+                                case BLOCK_T.LEER:
+                                    console.log(zex.MitStrich );
+                                break;
+                            }
+                            */
                             
                             //var ze: SaxSchedulesTyped.TNormalZeileEintrag = zex;
                             switch (ze.kind) {
-                                case SaxSchedulesTyped.BLOCK_T.LEER:
-                                    //var zel = ze;
+                                case BLOCK_T.LEER:
+                                    console.log(ze.MitStrich );
+                                    //var zel: TLeerEintrag  = ze as TLeerEintrag;
                                     td.innerHTML = ((ze.MitStrich == true) ? "-" : "");
-                                    td.title = " Z" + (ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
+                                    td.title = " Z" + (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                     td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)){
                                     //    td.innerHTML += " isEnd ";
                                     //}
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_T.KEINHALT:
+                                
+                                case BLOCK_T.KEINHALT:
                                     td.innerHTML = " | ";
                                     //td.title = ze.BerechneterZugLauf.kind;
-                                    td.title = " Z" +  (ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
+                                    td.title = " Z" +  (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                     td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_T.BLOCK:
+                                    
+                                case BLOCK_T.BLOCK:
                                     //console.warn("ZugnrZeile Blockeintrag not yet implemented");
                                     //td.setAttribute("class", "notImplemented");
 
                                     var tDebugString = ""; // (ze.Start) ? ("_"+ze.Referenzkey+ "_"+ze.Breite + "x" + ze.Hoehe)  : " not start";  
-                                    td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";  
+                                    td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";  
                                      td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //td.title = ze.BerechneterZugLauf.kind;
                                     
@@ -484,15 +498,15 @@ export class Renderer{
                                      //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_T.ERROR:
+                                case BLOCK_T.ERROR:
                                     console.warn("NormalZeile Erroreintrag not yet implemented");
                                     td.setAttribute("class", "notImplemented");
                                     td.innerHTML = JSON.stringify(ze);
                                     //td.title =  " Z" +  ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                     break;
-                                case SaxSchedulesTyped.BLOCK_T.ZEITEINTRAG:
+                                case BLOCK_T.ZEITEINTRAG:
                                     if(ze.Zeit.kind == ZEIT_24){
-                                    td.title= ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                    td.title= ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                     td.setAttribute("class", ze.Zeit.WelcherTag == GesternHeuteMorgen.Gestern ? "Gestern" :
                                         ze.Zeit.WelcherTag == GesternHeuteMorgen.Heute ? "Heute":
                                             ze.Zeit.WelcherTag == GesternHeuteMorgen.Morgen ? "Morgen": "UnbekannterTag");
@@ -555,31 +569,33 @@ export class Renderer{
                                         console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
                                     }
                                     break;
-                                case SaxSchedulesTyped.BLOCK_T.DICKERSTRICH:
+                                case BLOCK_T.DICKERSTRICH:
                                     td.innerHTML = "DICK";
                                     td.setAttribute("class", "DickStrich");
                                     //td.title = ze.BerechneterZugLauf.kind;
-                                    td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                    td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                     //td.innerHTML+= " Z" +  (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                      td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
-                                case SaxSchedulesTyped.BLOCK_T.ANKUNFT:
+                                case BLOCK_T.ANKUNFT:
                                     td.innerHTML = "Ank.";
-                                    td.title = ze.BerechneterZugLauf.kind == SaxSchedulesTyped.ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
+                                    td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                      //td.innerHTML+= " Z" +  (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                      td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
                                 default: return assertNever(ze);
+                                
                             }
                             if (tAppendTD){ 
                                 tr.appendChild(tdd);
                                 tRealeSpaltenBisher++;
                                 
                             }
+                            
                         });
 
                          // falls hinten globale spalten fehlen

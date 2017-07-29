@@ -76,30 +76,3 @@
     }
 //endregion
 
-//region FAHRTAGE oder GUELTIGTAGE
-
-     // GUELTIGKEIT
-    export type TGueltigkeit = TGueltigImmer | TGueltigNie | TGueltigAb;
-    export enum GUELTIG_T {
-        IMMER = "GUELTIG_IMMER",
-        NIE = "GUELTIG_NIE",
-        AB = "GUELTIG_AB"
-    }
-    interface TGueltigImmer { kind: typeof GUELTIG_T.IMMER };
-    interface TGueltigNie { kind: typeof GUELTIG_T.NIE };
-    interface TGueltigAb { kind: typeof GUELTIG_T.AB, bhf: string };
-    //todo wochentagsabhaengige gueltigkeit etc
-
-    //// Fahrtage
-    export type TFahrtage = TFaehrtImmer | TFaehrtWerktags | TFaehrtSonnUndFesttags;
-    export enum FAEHRT_T{
-        IMMER = "FAEHRT_IMMER",
-        WERKTAGS = "FAEHRT_WERKTAGS",
-        SONNUNDFESTTAGS = "FAEHRT_SONNUNDFESTTAGS"
-    }
-    interface TFaehrtImmer { kind: typeof FAEHRT_T.IMMER };
-    interface TFaehrtWerktags { kind: typeof FAEHRT_T.WERKTAGS };
-    interface TFaehrtSonnUndFesttags { kind: typeof FAEHRT_T.SONNUNDFESTTAGS };
-
-
-//endregion
