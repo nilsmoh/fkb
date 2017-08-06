@@ -5,6 +5,32 @@
 
 import { /*TBlockinhaltBaseV2 */  } from "./SaxParsedTypes";
 
+export type EinzelEintragInputBaseKinded = TZeilentypEintrag | TKeinHalt 
+                            | TLeerEintrag | TAnkunftEintrag | TDickerStrichEintrag | TBlockEintrag 
+                            | TKlassenEintrag 
+                            | TZugNrEintrag
+                            | TZeiteintrag 
+                            | TKMEintrag
+                            | StationTicketInfoEntryKpxTagged
+                            | TTrennerEintrag
+                            ;
+
+export type EinzelEintragInput = EinzelEintragInputBaseKinded 
+                            | number  
+                            | IZeilenZusatzInfo  // this silently adds string ???? but not in tsc 2.4.2 or was it a sideffect of fkb1900_hinweise3.ts being buggy ???
+                        
+export type EinzelZeile = Array<EinzelEintragInput>;
+
+export type EinzelEintragInputZZ = EinzelEintragInputBaseKinded 
+                            | number  
+                            | IZeilenZusatzInfoKinded
+
+export type EinzelZeileZZK = Array<EinzelEintragInputZZ>;  
+                            
+
+export type EinzelZeileNumless = Array< EinzelEintragInputBaseKinded                             
+                                        | IZeilenZusatzInfoKinded >;                             
+
 export interface SingleDirectionScheduleInput {
     route1900: string | number;
     comment?: string;
@@ -12,9 +38,34 @@ export interface SingleDirectionScheduleInput {
     seite: number; // seite in FKB wie gedruckt
     klassen?: string;
     caption: string;
-    zeilen: Array<Array<(string | number | IZeilenZusatzInfo  | TKeinHalt | TLeerEintrag | TAnkunftEintrag | TDickerStrichEintrag | TBlockEintrag )>>;
+    zeilen: Array<EinzelZeile>;
     ZellenVerweise?: Array< TBlockinhaltBaseV2  /*IZellenEigenschaft*/ >;
 }
+
+export interface SingleDirectionScheduleInputKindedZZZ {
+    route1900: string | number;
+    comment?: string;
+    todo?: string;
+    seite: number; // seite in FKB wie gedruckt
+    klassen?: string;
+    caption: string;
+    zeilen: Array<EinzelZeileZZK>;
+    ZellenVerweise?: Array< TBlockinhaltBaseV2  /*IZellenEigenschaft*/ >;
+}
+
+
+export interface SingleDirectionScheduleInputNumless {
+    route1900: string | number;
+    comment?: string;
+    todo?: string;
+    seite: number; // seite in FKB wie gedruckt
+    klassen?: string;
+    caption: string;
+    zeilen: Array<EinzelZeileNumless>;
+    ZellenVerweise?: Array< TBlockinhaltBaseV2  /*IZellenEigenschaft*/ >;
+}
+
+
 
 //rechts hinter zeile
 export interface IZeilenZusatzInfo {
@@ -29,10 +80,14 @@ export interface IZeilenZusatzInfo {
     lfd?: number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden
 }
 
+export interface IZeilenZusatzInfoKinded extends IZeilenZusatzInfo{
+    kind: typeof BLOCK_T.ZEILENZUSATZINFO
+}
+
 //typeguard
 
 export function isIZeilenZusatzInfo(test: any): test is IZeilenZusatzInfo {
-    return (test != null && test.kind == undefined);
+    return (("number" != typeof test)  && (test != null) && (test.kind == undefined));
 }
 
 
@@ -72,8 +127,8 @@ export var restspalte = "restspalte";
 
 
 
-export var WaltersdfHst = "Waltersdorf Haltest.";
-export var MittwMrkb = "Mittweida-Markrsb.";
+export var WaltersdfHst = Waltersdorf_Haltest; // "Waltersdorf Haltest.";
+export var MittwMrkb = Mittweida_Markrsb;// "Mittweida-Markrsb.";
 
 
 export var MARKERPREFIX = "_markerAussehen_";
@@ -130,25 +185,30 @@ export var nach5spalten2spalten = 'nach5spalten2spalten';
 
 
 
-export var Z1971 = "_Z1971";
-export var Z2045 = "_Z2045";
-export var Z1967 = "_Z1967";
-export var Z2065 = "_Z2065";
+export var Z1971 : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "1971" , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}}; // = "_Z1971";
+export var Z2045 : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "2045" , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}};
+export var Z1967 : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "1967", BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}};
+export var Z2065 : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "2065" , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}};
+
 export var Z1991 = "_Z1991";
 export var Z1998 = "_Z1998";
 
 
-export var m747 = "_m747";
-export var b355 = "_b355";
-export var a510 = "_a510";
-export var n822 = "_n822";
-export var c510 = "_c510";
-export var d1153 = "_d1153";
-export var s550 = "_s550";  //schnellzug
-export var s748 = "_s748";
-export var s800 = "_s800";
-export var s321 = "_s321";
-export var s810 = "_s810";
+export var m747 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"m",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 747 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; // _m747 
+
+
+
+export var b355: TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"b",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 355 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; // "_b355";
+export var a510: TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"a",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 510 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_a510";
+export var n822: TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"n",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 822 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_n822";
+export var c510: TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"c",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 510 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_c510";
+export var d1153:TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"d",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit:1153 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_d1153";
+
+export var s550 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 550 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s550";  //schnellzug
+export var s748 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 748 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s748";
+export var s800 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 800 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s800";
+export var s321 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 321 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s321";
+export var s810 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 810 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s810";
 
 export var a858 = "_a858";
 

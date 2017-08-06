@@ -1,4 +1,4 @@
-import {  assertNever,  ZEIT_24, TZeit24 } from "./SaxBaseTypes";
+import {  assertNever /*,  ZEIT_24, TZeit24 */ } from "./SaxBaseTypes";
 import { ZEILE_T, /*BLOCK_T,*/ TNormalZeileEintrag, /*ZUGLAUF_BERECHNET,*/ EAnAb, KBS_ABWEICHUNG_T, SingleDirectionScheduleTyped } from "./SaxParsedTypes";
 
     export const LAUFEINTRAG_NORMAL: "LAUFEINTRAG_NORMAL" = "LAUFEINTRAG_NORMAL";
@@ -378,6 +378,13 @@ import { ZEILE_T, /*BLOCK_T,*/ TNormalZeileEintrag, /*ZUGLAUF_BERECHNET,*/ EAnAb
 
                                         break;
                                     case BLOCK_T.DICKERSTRICH:
+                                        break;
+                                    case BLOCK_T.ZUG_NR_WERT:
+                                        console.warn("TODO important !!!");
+                                        break;
+                                        
+                                    case BLOCK_T.KLASSEN_WERT:
+                                        console.warn("TODO important !!!");
                                         break;
                                     default:
                                         return assertNever(tEintrag);

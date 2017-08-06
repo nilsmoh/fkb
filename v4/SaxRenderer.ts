@@ -1,7 +1,7 @@
 import * as SaxSchedulesTyped from "./SaxParsedTypes";   
 import { ZI_Renderer } from "./SaxParser";
-import { assertNever, FAHRPREIS_T, GesternHeuteMorgen, ZEIT_24, ETimeValid } from "./SaxBaseTypes";
-import { /*TLeerEintrag*/ } from "./SaxParsedTypes";
+import { assertNever, FAHRPREIS_T /*, GesternHeuteMorgen, ZEIT_24, ETimeValid */} from "./SaxBaseTypes";
+import { TZugNummernEintrag } from "./SaxParsedTypes";
 
 export class Renderer{
  
@@ -18,6 +18,9 @@ export class Renderer{
 
         public static renderTable(parentToAppendTo: HTMLElement, input:  SaxSchedulesTyped.SingleDirectionScheduleTyped) {
             console.log("render table");
+
+            console.log(input);
+
             var tDiv = document.createElement("div");
             tDiv.setAttribute("class", "GanzeSeite");
 
@@ -130,7 +133,7 @@ export class Renderer{
               }  
             });    
 
-            var berechneStartEndString = function(ze: SaxSchedulesTyped.TZeiteintrag | TAnkunftEintrag | TDickerStrichEintrag | TKeinHalt | TLeerEintrag | TBlockEintrag){ 
+            var berechneStartEndString = function(ze: TZeiteintrag | TAnkunftEintrag | TDickerStrichEintrag | TKeinHalt | TLeerEintrag | TBlockEintrag){ 
                 var tResult = "";
                 if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)){
                    tResult = " isEnd ";
@@ -244,7 +247,7 @@ export class Renderer{
                         tdkx.setAttribute("class", "notImplemented");
                         var tdk = document.createElement("div");
                         tdkx.appendChild(tdk);
-                        var tEintraege: Array<SaxSchedulesTyped.TZugNrEintrag|SaxSchedulesTyped.TKlassenNrEintrag|SaxSchedulesTyped.TNormalZeileEintrag> = [];
+                        var tEintraege: Array<TZugNummernEintrag|SaxSchedulesTyped.TKlassenNrEintrag|SaxSchedulesTyped.TNormalZeileEintrag> = [];
        
                         // erste spalte:
               
@@ -567,6 +570,7 @@ export class Renderer{
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     }else{
                                         console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
+                                        td.innerHTML = "rohz "+ze.Zeit.RohZeit;
                                     }
                                     break;
                                 case BLOCK_T.DICKERSTRICH:
@@ -587,6 +591,49 @@ export class Renderer{
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                     break;
+                                case BLOCK_T.KLASSEN_WERT:
+                                    let kl = "kl?";
+                                    switch (ze.klassen){
+                                        case EKlassen.Klassen1:
+                                            kl="I";
+                                            break;
+                                        case EKlassen.Klassen1bis2:
+                                            kl="I-II";
+                                            break;
+                                        case EKlassen.Klassen1bis3:
+                                            kl="I-III";
+                                            break;
+                                        case EKlassen.Klassen1bis4:
+                                            kl="I-IV";
+                                            break;
+                                        case EKlassen.Klassen2bis3:
+                                            kl="II-III";
+                                            break;
+                                        case EKlassen.Klassen2bis4:
+                                            kl="II-IV";
+                                            break;
+                                        case EKlassen.Klassen3:
+                                            kl="III";
+                                            break;
+                                        case EKlassen.Klassen3bis4:
+                                            kl="III-IV";
+                                            break;
+                                        case EKlassen.KlassenNurEine:
+                                            kl="eine Kl";
+                                            break;
+                                        case EKlassen.NichtAngegeben:
+                                            kl="k.a.";
+                                            break;
+                                        //default: return assertNever(ze);
+                                    }
+
+
+                                    td.innerHTML = kl;
+                                    break;
+                                case BLOCK_T.ZUG_NR_WERT:
+                                    td.innerHTML = "Z:"+ ze.zugnr;
+                                    break;
+
                                 default: return assertNever(ze);
                                 
                             }

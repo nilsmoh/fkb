@@ -40,39 +40,5 @@
     }
 //endregion
 
-//region ZEIT
-    export type TEchteZeit = TZeitRoh | TZeit24;
 
-    export enum GesternHeuteMorgen {
-        Unbekannt,
-        Gestern,
-        Heute,
-        Morgen
-    }
-
-    export enum ETimeValid {
-        Nein = 1,        //
-        Vorgabe24 = 2,  // 24 irgendwie geparst aus json
-        Berechnet24 = 3  // 24 berechnet
-    }
-
-    // neuer Zeittyp, der roh und 24 klar trennt
-    export const ZEIT_ROH: "ZEIT_ROH" = "ZEIT_ROH";
-    export const ZEIT_24: "ZEIT_24" = "ZEIT_24";
-
-    export interface TZeitRoh {
-        kind: typeof ZEIT_ROH;
-        RohZeit: number;
-    }
-
-    export interface TZeit24 {
-        kind: typeof ZEIT_24;
-        Stunde24: number;
-        Minute24: number;
-        WelcherTag: GesternHeuteMorgen;
-        Valid: ETimeValid;
-        src: number;
-
-    }
-//endregion
 

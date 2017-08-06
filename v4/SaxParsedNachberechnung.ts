@@ -25,7 +25,7 @@ import {
      
 
 } from "./SaxParsedTypes"
-import { assertNever, TZeit24,  ZEIT_24,  } from "./SaxBaseTypes";
+import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
 
 
 // functions filling SingleDirectionScheduleTyped value
@@ -207,6 +207,8 @@ import { assertNever, TZeit24,  ZEIT_24,  } from "./SaxBaseTypes";
                                 // TODO * external blocks and intern blocks
 
                                 case BLOCK_T.ERROR:
+                                case BLOCK_T.KLASSEN_WERT:
+                                case BLOCK_T.ZUG_NR_WERT:
 
                                     //nothing to fill for these entries            
                                     break;

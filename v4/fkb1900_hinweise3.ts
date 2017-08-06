@@ -132,7 +132,7 @@ type Block2Entry = {
         ,
 
     Fehler?: string,
-    OhneNrNach?: string | Array<string>,
+    OhneNrNach?: string | Array<string> | Array<{ziel:string, ank: any}>,
     OhneNrAus?: string | Array<string>,
     Fahrtage?: FAEHRT_T,
     GeltungsTag?: string, //falls scope zelle
@@ -152,7 +152,7 @@ type Block2Entry = {
         mitUmstiegIn?: string, mitUmstiegInZugNr?: string, ohneUmstieg?: boolean, Ueber?: string[]
     },    // anschluss abfahrt fuer zelle jetzt mit konkretem zeilentyp !!! 
     AnschlussZubringerIn?: { ZugNr?: string, Geltungstag?: string },
-    AnschlussWeiterAb?: { bis?: string },
+    AnschlussWeiterAb?: {Bhf?:string,  bis?: string },
     AnschlussWeiterNach?: { Geltungstag?: string, SubBhf?: string, Bhf?: string, Ueber?: Array<string>, Zeit?: string, WeitereFernziele?: Array<string>, mitUmstiegIn?: string, ohneUmstieg?: boolean, Kategorie?: string },
 
     ZugOhneSpalte?: { Fahrtage?: string, Klasse?: string, ZugNr?: string, weg: [{ bhfAb?: string, zeit?: number | string, bhfAn?: string }] }, //z.b.fkb61
@@ -412,33 +412,34 @@ var x26: Array<page> = [
             q: "*Verkehrt Werktags vor Sonn- und Festtagen bis Edle Krone (Ank. 504) und Klingenberg (Ank. 523)",
             c: "  //  (ganzer zug verkehrt weiter)",
             BLOCK: {
-                Standard: {}, Abweichend: [{ scope: Zug, Fahrtag: SonnUndFesttags, ohneNrNach: [{ ziel: "edlekrone", ank: 504 }, { ziel: "Klingenberg", ank: 523 }] }]
+                Standard: {}, Abweichend: { scope: Zug, Fahrtage: SonnUndFesttags, OhneNrNach: [{ ziel: "edlekrone", ank: 504 }, { ziel: "Klingenberg", ank: 523 }] }
             }
-        },
-        {
-            q: "+Sonn und festtags",
-            BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags }, Abweichend: {} }
-        },
-        // 26.3
-        {
-            q: "*Nur Sonnabends.",
-            c: "// (ganzer zug verkehrt)  ",
-            BLOCK: { Standard: { scope: Zug, Fahrtage: Sonnabends }, Abweichend: {} }
-        },
-        {
-            q: "+Nur an Werktagen,ausser Sonnabends.",
-            c: " //(ganzer zug verkehrt) /",
-            BLOCK: { Standard: { scope: Zug, Fahrtage: WerktageAusserSonnabends }, Abweichend: {} },
-        },
-        {
-            q: "n. Königsbrück",
-            c: "verlaesst strecke",
-            BLOCK: { Standard: { scope: Zug, OhneNrNach: "Koenigsbrueck" }, Abweichend: {} }
-        },
-        {
-            q: "nach Schwepnitz",
-            BLOCK: { Standard: { scope: Zug, OhneNrNach: "Schwepnitz" }, Abweichend: {} }
         }
+        // ,
+        // {
+        //     q: "+Sonn und festtags",
+        //     BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags }, Abweichend: {} }
+        // },
+        // // 26.3
+        // {
+        //     q: "*Nur Sonnabends.",
+        //     c: "// (ganzer zug verkehrt)  ",
+        //     BLOCK: { Standard: { scope: Zug, Fahrtage: Sonnabends }, Abweichend: {} }
+        // },
+        // {
+        //     q: "+Nur an Werktagen,ausser Sonnabends.",
+        //     c: " //(ganzer zug verkehrt) /",
+        //     BLOCK: { Standard: { scope: Zug, Fahrtage: WerktageAusserSonnabends }, Abweichend: {} },
+        // },
+        // {
+        //     q: "n. Königsbrück",
+        //     c: "verlaesst strecke",
+        //     BLOCK: { Standard: { scope: Zug, OhneNrNach: "Koenigsbrueck" }, Abweichend: {} }
+        // },
+        // {
+        //     q: "nach Schwepnitz",
+        //     BLOCK: { Standard: { scope: Zug, OhneNrNach: "Schwepnitz" }, Abweichend: {} }
+        // }
 
         ]
     }];
@@ -2321,7 +2322,7 @@ var x75: page[] = [{
     }, {
         q: "(grosser endstern) ueber Franzensbad",
         c: "anderer startort des anschlusses, muss vor eger umnsteigen !!!",
-        BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:"Eger", endZelle:"Karlsbad"}, AnschlussWeiterAb: "Franzensbad" } }
+        BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:"Eger", endZelle:"Karlsbad"}, AnschlussWeiterAb: {Bhf: "Franzensbad"} } }
     }, {
         q: "!ueber Marktredwitz",
         BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:"Eger", endZelle:"Muenchen"}, AnschlussWeiterNach: { Ueber: ["Marktredwitz"] } } }
@@ -2620,11 +2621,11 @@ var x89: page[] = [{
     list: [{
         q: "v. Noss",
         c: " eintrag in AnschlussZubringerAus Zeile ohne zeit aber mit anderem Bhf als zeile eigentlich hat",
-        BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: "Nossen" } }
+        BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: {Bhf: "Nossen" } } }
     }, {
         q: "v. Leisn.",
         c: " eintrag in AnschlussZubringerAus Zeile ohne zeit aber mit anderem Bhf als zeile eigentlich hat",
-        BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: "Leisnig" } }
+        BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: {Bhf: "Leisnig" } } }
     }, {
         q: "Nur Werktags",
         BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }

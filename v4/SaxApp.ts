@@ -18,7 +18,13 @@ export class Sched{
         public static do(input: InputTypes.SingleDirectionScheduleInput): ParsedTypes.SingleDirectionScheduleTyped {
            
             console.log("test");
-            var tResult = Parser.Importer.parse(input);
+
+            var inp = Parser.Importer.kindifyZZZ(input);
+            var inp2 = Parser.Importer.kindifynumbers(inp);
+            var tResult = Parser.Importer.parse(inp2);
+
+            console.log("parse done: ", JSON.stringify(tResult));
+
 
             //tResult ist eine stark getypte eingabetabelle
 
@@ -31,13 +37,15 @@ export class Sched{
             SaxValidator.Validator.validate_addZusatzinfobase(tResult);
             //SaxSchedulesTyped.Validator.validate_Zeiten24(tResult);
 
+            /* no longer works ATM
             Parser.Importer.berechneZeiten(tResult);
 
             
            SaxNachberechnung.Nachberechnung.berechneZugLaeufe(tResult);
             
-             SaxValidator.Validator.validate_move_Anschluss_ZusatzInfo(tResult);
-
+            SaxValidator.Validator.validate_move_Anschluss_ZusatzInfo(tResult);
+            */
+            /*
             var tZugl = ZugExtraktor.findeZuglaeufe(tResult);
             
             // zuglaeufe ausgeben:
@@ -46,7 +54,7 @@ export class Sched{
                 ZugExtraktor.printZuglauf(zl.TagAbhaengig[0].Ablauf);
             });
             
-
+            */
 
             var t = document.getElementById("testdiv");
             if (t != null){
@@ -70,11 +78,14 @@ export class Sched{
                 tResults.push({ "input": idx, val: input });
                 //input: SaxSchedules.SingleDirectionScheduleInput): SaxSchedulesTyped.SingleDirectionScheduleTyped
 
-                var tResult = Parser.Importer.parse(input);
+                 var inp = Parser.Importer.kindifyZZZ(input);
+                var inp2 = Parser.Importer.kindifynumbers(inp);
+                var tResult = Parser.Importer.parse(inp2);
                 //console.log("--parsed:");
                 //console.log(JSON.stringify(tResult));
                 tResults.push({ "parsed": idx, val: tResult });
                 //tResult ist eine stark getypte eingabetabelle
+
 
 
                 SaxValidator.Validator.validate_mergeBlocks(tResult); // fasst wa/sa zu rechteckigen bereichen zusammen, der oberste linke enthaelt dann breite und hoehe des rechteckigen bereichs
@@ -89,6 +100,7 @@ export class Sched{
                 tResults.push({ "zusatzed": idx, val: tResult });
                 //SaxSchedulesTyped.Validator.validate_Zeiten24(tResult);
 
+                /* no longer works atm
                 Parser.Importer.berechneZeiten(tResult);
                 //console.log("--zeiten:");
                 //console.log(JSON.stringify(tResult));
@@ -104,6 +116,7 @@ export class Sched{
                 //console.log(JSON.stringify(tResult));
                 tResults.push({ "moved": idx, val: tResult });
 
+                */
                 try {
                     var tZugl = ZugExtraktor.findeZuglaeufe(tResult);
                     //console.log("---zuglaufextrakt:");

@@ -1,4 +1,4 @@
-import { /*EKlassen,*/ TFahrpreisAngabe, TEchteZeit } from "./SaxBaseTypes";
+import { /*EKlassen,*/ TFahrpreisAngabe } from "./SaxBaseTypes";
 import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     // stark typisierte, geparste Tabelle - noch unbearbeitet !!!
@@ -47,21 +47,13 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
     }
 
     
-    export type TNormalZeileEintrag = TZeiteintrag | TLeerEintrag | TBlockEintrag | TKeinHalt | TDickerStrichEintrag | TAnkunftEintrag | TError;
+    export type TNormalZeileEintragBase =  TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError | TKlassenEintrag | TZugNrEintrag;
 
+    export type TNormalZeileEintrag = TZeiteintrag | TNormalZeileEintragBase | TKeinHalt | TAnkunftEintrag ;
+    export type TZugNummernEintrag       =               TNormalZeileEintragBase;
+    export type TKlassenNrEintrag   =              TNormalZeileEintragBase;
 
-
-    
-
-
-
-    export type TZugNrEintrag = TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError;
-    export type TKlassenNrEintrag = TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError;
-
-    
-
-
-   
+  
 
     export interface TError {
         kind: typeof BLOCK_T.ERROR;
@@ -73,22 +65,13 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
 
 
-    export interface TZeiteintrag {
-        kind: typeof BLOCK_T.ZEITEINTRAG;
-        Referenzkey: string | null;
-        Schnellzug: boolean;
-        Zeit: TEchteZeit;
-        BerechneterZugLauf: TZugLaufInfo;
-
-    }
-
     
 
    
 
     export interface TZugNrZeile {
         kind: typeof ZEILE_T.ZUGNR,
-        ZugNummern: Array<TZugNrEintrag>,
+        ZugNummern: Array<TZugNummernEintrag>,
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined
     }
 
@@ -111,6 +94,10 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     export type TZeile = TZugNrZeile | TKlassenNrZeile | TNormalzeile | TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile;
 
+       
+//                     | TZugNrZeile)  | TKlassenNrZeile | TNormalzeile (TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile  | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile 
+
+  
 
     // KOPF der Normalzeilen
     export interface TNormalzeile {

@@ -1,4 +1,4 @@
-import {/*TBlockEintrag,*/ ZEILE_T, TZugNrEintrag, TKlassenNrEintrag, TKlassenNrZeile, /* BLOCK_T,*/
+import {/*TBlockEintrag,*/ ZEILE_T, TZugNummernEintrag, TKlassenNrEintrag, TKlassenNrZeile, /* BLOCK_T,*/
  TNormalZeileEintrag, /*VERWEIS_T,*/
 
 SingleDirectionScheduleTyped,
@@ -77,7 +77,12 @@ export class Validator {
                                 case BLOCK_T.LEER:
                                 case BLOCK_T.KEINHALT:
                                 case BLOCK_T.DICKERSTRICH:
+                                case BLOCK_T.ZUG_NR_WERT:
                                 case BLOCK_T.ERROR:
+                                case BLOCK_T.KLASSEN_WERT:
+                                
+
+                                //case BLOCK_T:
                                     // alle die kein block sind
                                     /*
                                     if (tLetzteWaag != null){
@@ -321,6 +326,8 @@ export class Validator {
                                 case BLOCK_T.ANKUNFT:
                                 case BLOCK_T.ZEITEINTRAG:
                                 case BLOCK_T.KEINHALT:
+                                case BLOCK_T.ZUG_NR_WERT:
+                                case BLOCK_T.KLASSEN_WERT:
                                     // ???? TODO
                                     break;
                                 default:
