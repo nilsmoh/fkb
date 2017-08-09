@@ -413,10 +413,6 @@ export class Importer {
 
         }
 
-        if (rawEntry.FROM) {
-            console.warn("from not implemented");
-            tWillBeValid = false;
-        }
 
         if (rawEntry.nr) { tZeitZeilenZusatzInfo.AnschlussNummern.push(rawEntry.nr.toString()) }
 

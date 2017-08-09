@@ -74,10 +74,10 @@ export interface IZeilenZusatzInfo {
     nrn?: Array<(string | number)>;
     fk?: Array<number>;
     fkab?: string;
-    FROM?: string;
-    NACH?: string;
+    //FROM?: string;  ersetzt durch lfd
+    //NACH?: string; ersetzt durch lfd
     via?: string;
-    lfd?: number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden
+    lfd?: number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden, ersetyt from u nach
 }
 
 export interface IZeilenZusatzInfoKinded extends IZeilenZusatzInfo{

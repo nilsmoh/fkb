@@ -4165,10 +4165,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         };
                         tZeitZeilenZusatzInfo.Fahrpreise = tFahrpreisAb;
                     }
-                    if (rawEntry.FROM) {
-                        console.warn("from not implemented");
-                        tWillBeValid = false;
-                    }
                     if (rawEntry.nr) {
                         tZeitZeilenZusatzInfo.AnschlussNummern.push(rawEntry.nr.toString());
                     }
