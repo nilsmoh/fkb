@@ -28,6 +28,7 @@ import { /*EKlassen,*/ assertNever, /*TEchteZeit, TZeitRoh, GesternHeuteMorgen, 
     FAHRPREIS_T, TFahrpreisEinfach, TFahrpreisAb,
     TFahrpreisEinfachUndRueck, /* ETimeValid, ZEIT_24, TZeit24,*/
 } from "./SaxBaseTypes";
+import { EinzelEintragInputBaseKinded, EinzelZeileZZK, EinzelZeileNumless } from "./SaxInputTypes";
 
 /**
  * code coverting
@@ -370,7 +371,7 @@ export class Importer {
     public static parseZeitZeileZusatzInfo(rawEntry: SaxInput.IZeilenZusatzInfo): ZeitZeileZusatzInfo {
         var tZeitZeilenZusatzInfo: ZeitZeileZusatzInfo = {
             AnschlussNummern: [],
-            Ortsname: "",
+            Ortsname: null,
             Fahrpreise: { kind: FAHRPREIS_T.KEINE_ANGABE },
             Valid: false,
             Raw: JSON.stringify(rawEntry)
@@ -529,6 +530,32 @@ export class Importer {
         return tResult;
     }
 
+    public static erstelleZZZausHeaderArray(zeilenAnfang:EinzelZeileNumless):ZeitZeileZusatzInfo{
+        
+        var tNum:Array<string | number> = [];
+        var tBhf = null;
+        
+        zeilenAnfang.forEach((ze)=>{
+            switch (ze.kind){
+                case BLOCK_T.ANSCHLUSS_NUMMERN:
+                    tNum = ze.fkbnummern;
+                    break;
+                case BLOCK_T.BHFTAG:
+                    tBhf = ze;
+                    break;
+            }
+        });
+        
+        
+        return {
+            AnschlussNummern: tNum,
+            Ortsname: tBhf,
+            Fahrpreise:  {kind: FAHRPREIS_T.KEINE_ANGABE },
+            Valid: true,
+            Raw: ""
+        };
+    }
+
     public static parse(input: SaxInput.SingleDirectionScheduleInputNumless): SingleDirectionScheduleTyped {
         // fuelle Grunddaten
         var tResult: SingleDirectionScheduleTyped = {
@@ -615,7 +642,7 @@ export class Importer {
                         //if (("string" == typeof zeile[0]) && ((<string>zeile[0]).indexOf(_anschluss_nach_in) == 0)) {
                         var tResultZeileX: TAnschlussWeiterInZeile = {
                             kind: ZEILE_T.ANSCHLUSS_WEITER_IN, // ZEILE_ANSCHLUSS_NACH_IN, // EZeilentyp.AnschlussNachIn,
-                            BhfTag: "",             // TODO aus Zusatzinfo lesen
+                            BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
                             ZeitZeileZusatzInfo: undefined
@@ -638,11 +665,19 @@ export class Importer {
                     if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_ZUBRINGER_AB)) {
                         var tResultZeileY: TAnschlussZubringerAbZeile = {
                             kind: ZEILE_T.ANSCHLUSS_ZUBRINGER_AB, //
-                            BhfTag: "",             // TODO aus Zusatzinfo lesen
+                            BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
                             ZeitZeileZusatzInfo: undefined
                         }
+
+                        tResultZeileY.ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
+
+                        tResultZeileY.BhfTag = tResultZeileY.ZeitZeileZusatzInfo.Ortsname;
+                        tResultZeileY.AnschlussNummern = tResultZeileY.ZeitZeileZusatzInfo.AnschlussNummern;
+
+
+
                         tResultZeile = tResultZeileY;
                     }
 
@@ -745,6 +780,8 @@ export class Importer {
                                 // schon oben bei typbestimmung komplett ausgelesen
                                 break;
                             case BLOCK_T.TRENNER:
+                                break;
+                            case BLOCK_T.ANSCHLUSS_NUMMERN:
                                 break;
 
                             default:

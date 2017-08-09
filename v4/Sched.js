@@ -2692,9 +2692,12 @@ var BLOCK_T;
     BLOCK_T["ZEITEINTRAG"] = "BLOCK_ZEITEINTRAG";
     BLOCK_T["ANKUNFT"] = "BLOCK_ANKUNFT";
     BLOCK_T["HEADERREF"] = "BLOCK_HEADERREFERENCE";
+    BLOCK_T["HEADERLFD"] = "BLOCK_HEADERLFD";
     BLOCK_T["KM_WERT"] = "BLOCK_KMWERT";
     BLOCK_T["ZEILENZUSATZINFO"] = "BLOCK_ZEILENZUSATZINFO";
+    BLOCK_T["ANSCHLUSS_NUMMERN"] = "BLOCK_HEADER_ANSCHLUSS_NUMMERN";
 })(BLOCK_T || (BLOCK_T = {}));
+var N_85 = { kind: BLOCK_T.ANSCHLUSS_NUMMERN, fkbnummern: [85] };
 var EKlassen;
 (function (EKlassen) {
     EKlassen["NichtAngegeben"] = "_Klassen_nicht_angegeben";
@@ -2873,6 +2876,7 @@ var EZeilentyp;
     EZeilentyp["ANSCHLUSS_WEITER_AN"] = "_Anschluss_nach_in";
 })(EZeilentyp || (EZeilentyp = {}));
 var _anschluss_aus = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_AB };
+var _anschl_aus = _anschluss_aus;
 var _anschluss_aus_ziel = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_IN };
 var _zugnr = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ZUGNRZEILE };
 var _klassen = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.KLASSENNRZEILE };
@@ -2916,6 +2920,7 @@ var ETimeValid;
 })(ETimeValid || (ETimeValid = {}));
 var ZEIT_ROH = "ZEIT_ROH";
 var ZEIT_24 = "ZEIT_24";
+var Leipzig = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines: [], upperCase: 'Leipzig' };
 {
     var Adorf = { kind: BLOCK_T.BHFTAG, "station": "Adorf", "lines": ["PE", "CA"], "upperCase": "ADORF", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 690, "c3b": 460, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 450, "z3c": 300, "viac": "Voigtsgrün", "comment": "schwer lesbar" };
     var Affalter = { kind: BLOCK_T.BHFTAG, "station": "Affalter", "lines": ["ZC"], "upperCase": "AFFALTER", "dd2": 0, "dd3": 0, "c2": 220, "c3": 150, "z2": 0, "z3": 0, "via": "Neukirchen i.E.", "dd2b": 0, "dd3b": 0, "c2b": 260, "c3b": 170, "z2b": 0, "z3b": 0, "viab": "Einsiedel" };
@@ -4128,7 +4133,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 Importer.parseZeitZeileZusatzInfo = function (rawEntry) {
                     var tZeitZeilenZusatzInfo = {
                         AnschlussNummern: [],
-                        Ortsname: "",
+                        Ortsname: null,
                         Fahrpreise: { kind: SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE },
                         Valid: false,
                         Raw: JSON.stringify(rawEntry)
@@ -4252,6 +4257,27 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     console.log(tZeilenNum);
                     return tResult;
                 };
+                Importer.erstelleZZZausHeaderArray = function (zeilenAnfang) {
+                    var tNum = [];
+                    var tBhf = null;
+                    zeilenAnfang.forEach(function (ze) {
+                        switch (ze.kind) {
+                            case BLOCK_T.ANSCHLUSS_NUMMERN:
+                                tNum = ze.fkbnummern;
+                                break;
+                            case BLOCK_T.BHFTAG:
+                                tBhf = ze;
+                                break;
+                        }
+                    });
+                    return {
+                        AnschlussNummern: tNum,
+                        Ortsname: tBhf,
+                        Fahrpreise: { kind: SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE },
+                        Valid: true,
+                        Raw: ""
+                    };
+                };
                 Importer.parse = function (input) {
                     var tResult = {
                         Quelle: SaxParsedTypes_1.EQuelle.FritzscheSommer1900,
@@ -4312,7 +4338,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_WEITER_AN)) {
                                     var tResultZeileX = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN,
-                                        BhfTag: "",
+                                        BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
                                         ZeitZeileZusatzInfo: undefined
@@ -4332,11 +4358,14 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_ZUBRINGER_AB)) {
                                     var tResultZeileY = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB,
-                                        BhfTag: "",
+                                        BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
                                         ZeitZeileZusatzInfo: undefined
                                     };
+                                    tResultZeileY.ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
+                                    tResultZeileY.BhfTag = tResultZeileY.ZeitZeileZusatzInfo.Ortsname;
+                                    tResultZeileY.AnschlussNummern = tResultZeileY.ZeitZeileZusatzInfo.AnschlussNummern;
                                     tResultZeile = tResultZeileY;
                                 }
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_ZUBRINGER_IN)) {
@@ -4410,6 +4439,8 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         case BLOCK_T.BHFTAG:
                                             break;
                                         case BLOCK_T.TRENNER:
+                                            break;
+                                        case BLOCK_T.ANSCHLUSS_NUMMERN:
                                             break;
                                         default:
                                             SaxBaseTypes_1.assertNever(rawentryX);
@@ -4783,9 +4814,8 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                             case SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_WEITER_AB:
                             case SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                 if (z.ZeitZeileZusatzInfo) {
-                                    if (z.ZeitZeileZusatzInfo.Ortsname.length > 0) {
+                                    if (z.ZeitZeileZusatzInfo.Ortsname) {
                                         z.BhfTag = z.ZeitZeileZusatzInfo.Ortsname;
-                                        z.ZeitZeileZusatzInfo.Ortsname = "__MOVED__";
                                     }
                                     else {
                                         console.warn("ANSCHLUSS MUSS ORT HABEN !!!", z);
@@ -5034,7 +5064,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                         if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB) {
                                             tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                             tdk.innerHTML += "<div class=\"" + "ZubringerAbAus" + "\">" + "aus" + "</div>";
-                                            tdk.innerHTML += "<div class=\"" + "ZubringerAbBhf" + "\">" + z.BhfTag + "</div>";
+                                            tdk.innerHTML += "<div class=\"" + "ZubringerAbBhf" + "\">" + ((z.BhfTag) ? z.BhfTag.station : "null") + "</div>";
                                             tdk.setAttribute("title", "ANSCHLUSS zubringer ab");
                                         }
                                         if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN) {
@@ -5439,7 +5469,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                         seite: 102,
                         caption: "Annaberg -- Aue -- Werdau",
                         zeilen: [
-                            [_anschluss_aus, CH, _, _, _, _, _, _, _, _, 639, _, 902, _, _, 1212, _, _, _, 242, 505, _, 715, { ort: "Chemnitz", nr: 85 }],
+                            [_anschl_aus, Chemnitz, N_85, CH, _, _, _, _, _, _, _, _, 639, _, 902, _, _, 1212, _, _, _, 242, 505, _, 715],
                             [_zugnr, zn, gnix, 1951, gnix, 1861, gnix, gnix, 1931, 1867, 1933, gnix, 1995, gnix, gnix, 1935, 1869, 1937, _, 1997, 1939, 1871, 1999],
                             [_klassen, kl, gnix, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b3, _, k2b4, k2b4, k2b3, k2b4],
                             [Annaberg, ab, _, _, _, _, _, _, 605, _, 918, _, 1126, _, _, 226, _, sg, _, 607, 736, _, 944],
@@ -5475,7 +5505,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                             [Zwickau, ab, SaxInputTypes_2.a510, 632, 656, SaxInputTypes_2.n822, _, _, 948, SaxInputTypes_2.d1153, 115, _, 235, SaxInputTypes_2.b355, SaxInputTypes_2.c510, 620, 628, 710, 825, 908, 1150, _, _, { nrn: [54, 68] }],
                             [Lichtentanne, ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125, _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200, _, _],
                             [76.8, Werdau, an, 530, 647, 716, 835, wa, wa, 1008, 1212, 135, _, 254, 416, 529, 635, 655, 730, 845, 925, 1208, _, _, { nr: 59 }],
-                            [_anschluss_nach_in, LE, 749, SaxInputTypes_2.s810, 925, 1019, _, _, 1232, _, 341, _, SaxInputTypes_2.s550, 652, SaxInputTypes_2.s748, SaxInputTypes_2.s800, _, 957, _, 1205, SaxInputTypes_2.s321, _, _, { ort: "Leipzig", nr: 56 }]
+                            [_anschluss_nach_in, LE, 749, SaxInputTypes_2.s810, 925, 1019, _, _, 1232, _, 341, _, SaxInputTypes_2.s550, 652, SaxInputTypes_2.s748, SaxInputTypes_2.s800, _, 957, _, 1205, SaxInputTypes_2.s321, _, _, { ort: Leipzig, nr: 56 }]
                         ],
                         ZellenVerweise: [
                             {

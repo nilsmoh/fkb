@@ -112,8 +112,8 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     export interface TAnschlussZubringerAbZeile {
         kind: typeof ZEILE_T.ANSCHLUSS_ZUBRINGER_AB, // ZEILE_ANSCHLUSS_AUS,
-        BhfTag: string;
-        AnschlussNummern: Array<string>;
+        BhfTag: StationTicketInfoEntryKpxTagged | null;
+        AnschlussNummern: Array<string | number>;
         Zeiteintraege: Array<TNormalZeileEintrag>;
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
     }
@@ -136,7 +136,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     export interface TAnschlussWeiterInZeile {
         kind: typeof ZEILE_T.ANSCHLUSS_WEITER_IN, //  ZEILE_ANSCHLUSS_NACH_IN,
-        BhfTag: string;
+        BhfTag: StationTicketInfoEntryKpxTagged | null ,
         AnschlussNummern: Array<string>;
         Zeiteintraege: Array<TNormalZeileEintrag>;
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
@@ -146,8 +146,8 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     // infos hinter einer zeitzeile
     export interface ZeitZeileZusatzInfo {
-        AnschlussNummern: string[],
-        Ortsname: string,
+        AnschlussNummern: (string | number)[],
+        Ortsname: StationTicketInfoEntryKpxTagged | null,
         Fahrpreise: TFahrpreisAngabe,
         Valid: boolean,
         Raw: string

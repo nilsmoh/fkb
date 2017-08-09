@@ -21,12 +21,22 @@ enum BLOCK_T{
         ZEITEINTRAG = "BLOCK_ZEITEINTRAG",
         ANKUNFT = "BLOCK_ANKUNFT",
         HEADERREF = "BLOCK_HEADERREFERENCE",   //a oder aa
+        HEADERLFD = "BLOCK_HEADERLFD", 
+
         KM_WERT = "BLOCK_KMWERT", //km eintrag ganz vorn
 
-        ZEILENZUSATZINFO = "BLOCK_ZEILENZUSATZINFO"
+        ZEILENZUSATZINFO = "BLOCK_ZEILENZUSATZINFO",
+        ANSCHLUSS_NUMMERN = 'BLOCK_HEADER_ANSCHLUSS_NUMMERN'             
 
 
 }
+
+interface THEADERANSCHLUSSNUMMERN{
+    kind:  BLOCK_T.ANSCHLUSS_NUMMERN, 
+    fkbnummern: Array<number | string>
+} 
+
+var N_85: THEADERANSCHLUSSNUMMERN = {kind: BLOCK_T.ANSCHLUSS_NUMMERN, fkbnummern:[85]} ;
 
 
 enum EKlassen {
@@ -430,6 +440,7 @@ enum EZeilentyp{
 }
 
 var _anschluss_aus : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_AB}; //  aus Zwickau  // Abfahrtszeit in Zwickau
+var _anschl_aus = _anschluss_aus;
 var _anschluss_aus_ziel : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_IN}; // aus Karlsbad in Johanngeorgenstadt
 var _zugnr : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ZUGNRZEILE};
 var _klassen : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.KLASSENNRZEILE};
@@ -533,6 +544,9 @@ var kl :TTrennerEintrag = { kind:BLOCK_T.TRENNER, art:ETrennerArt.Klassenzeile};
 
 
 // Stationen global nach aussen gezogen wegen var :-)
+
+var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines:[], upperCase: 'Leipzig'};
+
 {
     var Adorf: StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Adorf", "lines": ["PE", "CA"], "upperCase": "ADORF", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 690, "c3b": 460, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 450, "z3c": 300, "viac": "Voigtsgrün", "comment": "schwer lesbar" };
     var Affalter : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Affalter", "lines": ["ZC"], "upperCase": "AFFALTER", "dd2": 0, "dd3": 0, "c2": 220, "c3": 150, "z2": 0, "z3": 0, "via": "Neukirchen i.E.", "dd2b": 0, "dd3b": 0, "c2b": 260, "c3b": 170, "z2b": 0, "z3b": 0, "viab": "Einsiedel" };

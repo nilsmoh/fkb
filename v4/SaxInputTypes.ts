@@ -13,6 +13,7 @@ export type EinzelEintragInputBaseKinded = TZeilentypEintrag | TKeinHalt
                             | TKMEintrag
                             | StationTicketInfoEntryKpxTagged
                             | TTrennerEintrag
+                            | THEADERANSCHLUSSNUMMERN
                             ;
 
 export type EinzelEintragInput = EinzelEintragInputBaseKinded 
@@ -69,7 +70,7 @@ export interface SingleDirectionScheduleInputNumless {
 
 //rechts hinter zeile
 export interface IZeilenZusatzInfo {
-    ort?: string;
+    ort?: StationTicketInfoEntryKpxTagged;
     nr?: string | number;
     nrn?: Array<(string | number)>;
     fk?: Array<number>;

@@ -312,7 +312,7 @@ export class Renderer{
                                 if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB){ //ZEILE_ANSCHLUSS_AUS){
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     tdk.innerHTML += "<div class=\""+  "ZubringerAbAus"  +"\">" +"aus"     + "</div>";
-                                    tdk.innerHTML += "<div class=\""+  "ZubringerAbBhf"  +"\">" + z.BhfTag + "</div>";
+                                    tdk.innerHTML += "<div class=\""+  "ZubringerAbBhf"  +"\">" + ((z.BhfTag) ? z.BhfTag.station : "null"  ) + "</div>";
                                     tdk.setAttribute("title", "ANSCHLUSS zubringer ab");
                                     //tLastWasAb = false;
                                     

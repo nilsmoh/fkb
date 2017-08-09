@@ -358,9 +358,9 @@ export class Validator {
                     case ZEILE_T.ANSCHLUSS_WEITER_IN:
 
                         if (z.ZeitZeileZusatzInfo) {
-                            if (z.ZeitZeileZusatzInfo.Ortsname.length > 0) {
+                            if (z.ZeitZeileZusatzInfo.Ortsname) {
                                 z.BhfTag = z.ZeitZeileZusatzInfo.Ortsname;
-                                z.ZeitZeileZusatzInfo.Ortsname = "__MOVED__";
+                                //z.ZeitZeileZusatzInfo.Ortsname = "__MOVED__";
                             } else {
                                 console.warn("ANSCHLUSS MUSS ORT HABEN !!!", z);
                             }
