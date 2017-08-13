@@ -398,20 +398,6 @@ interface TZeilentypEintrag {
     zeilentyp: EZeilentyp
 }
 
-enum ETrennerArt{
-    Ort = "Ort",
-    Zugnr =  "Zugnr" ,
-    Klassenzeile =  "Klassenzeile" ,
-    Ab = "Ab",
-    An = "An"
-}
-
-interface TTrennerEintrag {
-    kind: BLOCK_T.TRENNER,
-    ort?:string,
-    art: ETrennerArt
-}
-
 interface TKMEintrag{
     kind: BLOCK_T.KM_WERT,
     km: number
@@ -474,17 +460,6 @@ var sp :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false
 
 
 
-//TRENNER hilfe
-var ORTPREFIX = "_Ort_";
-
-//TRENNER eigentliche
-var CH:TTrennerEintrag = { kind:BLOCK_T.TRENNER, ort:  ORTPREFIX + "Chemnitz" , art: ETrennerArt.Ort} ;   //kind:"KOPFENDE"
-var LE :TTrennerEintrag = { kind:BLOCK_T.TRENNER, ort: ORTPREFIX + "Leipzig" , art: ETrennerArt.Ort} ;
-var ab :TTrennerEintrag = { kind:BLOCK_T.TRENNER, art:ETrennerArt.Ab};
-var an :TTrennerEintrag = { kind:BLOCK_T.TRENNER, art:ETrennerArt.An}; 
-var zn :TTrennerEintrag = { kind:BLOCK_T.TRENNER, art:ETrennerArt.Zugnr}; 
-var kl :TTrennerEintrag = { kind:BLOCK_T.TRENNER, art:ETrennerArt.Klassenzeile};
-
 
 
 
@@ -546,6 +521,8 @@ var kl :TTrennerEintrag = { kind:BLOCK_T.TRENNER, art:ETrennerArt.Klassenzeile};
 // Stationen global nach aussen gezogen wegen var :-)
 
 var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines:[], upperCase: 'Leipzig'};
+
+var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines:[], upperCase: 'KARLSBAD B.E.B.'};
 
 {
     var Adorf: StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Adorf", "lines": ["PE", "CA"], "upperCase": "ADORF", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 690, "c3b": 460, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 450, "z3c": 300, "viac": "Voigtsgrün", "comment": "schwer lesbar" };

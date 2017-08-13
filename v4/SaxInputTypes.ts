@@ -148,15 +148,15 @@ export var Sachs = BAHNVERWALTUNGPREFIX + "Sachs";
 
 
 
-export var ZW = ORTPREFIX + "Zwickau";
-export var SC = ORTPREFIX + "Schwarzenberg";
-export var JO = ORTPREFIX + "Johangeorgenstadt";
-export var KA = ORTPREFIX + "Karlsbad BEB";
-export var AU = ORTPREFIX + "Aue";
-export var AN = ORTPREFIX + "Annaberg";
-export var LU = ORTPREFIX + "Lugau";
-export var CT = ORTPREFIX + "Chemnitz ü.Thalheim";
-export var CN = ORTPREFIX + "Chemnitz ü.Neu.";
+//export var ZW = ORTPREFIX + "Zwickau";
+//export var SC = ORTPREFIX + "Schwarzenberg";
+//export var JO = ORTPREFIX + "Johangeorgenstadt";
+//export var KA = ORTPREFIX + "Karlsbad BEB";
+//export var AU = ORTPREFIX + "Aue";
+//export var AN = ORTPREFIX + "Annaberg";
+//export var LU = ORTPREFIX + "Lugau";
+//export var CT = ORTPREFIX + "Chemnitz ü.Thalheim";
+//export var CN = ORTPREFIX + "Chemnitz ü.Neu.";
 
 
 
@@ -211,7 +211,8 @@ export var s800 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null
 export var s321 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 321 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s321";
 export var s810 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 810 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s810";
 
-export var a858 = "_a858";
+
+export var a858 : TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"a",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 858 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; /// "_a858";
 
 export var s113 = "_s113";
 export var s710 = "_s710";

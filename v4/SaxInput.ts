@@ -6,9 +6,9 @@ import {SingleDirectionScheduleInput,  /*sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl,  */
     /*k2b4,k1b3,k2b3,k3b4, _klassen, */ 
     passend, sonn_und_festtags, nur_werktags, headerlinks,  /*LE,*/
      WaltersdfHst, MittwMrkb, a510, s810, Z1967, Z1971, Z2045, Z2065, n822, m747, d1153, b355, s321, s550, s748, c510, s800
-     ,s113 ,s710, s845 , s1058 /*,wx,sj,sp,sm*/ , ZW, SC,AN, CT, AU, LU, CN, JO, KA, x135, x150, a644,a659,a818,a754,b233,c937,
-     Z1960,/*dick,*/ Z1991, Z1998, m149, cross,chooseown,nach9spalten
-     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten,a858,nach5spalten2spalten,nach4spalten2spalten, 
+     /*,s113 ,s710, s845 , s1058*/ /*,wx,sj,sp,sm*/ , /*ZW, SC,AN, CT, AU, LU, CN, JO, KA,*/ /* x135, x150, a644,a659,a818,a754,b233,c937, */  
+     Z1960,/*dick,*/ Z1991, Z1998, /*m149,*/ cross,chooseown,nach9spalten
+     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten, a858,  nach5spalten2spalten,nach4spalten2spalten, 
     } from "./SaxInputTypes";
 
 import { /*VERWEIS_T, TEXTORT_T*/ } from "./SaxParsedTypes";    
@@ -30,8 +30,8 @@ export class InputData {
         [Annaberg     ,                ab,    _,    _,    _,    _,    _,    _,  605,    _, 918,    _, 1126,    _,    _, 226,    _, sg,    _, 607, 736,    _, 944],
         [ 2.7, Buchholz,               ab,    _,    _,    _,    _,    _,    _,  613,    _, 930,    _, 1136,    _,    _, 237,    _, sg,    _, 619, 749,    _, 954, { nr: 85 }],
         [ 8.6, WaltersdfHst,           ab,    _,    _,    _,    _,    _,    _,  630,    _, 947,    _, 1153,    _,    _, 256,    _, sg,    _, 636, 808,    _, 1011],
-                     [Schlettau,          an,    _,    _,    _,    _,    _,    _,  635,    _, 952,    _, 1158,    _,    _, 301,    _, sg,    _, 641, 813,    _, 1016, { nr: "99b" }],
-                     [9.9, Schlettau,     ab,    _,    _,    _,  525,    _,    _,  640, 853, 957,     _,    _,    _,    _, 306, 320, 610, Z1971,    _, 818, 830, _],
+        [Schlettau,          an,    _,    _,    _,    _,    _,    _,  635,    _, 952,    _, 1158,    _,    _, 301,    _, sg,    _, 641, 813,    _, 1016, { nr: "99b" }],
+        [9.9, Schlettau,     ab,    _,    _,    _,  525,    _,    _,  640, 853, 957,     _,    _,    _,    _, 306, 320, 610, Z1971,    _, 818, 830, _],
                      [18.3, Scheibenberg, ab,    _,    _,    _,  540,    _,    _,  651, 903, 1008,     _,    _,    _,    _, 317, 341, 621, k2b3,    _, 830, 840, _],
                      [20.8, MittwMrkb,    ab,    _,    _,    _,   se,    _,    _,  710, ank, 1027,     _,    _,    _,    _, 336, sf, 639, sh,    _, 848, ank, _],
                      [22.2, Raschau,      ab,    _,    _,    _,   se,    _,    _,  716,    _, 1033,    _,    _,    _,    _, 342, sf, 645, sh,    _, 854, sk, _],
@@ -48,19 +48,19 @@ export class InputData {
                      [41.6, Niederschlema ,an,    _,  516,    _,    _,    _,    _, 826,    _, 1150,    _, 126,    _,    _, 514,    _,    _, 723, 741, 1013,    _, _],
                      [_zugnr,               zn, 1978,    _, 2043,  205, 2051, 2053,   _, 2055,    _, 2057,    _, 2059, 2061,    _, 1975, 2047,    _,    _,    _,    _, _],
                      [_klassen,             kl, k2b4,    _, k2b4, k1b3, k2b4, k2b4,   _, k2b4,    _, k2b4,    _, k2b4, k2b4,    _, k3b4, k2b4,    _,    _,    _,    _, _],
-                     [Niederschlema,      ab,   sl,  518,    _,    _,    _,    _, 830, sd, 1155,    _, 128,    _,    _, 517, si,    _, 724, 742, 1019,    _, _],
-                     [47.4, Stein_Hartenstein ,ab,sl, 528,    _,    _,    _,    _, 840, sd, 1206,    _, 139,    _,    _, 527, si,    _, 734, 755, 1029,    _, _],
+                     [Niederschlema,          ab,   sl,  518,    _,    _,    _,    _, 830, sd, 1155,    _, 128,    _,    _, 517, si,    _, 724, 742, 1019,    _, _],
+                     [47.4, Stein_Hartenstein,ab,sl, 528,    _,    _,    _,    _, 840, sd, 1206,    _, 139,    _,    _, 527, si,    _, 734, 755, 1029,    _, _],
                      [Fährbrücke,             ab,sl, 538,    _,    _,    _,    _, 849, sd, 1216,    _, 148,    _,    _, 537, si,    _, 743, 804, 1038,    _, _],
                      [55.7, Wiesenburg,       ab,sl, 548,    _,    _,  717,    _, 900, sd, 1228,    _, 157,  319,    _, 547, si, 635, 752, 813, 1048,    _, _],
-                     [Silberstrasse,      ab, sl, kHlt,    _,    _, 723,    _, kHlt, sd, kHlt,    _, 203, 325,    _, kHlt, si, 641, kHlt, kHlt, kHlt,    _, _],
-                     [61.8, Wilkau_Bf,   ab, 445, 600, 631,    _, 731, 818, 912, 1042, 1242, 124, 212, 334, 443, 600, si, 650, 804, 826, 1102,    _,    _, { nr: 96 }],
-                     [Cainsdorf,           ab, 452, 606, 637,    _, 736, 824, 917, 1048, 1247, 130, 217, 339, 448, 605, si, 655, 809, 831, 1108,    _, _],
-                     [Schedewitz,          ab, 459, 612, 642,    _, 741, 829, 922, 1053, 1252, 135, 222, 344, 453, 610, si, 700, 814, 836, 1114,    _, _],
-                     [67.2, Zwickau,       an, 505, 618, 649,    _, m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120,    _,    _, { nr: 54 }],
-                     [Zwickau,             ab, a510, 632, 656, n822,    _,    _, 948, d1153, 115,    _, 235, b355, c510, 620, 628, 710, 825, 908, 1150,    _,    _, { nrn: [54, 68] }],
-                     [Lichtentanne,        ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125,    _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200,    _, _],
-                     [76.8,Werdau,         an, 530,  647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, 1208,    _,    _, { nr: 59 }],
-                     [_anschluss_nach_in, LE, 749, s810, 925, 1019,    _,    _, 1232,    _, 341,    _, s550, 652, s748, s800,    _, 957,    _, 1205, s321,    _, _,{ort: Leipzig, nr:56}]
+                     [Silberstrasse,          ab, sl, kHlt,    _,    _, 723,    _, kHlt, sd, kHlt,    _, 203, 325,    _, kHlt, si, 641, kHlt, kHlt, kHlt,    _, _],
+                     [61.8, Wilkau_Bf,        ab, 445, 600, 631,    _, 731, 818, 912, 1042, 1242, 124, 212, 334, 443, 600, si, 650, 804, 826, 1102,    _,    _, { nr: 96 }],
+                     [Cainsdorf,              ab, 452, 606, 637,    _, 736, 824, 917, 1048, 1247, 130, 217, 339, 448, 605, si, 655, 809, 831, 1108,    _, _],
+                     [Schedewitz,             ab, 459, 612, 642,    _, 741, 829, 922, 1053, 1252, 135, 222, 344, 453, 610, si, 700, 814, 836, 1114,    _, _],
+                     [67.2, Zwickau,          an, 505, 618, 649,    _, m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120,    _,    _, { nr: 54 }],
+                     [Zwickau,                ab, a510, 632, 656, n822,    _,    _, 948, d1153, 115,    _, 235, b355, c510, 620, 628, 710, 825, 908, 1150,    _,    _, { nrn: [54, 68] }],
+                     [Lichtentanne,           ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125,    _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200,    _, _],
+                     [76.8,Werdau,            an, 530,  647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, 1208,    _,    _, { nr: 59 }],
+                     [_anschluss_nach_in,     LE, 749, s810, 925, 1019,    _,    _, 1232,    _, 341,    _, s550, 652, s748, s800,    _, 957,    _, 1205, s321,    _, _,{ort: Leipzig, nr:56}]
                 
                  ],
                 ZellenVerweise: [
@@ -757,38 +757,50 @@ export class InputData {
                     }
                     ]
             }
+*/                
             ,  {
                 route1900: "100a",
                 seite:105,
                caption:"Schwarzenberg -- Johanngeorgenstadt hin",
                zeilen:[
-                   [_anschluss_aus, ZW,515,a858,335,701,{ort:"Zwickau", nr:99, lfd:1}],                      //erstmal als annahme, soll der validierer dann als problem feststellen !!!
-                   [_anschluss_aus, AU,642,1025,501,833,{ort:"Aue", nr:99, lfd:1}],                        
-                   [_anschluss_aus, AN,605,918,226,736,{ort:"Annaberg",nr:99,lfd:1}],                    
+                   [ _anschluss_aus, TR,515,a858,335,701,{ort:Zwickau, nr:99, lfd:1}],                      // lfd erstmal als annahme, soll der validierer dann als problem feststellen !!!
+                   [_anschluss_aus, TR,642,1025,501,833,{ort:Aue, nr:99, lfd:1}],                        
+                   [_anschluss_aus, TR,605,918,226,736,{ort:Annaberg,nr:99,lfd:1}],                    
                    [_zugnr,         zn,3112,3114,3116,3118],
-                   ["Schwarzenberg",     ab,740,1115,545,923],
-                   [1.5, "Schwarzenberg Hltp",ab,748,1123,554,931                      ,{fk:[ 30,20]}],
-                   [3.1 ,"Erla"              ,ab,755,1130,601,938                      ,{fk:[ 30,20]}],
-                   [6.7 ,"Antonsthal"        ,ab,807,1142,613,949                      ,{fk:[ 50,30]}],
-                   [11.3,"Breitenhof"        ,ab,818,1153,624,1000                     ,{fk:[ 70,50]}],
-                   [13.2,"Erlabrunn",                            ab, 827,1202, 633,1009,{fk:[ 90,60]}],
-                   [17.3,"Johanngeorgenstadt",                   an, 838,1213, 645,1020,{fk:[110,80]}],
-                   [_anschluss_nach_start,  JO, 920,1235, 733,   _,{ort:"Johanngeorgenstadt",NACH:"Karlsbad B.E.B.", lfd:2}],  //lfd um anschlusszeilen zusammenzufassen
-                   [_anschluss_nach_in,     KA,1124, 247, 945,   _,{fk:[430,230], ort:"Karlsbad B.E.B.", lfd:2}]
+                   [Schwarzenberg_Bf,     ab,740,1115,545,923],
+                   [1.5, Schwarzenberg_Hltp,ab,748,1123,554,931                      ,{fk:[ 30,20]}],
+                   [3.1 ,Erla              ,ab,755,1130,601,938                      ,{fk:[ 30,20]}],
+                   [6.7 ,Antonsthal        ,ab,807,1142,613,949                      ,{fk:[ 50,30]}],
+                   [11.3,Breitenhof        ,ab,818,1153,624,1000                     ,{fk:[ 70,50]}],
+                   [13.2,Erlabrunn,                            ab, 827,1202, 633,1009,{fk:[ 90,60]}],
+                   [17.3,Johanngeorgenstadt,                   an, 838,1213, 645,1020,{fk:[110,80]}],
+                   [_anschluss_nach_start,  TR, 920,1235, 733,   _,{ort:Johanngeorgenstadt,/* NACH:"Karlsbad B.E.B.",*/ lfd:2}],  //lfd um anschlusszeilen zusammenzufassen
+                   [_anschluss_nach_in,     TR,1124, 247, 945,   _,{fk:[430,230], ort:Karlsbad_BEB, lfd:2}]
 
                    
                    ],
                 ZellenVerweise:[
+                //          { typ:global,    bahn: Sachs,     verweisort: headerlinks  },
                     {
-                        typ:global,
-                        bahn: Sachs,
-                        verweisort: headerlinks
+                        "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                        "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
+                        Inhalt: {
+                            q: "S. Staatsb.",
+                            BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                        }
                     },
+                //  {   typ:global,       klassen: k2b3,          verweisort: headerrechts           },
                     {
-                        typ:global,
-                        klassen: k2b3,
-                        verweisort: headerrechts
-                    },
+                        "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                        "TextOrt": { "kind": TEXTORT_T.RECHTSVONHEADER },
+                        Inhalt: {
+                            q: "Alle Zuege II.-III.Kl.",
+                            BLOCK: { Standard: { scope: Global, Klasse: Kl2bis3 } }
+                        }
+                    }
+
+
+    /*              
                     {
                         typ:global,
                         verweisort: nach4spalten2spalten
@@ -797,7 +809,8 @@ export class InputData {
                         typ:global,
                         verweisort: nach4spalten2spalten
                     }
-                    ]
+*/                    
+                ]
             
             
             
@@ -809,22 +822,23 @@ export class InputData {
                 todo: "fahrpreise,direkterwagenwerdaukarlsbad rueckrichtung",
                 caption: "Schwarzenberg - johangeorgenstadt zurueck",
                 zeilen: [
-                    [_anschluss_aus, KA, nix, 700, 1228, 506, { ort: "Karlsbad", nr: "108d" }],
-                    [_anschluss_aus_ziel, JO, nix, 919, 245, 722, { ort: "Johangeorgenstadt", FROM: KA }],
+                    [_anschluss_aus, TR, nix, 700, 1228, 506, { ort: Karlsbad_BEB, nr: "108d", lfd:1 }],
+                    [_anschluss_aus_ziel, TR, nix, 919, 245, 722, { ort: Johanngeorgenstadt, lfd:1 }],
                     [_zugnr, zn, 3111, 3113, 3115, 3117],
-                    ["Johanngeorgenstadt", an, 608, 946, 315, 759],
-                    ["Erlabrunn", ab, 619, 957, 326, 810],
-                    ["Breitenhof", ab, 628, 1006, 335, 819],
-                    ["Antonsthal", ab, 638, 1016, 345, 829],
-                    ["Erla", ab, 649, 1027, 356, 840],
-                    ["Schwarzenberg Hltp.", ab, 655, 1033, 402, 846],
-                    ["Schwarzenberg Bf.", ab, 703, 1041, 410, 854],
-                    [_anschluss_nach_in, AU, 804, 1122, 441, 942, { ort: "Aue", nr: 99 }],
-                    [_anschluss_nach_in, ZW, 928, 1258, 616, 1120, { ort: "Zwickau", nr: 99 }],
-                    [_anschluss_nach_in, AN, 850, 1232, 736, 1052, { ort: "Annaberg", nr: 99 }]
+                    [Johanngeorgenstadt, an, 608, 946, 315, 759],
+                    [Erlabrunn, ab, 619, 957, 326, 810],
+                    [Breitenhof, ab, 628, 1006, 335, 819],
+                    [Antonsthal, ab, 638, 1016, 345, 829],
+                    [Erla, ab, 649, 1027, 356, 840],
+                    [Schwarzenberg_Hltp, ab, 655, 1033, 402, 846],
+                    [Schwarzenberg_Bf, ab, 703, 1041, 410, 854],
+                    [_anschluss_nach_in, TR, 804, 1122, 441, 942, { ort: Aue, nr: 99 }],
+                    [_anschluss_nach_in, TR, 928, 1258, 616, 1120, { ort: Zwickau, nr: 99 }],
+                    [_anschluss_nach_in, TR, 850, 1232, 736, 1052, { ort: Annaberg, nr: 99 }]
 
                 ],
                 ZellenVerweise:[
+/*  
                     {
                         typ:global,
                         bahn: Sachs,
@@ -843,8 +857,9 @@ export class InputData {
                         typ:global,
                         verweisort: nach4spalten2spalten
                     }
+*/                    
                     ]
             }
-*/
+
         ];
     }
