@@ -543,6 +543,14 @@ export class Importer {
                 case BLOCK_T.BHFTAG:
                     tBhf = ze;
                     break;
+                /*
+                case BLOCK_T.HEADERLFD:
+                    //TODO LFD in header
+                    break;    
+                case BLOCK_T.HEADERREF:
+                    //TODO REF in header
+                    break;
+                */    
             }
         });
         
@@ -592,11 +600,12 @@ export class Importer {
                     var tResultZeileN: TNormalzeile = {
                         kind: ZEILE_T.NORMAL, // EZeilentyp.Normalzeile,
                         Km: (zeile_0.kind == BLOCK_T.KM_WERT) ? zeile_0.km : -1,
-                        BhfTag: (zeile_0.kind === BLOCK_T.BHFTAG) ? zeile_0.station :
-                            ((zeile_0.kind == BLOCK_T.KM_WERT) && (zeile_1.kind === BLOCK_T.BHFTAG) ? zeile_1.station : "??? "+ zeile_0.kind +" "+zeile_1.kind),
+                        BhfTag: (zeile_0.kind === BLOCK_T.BHFTAG) ? zeile_0 :
+                            ((zeile_0.kind == BLOCK_T.KM_WERT) && (zeile_1.kind === BLOCK_T.BHFTAG) ? zeile_1 : null),
                         AnschlussNummern: [], // TODO
                         Zeiteintraege: [],  //TODO
-                        ZeitZeileZusatzInfo: undefined,
+                        //ZeitZeileZusatzInfo: undefined,
+                        Fahrkarteninfo: null,
                         AnAb: EAnAb.FollowAb //   tAnAb // TODO wenigstens error bei anderen eintraegen
                     };
 
@@ -668,13 +677,15 @@ export class Importer {
                             BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
-                            ZeitZeileZusatzInfo: undefined
+                            //ZeitZeileZusatzInfo: undefined
+                            Via: null,
+                            Fahrkarteninfo: null
                         }
 
-                        tResultZeileY.ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
+                        var tResultZeileY_ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
 
-                        tResultZeileY.BhfTag = tResultZeileY.ZeitZeileZusatzInfo.Ortsname;
-                        tResultZeileY.AnschlussNummern = tResultZeileY.ZeitZeileZusatzInfo.AnschlussNummern;
+                        tResultZeileY.BhfTag = tResultZeileY_ZeitZeileZusatzInfo.Ortsname;
+                        tResultZeileY.AnschlussNummern = tResultZeileY_ZeitZeileZusatzInfo.AnschlussNummern;
 
 
 
@@ -687,7 +698,9 @@ export class Importer {
                             BhfTag: "",             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
-                            ZeitZeileZusatzInfo: undefined
+                            //ZeitZeileZusatzInfo: undefined
+                            Via: null,
+                            Fahrkarteninfo: null
                         }
                         tResultZeile = tResultZeileZ;
                     }
@@ -770,7 +783,8 @@ export class Importer {
                                     };
                                     tResultZeile_Zeiteintraege.push(tResultEntryE);
                                 }
-                                tResultZeile.ZeitZeileZusatzInfo = z;
+                                //tResultZeile.ZeitZeileZusatzInfo = z;
+                                
                                 
                                 break;
                             case BLOCK_T.KM_WERT:
@@ -783,6 +797,12 @@ export class Importer {
                                 break;
                             case BLOCK_T.ANSCHLUSS_NUMMERN:
                                 break;
+                            case BLOCK_T.HEADERLFD:
+                                break;  
+                            case BLOCK_T.HEADERREF:
+                                break; 
+                            case BLOCK_T.HEADERVIA:
+                            break;     
 
                             default:
                                 assertNever(rawentryX);

@@ -131,14 +131,26 @@ type Block2Entry = {
         | ScVirtuelleFolgeZelle //kein platz fuer extra zeile, koennte als extrazeile nach verweis umgesetzt werden
         ,
 
-    Fehler?: string,
+    //Fehler?: string,
     OhneNrNach?: string | Array<string> | Array<{ziel:string, ank: any}>,
     OhneNrAus?: string | Array<string>,
+
+    //TODO ist das das selbe ??? oder vorher nachher explizit ?
+
+   verlasseKbsNach?: string | { Kategorie?: string, nach: string[], ueber?: string, AnkunftsZeit?: string },
+    erreicheKbsAus?: string | { Kategorie?: string, aus: string[], ueber?: string, AbfahrtsZeit?: string },
+
+
+
+
+
     Fahrtage?: FAEHRT_T,
     GeltungsTag?: string, //falls scope zelle
     //Fortsetzung?: boolean,
     RedundanteZugNr?: Array<String | Number>,
     virtuellerAnschluss?: { AnschlussAusZeit: number, AnschlussAusBhf: string }, //Zubringer ohne eigene zeile
+    
+    
     AnkunftOrt?: String,                     // DD Neust
     AnkunftOrtDetail?: string,                // Schles.Bhf
     AnkunftZeit?: string | number,
@@ -159,9 +171,7 @@ type Block2Entry = {
 
     Verwaltung?: string | Array<{ von: string, bis: string, Dir: string }>,
     Klasse?: string,
-    verlasseKbsNach?: string | { Kategorie?: string, nach: string[], ueber?: string, AnkunftsZeit?: string },
-    erreicheKbsAus?: string | { Kategorie?: string, aus: string[], ueber?: string, AbfahrtsZeit?: string },
-
+ 
     ZuegeHaltenNurZumEinsteigen?: boolean, //scope Zeile
     ZuegeHaltenNurZumAussteigen?: boolean, //scope Zeile
 
@@ -172,9 +182,11 @@ type Block2Entry = {
     DirekterwagenKlasse?: string,
 
     ZeilenLinkOhneBedeutung?: boolean // Marker 2x in tabelle, einmal an zug und einmal zusaetzlich um die zeile zu finden, letzteres kann ignoriert werden
+    
     Schlafwagen?: string | Array<string> | { von: string }, // angabe senkrecht in spalte, ueber konkreten Zuglauf hinaus
     Speisewagen?: string | Array<string> | { von: string },   // angabe senkrecht in spalte, ueber konkreten Zuglauf hinaus
     Buffetwagen?: string | Array<string> | { von: string },   // angabe senkrecht in spalte, ueber konkreten Zuglauf hinaus
+    
     FahrkartenInfo?: string //text zur gueltigkeit von rueckfahrkarten, ohne direkten einfluss auf fahrplan,
     AllgemeineInfo?: AllgemeineInfo,
     andererBhf?: string,               //fuer scope zelle , Z.B. Anschluss aus gilt fuer anderen Bahnhof als zellenkopf angibt 

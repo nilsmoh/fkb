@@ -2693,11 +2693,21 @@ var BLOCK_T;
     BLOCK_T["ANKUNFT"] = "BLOCK_ANKUNFT";
     BLOCK_T["HEADERREF"] = "BLOCK_HEADERREFERENCE";
     BLOCK_T["HEADERLFD"] = "BLOCK_HEADERLFD";
+    BLOCK_T["HEADERVIA"] = "BLOCK_HEADERVIA";
     BLOCK_T["KM_WERT"] = "BLOCK_KMWERT";
     BLOCK_T["ZEILENZUSATZINFO"] = "BLOCK_ZEILENZUSATZINFO";
     BLOCK_T["ANSCHLUSS_NUMMERN"] = "BLOCK_HEADER_ANSCHLUSS_NUMMERN";
 })(BLOCK_T || (BLOCK_T = {}));
 var N_85 = { kind: BLOCK_T.ANSCHLUSS_NUMMERN, fkbnummern: [85] };
+var F = function (nn) {
+    var tInput = ("number" == typeof nn) ? [nn] :
+        (("string" == typeof nn) ? [nn] : nn);
+    var tResult = {
+        kind: BLOCK_T.ANSCHLUSS_NUMMERN,
+        fkbnummern: [12]
+    };
+    return tResult;
+};
 var EKlassen;
 (function (EKlassen) {
     EKlassen["NichtAngegeben"] = "_Klassen_nicht_angegeben";
@@ -2726,6 +2736,20 @@ var k1b3 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen1bis3, Berechn
 var k2b4 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen2bis4, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var k2b3 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen2bis3, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var k3b4 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen3bis4, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var L = function (n) {
+    var tResult = {
+        kind: BLOCK_T.HEADERLFD,
+        nummer: n
+    };
+    return tResult;
+};
+var Via = function (st) {
+    var tResult = {
+        kind: BLOCK_T.HEADERVIA,
+        ort: st
+    };
+    return tResult;
+};
 var GUELTIG_T;
 (function (GUELTIG_T) {
     GUELTIG_T["IMMER"] = "GUELTIG_IMMER";
@@ -2851,14 +2875,6 @@ var VERWEIS_T;
     VERWEIS_T["EMBEDDED"] = "VERWEIS_EMBEDDED";
     VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
 })(VERWEIS_T || (VERWEIS_T = {}));
-var ETrennerArt;
-(function (ETrennerArt) {
-    ETrennerArt["Ort"] = "Ort";
-    ETrennerArt["Zugnr"] = "Zugnr";
-    ETrennerArt["Klassenzeile"] = "Klassenzeile";
-    ETrennerArt["Ab"] = "Ab";
-    ETrennerArt["An"] = "An";
-})(ETrennerArt || (ETrennerArt = {}));
 var _ = { kind: BLOCK_T.LEER, MitStrich: true, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var nix = _;
 var gnix = { kind: BLOCK_T.LEER, MitStrich: false, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
@@ -2878,10 +2894,14 @@ var EZeilentyp;
 var _anschluss_aus = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_AB };
 var _anschl_aus = _anschluss_aus;
 var _anschluss_aus_ziel = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_IN };
+var _zub_aus = _anschluss_aus;
+var _zub_in = _anschluss_aus_ziel;
 var _zugnr = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ZUGNRZEILE };
 var _klassen = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.KLASSENNRZEILE };
 var _anschluss_nach_start = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_WEITER_AB };
 var _anschluss_nach_in = { kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_WEITER_AN };
+var _weiter_ab = _anschluss_nach_start;
+var _weiter_in = _anschluss_nach_in;
 var wa = { kind: BLOCK_T.BLOCK, Senkrecht: false, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "a", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var wx = { kind: BLOCK_T.BLOCK, Senkrecht: false, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "x", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sa = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "a", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
@@ -2898,13 +2918,6 @@ var sl = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Bre
 var sj = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "j", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sm = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "m", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sp = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "p", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
-var ORTPREFIX = "_Ort_";
-var CH = { kind: BLOCK_T.TRENNER, ort: ORTPREFIX + "Chemnitz", art: ETrennerArt.Ort };
-var LE = { kind: BLOCK_T.TRENNER, ort: ORTPREFIX + "Leipzig", art: ETrennerArt.Ort };
-var ab = { kind: BLOCK_T.TRENNER, art: ETrennerArt.Ab };
-var an = { kind: BLOCK_T.TRENNER, art: ETrennerArt.An };
-var zn = { kind: BLOCK_T.TRENNER, art: ETrennerArt.Zugnr };
-var kl = { kind: BLOCK_T.TRENNER, art: ETrennerArt.Klassenzeile };
 var GesternHeuteMorgen;
 (function (GesternHeuteMorgen) {
     GesternHeuteMorgen[GesternHeuteMorgen["Unbekannt"] = 0] = "Unbekannt";
@@ -2921,6 +2934,7 @@ var ETimeValid;
 var ZEIT_ROH = "ZEIT_ROH";
 var ZEIT_24 = "ZEIT_24";
 var Leipzig = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines: [], upperCase: 'Leipzig' };
+var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: [], upperCase: 'KARLSBAD B.E.B.' };
 {
     var Adorf = { kind: BLOCK_T.BHFTAG, "station": "Adorf", "lines": ["PE", "CA"], "upperCase": "ADORF", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 690, "c3b": 460, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 450, "z3c": 300, "viac": "Voigtsgrün", "comment": "schwer lesbar" };
     var Affalter = { kind: BLOCK_T.BHFTAG, "station": "Affalter", "lines": ["ZC"], "upperCase": "AFFALTER", "dd2": 0, "dd3": 0, "c2": 220, "c3": 150, "z2": 0, "z3": 0, "via": "Neukirchen i.E.", "dd2b": 0, "dd3b": 0, "c2b": 260, "c3b": 170, "z2b": 0, "z3b": 0, "viab": "Einsiedel" };
@@ -3716,6 +3730,23 @@ var Leipzig = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines: [], upperCase: 
     var Zwötzen = { kind: BLOCK_T.BHFTAG, "station": "Zwötzen", "lines": ["PWz"], "upperCase": "IRJL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 270, "z3": 180 };
     var Zöblitz = { kind: BLOCK_T.BHFTAG, "station": "Zöblitz", "lines": ["RF"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 290, "c3": 190, "z2": 570, "z3": 380 };
 }
+var ETrennerArt;
+(function (ETrennerArt) {
+    ETrennerArt["Ort"] = "Ort";
+    ETrennerArt["Zugnr"] = "Zugnr";
+    ETrennerArt["Klassenzeile"] = "Klassenzeile";
+    ETrennerArt["Ab"] = "Ab";
+    ETrennerArt["An"] = "An";
+    ETrennerArt["NixWeiter"] = "NixWeiter";
+})(ETrennerArt || (ETrennerArt = {}));
+var ORTPREFIX = "_Ort_";
+var CH = { kind: BLOCK_T.TRENNER, ort: ORTPREFIX + "Chemnitz", art: ETrennerArt.Ort };
+var LE = { kind: BLOCK_T.TRENNER, ort: ORTPREFIX + "Leipzig", art: ETrennerArt.Ort };
+var TR = { kind: BLOCK_T.TRENNER, art: ETrennerArt.NixWeiter };
+var ab = { kind: BLOCK_T.TRENNER, art: ETrennerArt.Ab };
+var an = { kind: BLOCK_T.TRENNER, art: ETrennerArt.An };
+var zn = { kind: BLOCK_T.TRENNER, art: ETrennerArt.Zugnr };
+var kl = { kind: BLOCK_T.TRENNER, art: ETrennerArt.Klassenzeile };
 System.register("SaxBaseTypes", [], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -3796,7 +3827,7 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
         return (("number" != typeof test) && (test != null) && (test.kind == undefined));
     }
     exports_3("isIZeilenZusatzInfo", isIZeilenZusatzInfo);
-    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, ZW, SC, JO, KA, AU, AN, LU, CT, CN, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
+    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
     return {
         setters: [],
         execute: function () {
@@ -3810,15 +3841,6 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("chooseown", chooseown = MARKERPREFIX + "selbstEinenFreienAussuchen");
             BAHNVERWALTUNGPREFIX = "_bahnverwaltung_";
             exports_3("Sachs", Sachs = BAHNVERWALTUNGPREFIX + "Sachs");
-            exports_3("ZW", ZW = ORTPREFIX + "Zwickau");
-            exports_3("SC", SC = ORTPREFIX + "Schwarzenberg");
-            exports_3("JO", JO = ORTPREFIX + "Johangeorgenstadt");
-            exports_3("KA", KA = ORTPREFIX + "Karlsbad BEB");
-            exports_3("AU", AU = ORTPREFIX + "Aue");
-            exports_3("AN", AN = ORTPREFIX + "Annaberg");
-            exports_3("LU", LU = ORTPREFIX + "Lugau");
-            exports_3("CT", CT = ORTPREFIX + "Chemnitz ü.Thalheim");
-            exports_3("CN", CN = ORTPREFIX + "Chemnitz ü.Neu.");
             exports_3("fern", fern = "_VERWEISTYP_fern");
             exports_3("passend", passend = "_VERWEISTYP_passend");
             exports_3("global", global = "_VERWEISTYP_GLOBAL");
@@ -3851,7 +3873,7 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("s800", s800 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: null, Schnellzug: true, Zeit: { kind: ZEIT_ROH, RohZeit: 800 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("s321", s321 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: null, Schnellzug: true, Zeit: { kind: ZEIT_ROH, RohZeit: 321 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("s810", s810 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: null, Schnellzug: true, Zeit: { kind: ZEIT_ROH, RohZeit: 810 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
-            exports_3("a858", a858 = "_a858");
+            exports_3("a858", a858 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "a", Schnellzug: false, Zeit: { kind: ZEIT_ROH, RohZeit: 858 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("s113", s113 = "_s113");
             exports_3("s710", s710 = "_s710");
             exports_3("s845", s845 = "_s845");
@@ -4301,11 +4323,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                 var tResultZeileN = {
                                     kind: SaxParsedTypes_1.ZEILE_T.NORMAL,
                                     Km: (zeile_0.kind == BLOCK_T.KM_WERT) ? zeile_0.km : -1,
-                                    BhfTag: (zeile_0.kind === BLOCK_T.BHFTAG) ? zeile_0.station :
-                                        ((zeile_0.kind == BLOCK_T.KM_WERT) && (zeile_1.kind === BLOCK_T.BHFTAG) ? zeile_1.station : "??? " + zeile_0.kind + " " + zeile_1.kind),
+                                    BhfTag: (zeile_0.kind === BLOCK_T.BHFTAG) ? zeile_0 :
+                                        ((zeile_0.kind == BLOCK_T.KM_WERT) && (zeile_1.kind === BLOCK_T.BHFTAG) ? zeile_1 : null),
                                     AnschlussNummern: [],
                                     Zeiteintraege: [],
-                                    ZeitZeileZusatzInfo: undefined,
+                                    Fahrkarteninfo: null,
                                     AnAb: SaxParsedTypes_1.EAnAb.FollowAb
                                 };
                                 var tFindFirstIndex = function (arr, matches) {
@@ -4361,11 +4383,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
-                                        ZeitZeileZusatzInfo: undefined
+                                        Via: null,
+                                        Fahrkarteninfo: null
                                     };
-                                    tResultZeileY.ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
-                                    tResultZeileY.BhfTag = tResultZeileY.ZeitZeileZusatzInfo.Ortsname;
-                                    tResultZeileY.AnschlussNummern = tResultZeileY.ZeitZeileZusatzInfo.AnschlussNummern;
+                                    var tResultZeileY_ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
+                                    tResultZeileY.BhfTag = tResultZeileY_ZeitZeileZusatzInfo.Ortsname;
+                                    tResultZeileY.AnschlussNummern = tResultZeileY_ZeitZeileZusatzInfo.AnschlussNummern;
                                     tResultZeile = tResultZeileY;
                                 }
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_ZUBRINGER_IN)) {
@@ -4374,7 +4397,8 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         BhfTag: "",
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
-                                        ZeitZeileZusatzInfo: undefined
+                                        Via: null,
+                                        Fahrkarteninfo: null
                                     };
                                     tResultZeile = tResultZeileZ;
                                 }
@@ -4432,7 +4456,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                                 };
                                                 tResultZeile_Zeiteintraege.push(tResultEntryE);
                                             }
-                                            tResultZeile.ZeitZeileZusatzInfo = z;
                                             break;
                                         case BLOCK_T.KM_WERT:
                                             break;
@@ -4441,6 +4464,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         case BLOCK_T.TRENNER:
                                             break;
                                         case BLOCK_T.ANSCHLUSS_NUMMERN:
+                                            break;
+                                        case BLOCK_T.HEADERLFD:
+                                            break;
+                                        case BLOCK_T.HEADERREF:
+                                            break;
+                                        case BLOCK_T.HEADERVIA:
                                             break;
                                         default:
                                             SaxBaseTypes_1.assertNever(rawentryX);
@@ -4813,24 +4842,10 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                             case SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                             case SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_WEITER_AB:
                             case SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_WEITER_IN:
-                                if (z.ZeitZeileZusatzInfo) {
-                                    if (z.ZeitZeileZusatzInfo.Ortsname) {
-                                        z.BhfTag = z.ZeitZeileZusatzInfo.Ortsname;
-                                    }
-                                    else {
-                                        console.warn("ANSCHLUSS MUSS ORT HABEN !!!", z);
-                                    }
-                                }
-                            case SaxParsedTypes_2.ZEILE_T.NORMAL:
-                                if (z.ZeitZeileZusatzInfo) {
-                                    if (z.ZeitZeileZusatzInfo.AnschlussNummern.length > 0) {
-                                        z.AnschlussNummern = z.ZeitZeileZusatzInfo.AnschlussNummern;
-                                        z.ZeitZeileZusatzInfo.AnschlussNummern = ["_MOVED_"];
-                                    }
-                                }
                                 break;
                             case SaxParsedTypes_2.ZEILE_T.ZUGNR:
                             case SaxParsedTypes_2.ZEILE_T.KLASSEN:
+                            case SaxParsedTypes_2.ZEILE_T.NORMAL:
                                 break;
                             default:
                                 return SaxBaseTypes_2.assertNever(z);
@@ -4917,29 +4932,6 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                             case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_AB:
                             case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN:
                             case SaxSchedulesTyped.ZEILE_T.KLASSEN:
-                                if (z.ZeitZeileZusatzInfo) {
-                                    switch (z.ZeitZeileZusatzInfo.Fahrpreise.kind) {
-                                        case SaxBaseTypes_3.FAHRPREIS_T.KEINE_ANGABE:
-                                            break;
-                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH_UND_RUECK:
-                                            tFahrpreisSpalten = 4;
-                                            if (tErsteBelegteFahrpreisZeile < 0) {
-                                                tErsteBelegteFahrpreisZeile = zidx;
-                                            }
-                                            break;
-                                        case SaxBaseTypes_3.FAHRPREIS_T.AB:
-                                            if (tErsteBelegteFahrpreisZeile < 0) {
-                                                tErsteBelegteFahrpreisZeile = zidx;
-                                            }
-                                            break;
-                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH:
-                                            tFahrpreisSpalten = 2;
-                                            if (tErsteBelegteFahrpreisZeile < 0) {
-                                                tErsteBelegteFahrpreisZeile = zidx;
-                                            }
-                                            break;
-                                    }
-                                }
                                 break;
                         }
                     });
@@ -5285,53 +5277,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                     }
                                 });
                                 Renderer.globalespalten(tr, tRealeSpaltenBisher, tErsteGlobalZeile, tSpalteNach);
-                                if (z.ZeitZeileZusatzInfo) {
-                                    var f = z.ZeitZeileZusatzInfo.Fahrpreise;
-                                    switch (f.kind) {
-                                        case SaxBaseTypes_3.FAHRPREIS_T.KEINE_ANGABE:
-                                            if ((tErsteBelegteFahrpreisZeile > -1) && (zindex > tErsteBelegteFahrpreisZeile)) {
-                                                for (var i = 0; i < (tFahrpreisSpalten == 2 ? 1 : 2); i++) {
-                                                    var tde = document.createElement("td");
-                                                    tde.innerHTML = "" + ".";
-                                                    tr.appendChild(tde);
-                                                    var tde = document.createElement("td");
-                                                    tde.innerHTML = "" + ".";
-                                                    tr.appendChild(tde);
-                                                }
-                                            }
-                                            break;
-                                        case SaxBaseTypes_3.FAHRPREIS_T.AB:
-                                            var tde = document.createElement("td");
-                                            tde.innerHTML = "ab " + f.AbfahrtsOrt;
-                                            tde.setAttribute("colspan", "" + tFahrpreisSpalten);
-                                            tr.appendChild(tde);
-                                            break;
-                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH:
-                                            var tde = document.createElement("td");
-                                            tde.innerHTML = "" + f.Einfach2;
-                                            tr.appendChild(tde);
-                                            tde = document.createElement("td");
-                                            tde.innerHTML = "" + f.Einfach3;
-                                            tr.appendChild(tde);
-                                            break;
-                                        case SaxBaseTypes_3.FAHRPREIS_T.EINFACH_UND_RUECK:
-                                            var tde = document.createElement("td");
-                                            tde.innerHTML = "" + f.Einfach2;
-                                            tr.appendChild(tde);
-                                            tde = document.createElement("td");
-                                            tde.innerHTML = "" + f.Einfach3;
-                                            tr.appendChild(tde);
-                                            var tde = document.createElement("td");
-                                            tde.innerHTML = "" + f.Rueck2;
-                                            tr.appendChild(tde);
-                                            tde = document.createElement("td");
-                                            tde.innerHTML = "" + f.Rueck3;
-                                            tr.appendChild(tde);
-                                            break;
-                                        default:
-                                    }
-                                }
-                                else {
+                                {
                                     if ((tErsteBelegteFahrpreisZeile > -1) && (zindex > tErsteBelegteFahrpreisZeile)) {
                                         for (var i = 0; i < (tFahrpreisSpalten == 2 ? 1 : 2); i++) {
                                             var tde = document.createElement("td");
@@ -5670,6 +5616,126 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                                 Inhalt: {
                                     q: "Saechs Staatsb",
                                     BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        route1900: 100,
+                        caption: "Stollberg -- Zwoenitz -- Scheibenberg -- (Anaberg) Rueck",
+                        seite: 105,
+                        zeilen: [
+                            [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: Chemnitz, via: "neuk", nr: 95 }],
+                            [_anschluss_aus, Lugau, TR, 422, 702, nix, 148, 426, { ort: Lugau, nr: 83 }],
+                            [_zugnr, zn, 1862, 1866, 1868, 1870, 1872],
+                            [Stollberg, ab, 455, 900, 1100, 325, 830],
+                            [6.5, Oberdorf_Beutha, ab, 514, 916, 1116, 344, 845],
+                            [11.7, Affalter, ab, 531, 929, 1130, 401, 857],
+                            [16.6, Zwönitz, an, 543, 941, 1142, 413, 909],
+                            [_anschluss_nach_in, Aue, TR, 635, 1020, 201, 453, 940, { ort: Aue, nr: 94 }],
+                            [_anschluss_nach_in, Chemnitz, Via(Thalheim), 444, nix, 928, 303, 750, { ort: Chemnitz, via: "Thalheim", nr: 94 }],
+                            [Zwönitz, ab, 620, nix, 1205, 440, 925],
+                            [24.5, Bernsbach, ab, 645, nix, 1227, 505, 949],
+                            [27.4, Beierfeld, ab, 656, nix, 1237, 516, 1000],
+                            [29.3, Grünhain, ab, 706, nix, 1247, 527, 1009],
+                            [34.6, Elterlein, ab, 725, nix, 103, 547, 1027],
+                            [38.0, Hermannsdorf, ab, 736, nix, 114, 558, 1038],
+                            [42.7, Scheibenberg, an, 749, nix, 127, 611, 1051],
+                            [_anschluss_nach_in, Schlettau, TR, 810, nix, 142, 642, 1105, { ort: Schlettau, nr: 99 }],
+                            [_anschluss_nach_in, Annaberg, TR, 850, nix, 222, 736, nix, { ort: Annaberg, nr: 99 }]
+                        ],
+                        ZellenVerweise: [
+                            {
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
+                                Inhalt: {
+                                    q: "S. Staatsb.",
+                                    BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                                }
+                            },
+                            {
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.RECHTSVONHEADER },
+                                Inhalt: {
+                                    q: "Alle Zuege II.-III.Kl.",
+                                    BLOCK: { Standard: { scope: Global, Klasse: Kl2bis4 } }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        route1900: "100a",
+                        seite: 105,
+                        caption: "Schwarzenberg -- Johanngeorgenstadt hin",
+                        zeilen: [
+                            [_zub_aus, Zwickau, L(1), F(99), TR, 515, SaxInputTypes_2.a858, 335, 701, {}],
+                            [_zub_aus, Aue, L(1), F(99), TR, 642, 1025, 501, 833, {}],
+                            [_zub_aus, Annaberg, L(9), F(99), TR, 605, 918, 226, 736, {}],
+                            [_zugnr, zn, 3112, 3114, 3116, 3118],
+                            [Schwarzenberg_Bf, ab, 740, 1115, 545, 923],
+                            [1.5, Schwarzenberg_Hltp, ab, 748, 1123, 554, 931, { fk: [30, 20] }],
+                            [3.1, Erla, ab, 755, 1130, 601, 938, { fk: [30, 20] }],
+                            [6.7, Antonsthal, ab, 807, 1142, 613, 949, { fk: [50, 30] }],
+                            [11.3, Breitenhof, ab, 818, 1153, 624, 1000, { fk: [70, 50] }],
+                            [13.2, Erlabrunn, ab, 827, 1202, 633, 1009, { fk: [90, 60] }],
+                            [17.3, Johanngeorgenstadt, an, 838, 1213, 645, 1020, { fk: [110, 80] }],
+                            [_anschluss_nach_start, TR, 920, 1235, 733, _, { ort: Johanngeorgenstadt, lfd: 2 }],
+                            [_anschluss_nach_in, TR, 1124, 247, 945, _, { fk: [430, 230], ort: Karlsbad_BEB, lfd: 2 }]
+                        ],
+                        ZellenVerweise: [
+                            {
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
+                                Inhalt: {
+                                    q: "S. Staatsb.",
+                                    BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                                }
+                            },
+                            {
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.RECHTSVONHEADER },
+                                Inhalt: {
+                                    q: "Alle Zuege II.-III.Kl.",
+                                    BLOCK: { Standard: { scope: Global, Klasse: Kl2bis3 } }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        route1900: "100a",
+                        seite: 105,
+                        todo: "fahrpreise,direkterwagenwerdaukarlsbad rueckrichtung",
+                        caption: "Schwarzenberg - johangeorgenstadt zurueck",
+                        zeilen: [
+                            [_anschluss_aus, TR, nix, 700, 1228, 506, { ort: Karlsbad_BEB, nr: "108d", lfd: 1 }],
+                            [_anschluss_aus_ziel, TR, nix, 919, 245, 722, { ort: Johanngeorgenstadt, lfd: 1 }],
+                            [_zugnr, zn, 3111, 3113, 3115, 3117],
+                            [Johanngeorgenstadt, an, 608, 946, 315, 759],
+                            [Erlabrunn, ab, 619, 957, 326, 810],
+                            [Breitenhof, ab, 628, 1006, 335, 819],
+                            [Antonsthal, ab, 638, 1016, 345, 829],
+                            [Erla, ab, 649, 1027, 356, 840],
+                            [Schwarzenberg_Hltp, ab, 655, 1033, 402, 846],
+                            [Schwarzenberg_Bf, ab, 703, 1041, 410, 854],
+                            [_anschluss_nach_in, TR, 804, 1122, 441, 942, { ort: Aue, nr: 99 }],
+                            [_anschluss_nach_in, TR, 928, 1258, 616, 1120, { ort: Zwickau, nr: 99 }],
+                            [_anschluss_nach_in, TR, 850, 1232, 736, 1052, { ort: Annaberg, nr: 99 }]
+                        ],
+                        ZellenVerweise: [
+                            {
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
+                                Inhalt: {
+                                    q: "S. Staatsb.",
+                                    BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                                }
+                            },
+                            {
+                                "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                                "TextOrt": { "kind": TEXTORT_T.RECHTSVONHEADER },
+                                Inhalt: {
+                                    q: "Alle Zuege II.-III.Kl.",
+                                    BLOCK: { Standard: { scope: Global, Klasse: Kl2bis3 } }
                                 }
                             }
                         ]

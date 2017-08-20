@@ -5,16 +5,26 @@
 
 import { /*TBlockinhaltBaseV2 */  } from "./SaxParsedTypes";
 
-export type EinzelEintragInputBaseKinded = TZeilentypEintrag | TKeinHalt 
-                            | TLeerEintrag | TAnkunftEintrag | TDickerStrichEintrag | TBlockEintrag 
-                            | TKlassenEintrag 
-                            | TZugNrEintrag
-                            | TZeiteintrag 
+export type EinzelEintragInputBaseKinded = 
+                            TZeilentypEintrag 
                             | TKMEintrag
                             | StationTicketInfoEntryKpxTagged
                             | TTrennerEintrag
                             | THEADERANSCHLUSSNUMMERN
+                            | THeaderViaEintrag
+                            | TLaufendeNrHeaderEintrag
+                            | TReferenzHeaderEintrag
+                            | EinzelEintragFertigKinded   // alle die spaeter noch erlaubt sind, wenn kopfzeilen durch sind
                             ;
+
+export type EinzelEintragFertigKinded =   TKeinHalt 
+                            | TLeerEintrag 
+                            | TAnkunftEintrag 
+                            | TDickerStrichEintrag   
+                            | TBlockEintrag 
+                            | TKlassenEintrag 
+                            | TZugNrEintrag
+                            | TZeiteintrag                          
 
 export type EinzelEintragInput = EinzelEintragInputBaseKinded 
                             | number  
@@ -70,15 +80,15 @@ export interface SingleDirectionScheduleInputNumless {
 
 //rechts hinter zeile
 export interface IZeilenZusatzInfo {
-    ort?: StationTicketInfoEntryKpxTagged;
-    nr?: string | number;
-    nrn?: Array<(string | number)>;
-    fk?: Array<number>;
+    ort?: StationTicketInfoEntryKpxTagged;   //--> vorn
+    nr?: string | number;                    //--> vorn
+    nrn?: Array<(string | number)>;          //--> vorn  
+    fk?: Array<number>;                      
     fkab?: string;
     //FROM?: string;  ersetzt durch lfd
     //NACH?: string; ersetzt durch lfd
-    via?: string;
-    lfd?: number; //angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden, ersetyt from u nach
+    via?: string;                           //--> vorn
+    lfd?: number;                           //--> vorn    angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden, ersetyt from u nach
 }
 
 export interface IZeilenZusatzInfoKinded extends IZeilenZusatzInfo{

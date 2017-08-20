@@ -714,6 +714,8 @@ export class InputData {
                     
                 ]
             }
+            
+ */          
             ,
             {
                 route1900: 100,
@@ -721,55 +723,66 @@ export class InputData {
                 seite: 105,
                 //klassen: k2b4,
                 zeilen: [
-                    [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: "Chemnitz", via: "neuk", nr: 95 }],    //d.h. Chemnitz ueber Neuk.
-                    [_anschluss_aus, LU, 422, 702, nix, 148, 426, { ort: "Lugau", nr: 83 }],
-                    [_zugnr, zn, 1862, 1866, 1868, 1870, 1872],
-                    ["Stollberg", ab, 455, 900, 1100, 325, 830],
-                    [6.5, "Oberdorf-Beutha", ab, 514, 916, 1116, 344, 845],
-                    [11.7, "Affalter", ab, 531, 929, 1130, 401, 857],
-                    [16.6, "Zwönitz", an, 543, 941, 1142, 413, 909],
-                    [_anschluss_nach_in, AU, 635, 1020, 201, 453, 940, { ort: "Aue", nr: 94 }],
-                    [_anschluss_nach_in, CH, 444, nix, 928, 303, 750, { ort: "Chemnitz", via: "Thalheim", nr: 94 }],
-                    ["Zwönitz", ab, 620, nix, 1205, 440, 925],
-                    [24.5, "Bernsbach", ab, 645, nix, 1227, 505, 949],
-                    [27.4, "Beierfeld", ab, 656, nix, 1237, 516, 1000],
-                    [29.3, "Grünhain", ab, 706, nix, 1247, 527, 1009],
-                    [34.6, "Elterlein", ab, 725, nix, 103, 547, 1027],
-                    [38.0, "Hermannsdorf", ab, 736, nix, 114, 558, 1038],
-                    [42.7, "Scheibenberg", an, 749, nix, 127, 611, 1051],
-                    [_anschluss_nach_in, SC, 810, nix, 142, 642, 1105, { ort: "Schlettau", nr: 99 }],
-                    [_anschluss_nach_in, AN, 850, nix, 222, 736, nix, { ort: "Annaberg", nr: 99 }]
+                     [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: Chemnitz, via: "neuk", nr: 95 }],    //d.h. Chemnitz ueber Neuk.
+                     [_anschluss_aus,Lugau, TR, 422, 702, nix, 148, 426, { ort: Lugau, nr: 83 }],
+                     [_zugnr, zn, 1862, 1866, 1868, 1870, 1872],
+                     [Stollberg, ab, 455, 900, 1100, 325, 830],
+                     [6.5, Oberdorf_Beutha, ab, 514, 916, 1116, 344, 845],
+                     [11.7, Affalter, ab, 531, 929, 1130, 401, 857],
+                     [16.6, Zwönitz, an, 543, 941, 1142, 413, 909],
+                     [_anschluss_nach_in, Aue, TR, 635, 1020, 201, 453, 940, { ort: Aue, nr: 94 }],
+                     [_anschluss_nach_in, Chemnitz, Via(Thalheim) , 444, nix, 928, 303, 750, { ort: Chemnitz, via: "Thalheim", nr: 94 }],
+                     [Zwönitz, ab, 620, nix, 1205, 440, 925],
+                     [24.5, Bernsbach, ab, 645, nix, 1227, 505, 949],
+                     [27.4, Beierfeld, ab, 656, nix, 1237, 516, 1000],
+                     [29.3, Grünhain, ab, 706, nix, 1247, 527, 1009],
+                     [34.6, Elterlein, ab, 725, nix, 103, 547, 1027],
+                     [38.0, Hermannsdorf, ab, 736, nix, 114, 558, 1038],
+                     [42.7, Scheibenberg, an, 749, nix, 127, 611, 1051],
+                     [_anschluss_nach_in,Schlettau, TR, 810, nix, 142, 642, 1105, { ort: Schlettau, nr: 99 }],
+                     [_anschluss_nach_in, Annaberg, TR, 850, nix, 222, 736, nix, { ort: Annaberg, nr: 99 }]
                 ],
                 ZellenVerweise:[
+                  //  {  typ:global,   bahn: Sachs,    verweisort: headerlinks           },
+                  //  {  typ:global,  klassen: k2b4, verweisort: headerrechts              },
+                  //  {   //leer      typ:global,        verweisort: nach5spalten2spalten            }
+
+
+   //          { typ:global,    bahn: Sachs,     verweisort: headerlinks  },
                     {
-                        typ:global,
-                        bahn: Sachs,
-                        verweisort: headerlinks
+                        "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                        "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
+                        Inhalt: {
+                            q: "S. Staatsb.",
+                            BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                        }
                     },
+                //  {   typ:global,       klassen: k2b4,          verweisort: headerrechts           },
                     {
-                        typ:global,
-                        klassen: k2b4,
-                        verweisort: headerrechts
-                    },
-                    {   //leer
-                        typ:global,
-                        verweisort: nach5spalten2spalten
+                        "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                        "TextOrt": { "kind": TEXTORT_T.RECHTSVONHEADER },
+                        Inhalt: {
+                            q: "Alle Zuege II.-III.Kl.",
+                            BLOCK: { Standard: { scope: Global, Klasse: Kl2bis4 } }
+                        }
                     }
+
+
                     ]
             }
-*/                
+                
             ,  {
                 route1900: "100a",
                 seite:105,
                caption:"Schwarzenberg -- Johanngeorgenstadt hin",
                zeilen:[
-                   [ _anschluss_aus, TR,515,a858,335,701,{ort:Zwickau, nr:99, lfd:1}],                      // lfd erstmal als annahme, soll der validierer dann als problem feststellen !!!
-                   [_anschluss_aus, TR,642,1025,501,833,{ort:Aue, nr:99, lfd:1}],                        
-                   [_anschluss_aus, TR,605,918,226,736,{ort:Annaberg,nr:99,lfd:1}],                    
-                   [_zugnr,         zn,3112,3114,3116,3118],
-                   [Schwarzenberg_Bf,     ab,740,1115,545,923],
-                   [1.5, Schwarzenberg_Hltp,ab,748,1123,554,931                      ,{fk:[ 30,20]}],
-                   [3.1 ,Erla              ,ab,755,1130,601,938                      ,{fk:[ 30,20]}],
+                   [_zub_aus, Zwickau,L(1),F(99), TR,515,a858,335,701,{/*ort:Zwickau,*/ /*nr:99, lfd:1*/}],                      // lfd erstmal als annahme, soll der validierer dann als problem feststellen !!!
+                   [_zub_aus, Aue,    L(1),F(99), TR,642,1025,501,833,{/*ort:Aue, nr:99, lfd:1*/}],                        
+                   [_zub_aus, Annaberg,L(9),F(99),TR,605,918,226,736,{/*ort:Annaberg,nr:99,lfd:1*/}],                    //andere lfd weil gegenrichtung
+                   [_zugnr,                 zn, 3112,3114,3116,3118],
+                   [Schwarzenberg_Bf,       ab,  740,1115,545,923],
+                   [1.5, Schwarzenberg_Hltp,ab,  748,1123,554,931                      ,{fk:[ 30,20]}],
+                   [3.1 ,Erla              ,ab,  755,1130,601,938                      ,{fk:[ 30,20]}],
                    [6.7 ,Antonsthal        ,ab,807,1142,613,949                      ,{fk:[ 50,30]}],
                    [11.3,Breitenhof        ,ab,818,1153,624,1000                     ,{fk:[ 70,50]}],
                    [13.2,Erlabrunn,                            ab, 827,1202, 633,1009,{fk:[ 90,60]}],
@@ -838,17 +851,28 @@ export class InputData {
 
                 ],
                 ZellenVerweise:[
-/*  
+    //          { typ:global,    bahn: Sachs,     verweisort: headerlinks  },
                     {
-                        typ:global,
-                        bahn: Sachs,
-                        verweisort: headerlinks
+                        "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                        "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
+                        Inhalt: {
+                            q: "S. Staatsb.",
+                            BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                        }
                     },
+                //  {   typ:global,       klassen: k2b3,          verweisort: headerrechts           },
                     {
-                        typ:global,
-                        klassen: k2b3,
-                        verweisort: headerrechts
-                    },
+                        "Verweistyp": { "kind": VERWEIS_T.GLOBAL_DEFAULT },
+                        "TextOrt": { "kind": TEXTORT_T.RECHTSVONHEADER },
+                        Inhalt: {
+                            q: "Alle Zuege II.-III.Kl.",
+                            BLOCK: { Standard: { scope: Global, Klasse: Kl2bis3 } }
+                        }
+                    }
+
+
+                    /*  
+
                     {   //leer
                         typ:global,
                         verweisort: nach4spalten2spalten

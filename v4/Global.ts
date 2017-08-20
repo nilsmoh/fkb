@@ -21,7 +21,8 @@ enum BLOCK_T{
         ZEITEINTRAG = "BLOCK_ZEITEINTRAG",
         ANKUNFT = "BLOCK_ANKUNFT",
         HEADERREF = "BLOCK_HEADERREFERENCE",   //a oder aa
-        HEADERLFD = "BLOCK_HEADERLFD", 
+        HEADERLFD = "BLOCK_HEADERLFD",
+        HEADERVIA = "BLOCK_HEADERVIA", 
 
         KM_WERT = "BLOCK_KMWERT", //km eintrag ganz vorn
 
@@ -37,6 +38,21 @@ interface THEADERANSCHLUSSNUMMERN{
 } 
 
 var N_85: THEADERANSCHLUSSNUMMERN = {kind: BLOCK_T.ANSCHLUSS_NUMMERN, fkbnummern:[85]} ;
+
+var F = function(nn:number | string | Array<number | string>) : THEADERANSCHLUSSNUMMERN  {
+    var tInput = ("number" == typeof nn) ? [nn] :
+                    (("string" == typeof nn) ? [nn] : nn);
+
+    var tResult: THEADERANSCHLUSSNUMMERN =
+    {
+        kind:  BLOCK_T.ANSCHLUSS_NUMMERN, 
+        fkbnummern: [12]
+    } ;
+
+    return tResult;
+}
+
+
 
 
 enum EKlassen {
@@ -91,6 +107,40 @@ interface TZugNrEintrag{
     kind: BLOCK_T.ZUG_NR_WERT,
     zugnr: string,
     BerechneterZugLauf: TZugLaufInfo
+}
+
+
+interface TLaufendeNrHeaderEintrag{
+    kind: BLOCK_T.HEADERLFD,
+    nummer: number
+}
+
+var L = function(n:number): TLaufendeNrHeaderEintrag  {
+    var tResult: TLaufendeNrHeaderEintrag = {
+        kind: BLOCK_T.HEADERLFD,
+        nummer: n
+    };
+    return tResult;
+}
+
+
+interface TReferenzHeaderEintrag{
+    kind: BLOCK_T.HEADERREF,
+    ref: string | null
+}
+
+
+interface THeaderViaEintrag{
+    kind: BLOCK_T.HEADERVIA,
+    ort: StationTicketInfoEntryKpxTagged
+}
+
+var Via = function(st: StationTicketInfoEntryKpxTagged): THeaderViaEintrag{
+    var tResult: THeaderViaEintrag ={
+        kind: BLOCK_T.HEADERVIA,
+        ort: st
+    }
+    return tResult;
 }
 
 
@@ -428,11 +478,17 @@ enum EZeilentyp{
 var _anschluss_aus : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_AB}; //  aus Zwickau  // Abfahrtszeit in Zwickau
 var _anschl_aus = _anschluss_aus;
 var _anschluss_aus_ziel : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_ZUBRINGER_IN}; // aus Karlsbad in Johanngeorgenstadt
+
+var _zub_aus = _anschluss_aus;
+var _zub_in = _anschluss_aus_ziel;
+
 var _zugnr : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ZUGNRZEILE};
 var _klassen : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.KLASSENNRZEILE};
 var _anschluss_nach_start: TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_WEITER_AB}; // nach Karlsbad ab Johanngeorgenstadt
 var _anschluss_nach_in : TZeilentypEintrag = {kind: BLOCK_T.ZEILEN_TYP, zeilentyp: EZeilentyp.ANSCHLUSS_WEITER_AN}; // in Zwickau // Ankunftszeit nach Nutzung eines nicht naeher spezifizierten anschlusszugs in Zwickau
 
+var _weiter_ab = _anschluss_nach_start;
+var _weiter_in = _anschluss_nach_in;
 
 //var SENKRECHT_PREFIX = "_senkrecht_";
 //var WAAGERECHT_PREFIX = "_waagerecht_";

@@ -356,7 +356,7 @@ export class Validator {
                     case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
                     case ZEILE_T.ANSCHLUSS_WEITER_AB:
                     case ZEILE_T.ANSCHLUSS_WEITER_IN:
-
+/*
                         if (z.ZeitZeileZusatzInfo) {
                             if (z.ZeitZeileZusatzInfo.Ortsname) {
                                 z.BhfTag = z.ZeitZeileZusatzInfo.Ortsname;
@@ -373,10 +373,14 @@ export class Validator {
                             }
 
                         }
+*/
+
+                       
 
                         break;
                     case ZEILE_T.ZUGNR:
                     case ZEILE_T.KLASSEN:
+                    case ZEILE_T.NORMAL:
                         // ??? todo
                         break;
                     default:

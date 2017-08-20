@@ -11,14 +11,14 @@ import { ZEILE_T, /*BLOCK_T,*/ TNormalZeileEintrag, /*ZUGLAUF_BERECHNET,*/ EAnAb
 
     export interface LaufEintragNormal {
         kind: typeof LAUFEINTRAG_NORMAL,
-        BhfTag: string,
+        BhfTag: StationTicketInfoEntryKpxTagged | null,
         AnZeit: TZeit24 | null,
         AbZeit: TZeit24 | null
     }
 
     export interface LaufEintragKeinHalt {
         kind: typeof LAUFEINTRAG_KEINHALT,
-        BhfTag: string
+        BhfTag: StationTicketInfoEntryKpxTagged | null
     }
 
     export interface LaufEintragAn {

@@ -105,6 +105,7 @@ export class Renderer{
                 case SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN:
 
                 case SaxSchedulesTyped.ZEILE_T.KLASSEN:
+                    /*                
                       if (z.ZeitZeileZusatzInfo){
                         switch(z.ZeitZeileZusatzInfo.Fahrpreise.kind){
                             case FAHRPREIS_T.KEINE_ANGABE:
@@ -127,7 +128,8 @@ export class Renderer{
                                 }
                                 break;
                         }
-                      }
+                    }
+                    */
                       break;
                  
               }  
@@ -686,6 +688,7 @@ export class Renderer{
                              
 
                         //Fahrkartenpreise rechts in tabelle anhaengen
+                        /*
                         if (z.ZeitZeileZusatzInfo){
                             let f = z.ZeitZeileZusatzInfo.Fahrpreise;
                             switch (f.kind){
@@ -733,7 +736,9 @@ export class Renderer{
                                     //todo assert never
                             }
                         
-                        }else{
+                        }else
+                        */
+                        {
                             // zeile ohne zusatzinfo, aber mit fahrpreisen  darueber und/oder darunter
                             if ((tErsteBelegteFahrpreisZeile > -1) && (zindex > tErsteBelegteFahrpreisZeile)) {
                                        for (var i =  0;i < (tFahrpreisSpalten == 2 ? 1 : 2) ; i++){
