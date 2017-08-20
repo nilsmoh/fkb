@@ -87,7 +87,7 @@ export interface IZeilenZusatzInfo {
     fkab?: string;
     //FROM?: string;  ersetzt durch lfd
     //NACH?: string; ersetzt durch lfd
-    via?: string;                           //--> vorn
+    via?:  StationTicketInfoEntryKpxTagged;                           //--> vorn
     lfd?: number;                           //--> vorn    angenommener oder realer zusammenhang zwischen ANSCHLUSS Zeilen -> muss validiert werden, ersetyt from u nach
 }
 

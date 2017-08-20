@@ -28,7 +28,7 @@ import { /*EKlassen,*/ assertNever, /*TEchteZeit, TZeitRoh, GesternHeuteMorgen, 
     FAHRPREIS_T, TFahrpreisEinfach, TFahrpreisAb,
     TFahrpreisEinfachUndRueck, /* ETimeValid, ZEIT_24, TZeit24,*/
 } from "./SaxBaseTypes";
-import { EinzelEintragInputBaseKinded, EinzelZeileZZK, EinzelZeileNumless } from "./SaxInputTypes";
+import { EinzelEintragInputBaseKinded, EinzelZeileZZK, EinzelZeileNumless, IZeilenZusatzInfoKinded } from "./SaxInputTypes";
 
 /**
  * code coverting
@@ -371,9 +371,12 @@ export class Importer {
     public static parseZeitZeileZusatzInfo(rawEntry: SaxInput.IZeilenZusatzInfo): ZeitZeileZusatzInfo {
         var tZeitZeilenZusatzInfo: ZeitZeileZusatzInfo = {
             AnschlussNummern: [],
+            Via: null,
             Ortsname: null,
             Fahrpreise: { kind: FAHRPREIS_T.KEINE_ANGABE },
             Valid: false,
+            Ref: null,
+            Lfd: -1,
             Raw: JSON.stringify(rawEntry)
         };
 
@@ -425,9 +428,16 @@ export class Importer {
         }
 
         if (rawEntry.via) {
-            console.warn("via not implemented");
-            tWillBeValid = false;
+            //console.warn("via not implemented");
+            //tWillBeValid = false;
+            tZeitZeilenZusatzInfo.Via = rawEntry.via;
         }
+
+        if (rawEntry.lfd){
+            tZeitZeilenZusatzInfo.Lfd = rawEntry.lfd;
+        }
+
+        
 
 
 
@@ -530,11 +540,14 @@ export class Importer {
         return tResult;
     }
 
-    public static erstelleZZZausHeaderArray(zeilenAnfang:EinzelZeileNumless):ZeitZeileZusatzInfo{
+    public static erstelleZZZausHeaderArray(zeilenAnfang:EinzelZeileNumless   ):ZeitZeileZusatzInfo{
         
         var tNum:Array<string | number> = [];
         var tBhf = null;
+        var tLfd = -1;
+        var tRef = null;
         
+        // fuelle vordere
         zeilenAnfang.forEach((ze)=>{
             switch (ze.kind){
                 case BLOCK_T.ANSCHLUSS_NUMMERN:
@@ -543,22 +556,25 @@ export class Importer {
                 case BLOCK_T.BHFTAG:
                     tBhf = ze;
                     break;
-                /*
+                
                 case BLOCK_T.HEADERLFD:
-                    //TODO LFD in header
+                    tLfd = ze.nummer;
                     break;    
                 case BLOCK_T.HEADERREF:
-                    //TODO REF in header
+                    tRef = ze.ref;
                     break;
-                */    
+                    
             }
         });
         
-        
+            
         return {
             AnschlussNummern: tNum,
+            Via: null,
             Ortsname: tBhf,
             Fahrpreise:  {kind: FAHRPREIS_T.KEINE_ANGABE },
+            Ref: tRef,
+            Lfd: tLfd,
             Valid: true,
             Raw: ""
         };
@@ -654,7 +670,11 @@ export class Importer {
                             BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
-                            ZeitZeileZusatzInfo: undefined
+                            ZeitZeileZusatzInfo: undefined,
+                            Ref:null,
+                            Lfd: -1,
+                            Via: null,
+                            Fahrkarteninfo: null
                         }
                         tResultZeile = tResultZeileX;
                     }
@@ -663,10 +683,14 @@ export class Importer {
                         //if (("string" == typeof zeile[0]) && ((<string>zeile[0]).indexOf(_anschluss_nach_start) == 0)) {
                         var tResultZeileXD: TAnschlussWeiterAbZeile = {
                             kind: ZEILE_T.ANSCHLUSS_WEITER_AB,  // ZEILE_ANSCHLUSS_NACH_IN, // EZeilentyp.AnschlussNachIn,
-                            BhfTag: "",             // TODO aus Zusatzinfo lesen
+                            BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
-                            ZeitZeileZusatzInfo: undefined
+                            ZeitZeileZusatzInfo: undefined,
+                            Ref:null,
+                            Lfd: -1,
+                            Via: null,
+                            Fahrkarteninfo: null
                         }
                         tResultZeile = tResultZeileXD;
                     }
@@ -678,14 +702,11 @@ export class Importer {
                             AnschlussNummern: [],
                             Zeiteintraege: [],
                             //ZeitZeileZusatzInfo: undefined
+                            Ref:null,
+                            Lfd: -1,
                             Via: null,
                             Fahrkarteninfo: null
                         }
-
-                        var tResultZeileY_ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
-
-                        tResultZeileY.BhfTag = tResultZeileY_ZeitZeileZusatzInfo.Ortsname;
-                        tResultZeileY.AnschlussNummern = tResultZeileY_ZeitZeileZusatzInfo.AnschlussNummern;
 
 
 
@@ -695,10 +716,12 @@ export class Importer {
                     if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_ZUBRINGER_IN)) {
                         var tResultZeileZ: TAnschlussZubringerInZeile = {
                             kind: ZEILE_T.ANSCHLUSS_ZUBRINGER_IN, //
-                            BhfTag: "",             // TODO aus Zusatzinfo lesen
+                            BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
                             //ZeitZeileZusatzInfo: undefined
+                            Ref:null,
+                            Lfd: -1,
                             Via: null,
                             Fahrkarteninfo: null
                         }
@@ -728,6 +751,43 @@ export class Importer {
                     }
 
                     //ResultZeile jetzt prinzipiell korrekter typ
+
+                    // fill header
+                    switch (tResultZeile.kind){
+                        case ZEILE_T.ANSCHLUSS_WEITER_AB:
+                        case ZEILE_T.ANSCHLUSS_WEITER_IN:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                        case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+
+                            //tResultZeile.Zeiteintraege[0].kind
+
+                            var temp_ZeitZeileZusatzInfo: ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
+
+                            var tZusatzInfoIndex:number = tFindFirstIndex< EinzelEintragInputBaseKinded | IZeilenZusatzInfoKinded>(zeile, (z) => {
+                                return (z.kind === BLOCK_T.ZEILENZUSATZINFO);
+                            });                        
+                            
+                            var tZusatInfoHinten = null;
+                            if (tZusatzInfoIndex > -1){
+                                tZusatInfoHinten = Importer.parseZeitZeileZusatzInfo(zeile[tZusatzInfoIndex] as IZeilenZusatzInfoKinded);
+                            }
+
+                            //todo merge
+
+                            
+
+
+                            tResultZeile.BhfTag = temp_ZeitZeileZusatzInfo.Ortsname;
+                            tResultZeile.Via = temp_ZeitZeileZusatzInfo.Via;
+                            tResultZeile.Fahrkarteninfo = temp_ZeitZeileZusatzInfo.Fahrpreise;
+                            tResultZeile.AnschlussNummern = temp_ZeitZeileZusatzInfo.AnschlussNummern;
+                            tResultZeile.Ref = temp_ZeitZeileZusatzInfo.Ref;
+                            tResultZeile.Lfd = temp_ZeitZeileZusatzInfo.Lfd;
+                            
+
+
+                         break;
+                    }
 
 
 
@@ -774,8 +834,16 @@ export class Importer {
                                 break;
                             case BLOCK_T.ZEILENZUSATZINFO:
 
-                                var z = Importer.parseZeitZeileZusatzInfo(rawentryX);
+                                 
 
+                                var z: ZeitZeileZusatzInfo = Importer.parseZeitZeileZusatzInfo(rawentryX);
+
+
+
+
+                                // todo merge
+
+                                /*
                                 if (!z.Valid) {
                                     var tResultEntryE: TError = {
                                         kind: BLOCK_T.ERROR,
@@ -784,7 +852,7 @@ export class Importer {
                                     tResultZeile_Zeiteintraege.push(tResultEntryE);
                                 }
                                 //tResultZeile.ZeitZeileZusatzInfo = z;
-                                
+                                */
                                 
                                 break;
                             case BLOCK_T.KM_WERT:

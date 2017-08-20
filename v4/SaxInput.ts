@@ -723,7 +723,7 @@ export class InputData {
                 seite: 105,
                 //klassen: k2b4,
                 zeilen: [
-                     [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: Chemnitz, via: "neuk", nr: 95 }],    //d.h. Chemnitz ueber Neuk.
+                     [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: Chemnitz , via: Neukirchen_i_E /*"neuk"*/ , nr: 95 }],    //d.h. Chemnitz ueber Neuk. (Neukirchen lt FKB 95)
                      [_anschluss_aus,Lugau, TR, 422, 702, nix, 148, 426, { ort: Lugau, nr: 83 }],
                      [_zugnr, zn, 1862, 1866, 1868, 1870, 1872],
                      [Stollberg, ab, 455, 900, 1100, 325, 830],
@@ -731,7 +731,7 @@ export class InputData {
                      [11.7, Affalter, ab, 531, 929, 1130, 401, 857],
                      [16.6, Zwönitz, an, 543, 941, 1142, 413, 909],
                      [_anschluss_nach_in, Aue, TR, 635, 1020, 201, 453, 940, { ort: Aue, nr: 94 }],
-                     [_anschluss_nach_in, Chemnitz, Via(Thalheim) , 444, nix, 928, 303, 750, { ort: Chemnitz, via: "Thalheim", nr: 94 }],
+                     [_anschluss_nach_in, Chemnitz, Via(Thalheim) , 444, nix, 928, 303, 750, { ort: Chemnitz, via: Thalheim, nr: 94 }],
                      [Zwönitz, ab, 620, nix, 1205, 440, 925],
                      [24.5, Bernsbach, ab, 645, nix, 1227, 505, 949],
                      [27.4, Beierfeld, ab, 656, nix, 1237, 516, 1000],

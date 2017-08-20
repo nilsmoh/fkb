@@ -4155,9 +4155,12 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 Importer.parseZeitZeileZusatzInfo = function (rawEntry) {
                     var tZeitZeilenZusatzInfo = {
                         AnschlussNummern: [],
+                        Via: null,
                         Ortsname: null,
                         Fahrpreise: { kind: SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE },
                         Valid: false,
+                        Ref: null,
+                        Lfd: -1,
                         Raw: JSON.stringify(rawEntry)
                     };
                     var tWillBeValid = true;
@@ -4202,8 +4205,10 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         tZeitZeilenZusatzInfo.Ortsname = rawEntry.ort;
                     }
                     if (rawEntry.via) {
-                        console.warn("via not implemented");
-                        tWillBeValid = false;
+                        tZeitZeilenZusatzInfo.Via = rawEntry.via;
+                    }
+                    if (rawEntry.lfd) {
+                        tZeitZeilenZusatzInfo.Lfd = rawEntry.lfd;
                     }
                     tZeitZeilenZusatzInfo.Valid = tWillBeValid;
                     return tZeitZeilenZusatzInfo;
@@ -4282,6 +4287,8 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                 Importer.erstelleZZZausHeaderArray = function (zeilenAnfang) {
                     var tNum = [];
                     var tBhf = null;
+                    var tLfd = -1;
+                    var tRef = null;
                     zeilenAnfang.forEach(function (ze) {
                         switch (ze.kind) {
                             case BLOCK_T.ANSCHLUSS_NUMMERN:
@@ -4290,12 +4297,21 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                             case BLOCK_T.BHFTAG:
                                 tBhf = ze;
                                 break;
+                            case BLOCK_T.HEADERLFD:
+                                tLfd = ze.nummer;
+                                break;
+                            case BLOCK_T.HEADERREF:
+                                tRef = ze.ref;
+                                break;
                         }
                     });
                     return {
                         AnschlussNummern: tNum,
+                        Via: null,
                         Ortsname: tBhf,
                         Fahrpreise: { kind: SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE },
+                        Ref: tRef,
+                        Lfd: tLfd,
                         Valid: true,
                         Raw: ""
                     };
@@ -4363,17 +4379,25 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
-                                        ZeitZeileZusatzInfo: undefined
+                                        ZeitZeileZusatzInfo: undefined,
+                                        Ref: null,
+                                        Lfd: -1,
+                                        Via: null,
+                                        Fahrkarteninfo: null
                                     };
                                     tResultZeile = tResultZeileX;
                                 }
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_WEITER_AB)) {
                                     var tResultZeileXD = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_AB,
-                                        BhfTag: "",
+                                        BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
-                                        ZeitZeileZusatzInfo: undefined
+                                        ZeitZeileZusatzInfo: undefined,
+                                        Ref: null,
+                                        Lfd: -1,
+                                        Via: null,
+                                        Fahrkarteninfo: null
                                     };
                                     tResultZeile = tResultZeileXD;
                                 }
@@ -4383,20 +4407,21 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
+                                        Ref: null,
+                                        Lfd: -1,
                                         Via: null,
                                         Fahrkarteninfo: null
                                     };
-                                    var tResultZeileY_ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
-                                    tResultZeileY.BhfTag = tResultZeileY_ZeitZeileZusatzInfo.Ortsname;
-                                    tResultZeileY.AnschlussNummern = tResultZeileY_ZeitZeileZusatzInfo.AnschlussNummern;
                                     tResultZeile = tResultZeileY;
                                 }
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_ZUBRINGER_IN)) {
                                     var tResultZeileZ = {
                                         kind: SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN,
-                                        BhfTag: "",
+                                        BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
+                                        Ref: null,
+                                        Lfd: -1,
                                         Via: null,
                                         Fahrkarteninfo: null
                                     };
@@ -4418,6 +4443,27 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         ZeitZeileZusatzInfo: undefined
                                     };
                                     tResultZeile = tResultZeileKl;
+                                }
+                                switch (tResultZeile.kind) {
+                                    case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                                    case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                                    case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                                    case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                        var temp_ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
+                                        var tZusatzInfoIndex = tFindFirstIndex(zeile, function (z) {
+                                            return (z.kind === BLOCK_T.ZEILENZUSATZINFO);
+                                        });
+                                        var tZusatInfoHinten = null;
+                                        if (tZusatzInfoIndex > -1) {
+                                            tZusatInfoHinten = Importer.parseZeitZeileZusatzInfo(zeile[tZusatzInfoIndex]);
+                                        }
+                                        tResultZeile.BhfTag = temp_ZeitZeileZusatzInfo.Ortsname;
+                                        tResultZeile.Via = temp_ZeitZeileZusatzInfo.Via;
+                                        tResultZeile.Fahrkarteninfo = temp_ZeitZeileZusatzInfo.Fahrpreise;
+                                        tResultZeile.AnschlussNummern = temp_ZeitZeileZusatzInfo.AnschlussNummern;
+                                        tResultZeile.Ref = temp_ZeitZeileZusatzInfo.Ref;
+                                        tResultZeile.Lfd = temp_ZeitZeileZusatzInfo.Lfd;
+                                        break;
                                 }
                                 var tResultZeile_Zeiteintraege = [];
                                 var tResultZeile_Zeiteintraege_Klassen = [];
@@ -4449,13 +4495,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             break;
                                         case BLOCK_T.ZEILENZUSATZINFO:
                                             var z = Importer.parseZeitZeileZusatzInfo(rawentryX);
-                                            if (!z.Valid) {
-                                                var tResultEntryE = {
-                                                    kind: BLOCK_T.ERROR,
-                                                    Grund: "ZeitZeile ZeitZeilenZusatzInfo not fully implemented for " + JSON.stringify(rawentryX)
-                                                };
-                                                tResultZeile_Zeiteintraege.push(tResultEntryE);
-                                            }
                                             break;
                                         case BLOCK_T.KM_WERT:
                                             break;
@@ -5625,7 +5664,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                         caption: "Stollberg -- Zwoenitz -- Scheibenberg -- (Anaberg) Rueck",
                         seite: 105,
                         zeilen: [
-                            [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: Chemnitz, via: "neuk", nr: 95 }],
+                            [_anschluss_aus, CH, nix, 533, 908, 105, 648, { ort: Chemnitz, via: Neukirchen_i_E, nr: 95 }],
                             [_anschluss_aus, Lugau, TR, 422, 702, nix, 148, 426, { ort: Lugau, nr: 83 }],
                             [_zugnr, zn, 1862, 1866, 1868, 1870, 1872],
                             [Stollberg, ab, 455, 900, 1100, 325, 830],
@@ -5633,7 +5672,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                             [11.7, Affalter, ab, 531, 929, 1130, 401, 857],
                             [16.6, Zwönitz, an, 543, 941, 1142, 413, 909],
                             [_anschluss_nach_in, Aue, TR, 635, 1020, 201, 453, 940, { ort: Aue, nr: 94 }],
-                            [_anschluss_nach_in, Chemnitz, Via(Thalheim), 444, nix, 928, 303, 750, { ort: Chemnitz, via: "Thalheim", nr: 94 }],
+                            [_anschluss_nach_in, Chemnitz, Via(Thalheim), 444, nix, 928, 303, 750, { ort: Chemnitz, via: Thalheim, nr: 94 }],
                             [Zwönitz, ab, 620, nix, 1205, 440, 925],
                             [24.5, Bernsbach, ab, 645, nix, 1227, 505, 949],
                             [27.4, Beierfeld, ab, 656, nix, 1237, 516, 1000],
