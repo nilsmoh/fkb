@@ -430,7 +430,7 @@ export class Importer {
         if (rawEntry.via) {
             //console.warn("via not implemented");
             //tWillBeValid = false;
-            tZeitZeilenZusatzInfo.Via = rawEntry.via;
+            tZeitZeilenZusatzInfo.Via = [rawEntry.via];
         }
 
         if (rawEntry.lfd){
@@ -761,28 +761,151 @@ export class Importer {
 
                             //tResultZeile.Zeiteintraege[0].kind
 
-                            var temp_ZeitZeileZusatzInfo: ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
+                            const temp_ZeitZeileZusatzInfo_Vorn: ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
 
-                            var tZusatzInfoIndex:number = tFindFirstIndex< EinzelEintragInputBaseKinded | IZeilenZusatzInfoKinded>(zeile, (z) => {
+                            const tZusatzInfoIndex:number = tFindFirstIndex< EinzelEintragInputBaseKinded | IZeilenZusatzInfoKinded>(zeile, (z) => {
                                 return (z.kind === BLOCK_T.ZEILENZUSATZINFO);
                             });                        
                             
-                            var tZusatInfoHinten = null;
+                            let tZusatzInfoHinten:ZeitZeileZusatzInfo | null = null;
                             if (tZusatzInfoIndex > -1){
-                                tZusatInfoHinten = Importer.parseZeitZeileZusatzInfo(zeile[tZusatzInfoIndex] as IZeilenZusatzInfoKinded);
+                                tZusatzInfoHinten = Importer.parseZeitZeileZusatzInfo(zeile[tZusatzInfoIndex] as IZeilenZusatzInfoKinded);
                             }
 
                             //todo merge
 
-                            
+                            const mergeF = function (tVorn: ZeitZeileZusatzInfo, tHinten: ZeitZeileZusatzInfo | null): ZeitZeileZusatzInfo {
+                                var tNum: Array<string | number> = [];
+                                var tBhf = null;
+                                //var tLfd = -1;
+                                //var tRef = null;
+                         
+                                /*
+                                return {
+                                    AnschlussNummern: tNum,
+                                    Via: null,
+                                    Ortsname: tBhf,
+                                    Fahrpreise: { kind: FAHRPREIS_T.KEINE_ANGABE },
+                                    Ref: tRef,
+                                    Lfd: tLfd,
+                                    Valid: true,
+                                    Raw: ""
+                                };
+                                */   
+                                
+                                /*
+                                 export interface ZeitZeileZusatzInfo {
+                                    AnschlussNummern: (string | number)[],
+                                    Via: StationTicketInfoEntryKpxTagged[] | null,
+                                    Ortsname: StationTicketInfoEntryKpxTagged | null,
+                                    Fahrpreise: TFahrpreisAngabe,
+                                    Ref: string | null,
+                                    Lfd: number, 
+                                    Valid: boolean,
+                                    Raw: string
+                                }
+                                */
+
+                                // AnschlussMumern
+                                let tAnschlussNummern: (string | number)[] =  new Array<(string | number)>().concat(tVorn.AnschlussNummern);
+                                if (tHinten){
+                                    if (( tAnschlussNummern.length > 0) && (tHinten.AnschlussNummern.length > 0 )){
+                                        //problem
+                                        console.warn("merge found different Anschlussnummern: ", tVorn.AnschlussNummern, tHinten.AnschlussNummern );
+                                        console.warn("keeping front");
+                                    }else{
+                                        //just add
+                                        tAnschlussNummern = tAnschlussNummern.concat(tHinten.AnschlussNummern);
+                                    }
+                                }
+
+                                //Via
+                                let tVia = tVorn.Via || [];
+                                if (tHinten && tHinten.Via){
+                                    if (( tVia.length > 0) && (tHinten.Via.length > 0 )){
+                                        //problem
+                                        console.warn("merge found different Via: ", tVorn.Via, tHinten.Via );
+                                        console.warn("keeping front");
+                                    }else{
+                                        //just add
+                                        tVia = tVia.concat(tHinten.Via);
+                                    }
+                                }
+
+                                // ortsname
+                                let tOrtsname = tVorn.Ortsname;
+                                if (tHinten && tHinten.Ortsname){
+                                    if (tOrtsname){
+                                        console.warn("merge found different ortsname: ", tVorn.Ortsname, tHinten.Ortsname);
+                                        //error
+                                    }else{
+                                        //ok
+                                        tOrtsname = tHinten.Ortsname;
+                                    }
+                                }
+
+                                // fahrpreise
+                                var tFahrpreisAngabe = tVorn.Fahrpreise;
+                                if (tHinten && tHinten.Fahrpreise.kind != FAHRPREIS_T.KEINE_ANGABE){
+                                    if (tFahrpreisAngabe.kind != FAHRPREIS_T.KEINE_ANGABE){
+                                        console.warn("merge found different Fahrpreisangabe: ", tVorn.Fahrpreise, tHinten.Fahrpreise);
+                                        //error
+                                    }else{
+                                        //ok
+                                        tFahrpreisAngabe = tHinten.Fahrpreise;
+                                    }
+                                }
+
+                                var tRef = tVorn.Ref;
+                                if (tHinten && tHinten.Ref ){
+                                    if (tRef){
+                                        console.warn("merge found different ref ", tVorn.Ref, tHinten.Ref );
+                                    }else{
+                                        tRef = tHinten.Ref;
+                                    }
+                                }
+
+                                var tLfd = tVorn.Lfd;
+                                if (tHinten && tHinten.Lfd < 0){
+                                    if (tLfd > -1){
+                                        console.warn("merge found different lfd ", tVorn.Lfd, tHinten.Lfd );
+                                    }else{
+                                        tLfd = tHinten.Lfd;
+                                    }
+                                }
 
 
-                            tResultZeile.BhfTag = temp_ZeitZeileZusatzInfo.Ortsname;
-                            tResultZeile.Via = temp_ZeitZeileZusatzInfo.Via;
-                            tResultZeile.Fahrkarteninfo = temp_ZeitZeileZusatzInfo.Fahrpreise;
-                            tResultZeile.AnschlussNummern = temp_ZeitZeileZusatzInfo.AnschlussNummern;
-                            tResultZeile.Ref = temp_ZeitZeileZusatzInfo.Ref;
-                            tResultZeile.Lfd = temp_ZeitZeileZusatzInfo.Lfd;
+
+                                
+
+                                 const tResult:ZeitZeileZusatzInfo = {
+                                    AnschlussNummern: tAnschlussNummern ,
+                                    Via: tVia, //(tHinten) ? (tVorn.Via || []).concat(tHinten.Via || []) : tVorn.Via,
+                                    Ortsname: tOrtsname,
+                                    Fahrpreise: tFahrpreisAngabe,
+                                    Ref: tRef,
+                                    Lfd: tLfd,
+                                    
+                                    Valid: true, // ???
+                                    Raw: ""      // ???
+                                };
+
+                                return tResult;
+                            }
+
+
+
+                            const merged_ZeitZeileZusatzInfo = mergeF(temp_ZeitZeileZusatzInfo_Vorn , tZusatzInfoHinten);
+
+
+
+
+                            tResultZeile.BhfTag = merged_ZeitZeileZusatzInfo.Ortsname;
+                            tResultZeile.Via = merged_ZeitZeileZusatzInfo.Via;
+                            tResultZeile.Fahrkarteninfo =   merged_ZeitZeileZusatzInfo.Fahrpreise;
+                            tResultZeile.AnschlussNummern = merged_ZeitZeileZusatzInfo.AnschlussNummern;
+                            tResultZeile.Ref = merged_ZeitZeileZusatzInfo.Ref;
+                            tResultZeile.Lfd = merged_ZeitZeileZusatzInfo.Lfd;
                             
 
 
@@ -834,14 +957,17 @@ export class Importer {
                                 break;
                             case BLOCK_T.ZEILENZUSATZINFO:
 
+
+
+                                //SOLL: schon oben komplett ausgelesen
                                  
 
-                                var z: ZeitZeileZusatzInfo = Importer.parseZeitZeileZusatzInfo(rawentryX);
+                                //var z: ZeitZeileZusatzInfo = Importer.parseZeitZeileZusatzInfo(rawentryX);
 
 
 
 
-                                // todo merge
+                                
 
                                 /*
                                 if (!z.Valid) {

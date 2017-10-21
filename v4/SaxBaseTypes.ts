@@ -6,8 +6,9 @@
     }
 
 
-//region FAHRPREIS
-     // Fahrpreise hinter ZeitZeile
+    // #region FAHRPREIS_T
+    
+    // Fahrpreise hinter ZeitZeile
     export enum FAHRPREIS_T{
         KEINE_ANGABE = "FAHRPREIS_KEINE_ANGABE",
         EINFACH = "FAHRPREIS_EINFACH",
@@ -38,7 +39,8 @@
         kind: typeof FAHRPREIS_T.AB,
         AbfahrtsOrt: string
     }
-//endregion
+    // #endregion 
+
 
 
 

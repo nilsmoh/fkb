@@ -4205,7 +4205,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                         tZeitZeilenZusatzInfo.Ortsname = rawEntry.ort;
                     }
                     if (rawEntry.via) {
-                        tZeitZeilenZusatzInfo.Via = rawEntry.via;
+                        tZeitZeilenZusatzInfo.Via = [rawEntry.via];
                     }
                     if (rawEntry.lfd) {
                         tZeitZeilenZusatzInfo.Lfd = rawEntry.lfd;
@@ -4449,20 +4449,92 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                     case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
                                     case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
-                                        var temp_ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
+                                        var temp_ZeitZeileZusatzInfo_Vorn = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
                                         var tZusatzInfoIndex = tFindFirstIndex(zeile, function (z) {
                                             return (z.kind === BLOCK_T.ZEILENZUSATZINFO);
                                         });
-                                        var tZusatInfoHinten = null;
+                                        var tZusatzInfoHinten = null;
                                         if (tZusatzInfoIndex > -1) {
-                                            tZusatInfoHinten = Importer.parseZeitZeileZusatzInfo(zeile[tZusatzInfoIndex]);
+                                            tZusatzInfoHinten = Importer.parseZeitZeileZusatzInfo(zeile[tZusatzInfoIndex]);
                                         }
-                                        tResultZeile.BhfTag = temp_ZeitZeileZusatzInfo.Ortsname;
-                                        tResultZeile.Via = temp_ZeitZeileZusatzInfo.Via;
-                                        tResultZeile.Fahrkarteninfo = temp_ZeitZeileZusatzInfo.Fahrpreise;
-                                        tResultZeile.AnschlussNummern = temp_ZeitZeileZusatzInfo.AnschlussNummern;
-                                        tResultZeile.Ref = temp_ZeitZeileZusatzInfo.Ref;
-                                        tResultZeile.Lfd = temp_ZeitZeileZusatzInfo.Lfd;
+                                        var mergeF = function (tVorn, tHinten) {
+                                            var tNum = [];
+                                            var tBhf = null;
+                                            var tAnschlussNummern = new Array().concat(tVorn.AnschlussNummern);
+                                            if (tHinten) {
+                                                if ((tAnschlussNummern.length > 0) && (tHinten.AnschlussNummern.length > 0)) {
+                                                    console.warn("merge found different Anschlussnummern: ", tVorn.AnschlussNummern, tHinten.AnschlussNummern);
+                                                    console.warn("keeping front");
+                                                }
+                                                else {
+                                                    tAnschlussNummern = tAnschlussNummern.concat(tHinten.AnschlussNummern);
+                                                }
+                                            }
+                                            var tVia = tVorn.Via || [];
+                                            if (tHinten && tHinten.Via) {
+                                                if ((tVia.length > 0) && (tHinten.Via.length > 0)) {
+                                                    console.warn("merge found different Via: ", tVorn.Via, tHinten.Via);
+                                                    console.warn("keeping front");
+                                                }
+                                                else {
+                                                    tVia = tVia.concat(tHinten.Via);
+                                                }
+                                            }
+                                            var tOrtsname = tVorn.Ortsname;
+                                            if (tHinten && tHinten.Ortsname) {
+                                                if (tOrtsname) {
+                                                    console.warn("merge found different ortsname: ", tVorn.Ortsname, tHinten.Ortsname);
+                                                }
+                                                else {
+                                                    tOrtsname = tHinten.Ortsname;
+                                                }
+                                            }
+                                            var tFahrpreisAngabe = tVorn.Fahrpreise;
+                                            if (tHinten && tHinten.Fahrpreise.kind != SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE) {
+                                                if (tFahrpreisAngabe.kind != SaxBaseTypes_1.FAHRPREIS_T.KEINE_ANGABE) {
+                                                    console.warn("merge found different Fahrpreisangabe: ", tVorn.Fahrpreise, tHinten.Fahrpreise);
+                                                }
+                                                else {
+                                                    tFahrpreisAngabe = tHinten.Fahrpreise;
+                                                }
+                                            }
+                                            var tRef = tVorn.Ref;
+                                            if (tHinten && tHinten.Ref) {
+                                                if (tRef) {
+                                                    console.warn("merge found different ref ", tVorn.Ref, tHinten.Ref);
+                                                }
+                                                else {
+                                                    tRef = tHinten.Ref;
+                                                }
+                                            }
+                                            var tLfd = tVorn.Lfd;
+                                            if (tHinten && tHinten.Lfd < 0) {
+                                                if (tLfd > -1) {
+                                                    console.warn("merge found different lfd ", tVorn.Lfd, tHinten.Lfd);
+                                                }
+                                                else {
+                                                    tLfd = tHinten.Lfd;
+                                                }
+                                            }
+                                            var tResult = {
+                                                AnschlussNummern: tAnschlussNummern,
+                                                Via: tVia,
+                                                Ortsname: tOrtsname,
+                                                Fahrpreise: tFahrpreisAngabe,
+                                                Ref: tRef,
+                                                Lfd: tLfd,
+                                                Valid: true,
+                                                Raw: ""
+                                            };
+                                            return tResult;
+                                        };
+                                        var merged_ZeitZeileZusatzInfo = mergeF(temp_ZeitZeileZusatzInfo_Vorn, tZusatzInfoHinten);
+                                        tResultZeile.BhfTag = merged_ZeitZeileZusatzInfo.Ortsname;
+                                        tResultZeile.Via = merged_ZeitZeileZusatzInfo.Via;
+                                        tResultZeile.Fahrkarteninfo = merged_ZeitZeileZusatzInfo.Fahrpreise;
+                                        tResultZeile.AnschlussNummern = merged_ZeitZeileZusatzInfo.AnschlussNummern;
+                                        tResultZeile.Ref = merged_ZeitZeileZusatzInfo.Ref;
+                                        tResultZeile.Lfd = merged_ZeitZeileZusatzInfo.Lfd;
                                         break;
                                 }
                                 var tResultZeile_Zeiteintraege = [];
@@ -4494,7 +4566,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                             tResultZeile_Zeiteintraege_ZugNummern.push(rawentryX);
                                             break;
                                         case BLOCK_T.ZEILENZUSATZINFO:
-                                            var z = Importer.parseZeitZeileZusatzInfo(rawentryX);
                                             break;
                                         case BLOCK_T.KM_WERT:
                                             break;

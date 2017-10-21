@@ -90,7 +90,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
   
 
-    // KOPF der Normalzeilen
+    // KOPF / Header der Normalzeilen
     export interface TNormalzeile {
         kind: typeof ZEILE_T.NORMAL,
         Km: number | undefined;
@@ -115,7 +115,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Zeiteintraege: Array<TNormalZeileEintrag>;
         Ref: string | null,
         Lfd: number,
-        Via: StationTicketInfoEntryKpxTagged | null;
+        Via: StationTicketInfoEntryKpxTagged[] | null;
         Fahrkarteninfo: any;
     }
 
@@ -128,7 +128,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Lfd: number,
 
         //ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
-        Via: StationTicketInfoEntryKpxTagged | null;
+        Via: StationTicketInfoEntryKpxTagged[] | null;
         Fahrkarteninfo: any;
     }
 
@@ -140,7 +140,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Ref: string | null,
         Lfd: number,
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
-        Via: StationTicketInfoEntryKpxTagged | null;
+        Via: StationTicketInfoEntryKpxTagged[] | null;
         Fahrkarteninfo: any;
     }
 
@@ -152,7 +152,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Ref: string | null,
         Lfd: number,
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
-        Via: StationTicketInfoEntryKpxTagged | null;
+        Via: StationTicketInfoEntryKpxTagged[] | null;
         Fahrkarteninfo: any;
 
 
@@ -163,7 +163,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
     // infos hinter einer zeitzeile
     export interface ZeitZeileZusatzInfo {
         AnschlussNummern: (string | number)[],
-        Via:  StationTicketInfoEntryKpxTagged | null,
+        Via: StationTicketInfoEntryKpxTagged[] | null,
         Ortsname: StationTicketInfoEntryKpxTagged | null,
         Fahrpreise: TFahrpreisAngabe,
         Ref: string | null,
