@@ -662,7 +662,7 @@ export class Importer {
                         tNextAbIsFirst = true;
                     }
 
-
+                    tResultZeileN.AnAb = tAnAb;
 
                     var tResultZeile: TZeile = tResultZeileN;
 

@@ -590,8 +590,8 @@ export class Renderer{
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                 } else{
-                                        console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
-                                        td.innerHTML = "rohz "+ze.Zeit.RohZeit;
+                                        //console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
+                                        td.innerHTML = (ze.Referenzkey ? ze.Referenzkey + " " : "") + "rohz "+ze.Zeit.RohZeit;
                                     }
                                     break;
                                 case BLOCK_T.DICKERSTRICH:

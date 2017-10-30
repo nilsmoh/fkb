@@ -4381,6 +4381,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     tAnAb = SaxParsedTypes_1.EAnAb.An;
                                     tNextAbIsFirst = true;
                                 }
+                                tResultZeileN.AnAb = tAnAb;
                                 var tResultZeile = tResultZeileN;
                                 if ((zeile_0.kind === BLOCK_T.ZEILEN_TYP) && (zeile_0.zeilentyp == EZeilentyp.ANSCHLUSS_WEITER_AN)) {
                                     var tResultZeileX = {
@@ -5357,8 +5358,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
                                             }
                                             else {
-                                                console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
-                                                td.innerHTML = "rohz " + ze.Zeit.RohZeit;
+                                                td.innerHTML = (ze.Referenzkey ? ze.Referenzkey + " " : "") + "rohz " + ze.Zeit.RohZeit;
                                             }
                                             break;
                                         case BLOCK_T.DICKERSTRICH:
