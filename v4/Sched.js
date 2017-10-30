@@ -2704,8 +2704,29 @@ var F = function (nn) {
         (("string" == typeof nn) ? [nn] : nn);
     var tResult = {
         kind: BLOCK_T.ANSCHLUSS_NUMMERN,
-        fkbnummern: [12]
+        fkbnummern: tInput
     };
+    return tResult;
+};
+var MV = function (n) {
+    var tStunde12 = Math.floor(n / 100);
+    var tResult = {
+        kind: BLOCK_T.ZEITEINTRAG,
+        Referenzkey: null,
+        Schnellzug: false,
+        Zeit: { kind: ZEIT_24,
+            Stunde24: tStunde12,
+            Minute24: n - (Math.floor(n / 100) * 100),
+            WelcherTag: GesternHeuteMorgen.Morgen,
+            Valid: ETimeValid.Vorgabe24,
+            src: n },
+        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+    };
+    return tResult;
+};
+var sMV = function (n) {
+    var tResult = MV(n);
+    tResult.Schnellzug = true;
     return tResult;
 };
 var EKlassen;
@@ -4137,21 +4158,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     });
                     return s;
                 };
-                Importer.createTBlockEintrag_single = function (BlockInhalt) {
-                    var tResultEntryB = {
-                        kind: BLOCK_T.BLOCK,
-                        Senkrecht: false,
-                        Valid: true,
-                        Start: true,
-                        Breite: 1,
-                        Hoehe: 1,
-                        Passend: true,
-                        Referenzkey: undefined,
-                        Blockinhalt: BlockInhalt,
-                        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                    };
-                    return tResultEntryB;
-                };
                 Importer.parseZeitZeileZusatzInfo = function (rawEntry) {
                     var tZeitZeilenZusatzInfo = {
                         AnschlussNummern: [],
@@ -4344,7 +4350,10 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     AnschlussNummern: [],
                                     Zeiteintraege: [],
                                     Fahrkarteninfo: null,
-                                    AnAb: SaxParsedTypes_1.EAnAb.FollowAb
+                                    AnAb: SaxParsedTypes_1.EAnAb.FollowAb,
+                                    Ref: null,
+                                    Lfd: -1,
+                                    Via: null
                                 };
                                 var tFindFirstIndex = function (arr, matches) {
                                     for (var i_1 = 0; i_1 < arr.length; i_1++) {
@@ -4379,7 +4388,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
-                                        ZeitZeileZusatzInfo: undefined,
                                         Ref: null,
                                         Lfd: -1,
                                         Via: null,
@@ -4393,7 +4401,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                         BhfTag: null,
                                         AnschlussNummern: [],
                                         Zeiteintraege: [],
-                                        ZeitZeileZusatzInfo: undefined,
                                         Ref: null,
                                         Lfd: -1,
                                         Via: null,
@@ -4449,6 +4456,7 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                                     case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_WEITER_IN:
                                     case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
                                     case SaxParsedTypes_1.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                                    case SaxParsedTypes_1.ZEILE_T.NORMAL:
                                         var temp_ZeitZeileZusatzInfo_Vorn = Importer.erstelleZZZausHeaderArray(zeile.slice(0, tTrennerIndex));
                                         var tZusatzInfoIndex = tFindFirstIndex(zeile, function (z) {
                                             return (z.kind === BLOCK_T.ZEILENZUSATZINFO);
@@ -4678,7 +4686,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     return tResult;
                 };
                 ZI_Renderer.TBlockInhaltNachRenderKomplex = function (t, alleZuege) {
-                    return "todo render v2";
+                    var tResult = "";
+                    if (t) {
+                        tResult = t.Inhalt.q;
+                    }
+                    return "todo render v2 " + tResult;
                 };
                 return ZI_Renderer;
             }());
@@ -4736,8 +4748,11 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                 tEintraege.forEach(function (zi, spalteidx) {
                                     switch (zi.kind) {
                                         case BLOCK_T.BLOCK:
-                                            tUnprocessedBlocks.push({ eintrag: zi, zeile: zeileidx, spalte: spalteidx, alreadyDone: false });
-                                            console.log("push ", spalteidx, zeileidx);
+                                            var zix = JSON.parse(JSON.stringify(zi));
+                                            zix["comment"] = "created in merge()";
+                                            zix.Start = false;
+                                            tEintraege[spalteidx] = zix;
+                                            tUnprocessedBlocks.push({ eintrag: zix, zeile: zeileidx, spalte: spalteidx, alreadyDone: false });
                                             break;
                                         case BLOCK_T.ANKUNFT:
                                         case BLOCK_T.ZEITEINTRAG:
@@ -4777,6 +4792,7 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                         else if (tAlreadyProcessedKeys.indexOf(startblock.eintrag.Referenzkey) < 0) {
                             startblock.eintrag.Start = true;
                             startblock.alreadyDone = true;
+                            startblock.eintrag.Valid = true;
                             tAlreadyProcessedKeys.push(startblock.eintrag.Referenzkey);
                             console.log("Finding blocksize for ", startblock.eintrag.Referenzkey);
                             var tSuchZeile = startblock.zeile;
@@ -4787,11 +4803,13 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                             while (tSuchSpalteWeiter) {
                                 tSuchSpalte++;
                                 var tAnguck = FindEntry(tUnprocessedBlocks, tSuchSpalte, tSuchZeile);
-                                if ((tAnguck != null) && (tAnguck.alreadyDone == false) && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
+                                if ((tAnguck != null)
+                                    && (tAnguck.alreadyDone == false)
+                                    && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey)
+                                    && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                                     startblock.eintrag.Breite++;
                                     tAnguck.alreadyDone = true;
                                     tAnguck.eintrag.Valid = true;
-                                    tAnguck.eintrag.Start = false;
                                     tProcessedBlocks.push(tAnguck);
                                 }
                                 else {
@@ -4804,11 +4822,13 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                 tSuchZeile++;
                                 var tAnguck = FindEntry(tUnprocessedBlocks, tSuchSpalte, tSuchZeile);
                                 console.log(tSuchSpalte, tSuchZeile, tAnguck);
-                                if ((tAnguck != null) && (tAnguck.alreadyDone == false) && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
+                                if ((tAnguck != null)
+                                    && (tAnguck.alreadyDone == false)
+                                    && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey)
+                                    && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                                     startblock.eintrag.Hoehe++;
                                     tAnguck.alreadyDone = true;
                                     tAnguck.eintrag.Valid = true;
-                                    tAnguck.eintrag.Start = false;
                                     tProcessedBlocks.push(tAnguck);
                                 }
                                 else {
@@ -4816,12 +4836,16 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                 }
                             }
                             console.log("ermittelte Hoehe ", startblock.eintrag.Hoehe);
+                            console.log(JSON.stringify(startblock.eintrag));
                             console.log("rechteck pruefen");
                             for (var z = startblock.zeile; z < startblock.zeile + startblock.eintrag.Hoehe; z++) {
                                 for (var sp_1 = startblock.spalte; sp_1 < startblock.spalte + startblock.eintrag.Breite; sp_1++) {
                                     var tAnguck_1 = FindEntry(tUnprocessedBlocks, sp_1, z);
                                     console.log(sp_1, z, tAnguck_1);
-                                    if ((tAnguck_1 != null) && (true) && (tAnguck_1.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck_1.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
+                                    if ((tAnguck_1 != null)
+                                        && (true)
+                                        && (tAnguck_1.eintrag.Referenzkey === startblock.eintrag.Referenzkey)
+                                        && (tAnguck_1.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                                         tAnguck_1.alreadyDone = true;
                                         tAnguck_1.eintrag.Valid = true;
                                         tProcessedBlocks.push(tAnguck_1);
@@ -4832,12 +4856,14 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                     }
                                 }
                             }
+                            console.log(JSON.stringify(startblock.eintrag));
                             tProcessedBlocks.push(startblock);
                         }
                         else {
                             console.warn("Validation error: found entry for already known refkey " + startblock.eintrag.Referenzkey + "!!!");
                         }
                     });
+                    console.log(tProcessedBlocks);
                     return s;
                 };
                 Validator.validate_addZusatzinfobase = function (s) {
@@ -5161,30 +5187,36 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 tdk.innerHTML += '<div class = "BhfInClass">in </div>';
                                                 tBhfSpanClass = "ClassInBhf";
                                             }
-                                            tdk.innerHTML += "<div class=\"" + tBhfSpanClass + "\">" + z.BhfTag + "</div>";
+                                            tdk.innerHTML += "<div class=\"" + tBhfSpanClass + "\">" + (z.BhfTag ? z.BhfTag.station : "")
+                                                + "</div>";
+                                            console.log(z);
                                         }
                                         if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB) {
                                             tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                             tdk.innerHTML += "<div class=\"" + "ZubringerAbAus" + "\">" + "aus" + "</div>";
-                                            tdk.innerHTML += "<div class=\"" + "ZubringerAbBhf" + "\">" + ((z.BhfTag) ? z.BhfTag.station : "null") + "</div>";
+                                            tdk.innerHTML += "<div class=\"" + "ZubringerAbBhf" + "\">" + (z.BhfTag ? z.BhfTag.station : "")
+                                                + "</div>";
                                             tdk.setAttribute("title", "ANSCHLUSS zubringer ab");
                                         }
                                         if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN) {
                                             tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                             tdk.innerHTML += "<div class=\"" + "ZubringerInI" + "\">" + "i." + "</div>";
-                                            tdk.innerHTML += "<div class=\"" + "ZubringerInBhf" + "\">" + z.BhfTag + "</div>";
+                                            tdk.innerHTML += "<div class=\"" + "ZubringerInBhf" + "\">" + (z.BhfTag ? z.BhfTag.station : "")
+                                                + "</div>";
                                             tdk.setAttribute("title", "ANSCHLUSS zubringer in");
                                         }
                                         if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_AB) {
                                             tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                             tdk.innerHTML += "<div class=\"" + "WeiterAbAus" + "\">" + "a." + "</div>";
-                                            tdk.innerHTML += "<div class=\"" + "WeiterAbBhf" + "\">" + z.BhfTag + "</div>";
+                                            tdk.innerHTML += "<div class=\"" + "WeiterAbBhf" + "\">" + (z.BhfTag ? z.BhfTag.station : "")
+                                                + "</div>";
                                             tdk.setAttribute("title", "ANSCHLUSS weiter ab");
                                         }
                                         if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_WEITER_IN) {
                                             tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                             tdk.innerHTML += "<div class=\"" + "WeiterIn" + "\">" + "in" + "</div>";
-                                            tdk.innerHTML += "<div class=\"" + "WeiterInBhfBhf" + "\">" + z.BhfTag + "</div>";
+                                            tdk.innerHTML += "<div class=\"" + "WeiterInBhfBhf" + "\">" + (z.BhfTag ? z.BhfTag.station : "")
+                                                + "</div>";
                                             tdk.setAttribute("title", "ANSCHLUSS weiter in");
                                         }
                                         if (z.AnschlussNummern.length > 0) {
@@ -5249,6 +5281,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                             td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                             if (ze.Valid == false) {
+                                                console.log("render block invalid ", ze);
                                                 if (ze.Senkrecht) {
                                                     td.setAttribute("class", "blockSenkrecht invalid");
                                                     td.innerHTML = (ze.Referenzkey) ? ze.Referenzkey : "";
@@ -5259,6 +5292,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 }
                                             }
                                             else {
+                                                console.log("ZE ", ze.Start);
                                                 if (ze.Senkrecht) {
                                                     td.setAttribute("class", "blockSenkrecht valid");
                                                     var tSenkrechtDiv = document.createElement("div");
@@ -5529,7 +5563,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                             [_zugnr, zn, gnix, 1951, gnix, 1861, gnix, gnix, 1931, 1867, 1933, gnix, 1995, gnix, gnix, 1935, 1869, 1937, _, 1997, 1939, 1871, 1999],
                             [_klassen, kl, gnix, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b3, _, k2b4, k2b4, k2b3, k2b4],
                             [Annaberg, ab, _, _, _, _, _, _, 605, _, 918, _, 1126, _, _, 226, _, sg, _, 607, 736, _, 944],
-                            [2.7, Buchholz, ab, _, _, _, _, _, _, 613, _, 930, _, 1136, _, _, 237, _, sg, _, 619, 749, _, 954, { nr: 85 }],
+                            [2.7, Buchholz, F(85), ab, _, _, _, _, _, _, 613, _, 930, _, 1136, _, _, 237, _, sg, _, 619, 749, _, 954, { nr: 85 }],
                             [8.6, SaxInputTypes_2.WaltersdfHst, ab, _, _, _, _, _, _, 630, _, 947, _, 1153, _, _, 256, _, sg, _, 636, 808, _, 1011],
                             [Schlettau, an, _, _, _, _, _, _, 635, _, 952, _, 1158, _, _, 301, _, sg, _, 641, 813, _, 1016, { nr: "99b" }],
                             [9.9, Schlettau, ab, _, _, _, 525, _, _, 640, 853, 957, _, _, _, _, 306, 320, 610, SaxInputTypes_2.Z1971, _, 818, 830, _],
@@ -5560,8 +5594,8 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                             [67.2, Zwickau, an, 505, 618, 649, _, SaxInputTypes_2.m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120, _, _, { nr: 54 }],
                             [Zwickau, ab, SaxInputTypes_2.a510, 632, 656, SaxInputTypes_2.n822, _, _, 948, SaxInputTypes_2.d1153, 115, _, 235, SaxInputTypes_2.b355, SaxInputTypes_2.c510, 620, 628, 710, 825, 908, 1150, _, _, { nrn: [54, 68] }],
                             [Lichtentanne, ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125, _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200, _, _],
-                            [76.8, Werdau, an, 530, 647, 716, 835, wa, wa, 1008, 1212, 135, _, 254, 416, 529, 635, 655, 730, 845, 925, 1208, _, _, { nr: 59 }],
-                            [_anschluss_nach_in, LE, 749, SaxInputTypes_2.s810, 925, 1019, _, _, 1232, _, 341, _, SaxInputTypes_2.s550, 652, SaxInputTypes_2.s748, SaxInputTypes_2.s800, _, 957, _, 1205, SaxInputTypes_2.s321, _, _, { ort: Leipzig, nr: 56 }]
+                            [76.8, Werdau, an, 530, 647, 716, 835, wa, wa, 1008, 1212, 135, _, 254, 416, 529, 635, 655, 730, 845, 925, MV(1208), _, _, { nr: 59 }],
+                            [_anschluss_nach_in, LE, 749, SaxInputTypes_2.s810, 925, 1019, _, _, 1232, _, 341, _, SaxInputTypes_2.s550, 652, SaxInputTypes_2.s748, SaxInputTypes_2.s800, _, 957, _, MV(1205), sMV(321), _, _, { ort: Leipzig, nr: 56 }]
                         ],
                         ZellenVerweise: [
                             {

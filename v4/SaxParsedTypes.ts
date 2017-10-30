@@ -1,7 +1,7 @@
 import { /*EKlassen,*/ TFahrpreisAngabe } from "./SaxBaseTypes";
 import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
-    // stark typisierte, geparste Tabelle - noch unbearbeitet !!!
+    // stark typisierte, geparste Tabelle - noch unbearbeitet, aber PASSEND getypt   !!!
     export interface SingleDirectionScheduleTyped {
         Quelle: EQuelle;
         Kommentar: string;
@@ -85,11 +85,6 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     export type TZeile = TZugNrZeile | TKlassenNrZeile | TNormalzeile | TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile;
 
-       
-//                     | TZugNrZeile)  | TKlassenNrZeile | TNormalzeile (TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile  | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile 
-
-  
-
     // KOPF / Header der Normalzeilen
     export interface TNormalzeile {
         kind: typeof ZEILE_T.NORMAL,
@@ -103,6 +98,12 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         //Referenz: string | null;
      
         //Via: StationTicketInfoEntryKpxTagged | null;
+
+        Ref: string | null,
+        Lfd: number,
+        Via: StationTicketInfoEntryKpxTagged[] | null;
+
+
         Fahrkarteninfo: any;
 
 
@@ -139,7 +140,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Zeiteintraege: Array<TNormalZeileEintrag>;
         Ref: string | null,
         Lfd: number,
-        ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
+        //ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
         Via: StationTicketInfoEntryKpxTagged[] | null;
         Fahrkarteninfo: any;
     }
@@ -151,7 +152,7 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Zeiteintraege: Array<TNormalZeileEintrag>;
         Ref: string | null,
         Lfd: number,
-        ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
+        //ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
         Via: StationTicketInfoEntryKpxTagged[] | null;
         Fahrkarteninfo: any;
 

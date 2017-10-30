@@ -27,10 +27,6 @@ export class Sched{
 
 
             //tResult ist eine stark getypte eingabetabelle
-
-            
-            
-           
             
             SaxValidator.Validator.validate_mergeBlocks(tResult); // fasst wa/sa zu rechteckigen bereichen zusammen, der oberste linke enthaelt dann breite und hoehe des rechteckigen bereichs
 

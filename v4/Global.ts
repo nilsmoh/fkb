@@ -46,13 +46,39 @@ var F = function(nn:number | string | Array<number | string>) : THEADERANSCHLUSS
     var tResult: THEADERANSCHLUSSNUMMERN =
     {
         kind:  BLOCK_T.ANSCHLUSS_NUMMERN, 
-        fkbnummern: [12]
+        fkbnummern: tInput
     } ;
 
     return tResult;
 }
 
 
+// time functions
+var MV = function(n:number) : TZeiteintrag{
+
+    let tStunde12 = Math.floor( n/100);
+
+    var tResult :TZeiteintrag = {
+        kind:  BLOCK_T.ZEITEINTRAG,
+        Referenzkey: null,
+        Schnellzug: false,
+        Zeit:  { kind:  ZEIT_24,
+                Stunde24: tStunde12, 
+                Minute24: n - (Math.floor( n/100) * 100),
+                WelcherTag: GesternHeuteMorgen.Morgen,
+                Valid: ETimeValid.Vorgabe24,
+                src: n},
+        BerechneterZugLauf:  { kind:  ZUGLAUF_UNBEKANNT}
+    };
+
+    return tResult;
+}
+
+var sMV = function(n:number){
+    var tResult = MV(n);
+    tResult.Schnellzug = true;
+    return tResult;
+}
 
 
 enum EKlassen {

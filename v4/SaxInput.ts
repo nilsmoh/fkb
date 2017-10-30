@@ -28,7 +28,7 @@ export class InputData {
         [_zugnr                  ,     zn, gnix, 1951, gnix, 1861, gnix, gnix, 1931, 1867, 1933, gnix, 1995, gnix, gnix, 1935, 1869, 1937,    _, 1997, 1939, 1871, 1999],
         [_klassen,                     kl, gnix, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b4, gnix, k2b4, gnix, gnix, k2b4, k2b4, k2b3,    _, k2b4, k2b4, k2b3, k2b4],
         [Annaberg     ,                ab,    _,    _,    _,    _,    _,    _,  605,    _, 918,    _, 1126,    _,    _, 226,    _, sg,    _, 607, 736,    _, 944],
-        [ 2.7, Buchholz,               ab,    _,    _,    _,    _,    _,    _,  613,    _, 930,    _, 1136,    _,    _, 237,    _, sg,    _, 619, 749,    _, 954, { nr: 85 }],
+        [ 2.7, Buchholz,      F(85),         ab,    _,    _,    _,    _,    _,    _,  613,    _, 930,    _, 1136,    _,    _, 237,    _, sg,    _, 619, 749,    _, 954, { nr: 85 }],
         [ 8.6, WaltersdfHst,           ab,    _,    _,    _,    _,    _,    _,  630,    _, 947,    _, 1153,    _,    _, 256,    _, sg,    _, 636, 808,    _, 1011],
         [Schlettau,          an,    _,    _,    _,    _,    _,    _,  635,    _, 952,    _, 1158,    _,    _, 301,    _, sg,    _, 641, 813,    _, 1016, { nr: "99b" }],
         [9.9, Schlettau,     ab,    _,    _,    _,  525,    _,    _,  640, 853, 957,     _,    _,    _,    _, 306, 320, 610, Z1971,    _, 818, 830, _],
@@ -59,8 +59,8 @@ export class InputData {
                      [67.2, Zwickau,          an, 505, 618, 649,    _, m747, 835, 928, 1059, 1258, 141, 228, 350, 459, 616, si, 706, 820, 842, 1120,    _,    _, { nr: 54 }],
                      [Zwickau,                ab, a510, 632, 656, n822,    _,    _, 948, d1153, 115,    _, 235, b355, c510, 620, 628, 710, 825, 908, 1150,    _,    _, { nrn: [54, 68] }],
                      [Lichtentanne,           ab, 520, kHlt, 707, kHlt, wa, wa, 958, 1204, 125,    _, 245, 406, 521, kHlt, 640, 720, 836, 918, 1200,    _, _],
-                     [76.8,Werdau,            an, 530,  647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, 1208,    _,    _, { nr: 59 }],
-                     [_anschluss_nach_in,     LE, 749, s810, 925, 1019,    _,    _, 1232,    _, 341,    _, s550, 652, s748, s800,    _, 957,    _, 1205, s321,    _, _,{ort: Leipzig, nr:56}]
+                     [76.8,Werdau,            an, 530,  647, 716, 835, wa, wa, 1008, 1212, 135,    _, 254, 416, 529, 635, 655, 730, 845, 925, MV(1208),    _,    _, { nr: 59 }],
+                     [_anschluss_nach_in,     LE, 749, s810, 925, 1019,    _,    _, 1232,    _, 341,    _, s550, 652, s748, s800,    _, 957,    _, MV(1205), sMV(321),    _, _,{ort: Leipzig, nr:56}]
                 
                  ],
                 ZellenVerweise: [
@@ -778,7 +778,7 @@ export class InputData {
                zeilen:[
                    [_zub_aus, Zwickau,L(1),F(99), TR,515,a858,335,701,{/*ort:Zwickau,*/ /*nr:99, lfd:1*/}],                      // lfd erstmal als annahme, soll der validierer dann als problem feststellen !!!
                    [_zub_aus, Aue,    L(1),F(99), TR,642,1025,501,833,{/*ort:Aue, nr:99, lfd:1*/}],                        
-                   [_zub_aus, Annaberg,L(9),F(99),TR,605,918,226,736,{/*ort:Annaberg,nr:99,lfd:1*/}],                    //andere lfd weil gegenrichtung
+                   [_zub_aus, Annaberg,L(9),F(99),TR,605,918,226,736,{/*ort:Annaberg,nr:99,lfd:9*/}],                    //andere lfd weil gegenrichtung
                    [_zugnr,                 zn, 3112,3114,3116,3118],
                    [Schwarzenberg_Bf,       ab,  740,1115,545,923],
                    [1.5, Schwarzenberg_Hltp,ab,  748,1123,554,931                      ,{fk:[ 30,20]}],

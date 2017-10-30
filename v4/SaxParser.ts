@@ -352,6 +352,7 @@ export class Importer {
         return s;
     }
 
+    /*
     public static createTBlockEintrag_single(BlockInhalt: TBlockinhaltBaseV2): TBlockEintrag {
         var tResultEntryB: TBlockEintrag = {
             kind: BLOCK_T.BLOCK,
@@ -367,6 +368,7 @@ export class Importer {
         };
         return tResultEntryB;
     }
+    */
 
     public static parseZeitZeileZusatzInfo(rawEntry: SaxInput.IZeilenZusatzInfo): ZeitZeileZusatzInfo {
         var tZeitZeilenZusatzInfo: ZeitZeileZusatzInfo = {
@@ -622,7 +624,10 @@ export class Importer {
                         Zeiteintraege: [],  //TODO
                         //ZeitZeileZusatzInfo: undefined,
                         Fahrkarteninfo: null,
-                        AnAb: EAnAb.FollowAb //   tAnAb // TODO wenigstens error bei anderen eintraegen
+                        AnAb: EAnAb.FollowAb, //   tAnAb // TODO wenigstens error bei anderen eintraegen,
+                        Ref: null,
+                        Lfd: -1,
+                        Via:  null
                     };
 
                     // ------ Trenner finden
@@ -670,7 +675,7 @@ export class Importer {
                             BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
-                            ZeitZeileZusatzInfo: undefined,
+                            //ZeitZeileZusatzInfo: undefined,
                             Ref:null,
                             Lfd: -1,
                             Via: null,
@@ -686,7 +691,7 @@ export class Importer {
                             BhfTag: null,             // TODO aus Zusatzinfo lesen
                             AnschlussNummern: [],
                             Zeiteintraege: [],
-                            ZeitZeileZusatzInfo: undefined,
+                            //ZeitZeileZusatzInfo: undefined,
                             Ref:null,
                             Lfd: -1,
                             Via: null,
@@ -758,6 +763,8 @@ export class Importer {
                         case ZEILE_T.ANSCHLUSS_WEITER_IN:
                         case ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
                         case ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+
+                        case ZEILE_T.NORMAL:
 
                             //tResultZeile.Zeiteintraege[0].kind
 
@@ -1656,8 +1663,13 @@ export class ZI_Renderer {
             
         }
         */
+
+        var tResult = "";
+        if (t){
+            tResult = t.Inhalt.q;
+        }
         
-        return "todo render v2";
+        return "todo render v2 "+ tResult;
     }
 }
 

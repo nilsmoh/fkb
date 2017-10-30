@@ -298,10 +298,18 @@ export class Renderer{
                                      tBhfSpanClass = "ClassInBhf";
                                    }
                                     
-                                   tdk.innerHTML += "<div class=\""+tBhfSpanClass+"\">"+ z.BhfTag + "</div>";
+                                   tdk.innerHTML += "<div class=\""+tBhfSpanClass+"\">"+ (z.BhfTag ? z.BhfTag.station : "") 
+                                    /* +" "+(z.AnschlussNummern.length > 0 ? "  "+z.AnschlussNummern.join(",") : "") 
+                                    */
+                                    + "</div>";
+
+                                    console.log(z);
                                 
                                 }
                                 
+
+                                //ende implementierung normalzeile header
+
                                 //tdk.innerHTML += "<div class=\""+tBhfSpanClass+"\">"+ z.BhfTag + "</div>";
                                 
 
@@ -314,7 +322,9 @@ export class Renderer{
                                 if (z.kind === SaxSchedulesTyped.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB){ //ZEILE_ANSCHLUSS_AUS){
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     tdk.innerHTML += "<div class=\""+  "ZubringerAbAus"  +"\">" +"aus"     + "</div>";
-                                    tdk.innerHTML += "<div class=\""+  "ZubringerAbBhf"  +"\">" + ((z.BhfTag) ? z.BhfTag.station : "null"  ) + "</div>";
+                                    tdk.innerHTML += "<div class=\""+  "ZubringerAbBhf"  +"\">" + (z.BhfTag ? z.BhfTag.station : "") 
+                                    //+" "+(z.AnschlussNummern.length > 0 ? "  "+z.AnschlussNummern.join(",") : "") 
+                                    +  "</div>";
                                     tdk.setAttribute("title", "ANSCHLUSS zubringer ab");
                                     //tLastWasAb = false;
                                     
@@ -323,7 +333,9 @@ export class Renderer{
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     //tdk.innerHTML = "i. " + z.BhfTag;
                                     tdk.innerHTML += "<div class=\""+  "ZubringerInI"  +"\">" +"i."     + "</div>";
-                                    tdk.innerHTML += "<div class=\""+  "ZubringerInBhf"  +"\">" + z.BhfTag + "</div>";
+                                    tdk.innerHTML += "<div class=\""+  "ZubringerInBhf"  +"\">" + (z.BhfTag ? z.BhfTag.station : "") 
+                                    //+" "+(z.AnschlussNummern.length > 0 ? "  "+z.AnschlussNummern.join(",") : "") 
+                                    + "</div>";
                                     tdk.setAttribute("title", "ANSCHLUSS zubringer in");
                                     //tLastWasAb = false;
                                     
@@ -333,7 +345,9 @@ export class Renderer{
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     //tdk.innerHTML = "a. " + z.BhfTag;
                                     tdk.innerHTML += "<div class=\""+  "WeiterAbAus"  +"\">" +"a."     + "</div>";
-                                    tdk.innerHTML += "<div class=\""+  "WeiterAbBhf"  +"\">" + z.BhfTag + "</div>";
+                                    tdk.innerHTML += "<div class=\""+  "WeiterAbBhf"  +"\">" + (z.BhfTag ? z.BhfTag.station : "") 
+                                    //+" "+(z.AnschlussNummern.length > 0 ? "  "+z.AnschlussNummern.join(",") : "") 
+                                    +  "</div>";
                                     tdk.setAttribute("title", "ANSCHLUSS weiter ab")
                                     //tLastWasAb = false;
                                 }
@@ -342,7 +356,9 @@ export class Renderer{
                                     tdk.setAttribute("class", "notImplemented ErsteSpalteAnschluss");
                                     //tdk.innerHTML = "in " + z.BhfTag;
                                     tdk.innerHTML += "<div class=\""+  "WeiterIn"  +"\">" +"in"     + "</div>";
-                                    tdk.innerHTML += "<div class=\""+  "WeiterInBhfBhf"  +"\">" + z.BhfTag + "</div>";
+                                    tdk.innerHTML += "<div class=\""+  "WeiterInBhfBhf"  +"\">" + (z.BhfTag ? z.BhfTag.station : "") 
+                                    //+" "+(z.AnschlussNummern.length > 0 ? "  "+z.AnschlussNummern.join(",") : "") 
+                                    + "</div>";
                                     tdk.setAttribute("title", "ANSCHLUSS weiter in")
                                     //tLastWasAb = false;
                                 }
@@ -463,6 +479,9 @@ export class Renderer{
                                     //td.title = ze.BerechneterZugLauf.kind;
                                     
                                     if (ze.Valid == false) {
+
+                                        console.log("render block invalid ", ze);
+
                                         if (ze.Senkrecht) {
                                             td.setAttribute("class", "blockSenkrecht invalid");
                                             td.innerHTML = (ze.Referenzkey) ? ze.Referenzkey : ""; //= (ze.Marker) ? ze.Marker : "";
@@ -472,7 +491,7 @@ export class Renderer{
                                         }
                                     } else {
                                         //td.setAttribute("class", "notImplemented")
-
+                                        console.log("ZE ", ze.Start);
 
                                         if (ze.Senkrecht) {
                                             td.setAttribute("class", "blockSenkrecht valid");
@@ -570,7 +589,7 @@ export class Renderer{
                                     td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //td.innerHTML += berechneStartEndString(ze);
                                     td.setAttribute("class", td.getAttribute("class") + berechneStartEndString(ze));
-                                    }else{
+                                } else{
                                         console.error("Rohzeit sollte beim rendern lange geschichte sein ?!");
                                         td.innerHTML = "rohz "+ze.Zeit.RohZeit;
                                     }

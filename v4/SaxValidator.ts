@@ -66,11 +66,18 @@ export class Validator {
                             tEintraege = z.Zeiteintraege;
                         }
                         tEintraege.forEach((zi, spalteidx) => {
+                            
                             switch (zi.kind) {
                                 case BLOCK_T.BLOCK:
+                                    let zix = JSON.parse(JSON.stringify(zi)); // divide to be able to have different start values
+                                    zix["comment"] = "created in merge()";
 
-                                    tUnprocessedBlocks.push({ eintrag: zi, zeile: zeileidx, spalte: spalteidx, alreadyDone: false });
-                                    console.log("push ", spalteidx, zeileidx);
+                                    (zix as TBlockEintrag).Start = false;
+                                    tEintraege[spalteidx] = zix; 
+
+                                    //let zix:TBlockEintrag = JSON.parse(JSON.stringify(zi));
+                                    tUnprocessedBlocks.push({ eintrag: zix as TBlockEintrag, zeile: zeileidx, spalte: spalteidx, alreadyDone: false });
+                                    
                                     break;
                                 case BLOCK_T.ANKUNFT:
                                 case BLOCK_T.ZEITEINTRAG:
@@ -134,6 +141,7 @@ export class Validator {
                 else if (tAlreadyProcessedKeys.indexOf(startblock.eintrag.Referenzkey) < 0) {
                     startblock.eintrag.Start = true;
                     startblock.alreadyDone = true;
+                    startblock.eintrag.Valid = true;
                     tAlreadyProcessedKeys.push(startblock.eintrag.Referenzkey);
 
                     console.log("Finding blocksize for ", startblock.eintrag.Referenzkey);
@@ -149,11 +157,14 @@ export class Validator {
                     while (tSuchSpalteWeiter) {
                         tSuchSpalte++;
                         var tAnguck = FindEntry(tUnprocessedBlocks, tSuchSpalte, tSuchZeile);
-                        if ((tAnguck != null) && (tAnguck.alreadyDone == false) && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
+                        if ((tAnguck != null) 
+                        && (tAnguck.alreadyDone == false) 
+                        && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) 
+                        && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                             startblock.eintrag.Breite++;
                             tAnguck.alreadyDone = true;
                             tAnguck.eintrag.Valid = true;
-                            tAnguck.eintrag.Start = false;
+                            //tAnguck.eintrag.Start = false;
                             tProcessedBlocks.push(tAnguck);
 
                         } else {
@@ -173,11 +184,14 @@ export class Validator {
                         tSuchZeile++;
                         var tAnguck = FindEntry(tUnprocessedBlocks, tSuchSpalte, tSuchZeile);
                         console.log(tSuchSpalte, tSuchZeile, tAnguck);
-                        if ((tAnguck != null) && (tAnguck.alreadyDone == false) && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
+                        if ((tAnguck != null) 
+                        && (tAnguck.alreadyDone == false) 
+                        && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) 
+                        && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                             startblock.eintrag.Hoehe++;
                             tAnguck.alreadyDone = true;
                             tAnguck.eintrag.Valid = true;
-                            tAnguck.eintrag.Start = false;
+                            //tAnguck.eintrag.Start = false;  //test
                             tProcessedBlocks.push(tAnguck);
 
                         } else {
@@ -187,6 +201,7 @@ export class Validator {
                     }
 
                     console.log("ermittelte Hoehe ", startblock.eintrag.Hoehe);
+                    console.log(JSON.stringify(startblock.eintrag));
 
                     // hoehe und breite jetzt fix
                     console.log("rechteck pruefen");
@@ -194,7 +209,10 @@ export class Validator {
                         for (let sp = startblock.spalte; sp < startblock.spalte + startblock.eintrag.Breite; sp++) {
                             let tAnguck = FindEntry(tUnprocessedBlocks, sp, z);
                             console.log(sp, z, tAnguck);
-                            if ((tAnguck != null) && (true) && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
+                            if ((tAnguck != null) 
+                            && (true) 
+                            && (tAnguck.eintrag.Referenzkey === startblock.eintrag.Referenzkey) 
+                            && (tAnguck.eintrag.Senkrecht === startblock.eintrag.Senkrecht)) {
                                 tAnguck.alreadyDone = true;
                                 tAnguck.eintrag.Valid = true;
                                 //tAnguck.eintrag.Start = false;  // NB start is visited again here !!!
@@ -206,7 +224,8 @@ export class Validator {
                         }
                     }
                     // rechteck jetzt ok, ausserhalb ueberzaehlige werden spaeter gefunden
-
+                    console.log(JSON.stringify(startblock.eintrag));
+                    //startblock.eintrag.Start = true;
                     tProcessedBlocks.push(startblock);
                 } else {
                     console.warn("Validation error: found entry for already known refkey " + startblock.eintrag.Referenzkey + "!!!");
@@ -214,6 +233,7 @@ export class Validator {
 
             });
 
+            console.log(tProcessedBlocks);
             return s;
 
         }
