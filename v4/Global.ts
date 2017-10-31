@@ -392,7 +392,7 @@ interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seit
 
 
     //// TEXTORT //Text wird in z.b. links neben header geschrieben
-    type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
+type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
     
     enum TEXTORT_T {
         NICHTANGEGEBEN = "TEXTORT_NICHTANGEGEBEN",
@@ -449,9 +449,8 @@ interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seit
 
 
 interface TBlockinhaltBaseV2{
-        Verweistyp: TVerweisTyp; 
+        Verweistyp: TVerweisTyp, 
         TextOrt: TTextOrt,
-
         Inhalt: entry
 }
 

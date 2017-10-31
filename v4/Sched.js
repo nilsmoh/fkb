@@ -6443,10 +6443,127 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
         }
     };
 });
-System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput", "SaxZuglaufAuslesen"], function (exports_10, context_10) {
+System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
-    var Parser, SaxValidator, SaxRender, SaxSchedules, SaxZuglaufAuslesen_1, Sched;
+    function makeTableVirtual(tInput) {
+        var virtualize = function (z) {
+            z.Virtual = false;
+            return z;
+        };
+        var tResult = {
+            Quelle: JSON.parse(JSON.stringify(tInput.Quelle)),
+            Kommentar: JSON.parse(JSON.stringify(tInput.Kommentar)),
+            Seite: JSON.parse(JSON.stringify(tInput.Seite)),
+            Ueberschrift: JSON.parse(JSON.stringify(tInput.Ueberschrift)),
+            Route1900: JSON.parse(JSON.stringify(tInput.Route1900)),
+            Klassen: JSON.parse(JSON.stringify(tInput.Klassen)),
+            Zeilen: JSON.parse(JSON.stringify(tInput.Zeilen)).map(virtualize),
+            ZusatzBloecke: JSON.parse(JSON.stringify(tInput.ZusatzBloecke))
+        };
+        return tResult;
+    }
+    exports_10("makeTableVirtual", makeTableVirtual);
+    function virtualizeZugNrZugKlasse(tRefInput) {
+        console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
+        tRefInput.Zeilen.forEach(function (zeile) {
+            switch (zeile.kind) {
+                case ParsedTypes.ZEILE_T.NORMAL:
+                    zeile.Zeiteintraege.forEach(function (ze, zidx) {
+                        switch (ze.kind) {
+                            case BLOCK_T.ZEITEINTRAG:
+                                if (ze.Referenzkey) {
+                                    console.log("Zeit Refkey ", ze.Referenzkey);
+                                    var tRef = tRefInput.ZusatzBloecke.filter(function (b) { return ((b.Verweistyp.kind == VERWEIS_T.FERN) && (b.Verweistyp.ReferenzKey === ze.Referenzkey)); });
+                                    if (tRef.length > 0) {
+                                        var tr = tRef[0];
+                                        if (!SaxParser_2.ZI_Renderer.isEmptyBIBGlobal(tr)) {
+                                            var s = tr.Inhalt.BLOCK.Standard;
+                                            if (s.scope.kind == "Zug") {
+                                                console.log(s.scope, s.ZugNr, s.Klasse);
+                                                var tStandardZugVirtuelleZeile = {
+                                                    kind: SaxParsedTypes_5.ZEILE_T.ZUGNR,
+                                                    ZugNummern: new Array(),
+                                                    ZeitZeileZusatzInfo: undefined,
+                                                    Virtual: true
+                                                };
+                                                var tStandardKlasseVirtuelleZeile = {
+                                                    kind: SaxParsedTypes_5.ZEILE_T.KLASSEN,
+                                                    KlassenNummern: new Array(),
+                                                    ZeitZeileZusatzInfo: undefined,
+                                                    Virtual: true,
+                                                    BlockEintrag: undefined
+                                                };
+                                                var tNeedVirtualZugZeile = false;
+                                                var tNeedVirtualKlassenZeile = false;
+                                                for (var i = 0; i < zeile.Zeiteintraege.length; i++) {
+                                                    if ((i < zidx) || (i > zidx)) {
+                                                        tStandardZugVirtuelleZeile.ZugNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
+                                                        tStandardKlasseVirtuelleZeile.KlassenNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
+                                                    }
+                                                    if (i == zidx) {
+                                                        if (s.ZugNr) {
+                                                            var tEntr = {
+                                                                kind: BLOCK_T.ZUG_NR_WERT,
+                                                                zugnr: "" + s.ZugNr,
+                                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+                                                            };
+                                                            tStandardZugVirtuelleZeile.ZugNummern.push(tEntr);
+                                                            tNeedVirtualZugZeile = true;
+                                                        }
+                                                        else {
+                                                            tStandardZugVirtuelleZeile.ZugNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
+                                                        }
+                                                        if (s.Klasse) {
+                                                            var tEntr = {
+                                                                kind: BLOCK_T.KLASSEN_WERT,
+                                                                klassen: s.Klasse,
+                                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+                                                            };
+                                                            tStandardKlasseVirtuelleZeile.KlassenNummern.push(tEntr);
+                                                            tNeedVirtualKlassenZeile = true;
+                                                        }
+                                                        else {
+                                                            tStandardKlasseVirtuelleZeile.KlassenNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
+                                                        }
+                                                    }
+                                                }
+                                                console.log(tNeedVirtualZugZeile, tStandardZugVirtuelleZeile);
+                                                console.log(tNeedVirtualKlassenZeile, tStandardKlasseVirtuelleZeile);
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+                    });
+                    break;
+                case ParsedTypes.ZEILE_T.ZUGNR:
+                    console.log(zeile);
+                    break;
+            }
+        });
+    }
+    exports_10("virtualizeZugNrZugKlasse", virtualizeZugNrZugKlasse);
+    var ParsedTypes, SaxParser_2, SaxParsedTypes_5;
+    return {
+        setters: [
+            function (ParsedTypes_1) {
+                ParsedTypes = ParsedTypes_1;
+                SaxParsedTypes_5 = ParsedTypes_1;
+            },
+            function (SaxParser_2_1) {
+                SaxParser_2 = SaxParser_2_1;
+            }
+        ],
+        execute: function () {
+        }
+    };
+});
+System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput", "SaxZuglaufAuslesen", "SaxVirtualTable"], function (exports_11, context_11) {
+    "use strict";
+    var __moduleName = context_11 && context_11.id;
+    var Parser, SaxValidator, SaxRender, SaxSchedules, SaxZuglaufAuslesen_1, SaxVirtualTable_1, Sched;
     return {
         setters: [
             function (Parser_1) {
@@ -6460,12 +6577,15 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
             },
             function (SaxSchedules_1) {
                 SaxSchedules = SaxSchedules_1;
-                exports_10({
+                exports_11({
                     "InputData": SaxSchedules_1["InputData"]
                 });
             },
             function (SaxZuglaufAuslesen_1_1) {
                 SaxZuglaufAuslesen_1 = SaxZuglaufAuslesen_1_1;
+            },
+            function (SaxVirtualTable_1_1) {
+                SaxVirtualTable_1 = SaxVirtualTable_1_1;
             }
         ],
         execute: function () {
@@ -6484,6 +6604,8 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                     if (t != null) {
                         SaxRender.Renderer.renderTable(t, tResult);
                     }
+                    var tVirtualTable = SaxVirtualTable_1.makeTableVirtual(tResult);
+                    SaxVirtualTable_1.virtualizeZugNrZugKlasse(tVirtualTable);
                     return tResult;
                 };
                 Sched.doAllLogged = function () {
@@ -6511,7 +6633,7 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                 };
                 return Sched;
             }());
-            exports_10("Sched", Sched);
+            exports_11("Sched", Sched);
         }
     };
 });

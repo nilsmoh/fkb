@@ -14,6 +14,18 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         ZusatzBloecke: Array<TBlockinhaltBaseV2>
     }
 
+    export interface SingleDirectionScheduleTyped_plusVirtual{
+        Quelle: EQuelle;
+        Kommentar: string;
+        Seite: number; // seite in FKB wie gedruckt
+        Ueberschrift: string,
+        Route1900: string,
+        Klassen: EKlassen,
+        Zeilen: Array<TZeile_plusVirtual>;
+
+        ZusatzBloecke: Array<TBlockinhaltBaseV2>
+    }
+
     export enum EBahnverwaltung {
         NichtAngegeben,
         KSaechsStsEB
@@ -50,8 +62,8 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
     export type TNormalZeileEintragBase =  TLeerEintrag | TBlockEintrag | TDickerStrichEintrag | TError | TKlassenEintrag | TZugNrEintrag;
 
     export type TNormalZeileEintrag = TZeiteintrag | TNormalZeileEintragBase | TKeinHalt | TAnkunftEintrag ;
-    export type TZugNummernEintrag  =               TNormalZeileEintragBase;
-    export type TKlassenNrEintrag   =              TNormalZeileEintragBase;
+    export type TZugNummernEintrag  =                TNormalZeileEintragBase;
+    export type TKlassenNrEintrag   =                TNormalZeileEintragBase;
 
   
 
@@ -85,6 +97,8 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
 
     export type TZeile = TZugNrZeile | TKlassenNrZeile | TNormalzeile | TAnschlussZubringerAbZeile | TAnschlussZubringerInZeile | TAnschlussWeiterAbZeile | TAnschlussWeiterInZeile;
 
+    export type TZeile_plusVirtual = TZeile & {Virtual: boolean};
+
     // KOPF / Header der Normalzeilen
     export interface TNormalzeile {
         kind: typeof ZEILE_T.NORMAL,
@@ -94,19 +108,10 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         Zeiteintraege: Array<TNormalZeileEintrag>;
         AnAb: EAnAb;
         //ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined;    //letzter eintrag
-        //Lfd: number;
-        //Referenz: string | null;
-     
-        //Via: StationTicketInfoEntryKpxTagged | null;
-
         Ref: string | null,
         Lfd: number,
         Via: StationTicketInfoEntryKpxTagged[] | null;
-
-
         Fahrkarteninfo: any;
-
-
     }
 
     export interface TAnschlussZubringerAbZeile {

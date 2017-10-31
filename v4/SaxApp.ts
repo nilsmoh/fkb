@@ -10,6 +10,7 @@ import * as SaxSchedules from "./SaxInput";
 
 import * as SaxNachberechnung from "./SaxParsedNachberechnung";
 import { ZugExtraktor, Lauf } from "./SaxZuglaufAuslesen";
+import { makeTableVirtual, virtualizeZugNrZugKlasse } from "./SaxVirtualTable";
 
 // simpler HIGH Level Aufruf
 
@@ -59,7 +60,19 @@ export class Sched{
                 //console.error("renderTable commented out")
             }
 
-            
+            // todo create virtual table
+
+            const tVirtualTable:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = makeTableVirtual(tResult);
+
+            // todo move zusatzblocks into new virtual table lines
+
+            virtualizeZugNrZugKlasse(tVirtualTable);          
+
+            // todo render the new virtual
+
+            //todo calculate times in new virtual
+
+
             
             return tResult;            
         }

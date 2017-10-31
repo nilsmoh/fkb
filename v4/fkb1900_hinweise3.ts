@@ -170,7 +170,7 @@ type Block2Entry = {
     ZugOhneSpalte?: { Fahrtage?: string, Klasse?: string, ZugNr?: string, weg: [{ bhfAb?: string, zeit?: number | string, bhfAn?: string }] }, //z.b.fkb61
 
     Verwaltung?: string | Array<{ von: string, bis: string, Dir: string }>,
-    Klasse?: string,
+    Klasse?: EKlassen,
  
     ZuegeHaltenNurZumEinsteigen?: boolean, //scope Zeile
     ZuegeHaltenNurZumAussteigen?: boolean, //scope Zeile
