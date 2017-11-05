@@ -53,15 +53,68 @@ var Global = { kind: "Global" };
 var Tabelle = { kind: "Tabelle" };
 var Zelle = { kind: "Zelle" };
 var Zug = { kind: "Zug" };
-var HN1105 = "";
-var HN305 = "";
-var HN946 = "";
-var MV1226 = "";
-var HV657 = "";
-var HN830 = "";
+var ETimeValid;
+(function (ETimeValid) {
+    ETimeValid[ETimeValid["Nein"] = 1] = "Nein";
+    ETimeValid[ETimeValid["Vorgabe24"] = 2] = "Vorgabe24";
+    ETimeValid[ETimeValid["Berechnet24"] = 3] = "Berechnet24";
+})(ETimeValid || (ETimeValid = {}));
+var ZEIT_ROH = "ZEIT_ROH";
+var ZEIT_24 = "ZEIT_24";
+var GesternHeuteMorgen;
+(function (GesternHeuteMorgen) {
+    GesternHeuteMorgen[GesternHeuteMorgen["Unbekannt"] = 0] = "Unbekannt";
+    GesternHeuteMorgen[GesternHeuteMorgen["Gestern"] = 1] = "Gestern";
+    GesternHeuteMorgen[GesternHeuteMorgen["Heute"] = 2] = "Heute";
+    GesternHeuteMorgen[GesternHeuteMorgen["Morgen"] = 3] = "Morgen";
+})(GesternHeuteMorgen || (GesternHeuteMorgen = {}));
+var makeZ = function (zeit12, ghm, nachmittag) {
+    var tStunde12 = Math.floor(zeit12 / 100);
+    var tMinute24 = zeit12 - (Math.floor(zeit12 / 100) * 100);
+    if (!nachmittag) {
+        if (tStunde12 > 11) {
+            tStunde12 = tStunde12 - 12;
+        }
+    }
+    var tResult = {
+        kind: ZEIT_24,
+        Stunde24: (nachmittag ? 12 : 0) + tStunde12,
+        Minute24: tMinute24,
+        WelcherTag: ghm,
+        Valid: ETimeValid.Vorgabe24,
+        src: zeit12
+    };
+    return tResult;
+};
+var ZGN = function (n) { return makeZ(n, GesternHeuteMorgen.Gestern, true); };
+var ZHV = function (n) { return makeZ(n, GesternHeuteMorgen.Heute, false); };
+var ZHN = function (n) { return makeZ(n, GesternHeuteMorgen.Heute, true); };
+var ZMV = function (n) { return makeZ(n, GesternHeuteMorgen.Morgen, false); };
+var HN1105 = ZHN(1105);
+var MV = function (n) {
+    var tStunde12 = Math.floor(n / 100);
+    var tResult = {
+        kind: BLOCK_T.ZEITEINTRAG,
+        Referenzkey: null,
+        Schnellzug: false,
+        Zeit: { kind: ZEIT_24,
+            Stunde24: tStunde12,
+            Minute24: n - (Math.floor(n / 100) * 100),
+            WelcherTag: GesternHeuteMorgen.Morgen,
+            Valid: ETimeValid.Vorgabe24,
+            src: n },
+        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+    };
+    return tResult;
+};
+var HN305 = ZHN(305);
+var HN946 = ZHN(946);
+var MV1226 = ZMV(1226);
+var HV657 = ZHV(657);
+var HN830 = ZHN(830);
 var ASMV157 = "";
 var SHN221 = "";
-var MV1203 = "";
+var MV1203 = ZMV(3);
 var x24 = [
     {
         head: "24.1 (FKB1 Verbindungsbahn)",
@@ -335,7 +388,8 @@ var x29 = [
             }, {
                 q: "anschluss aus von glashuette 600" +
                     "anschluss aus sonn und festtags von geising a abf 500",
-                BLOCK: { Standard: { scope: Zelle, AbfahrtsOrt: "glashuette", AbfahrtsZeit: 600 }, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AbfahrtsOrt: "geising-a", AbfahrtsZeit: 500 } }
+                BLOCK: { Standard: { scope: Zelle, AbfahrtsOrt: "glashuette", AbfahrtsZeit: ZHN(600) },
+                    Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AbfahrtsOrt: "geising-a", AbfahrtsZeit: ZHN(500) } }
             }
         ]
     }
@@ -359,7 +413,7 @@ var x30 = [{
             },
             {
                 q: "!Ank Dresd-N Lpz. Bhf 221",
-                BLOCK: { Standard: { scope: VirtuelleFolgeZelle, AnkunftOrt: "Dresden-Neustadt", AnkunftOrtDetail: "LpzBhf", AnkunftZeit: SHN221, PfeilStart: true } }
+                BLOCK: { Standard: { scope: VirtuelleFolgeZelle, AnkunftOrt: "Dresden-Neustadt", AnkunftOrtDetail: "LpzBhf", Kategorie: "Schnellzug", AnkunftZeit: ZHN(221), PfeilStart: true } }
             },
             {
                 q: "+zug 1556 verkehrt von coswig bis meissen-c nur sonn und festtags",
@@ -691,7 +745,7 @@ var x39 = [{
             }, {
                 q: "+Anschluss von magdeburg abf 705",
                 c: " normalerweise wuerde ueber zugnr 62 noch eine aubringerzeile aus magdeburg stehen",
-                BLOCK: { Standard: { scope: Zug, virtuellerAnschluss: { AnschlussAusZeit: 705, AnschlussAusBhf: "Magdeburg" } } }
+                BLOCK: { Standard: { scope: Zug, virtuellerAnschluss: { AnschlussAusZeit: ZHV(705), AnschlussAusBhf: "Magdeburg" } } }
             }, {
                 q: "Speisewagen Berlin-Wien",
                 BLOCK: { Standard: { scope: Zug, Speisewagen: ["Berlin", "Wien"] } }
@@ -778,7 +832,7 @@ var x42 = [{
             }, {
                 q: "*Sonn und Festtags: 918",
                 c: "aus rochlitz kommender anschluss",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnschlussZubringerAb: { Zeit: 918 } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnschlussZubringerAb: { Zeit: ZHN(918) } } }
             }, {
                 q: "nach colditz ank 1203 wird von grimma nach colditz nur am ersten mittwoch jeden monats abgelassen und verkehrt " +
                     "sonach in der nacht vom 2/3 mai, 6/7juni, 4/5 juli, 1/2 august und 5/6 september",
@@ -822,7 +876,7 @@ var x44 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "*Sonn- und Festtags: 11:32.",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnkunftZeit: 1151 } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnkunftZeit: ZHV(1132) } }
             }
         ]
     }];
@@ -868,7 +922,7 @@ var x46 = [{
             }, {
                 q: "v Elsterw. 640",
                 c: "ZEILE_ANSCHLUSS_ZUBRINGER_AB  ZEILE_ANSCHLUSS_ZUBRINGER_IN   Paar, dessen erster teil veraendert ist",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Elsterwerda", Zeit: 640 } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Elsterwerda", Zeit: ZHV(640) } } }
             }, {
                 q: "v Elsterw.",
                 c: "ZEILE_ANSCHLUSS_ZUBRINGER_AB  ZEILE_ANSCHLUSS_ZUBRINGER_IN   Paar, dessen erster teil veraendert ist;   keine zeitangabe !!!",
@@ -937,7 +991,7 @@ var x48 = [{
         head: "48",
         list: [{
                 q: "*von 15juni bis15sept:335",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Zeit: 335 } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Kategorie: "Schnellzug", Zeit: ZHN(335) } } }
             }, {
                 q: "Schlafwagen Myslowitz Leipzig",
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Myslowitz", "Leipzig"] } }
@@ -966,7 +1020,7 @@ var x49 = [{
                 BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: ["DresdnerBhf", "ThueringerBhf"] } }
             }, {
                 q: "bis Erf. 229",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Leipzig", endZelle: "Frankfurt/M" }, AnschlussWeiterNach: { Bhf: "Erfurt", Zeit: "MV229" } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Leipzig", endZelle: "Frankfurt/M" }, AnschlussWeiterNach: { Bhf: "Erfurt", Zeit: ZMV(229) } } }
             },
             {
                 q: "Alle Zuege II u III Kl",
@@ -1000,10 +1054,12 @@ var x50 = [{
                 BLOCK: { Standard: { scope: Zug, ZugWartetNicht: { ZugNr: "3", GepaeckVonNichtUeberfuehrt: ["Magdeburg", "Halle"] } } }
             }, {
                 q: "(Anschluss) von Erf (3:34)",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Frankfurt/M", endZelle: "Leipzig Th Bhf" }, AnschlussZubringerAb: { Bhf: "Erfurt", Zeit: "HV229" } } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Frankfurt/M", endZelle: "Leipzig Th Bhf" },
+                        AnschlussZubringerAb: { Bhf: "Erfurt", Zeit: ZHV(334) } } }
             }, {
                 q: "von Mailand Stuttgart",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Frnakfurt/M", endZelle: "Leipzig Th Bhf" }, AnschlussZubringerAb: { WeitereFernStartpunkte: ["Mailand", "Stuttgart"] } } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Frnakfurt/M", endZelle: "Leipzig Th Bhf" },
+                        AnschlussZubringerAb: { WeitereFernStartpunkte: ["Mailand", "Stuttgart"] } } }
             }, {
                 q: "Buffetwagen Leipzig-Myslowitz",
                 BLOCK: { Standard: { scope: Zug, Buffetwagen: ["Leipzig", "Myslowitz"] } }
@@ -1077,10 +1133,10 @@ var x53 = [{
                 BLOCK: { Standard: { scope: Zug, haeltWerktagsFuerIVKlInProesen: true } }
             }, {
                 q: "*SonnUndFesttags: 1132",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussWeiterNach: { Geltungstag: SonnUndFesttags, Zeit: "HV1132" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussWeiterNach: { Geltungstag: SonnUndFesttags, Zeit: ZHV(1132) } } }
             }, {
                 q: "nach Chemnitz Ank.1155",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Chemnitz", AnkunftZeit: "HV1155" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Chemnitz", AnkunftZeit: ZHV(1155) } }
             }, {
                 q: "Nur Freitags.",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Freitags } }
@@ -1131,7 +1187,7 @@ var x54 = [{
             },
             {
                 q: "*Sonn-und Festtags:831",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnschlussWeiterNach: { Zeit: "831" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnschlussWeiterNach: { Zeit: ZHN(831) } } }
             }, {
                 q: "S.u.F.",
                 BLOCK: { Standard: { scope: Zelle, GeltungsTag: SonnUndFesttags } }
@@ -1143,7 +1199,7 @@ var x55 = [{
         list: [
             {
                 q: "+vom 15.juni bis 15.september:335 ab breslau",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Bhf: "Breslau", Zeit: "335" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Bhf: "Breslau", Zeit: ZHN(335) } } }
             }, {
                 q: "Nur Sonnabends",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Sonnabends } }
@@ -1165,7 +1221,7 @@ var x55 = [{
                 BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: "Bautzen" } } }
             }, {
                 q: "!Sonn und Festt:705",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussZubringerAb: { Zeit: "705" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussZubringerAb: { Zeit: ZHN(705) } } }
             }, {
                 q: "Rückfahrkarten über Hermsdorf gelten auch über Warnsdorf und Bischofswerda",
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.RueckfahrkartenUberHerrnhutGeltenAuchUeberWarnsdorfUndBischofswerda } }
@@ -1176,7 +1232,7 @@ var x56 = [{
         head: "56",
         list: [{
                 q: "*Sonn und festtags 831",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussWeiterNach: { Geltungstag: SonnUndFesttags, Zeit: "831" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussWeiterNach: { Geltungstag: SonnUndFesttags, Zeit: ZHN(831) } } }
             }, {
                 q: "über Warnsdorf",
                 BLOCK: { Standard: { scope: Zug, ZugVerlaesstStreckeAberKommtZurueck: { letzterBhf: "Eibau", abweichend: ["Warnsdorf"], wiederDaBhf: "Zittau" } } }
@@ -1205,17 +1261,17 @@ var x56 = [{
                 BLOCK: { Standard: { scope: Zug, ZugVerlaesstStreckeAberKommtZurueck: { letzterBhf: "Zittau", abweichend: ["Warnsdorf"], wiederDaBhf: "Neugersdorf" } } }
             }, {
                 q: "nach Loebau Ank 819",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: "819" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHV(819) } } }
             }, {
                 q: "nach Loebau Ank 704",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: "704" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHN(704) } } }
             }, {
                 q: "nach Loebau Ank 931",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: "931" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHN(931) } } }
             },
             {
                 q: "nach Loebau Ank 1129",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: "1129" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHN(1129) } } }
             }
         ]
     }];
@@ -1230,21 +1286,23 @@ var x57 = [{
             }, {
                 q: "#850 I-III Sonn und festtags: aus reichenberg 246 , aus Machendorf 258 in Kratzau 307",
                 c: "eigener Zug der eigentlich eigene spalte haette",
-                BLOCK: { Standard: { scope: Global, ZugOhneSpalte: { Fahrtage: SonnUndFesttagsSowie1624mai1429juni15aug828sept, Klasse: Kl1bis3, ZugNr: "850", weg: [{ bhfAb: "Reichenberg", zeit: 246 }, { bhfAb: "Machendorf", zeit: 258 }, { bhfAn: "Kratzau", zeit: 307 }] } } }
+                BLOCK: { Standard: { scope: Global, ZugOhneSpalte: { Fahrtage: SonnUndFesttagsSowie1624mai1429juni15aug828sept,
+                            Klasse: Kl1bis3, ZugNr: "850", weg: [{ bhfAb: "Reichenberg", zeit: ZHN(246) }, { bhfAb: "Machendorf", zeit: ZHN(258) }, { bhfAn: "Kratzau", zeit: ZHN(307) }] } } }
             }, {
                 q: "10:00 in Kreibitz",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Kreibitz", Zeit: "1000" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Kreibitz", Zeit: ZHN(1000) } } }
             },
             {
                 q: "11:31 in Ebersbach",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Ebersbach", Zeit: "1131" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Ebersbach", Zeit: ZHN(1131) } } }
             }, {
                 q: "*In Oberullersdorf halten die Zuege nur zum Aussteigen",
                 BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: "Oberullersdorf", endZeileBhf: "Oberullersdorf" }, ZuegeHaltenNurZumAussteigen: true } }
             }, {
                 q: "+849 I-III Sonn und festtags: aus kratzau 315, aus machendorf 325 in reichenberg 335",
                 c: "regulaere Zug der eigentlich eigene spalte haette",
-                BLOCK: { Standard: { scope: Global, ZugOhneSpalte: { Fahrtage: SonnUndFesttagsSowie1624mai1429juni15aug828sept, Klasse: Kl1bis3, ZugNr: "849", weg: [{ bhfAb: "Kratzau", zeit: 315 }, { bhfAb: "Machendorf", zeit: 325 }, { bhfAn: "Reichenberg", zeit: 335 }] } } }
+                BLOCK: { Standard: { scope: Global, ZugOhneSpalte: { Fahrtage: SonnUndFesttagsSowie1624mai1429juni15aug828sept, Klasse: Kl1bis3, ZugNr: "849",
+                            weg: [{ bhfAb: "Kratzau", zeit: ZHN(315) }, { bhfAb: "Machendorf", zeit: ZHN(325) }, { bhfAn: "Reichenberg", zeit: ZHN(335) }] } } }
             }, {
                 q: "Zuege 849, 850, 852a, 853, 856, 857, 858 verkehren nur an sonn und festtagen sowie am 16 und 24 mai 14 u 29 juni, 15 august, 8 u 28 september",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttagsSowie1624mai1429juni15aug828sept, RedundanteZugNr: [849, 850, "852a", 853, 856, 857, 858] } }
@@ -1351,10 +1409,10 @@ var x60 = [{
                 BLOCK: { Standard: { scope: Global, Klasse: Kl2bis4 } }
             }, {
                 q: "!Montags und Sonnabends 535",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: MontagsUndSonnabends, AnschlussWeiterNach: { Zeit: "535" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: MontagsUndSonnabends, AnschlussWeiterNach: { Zeit: ZHV(535) } } }
             }, {
                 q: "!Montags und Sonnabends 550",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: MontagsUndSonnabends, AnschlussWeiterNach: { Zeit: "550" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: MontagsUndSonnabends, AnschlussWeiterNach: { Zeit: ZHV(550) } } }
             }, {
                 q: "+Nur Montags oder, wenn dieser ein Festtag ist, Dienstags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: MontagsFallsMontagEinFesttagDannDienstag } }
@@ -1365,7 +1423,7 @@ var x61 = [{
         head: "61",
         list: [{
                 q: "(kleines viereck) Vom 15.Juni bis 15.September: s335",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Zeit: "s335" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Kategorie: "Schnellzug", Zeit: ZHN(3353) } } }
             }, {
                 q: "Nur Donnerstags und Sonntags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: DonnerstagUndSonntag } }
@@ -1451,7 +1509,7 @@ var x62 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: InDerAufEinenSonnOderFesttagFolgendenNacht } }
             }, {
                 q: "+Sonn und Festtags: 705",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnschlussZubringerAb: { Zeit: "705" } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnschlussZubringerAb: { Zeit: ZHN(705) } } }
             }
         ]
     }];
@@ -1643,7 +1701,7 @@ var x68 = [{
             }, {
                 q: "+ mit umsteigen in Reichenbach iV s640",
                 c: "FKB56 zeigt den anschluss in Reichenbach mit einem Pfeil 144->155",
-                BLOCK: { Standard: {}, Alternative: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Muenchen", mitUmstiegIn: "Reichenbach", Zeit: "S640" } } }
+                BLOCK: { Standard: {}, Alternative: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Muenchen", mitUmstiegIn: "Reichenbach", Kategorie: "Schnellzug", Zeit: ZGN(640) } } }
             }, {
                 q: "Directe Wagen unter 247.",
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.DirecteWagenSUnter247 } }
@@ -1746,7 +1804,7 @@ var x71 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "nach Eger(Ank329)",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Eger"], AnkunftsZeit: "329" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Eger"], Kategorie: "Schnellzug", AnkunftsZeit: ZHN(329) } } }
             }, {
                 q: "I-IV Kl",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: "Plauen i V", TZgueltigBisBhf: "Hof" }, Klasse: Kl1bis4 } }
@@ -1765,7 +1823,7 @@ var x71 = [{
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Dresden", "Muenchen"] } }
             }, {
                 q: "nach Eger (Ank533)",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Eger"], AnkunftsZeit: "SMV533" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Eger"], Kategorie: "Schnellzug", AnkunftsZeit: ZMV(533) } } }
             }, {
                 q: "!über Schnabelwald",
                 c: "detail eines Anschlusszuges mit mehreren Zeilen",
@@ -1814,7 +1872,7 @@ var x72 = [{
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Muenchen", "Dresden"] } }
             }, {
                 q: "nach Dresden Ank502",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Dresden"], AnkunftsZeit: "SHN502" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Dresden"], Kategorie: "Schnellzug", AnkunftsZeit: ZHN(502) } } }
             }, {
                 q: "schlaf und buffetwagenmuenchen berlin",
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Muenchen", "Berlin"], Buffetwagen: ["Muenchen", "Berlin"] } }
@@ -1899,7 +1957,7 @@ var x74 = [{
                 BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Karlsbad", endZelle: "Eger" }, Fahrtage: Vom15MaiBis15September, Klasse: Kl1 } }
             }, {
                 q: "nach Gera Ankunft 1010 ",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Gera"], AnkunftsZeit: "HV1010" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Gera"], AnkunftsZeit: ZHV(1010) } } }
             }, {
                 q: "*Zug 2085 haelt bis mit 15.Septbr. auch in Antonienhoehe an ",
                 BLOCK: { Standard: {}, Abweichend: { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: "Antonienhoehe", RedundanteZugNr: ["2085"] } }
@@ -1951,10 +2009,10 @@ var x75 = [{
                 BLOCK: { Standard: { scope: Zug, Verwaltung: "Bay" } }
             }, {
                 q: "von Gera abf 450",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Gera"], AbfahrtsZeit: "HV450" } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Gera"], AbfahrtsZeit: ZHV(450) } } }
             }, {
                 q: "von Gera abf 742",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Gera"], AbfahrtsZeit: "742" } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Gera"], AbfahrtsZeit: ZHV(742) } } }
             }, {
                 q: "** I.-IIIKl. //geschweifte klammer",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: "Adorf", TZgueltigBisBhf: "Eger" }, Klasse: Kl1bis3 } }
@@ -2055,10 +2113,10 @@ var x78 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
             }, {
                 q: "Ausserdem: Zug 2046a (II.-IV. Kl.): ab Meerane 330, in Goessnitz 341",
-                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Klasse: Kl2bis4, ZugNr: "2046a", weg: [{ bhfAb: "Meerane", zeit: 330 }, { bhfAn: "Goessnitz", zeit: 341 }] } } }
+                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Klasse: Kl2bis4, ZugNr: "2046a", weg: [{ bhfAb: "Meerane", zeit: ZHN(330) }, { bhfAn: "Goessnitz", zeit: ZHN(341) }] } } }
             }, {
                 q: "Ausserdem: Zug 2045a (II.-IV. Kl.): ab Goessnitz 354, in Meerane 405",
-                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Klasse: Kl2bis4, ZugNr: "2045a", weg: [{ bhfAb: "Goessnitz", zeit: 354 }, { bhfAn: "Meerane", zeit: 405 }] } } }
+                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Klasse: Kl2bis4, ZugNr: "2045a", weg: [{ bhfAb: "Goessnitz", zeit: ZHN(354) }, { bhfAn: "Meerane", zeit: ZHN(405) }] } } }
             }
         ]
     }];
@@ -2069,7 +2127,7 @@ var x79 = [{
                 BLOCK: { Standard: { scope: Tabelle, Verwaltung: "Saechs" } }
             }, {
                 q: "+Sonn und Festtags: 1139",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnkunftZeit: "1139" } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: SonnUndFesttags, AnkunftZeit: ZHN(1139) } }
             }]
     }];
 var x80 = [{
@@ -2082,13 +2140,13 @@ var x80 = [{
                 BLOCK: { Standard: { scope: Tabelle, Klasse: KlNurEine } }
             }, {
                 q: "Ausserdem: an Sonn- und Festtagen: 820 von Reichenbach i.V. unt.Bhf nach Mylau Haltest",
-                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Fahrtage: SonnUndFesttags, weg: [{ bhfAb: "Reichenbach unt bhf", zeit: 820 }, { bhfAn: "Mylau Hst" }] } } }
+                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Fahrtage: SonnUndFesttags, weg: [{ bhfAb: "Reichenbach unt bhf", zeit: ZHN(820) }, { bhfAn: "Mylau Hst" }] } } }
             }, {
                 q: "Ausserdem: an Sonn- und Festtagen: 800 von  Mylau Haltest nach Reichenbach i.V. unt.Bhf ",
-                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Fahrtage: SonnUndFesttags, weg: [{ bhfAb: "Mylau Hst", zeit: 800 }, { bhfAn: "Reichenbach unt bhf" }] } } }
+                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Fahrtage: SonnUndFesttags, weg: [{ bhfAb: "Mylau Hst", zeit: ZHN(800) }, { bhfAn: "Reichenbach unt bhf" }] } } }
             }, {
                 q: "Ausserdem: an Werktagen: 715 von Mylau Bhf nach Reichenbach i.V. unt.Bhf",
-                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Fahrtage: Werktags, weg: [{ bhfAb: "Mylau bhf", zeit: 715 }, { bhfAn: "Reichenbach unt Bf" }] } } }
+                BLOCK: { Standard: { scope: Zug, ZugOhneSpalte: { Fahrtage: Werktags, weg: [{ bhfAb: "Mylau bhf", zeit: ZHN(715) }, { bhfAn: "Reichenbach unt Bf" }] } } }
             }, {
                 q: "In der Nacht nach Sonn- u. Festtagen",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: InDerAufEinenSonnOderFesttagFolgendenNacht } }
@@ -2123,10 +2181,10 @@ var x82 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "ueb Lausigk in Leipzig Ank 1024 ",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Leipzig"], ueber: "Lausigk", AnkunftsZeit: "S1024" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Leipzig"], ueber: "Lausigk", Kategorie: "Schnellzug", AnkunftsZeit: ZHV(1024) } } }
             }, {
                 q: "ub Lausigk in Leipzig Ank 925",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Leipzig"], ueber: "Lausigk", AnkunftsZeit: "S925" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Leipzig"], ueber: "Lausigk", Kategorie: "Schnellzug", AnkunftsZeit: ZHN(925) } } }
             }, {
                 q: "Sonn und Festtags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -2708,22 +2766,6 @@ var F = function (nn) {
     };
     return tResult;
 };
-var MV = function (n) {
-    var tStunde12 = Math.floor(n / 100);
-    var tResult = {
-        kind: BLOCK_T.ZEITEINTRAG,
-        Referenzkey: null,
-        Schnellzug: false,
-        Zeit: { kind: ZEIT_24,
-            Stunde24: tStunde12,
-            Minute24: n - (Math.floor(n / 100) * 100),
-            WelcherTag: GesternHeuteMorgen.Morgen,
-            Valid: ETimeValid.Vorgabe24,
-            src: n },
-        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-    };
-    return tResult;
-};
 var sMV = function (n) {
     var tResult = MV(n);
     tResult.Schnellzug = true;
@@ -2939,21 +2981,6 @@ var sl = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Bre
 var sj = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "j", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sm = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "m", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sp = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "p", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
-var GesternHeuteMorgen;
-(function (GesternHeuteMorgen) {
-    GesternHeuteMorgen[GesternHeuteMorgen["Unbekannt"] = 0] = "Unbekannt";
-    GesternHeuteMorgen[GesternHeuteMorgen["Gestern"] = 1] = "Gestern";
-    GesternHeuteMorgen[GesternHeuteMorgen["Heute"] = 2] = "Heute";
-    GesternHeuteMorgen[GesternHeuteMorgen["Morgen"] = 3] = "Morgen";
-})(GesternHeuteMorgen || (GesternHeuteMorgen = {}));
-var ETimeValid;
-(function (ETimeValid) {
-    ETimeValid[ETimeValid["Nein"] = 1] = "Nein";
-    ETimeValid[ETimeValid["Vorgabe24"] = 2] = "Vorgabe24";
-    ETimeValid[ETimeValid["Berechnet24"] = 3] = "Berechnet24";
-})(ETimeValid || (ETimeValid = {}));
-var ZEIT_ROH = "ZEIT_ROH";
-var ZEIT_24 = "ZEIT_24";
 var Leipzig = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines: [], upperCase: 'Leipzig' };
 var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: [], upperCase: 'KARLSBAD B.E.B.' };
 {
@@ -6528,8 +6555,8 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
                                                         }
                                                     }
                                                 }
-                                                console.log(tNeedVirtualZugZeile, tStandardZugVirtuelleZeile);
-                                                console.log(tNeedVirtualKlassenZeile, tStandardKlasseVirtuelleZeile);
+                                                console.log("VI:", tNeedVirtualZugZeile, tStandardZugVirtuelleZeile);
+                                                console.log("VI:", tNeedVirtualKlassenZeile, tStandardKlasseVirtuelleZeile);
                                             }
                                         }
                                     }

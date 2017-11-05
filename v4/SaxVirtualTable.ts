@@ -26,6 +26,10 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
        return tResult;
     }
 
+    /**
+     * Konvertiere zugnr und klassennummern und fuege sie als virtuelle zeilen hinzu
+     * @param tRefInput 
+     */
     export function virtualizeZugNrZugKlasse(tRefInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual){
         console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
         tRefInput.Zeilen.forEach((zeile) => {
@@ -84,10 +88,11 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
                                                     }; 
                                                         tStandardZugVirtuelleZeile.ZugNummern.push( tEntr );
                                                         tNeedVirtualZugZeile = true;
+                                                        
                                                     }else{
                                                          tStandardZugVirtuelleZeile.ZugNummern.push( {BerechneterZugLauf:{  kind: ZUGLAUF_UNBEKANNT}, MitStrich:false, kind: BLOCK_T.LEER } );
 
-                                                        }
+                                                    }
                                                    
                                                          
                                                     if (s.Klasse){
@@ -104,6 +109,8 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
                                                          tStandardKlasseVirtuelleZeile.KlassenNummern.push( {BerechneterZugLauf:{  kind: ZUGLAUF_UNBEKANNT}, MitStrich:false, kind: BLOCK_T.LEER } );
 
                                                         }
+                                                        
+                                                    //if s. nur die beiden   s.Virtualized = true    
 
 
                                                    
@@ -112,8 +119,8 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
 
                                             }
 
-                                            console.log(tNeedVirtualZugZeile , tStandardZugVirtuelleZeile);
-                                            console.log(tNeedVirtualKlassenZeile ,tStandardKlasseVirtuelleZeile);
+                                            console.log("VI:",tNeedVirtualZugZeile , tStandardZugVirtuelleZeile);
+                                            console.log("VI:",tNeedVirtualKlassenZeile ,tStandardKlasseVirtuelleZeile);
 
                                             /**
                                              * {kind: "ZUGNR", ZugNummern: Array(21), Virtual: false}

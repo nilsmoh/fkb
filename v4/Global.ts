@@ -53,26 +53,7 @@ var F = function(nn:number | string | Array<number | string>) : THEADERANSCHLUSS
 }
 
 
-// time functions
-var MV = function(n:number) : TZeiteintrag{
 
-    let tStunde12 = Math.floor( n/100);
-
-    var tResult :TZeiteintrag = {
-        kind:  BLOCK_T.ZEITEINTRAG,
-        Referenzkey: null,
-        Schnellzug: false,
-        Zeit:  { kind:  ZEIT_24,
-                Stunde24: tStunde12, 
-                Minute24: n - (Math.floor( n/100) * 100),
-                WelcherTag: GesternHeuteMorgen.Morgen,
-                Valid: ETimeValid.Vorgabe24,
-                src: n},
-        BerechneterZugLauf:  { kind:  ZUGLAUF_UNBEKANNT}
-    };
-
-    return tResult;
-}
 
 var sMV = function(n:number){
     var tResult = MV(n);
@@ -551,22 +532,9 @@ var sp :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false
 //region ZEIT
     type TEchteZeit = TZeitRoh | TZeit24;
 
-    enum GesternHeuteMorgen {
-        Unbekannt,
-        Gestern,
-        Heute,
-        Morgen
-    }
+  
 
-    enum ETimeValid {
-        Nein = 1,        //
-        Vorgabe24 = 2,  // 24 irgendwie geparst aus json
-        Berechnet24 = 3  // 24 berechnet
-    }
-
-    // neuer Zeittyp, der roh und 24 klar trennt
-    const ZEIT_ROH: "ZEIT_ROH" = "ZEIT_ROH";
-    const ZEIT_24: "ZEIT_24" = "ZEIT_24";
+ 
 
     interface TZeitRoh {
         kind: typeof ZEIT_ROH;
