@@ -117,6 +117,8 @@ var Zug:ScZug = {kind:"Zug"}; //""; //scope
 
 type FertigeZeit = TZeit24; //  string | number;
 
+type KategorieTyp = "Schnellzug" | "DZug" | "Nord Sued Express";
+
 type Block2Entry = {
     scope:  
         | ScZug //z.B. passend rechts daneben
@@ -139,8 +141,8 @@ type Block2Entry = {
 
     //TODO ist das das selbe ??? oder vorher nachher explizit ?
 
-   verlasseKbsNach?: string | { Kategorie?: string, nach: string[], ueber?: string, AnkunftsZeit?:  TZeit24 },
-    erreicheKbsAus?: string | { Kategorie?: string, aus: string[], ueber?: string, AbfahrtsZeit?: TZeit24 },
+   verlasseKbsNach?: string | { Kategorie?: KategorieTyp, nach: string[], ueber?: string, AnkunftsZeit?:  FertigeZeit },
+    erreicheKbsAus?: string | { Kategorie?: KategorieTyp, aus: string[], ueber?: string, AbfahrtsZeit?: FertigeZeit },
 
 
 
@@ -164,7 +166,7 @@ type Block2Entry = {
     AnschlussZubringerAb?: {
         ZugNr?: string, SubBhf?: string, Bhf?: string, Zeit?: FertigeZeit , Klasse?: string, WeitereFernStartpunkte?: Array<string>, Geltungstag?: string,
         mitUmstiegIn?: string, mitUmstiegInZugNr?: string, ohneUmstieg?: boolean, Ueber?: string[],
-        Kategorie?: string
+        Kategorie?: KategorieTyp
     },    // anschluss abfahrt fuer zelle jetzt mit konkretem zeilentyp !!! 
     AnschlussZubringerIn?: { ZugNr?: string, Geltungstag?: string },
     AnschlussWeiterAb?: {Bhf?:string,  bis?: string },
@@ -202,7 +204,7 @@ type Block2Entry = {
     ZugWartetNicht?: { ZugNr: string, GepaeckVonNichtUeberfuehrt: Array<string> },
     haeltWerktagsFuerIVKlInProesen?: boolean,
     Klasse4AuchSonnUndFesttags?: true,
-    Kategorie?: string //z.B. DZug oder Schnellzug, z.B. wenn nur teil des weges hochgestuft,
+    Kategorie?: KategorieTyp //z.B. DZug oder Schnellzug, z.B. wenn nur teil des weges hochgestuft,
     
     mehrZeiligerAnschlusszugFaehrtNach?: string,
     mehrzeiligerAnschlusszugKommtAus?: string
@@ -285,8 +287,8 @@ var HN946 = ZHN(946);
 var MV1226 = ZMV(1226);
 var HV657 = ZHV(657);
 var HN830 = ZHN(830);
-var ASMV157 = ""; // globales Symbol a vor Zeit, kein extra Block   halt nur zum aussteigen (hier schnellzug)
-var SHN221 = "";   //Schnellzug heute nachmittag um 14:21
+//var ASMV157 = ""; // globales Symbol a vor Zeit, kein extra Block   halt nur zum aussteigen (hier schnellzug)
+//var SHN221 = "";   //Schnellzug heute nachmittag um 14:21
 var MV1203 = ZMV(3); 
 
 

@@ -112,8 +112,6 @@ var HN946 = ZHN(946);
 var MV1226 = ZMV(1226);
 var HV657 = ZHV(657);
 var HN830 = ZHN(830);
-var ASMV157 = "";
-var SHN221 = "";
 var MV1203 = ZMV(3);
 var x24 = [
     {
