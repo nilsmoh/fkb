@@ -1669,7 +1669,7 @@ export class ZI_Renderer {
             tResult = t.Inhalt.q;
         }
         
-        return "todo render v2 "+ tResult;
+        return (((<any>t)["Virtualized"]  === true) ? "VIRTUALIZED " : "") + "todo render v2 "+ tResult;
     }
 }
 

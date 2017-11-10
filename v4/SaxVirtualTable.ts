@@ -28,22 +28,28 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
 
     /**
      * Konvertiere zugnr und klassennummern und fuege sie als virtuelle zeilen hinzu
-     * @param tRefInput 
+     * @param tInput 
      */
-    export function virtualizeZugNrZugKlasse(tRefInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual){
+    export function virtualizeZugNrZugKlasse(tInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual):ParsedTypes.SingleDirectionScheduleTyped_plusVirtual {
         console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
-        tRefInput.Zeilen.forEach((zeile) => {
-            switch(zeile.kind){
+        var tResult:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = JSON.parse(JSON.stringify(tInput));
+        
+        var iz = 0;
+        while (iz < tResult.Zeilen.length){
+            console.log("while ",iz);
+            var xzeile = tResult.Zeilen[iz];
+            switch(xzeile.kind){
                 case ParsedTypes.ZEILE_T.NORMAL:
+                var zeile:ParsedTypes.TNormalzeile & {Virtual:boolean}  = xzeile;
                 zeile.Zeiteintraege.forEach((ze, zidx)=>{
                     switch (ze.kind){
                         case BLOCK_T.ZEITEINTRAG:
                             if (ze.Referenzkey){
                                 console.log("Zeit Refkey ", ze.Referenzkey);
 
-                                let tRef = tRefInput.ZusatzBloecke.filter((b)=>{return ((b.Verweistyp.kind == VERWEIS_T.FERN) && (b.Verweistyp.ReferenzKey === ze.Referenzkey));});
+                                let tRef = tResult.ZusatzBloecke.filter((b)=>{return ((b.Verweistyp.kind == VERWEIS_T.FERN) && (b.Verweistyp.ReferenzKey === ze.Referenzkey));});
                                 if (tRef.length > 0){
-                                    let tr:TBlockinhaltBaseV2 = tRef[0];
+                                    let tr:TBlockinhaltBaseV2 & {Virtualized?:boolean} = tRef[0];
                                     //console.log(tRef[0]);
                                     //if (tr.TextOrt.kind == TEXTORT_T. .NICHTANGEGEBEN){
 
@@ -88,7 +94,9 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
                                                     }; 
                                                         tStandardZugVirtuelleZeile.ZugNummern.push( tEntr );
                                                         tNeedVirtualZugZeile = true;
-                                                        
+
+                                                      //blockinhalt als virtuell kennzeichnen  
+                                                      tr.Virtualized = true;
                                                     }else{
                                                          tStandardZugVirtuelleZeile.ZugNummern.push( {BerechneterZugLauf:{  kind: ZUGLAUF_UNBEKANNT}, MitStrich:false, kind: BLOCK_T.LEER } );
 
@@ -105,6 +113,8 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
                                                     }; 
                                                         tStandardKlasseVirtuelleZeile.KlassenNummern.push( tEntr );
                                                         tNeedVirtualKlassenZeile = true;
+                                                        //blockinhalt als virtuell kennzeichnen  
+                                                        tr.Virtualized = true;
                                                     }else{
                                                          tStandardKlasseVirtuelleZeile.KlassenNummern.push( {BerechneterZugLauf:{  kind: ZUGLAUF_UNBEKANNT}, MitStrich:false, kind: BLOCK_T.LEER } );
 
@@ -119,8 +129,20 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
 
                                             }
 
-                                            console.log("VI:",tNeedVirtualZugZeile , tStandardZugVirtuelleZeile);
-                                            console.log("VI:",tNeedVirtualKlassenZeile ,tStandardKlasseVirtuelleZeile);
+
+                                            if (tNeedVirtualZugZeile){
+                                                 console.log("VI:",tNeedVirtualZugZeile , tStandardZugVirtuelleZeile);
+                                                 tResult.Zeilen.splice(iz,0,tStandardZugVirtuelleZeile);
+                                                 iz++;
+                                            }
+
+                                            if (tNeedVirtualKlassenZeile){
+                                                 console.log("VI:",tNeedVirtualKlassenZeile ,tStandardKlasseVirtuelleZeile);
+                                                 tResult.Zeilen.splice(iz,0,tStandardKlasseVirtuelleZeile);
+                                                 iz++;
+                                            }
+                                           
+                                            
 
                                             /**
                                              * {kind: "ZUGNR", ZugNummern: Array(21), Virtual: false}
@@ -143,9 +165,14 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
                 });
                 break;
                 case ParsedTypes.ZEILE_T.ZUGNR:
-                    console.log(zeile);
+                    console.log(xzeile);
                 break;
             }
-        });
+        
+        
+            iz++;
+        }
+
+        return tResult;
     }
     

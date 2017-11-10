@@ -53,12 +53,7 @@ export class Sched{
             
             */
 
-            var t = document.getElementById("testdiv");
-            if (t != null){
-                //SaxSchedulesTyped.Importer.renderTable(t ,tResult);
-                SaxRender.Renderer.renderTable(t,tResult);
-                //console.error("renderTable commented out")
-            }
+            
 
             // todo create virtual table
 
@@ -66,9 +61,16 @@ export class Sched{
 
             // todo move zusatzblocks into new virtual table lines
 
-            virtualizeZugNrZugKlasse(tVirtualTable);          
+            const tVirtualTablezugkla =  virtualizeZugNrZugKlasse(tVirtualTable);          
 
             // todo render the new virtual
+
+            var t = document.getElementById("testdiv");
+            if (t != null){
+                //SaxSchedulesTyped.Importer.renderTable(t ,tResult);
+                SaxRender.Renderer.renderTable(t,tVirtualTablezugkla);
+                //console.error("renderTable commented out")
+            }
 
             //todo calculate times in new virtual
 
