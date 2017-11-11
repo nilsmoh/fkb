@@ -293,6 +293,8 @@ export class Validator {
                                 }
                                 if (tFound) {
                                     z.BlockEintrag.Blockinhalt = tFound; //  zi.Blockinhalt = tFound;
+                                    (tFound as any)["XVirtualized"] = true;
+                                    console.log("added into zug oder klassenzeile", tFound);
                                 } else {
                                     console.warn("x Zusatzinfobase fehlt fuer refkey ", z.BlockEintrag.Referenzkey);
                                 }
@@ -335,6 +337,8 @@ export class Validator {
                                         }
                                         if (tFound) {
                                             zi.Blockinhalt = tFound;
+                                            (tFound as any)["YVirtualized"] = true;
+                                            console.log("added into normal or anschlusszeile", tFound);
                                         } else {
                                             console.warn("x Zusatzinfobase fehlt fuer refkey ", zi.Referenzkey);
                                         }

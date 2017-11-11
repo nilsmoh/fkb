@@ -4937,6 +4937,8 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                         }
                                         if (tFound) {
                                             z.BlockEintrag.Blockinhalt = tFound;
+                                            tFound["XVirtualized"] = true;
+                                            console.log("added into zug oder klassenzeile", tFound);
                                         }
                                         else {
                                             console.warn("x Zusatzinfobase fehlt fuer refkey ", z.BlockEintrag.Referenzkey);
@@ -4972,6 +4974,8 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                                 }
                                                 if (tFound) {
                                                     zi.Blockinhalt = tFound;
+                                                    tFound["YVirtualized"] = true;
+                                                    console.log("added into normal or anschlusszeile", tFound);
                                                 }
                                                 else {
                                                     console.warn("x Zusatzinfobase fehlt fuer refkey ", zi.Referenzkey);
@@ -6483,23 +6487,40 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
             Ueberschrift: JSON.parse(JSON.stringify(tInput.Ueberschrift)),
             Route1900: JSON.parse(JSON.stringify(tInput.Route1900)),
             Klassen: JSON.parse(JSON.stringify(tInput.Klassen)),
-            Zeilen: JSON.parse(JSON.stringify(tInput.Zeilen)).map(virtualize),
-            ZusatzBloecke: JSON.parse(JSON.stringify(tInput.ZusatzBloecke))
+            Zeilen: tInput.Zeilen.map(virtualize),
+            ZusatzBloecke: tInput.ZusatzBloecke
         };
         return tResult;
     }
     exports_10("makeTableVirtual", makeTableVirtual);
     function virtualizeZugNrZugKlasse(tInput) {
         console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
-        var tResult = JSON.parse(JSON.stringify(tInput));
+        var tResult = tInput;
         var iz = 0;
-        while (iz < tResult.Zeilen.length) {
+        var _loop_1 = function () {
             console.log("while ", iz);
-            var xzeile = tResult.Zeilen[iz];
+            xzeile = tResult.Zeilen[iz];
             switch (xzeile.kind) {
                 case ParsedTypes.ZEILE_T.NORMAL:
-                    var zeile = xzeile;
+                    zeile = xzeile;
+                    var tNeedVirtualZugZeile_1 = false;
+                    var tNeedVirtualKlassenZeile_1 = false;
+                    var tStandardZugVirtuelleZeile_1 = {
+                        kind: SaxParsedTypes_5.ZEILE_T.ZUGNR,
+                        ZugNummern: new Array(),
+                        ZeitZeileZusatzInfo: undefined,
+                        Virtual: true
+                    };
+                    var tStandardKlasseVirtuelleZeile_1 = {
+                        kind: SaxParsedTypes_5.ZEILE_T.KLASSEN,
+                        KlassenNummern: new Array(),
+                        ZeitZeileZusatzInfo: undefined,
+                        Virtual: true,
+                        BlockEintrag: undefined
+                    };
                     zeile.Zeiteintraege.forEach(function (ze, zidx) {
+                        var tVirtZugPossibleEntry = ({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
+                        var tVirtKlasPosibility = ({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
                         switch (ze.kind) {
                             case BLOCK_T.ZEITEINTRAG:
                                 if (ze.Referenzkey) {
@@ -6511,64 +6532,25 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
                                             var s = tr.Inhalt.BLOCK.Standard;
                                             if (s.scope.kind == "Zug") {
                                                 console.log(s.scope, s.ZugNr, s.Klasse);
-                                                var tStandardZugVirtuelleZeile = {
-                                                    kind: SaxParsedTypes_5.ZEILE_T.ZUGNR,
-                                                    ZugNummern: new Array(),
-                                                    ZeitZeileZusatzInfo: undefined,
-                                                    Virtual: true
-                                                };
-                                                var tStandardKlasseVirtuelleZeile = {
-                                                    kind: SaxParsedTypes_5.ZEILE_T.KLASSEN,
-                                                    KlassenNummern: new Array(),
-                                                    ZeitZeileZusatzInfo: undefined,
-                                                    Virtual: true,
-                                                    BlockEintrag: undefined
-                                                };
-                                                var tNeedVirtualZugZeile = false;
-                                                var tNeedVirtualKlassenZeile = false;
-                                                for (var i = 0; i < zeile.Zeiteintraege.length; i++) {
-                                                    if ((i < zidx) || (i > zidx)) {
-                                                        tStandardZugVirtuelleZeile.ZugNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
-                                                        tStandardKlasseVirtuelleZeile.KlassenNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
-                                                    }
-                                                    if (i == zidx) {
-                                                        if (s.ZugNr) {
-                                                            var tEntr = {
-                                                                kind: BLOCK_T.ZUG_NR_WERT,
-                                                                zugnr: "" + s.ZugNr,
-                                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                                            };
-                                                            tStandardZugVirtuelleZeile.ZugNummern.push(tEntr);
-                                                            tNeedVirtualZugZeile = true;
-                                                            tr.Virtualized = true;
-                                                        }
-                                                        else {
-                                                            tStandardZugVirtuelleZeile.ZugNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
-                                                        }
-                                                        if (s.Klasse) {
-                                                            var tEntr = {
-                                                                kind: BLOCK_T.KLASSEN_WERT,
-                                                                klassen: s.Klasse,
-                                                                BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
-                                                            };
-                                                            tStandardKlasseVirtuelleZeile.KlassenNummern.push(tEntr);
-                                                            tNeedVirtualKlassenZeile = true;
-                                                            tr.Virtualized = true;
-                                                        }
-                                                        else {
-                                                            tStandardKlasseVirtuelleZeile.KlassenNummern.push({ BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }, MitStrich: false, kind: BLOCK_T.LEER });
-                                                        }
-                                                    }
+                                                if (s.ZugNr) {
+                                                    var tEntr = {
+                                                        kind: BLOCK_T.ZUG_NR_WERT,
+                                                        zugnr: "" + s.ZugNr,
+                                                        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+                                                    };
+                                                    tVirtZugPossibleEntry = tEntr;
+                                                    tNeedVirtualZugZeile_1 = true;
+                                                    tr.Virtualized = true;
                                                 }
-                                                if (tNeedVirtualZugZeile) {
-                                                    console.log("VI:", tNeedVirtualZugZeile, tStandardZugVirtuelleZeile);
-                                                    tResult.Zeilen.splice(iz, 0, tStandardZugVirtuelleZeile);
-                                                    iz++;
-                                                }
-                                                if (tNeedVirtualKlassenZeile) {
-                                                    console.log("VI:", tNeedVirtualKlassenZeile, tStandardKlasseVirtuelleZeile);
-                                                    tResult.Zeilen.splice(iz, 0, tStandardKlasseVirtuelleZeile);
-                                                    iz++;
+                                                if (s.Klasse) {
+                                                    var tEntr = {
+                                                        kind: BLOCK_T.KLASSEN_WERT,
+                                                        klassen: s.Klasse,
+                                                        BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }
+                                                    };
+                                                    tVirtKlasPosibility = tEntr;
+                                                    tNeedVirtualKlassenZeile_1 = true;
+                                                    tr.Virtualized = true;
                                                 }
                                             }
                                         }
@@ -6576,13 +6558,29 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
                                 }
                                 break;
                         }
+                        tStandardZugVirtuelleZeile_1.ZugNummern.push(tVirtZugPossibleEntry);
+                        tStandardKlasseVirtuelleZeile_1.KlassenNummern.push(tVirtKlasPosibility);
                     });
+                    if (tNeedVirtualZugZeile_1) {
+                        console.log("VI:", tNeedVirtualZugZeile_1, tStandardZugVirtuelleZeile_1);
+                        tResult.Zeilen.splice(iz, 0, tStandardZugVirtuelleZeile_1);
+                        iz++;
+                    }
+                    if (tNeedVirtualKlassenZeile_1) {
+                        console.log("VI:", tNeedVirtualKlassenZeile_1, tStandardKlasseVirtuelleZeile_1);
+                        tResult.Zeilen.splice(iz, 0, tStandardKlasseVirtuelleZeile_1);
+                        iz++;
+                    }
                     break;
                 case ParsedTypes.ZEILE_T.ZUGNR:
                     console.log(xzeile);
                     break;
             }
             iz++;
+        };
+        var xzeile, zeile;
+        while (iz < tResult.Zeilen.length) {
+            _loop_1();
         }
         return tResult;
     }
@@ -6648,6 +6646,7 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                     if (t != null) {
                         SaxRender.Renderer.renderTable(t, tVirtualTablezugkla);
                     }
+                    console.log(JSON.stringify(tVirtualTablezugkla));
                     return tResult;
                 };
                 Sched.doAllLogged = function () {

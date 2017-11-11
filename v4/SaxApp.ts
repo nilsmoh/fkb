@@ -31,6 +31,9 @@ export class Sched{
             
             SaxValidator.Validator.validate_mergeBlocks(tResult); // fasst wa/sa zu rechteckigen bereichen zusammen, der oberste linke enthaelt dann breite und hoehe des rechteckigen bereichs
 
+
+
+
             SaxValidator.Validator.validate_addZusatzinfobase(tResult);
             //SaxSchedulesTyped.Validator.validate_Zeiten24(tResult);
 
@@ -68,13 +71,13 @@ export class Sched{
             var t = document.getElementById("testdiv");
             if (t != null){
                 //SaxSchedulesTyped.Importer.renderTable(t ,tResult);
-                SaxRender.Renderer.renderTable(t,tVirtualTablezugkla);
+                SaxRender.Renderer.renderTable(t, tVirtualTablezugkla);
                 //console.error("renderTable commented out")
             }
 
             //todo calculate times in new virtual
 
-
+            console.log( JSON.stringify(tVirtualTablezugkla));
             
             return tResult;            
         }
