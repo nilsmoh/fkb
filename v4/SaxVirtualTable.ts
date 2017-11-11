@@ -19,8 +19,8 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
             Ueberschrift: JSON.parse(JSON.stringify(tInput.Ueberschrift)),
             Route1900: JSON.parse(JSON.stringify(tInput.Route1900)),
             Klassen: JSON.parse(JSON.stringify(tInput.Klassen)),
-            Zeilen: /*JSON.parse(JSON.stringify(*/tInput.Zeilen/*))*/.map(virtualize),
-            ZusatzBloecke: /*JSON.parse(JSON.stringify(*/tInput.ZusatzBloecke//))
+            Zeilen: JSON.parse(JSON.stringify(tInput.Zeilen)).map(virtualize),
+            ZusatzBloecke: JSON.parse(JSON.stringify(tInput.ZusatzBloecke))
         };
 
        return tResult;
@@ -32,9 +32,9 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
      * 
      * @param tInput 
      */
-    export function virtualizeZugNrZugKlasse(tInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual){
+    export function virtualizeZugNrZugKlasse(tInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual): ParsedTypes.SingleDirectionScheduleTyped_plusVirtual{
         console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
-        var tResult:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = tInput; 
+        var tResult:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = JSON.parse(JSON.stringify( tInput)); 
         
         var iz = 0;
         while (iz < tResult.Zeilen.length){

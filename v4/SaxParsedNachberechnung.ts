@@ -74,7 +74,8 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
                                 case BLOCK_T.BLOCK:
                                     if (tZNEintrag.Blockinhalt) {
                                         console.warn("todo: error handling");
-                                        tZugNr = "" + (tZNEintrag.Blockinhalt.Inhalt.BLOCK.Standard as Block2Entry).ZugNr; //  .ZugNrOderKlasse.Zugnr!;   //force not undefined ??   TODO error handling
+                                        console.warn("todo fix reading zugnr from zusatzzeileninfo");
+                                        tZugNr = "" + (-9999) // (tZNEintrag.Blockinhalt.Inhalt.BLOCK.Standard as Block2Entry).ZugNr; //  .ZugNrOderKlasse.Zugnr!;   //force not undefined ??   TODO error handling
                                         // Neuer Zugnummereintrag bekommt seine eigene Zugnummer auch als berechneter wert
                                         tZNEintrag.BerechneterZugLauf = {
                                             kind: ZUGLAUF_BERECHNET,
@@ -176,7 +177,8 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
                                 case BLOCK_T.BLOCK:
 
                                     if (tEintrag.kind === BLOCK_T.BLOCK) {
-
+                                        console.warn("todo read from zusatzinfo");
+                                        /*    
                                         if (tEintrag.Blockinhalt) {
                                             if ((tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.PASSEND) ||
                                                 (tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.EMBEDDED)) {
@@ -185,6 +187,7 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
                                                 }
                                             }
                                         }
+                                        */
                                     }
 
 

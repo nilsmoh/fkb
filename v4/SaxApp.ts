@@ -77,7 +77,7 @@ export class Sched{
 
             //todo calculate times in new virtual
 
-            console.log( JSON.stringify(tVirtualTablezugkla));
+            //console.log( JSON.stringify(tVirtualTablezugkla));
             
             return tResult;            
         }

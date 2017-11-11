@@ -477,6 +477,21 @@ export class Renderer{
                                     td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";  
                                      td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
                                     //td.title = ze.BerechneterZugLauf.kind;
+
+                                    let ze_Blockinhalt = undefined;
+                                    if (ze.Referenzkey != null){
+                                        // find block
+                                        input.ZusatzBloecke.forEach((angabeAusListe)=>{
+                                            if ((angabeAusListe.Verweistyp.kind == VERWEIS_T.FERN) || (angabeAusListe.Verweistyp.kind == VERWEIS_T.PASSEND)){
+                                                if (angabeAusListe.Verweistyp.ReferenzKey === ze.Referenzkey){
+                                                    // richtiger listeneintrag gefunden
+                                                    ze_Blockinhalt = angabeAusListe;
+                                                }
+                                            }
+                                        });
+
+                                    }
+
                                     
                                     if (ze.Valid == false) {
 
@@ -496,13 +511,13 @@ export class Renderer{
                                         if (ze.Senkrecht) {
                                             td.setAttribute("class", "blockSenkrecht valid");
                                             let tSenkrechtDiv = document.createElement("div");
-                                            tSenkrechtDiv.innerHTML = (ze.Start ?  ZI_Renderer.TBlockInhaltNachRenderKomplex(ze.Blockinhalt, false) : "") + tDebugString;
+                                            tSenkrechtDiv.innerHTML = (ze.Start ?  ZI_Renderer.TBlockInhaltNachRenderKomplex(ze_Blockinhalt, false) : "") + tDebugString;
                                             tSenkrechtDiv.setAttribute("class", "senkrecht "+"senkOrgBreit-"+ze.Breite+" "+"senkOrgHoch-"+ze.Hoehe);
                                               
                                             td.appendChild(tSenkrechtDiv);
                                         } else {
                                             td.setAttribute("class", "blockWaagerecht valid");
-                                            td.innerHTML = (ze.Start ? ZI_Renderer.TBlockInhaltNachRenderKomplex(ze.Blockinhalt, false): "") + tDebugString;
+                                            td.innerHTML = (ze.Start ? ZI_Renderer.TBlockInhaltNachRenderKomplex(ze_Blockinhalt, false): "") + tDebugString;
                                         }
 
                                     }

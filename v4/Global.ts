@@ -399,12 +399,12 @@ type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechts
     }
 
  //// Typen fuer Verweis
-    type TVerweisTyp = TVerweisPassend | TVerweisFern | TVerweisEmbedded | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
+    type TVerweisTyp = TVerweisPassend | TVerweisFern /*| TVerweisEmbedded*/ | TVerweisGlobalDefault;    // | Pfeilstart ? PFEILZIEL ? 
 
     enum VERWEIS_T{
         PASSEND = "VERWEIS_PASSEND",
         FERN = "VERWEIS_FERN" ,
-        EMBEDDED = "VERWEIS_EMBEDDED",
+        //EMBEDDED = "VERWEIS_EMBEDDED",
         GLOBAL_DEFAULT = "VERWEIS_GLOBAL_DEFAULT"
     }
 
@@ -420,9 +420,11 @@ type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechts
         ReferenzKey: string,            // nur Verweistyp == Fern :  a..r, t..z
         OpticalMarker: string
     }
+    /*
     interface TVerweisEmbedded { //direkt 1*1 eingebettet
         kind: typeof VERWEIS_T.EMBEDDED // VERWEIS_EMBEDDED
     }
+    */
     // z.b. alle zuege 2u3 klasse,  textort gibt die renderposition an
     interface TVerweisGlobalDefault {
         kind: typeof VERWEIS_T.GLOBAL_DEFAULT // VERWEIS_GLOBAL_DEFAULT
@@ -444,7 +446,7 @@ interface TBlockEintrag {
         Hoehe: number;
         Passend: boolean; // Gegenteil waere fern
         Referenzkey: string | undefined;
-        Blockinhalt: TBlockinhaltBaseV2 | undefined;
+        Blockinhalt: /*TBlockinhaltBaseV2 |*/ undefined;
         Valid: boolean; // false in first incarnation, true when width / height is known and blockinhalt is analyzed
         BerechneterZugLauf: TZugLaufInfo;
 }

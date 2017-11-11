@@ -273,6 +273,7 @@ export class Validator {
                         if (z.kind == ZEILE_T.KLASSEN) {
                             tEintraege = z.KlassenNummern;
 
+                            /*
                             if (z.BlockEintrag) {
                                 let tFound: TBlockinhaltBaseV2 | null = null;
                                 for (let i = 0; i < s.ZusatzBloecke.length; i++) {
@@ -300,7 +301,7 @@ export class Validator {
                                 }
 
                             }
-
+                        */
 
 
                         }
@@ -318,6 +319,7 @@ export class Validator {
                             switch (zi.kind) {
                                 case BLOCK_T.BLOCK:
                                     if (zi.Start && zi.Referenzkey) {
+                                        /*
                                         let tFound: TBlockinhaltBaseV2 | null = null;
                                         for (let i = 0; i < s.ZusatzBloecke.length; i++) {
                                             let tBlockZusatz = s.ZusatzBloecke[i];
@@ -342,6 +344,7 @@ export class Validator {
                                         } else {
                                             console.warn("x Zusatzinfobase fehlt fuer refkey ", zi.Referenzkey);
                                         }
+                                        */
                                     }
                                     break;
                                 case BLOCK_T.LEER:

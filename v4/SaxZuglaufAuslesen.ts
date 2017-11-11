@@ -333,6 +333,8 @@ import { ZEILE_T, /*BLOCK_T,*/ TNormalZeileEintrag, /*ZUGLAUF_BERECHNET,*/ EAnAb
                                         }
                                         break;
                                     case BLOCK_T.BLOCK:
+                                     console.warn("todo read from zusatzinfo");
+                                    /*
                                         console.warn("todo auszulesender blockinhalt: ", tEintrag.Blockinhalt);
                                         if (tEintrag.Passend) {
                                             if (tEintrag.Blockinhalt) {
@@ -358,24 +360,14 @@ import { ZEILE_T, /*BLOCK_T,*/ TNormalZeileEintrag, /*ZUGLAUF_BERECHNET,*/ EAnAb
                                                     console.warn("todo implement fahrtage");
                                                 }
                                                  
-                                                /*
-                                                // gueltigkeit
-                                                switch (tEintrag.Blockinhalt.Fahrtage.kind) {
-                                                    case FAEHRT_T.WERKTAGS:
-                                                        tCurrentFahrtage = { kind: FAEHRT_T.WERKTAGS };
-                                                        break;
-                                                    case FAEHRT_T.SONNUNDFESTTAGS:
-                                                        tCurrentFahrtage = { kind: FAEHRT_T.SONNUNDFESTTAGS };
-                                                        break;
-                                                }
-                                                    */
+                                               
                                             }
 
 
 
                                         }
 
-
+*/
                                         break;
                                     case BLOCK_T.DICKERSTRICH:
                                         break;

@@ -1079,11 +1079,13 @@ export class Importer {
 // ZI_ ===  Zusatzinfobase bezogen
 
 export class ZI_Creator {
+    /*
     public static createTVerweisEmbedded(): TVerweisEmbedded {
         return {
             kind: VERWEIS_T.EMBEDDED
         }
     }
+    */
 
     public static createTVerweisPassend(key: string, scope: EScope): TVerweisPassend {
         return {
@@ -1664,12 +1666,13 @@ export class ZI_Renderer {
         }
         */
 
-        var tResult = "";
+        var tResult = "UUUndefined";
         if (t){
-            tResult = t.Inhalt.q;
+            tResult = (((<any>t)["Virtualized"]  === true) ? "VIRTUALIZED " : "") + t.Inhalt.q;
+            
         }
         
-        return (((<any>t)["Virtualized"]  === true) ? "VIRTUALIZED " : "") + "todo render v2 "+ tResult;
+        return "todo render v2 "+ tResult;
     }
 }
 

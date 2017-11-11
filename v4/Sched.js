@@ -2933,7 +2933,6 @@ var VERWEIS_T;
 (function (VERWEIS_T) {
     VERWEIS_T["PASSEND"] = "VERWEIS_PASSEND";
     VERWEIS_T["FERN"] = "VERWEIS_FERN";
-    VERWEIS_T["EMBEDDED"] = "VERWEIS_EMBEDDED";
     VERWEIS_T["GLOBAL_DEFAULT"] = "VERWEIS_GLOBAL_DEFAULT";
 })(VERWEIS_T || (VERWEIS_T = {}));
 var _ = { kind: BLOCK_T.LEER, MitStrich: true, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
@@ -4647,11 +4646,6 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
             ZI_Creator = (function () {
                 function ZI_Creator() {
                 }
-                ZI_Creator.createTVerweisEmbedded = function () {
-                    return {
-                        kind: VERWEIS_T.EMBEDDED
-                    };
-                };
                 ZI_Creator.createTVerweisPassend = function (key, scope) {
                     return {
                         kind: VERWEIS_T.PASSEND,
@@ -4712,11 +4706,11 @@ System.register("SaxParser", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseTypes"]
                     return tResult;
                 };
                 ZI_Renderer.TBlockInhaltNachRenderKomplex = function (t, alleZuege) {
-                    var tResult = "";
+                    var tResult = "UUUndefined";
                     if (t) {
-                        tResult = t.Inhalt.q;
+                        tResult = ((t["Virtualized"] === true) ? "VIRTUALIZED " : "") + t.Inhalt.q;
                     }
-                    return ((t["Virtualized"] === true) ? "VIRTUALIZED " : "") + "todo render v2 " + tResult;
+                    return "todo render v2 " + tResult;
                 };
                 return ZI_Renderer;
             }());
@@ -4918,32 +4912,6 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                 }
                                 if (z.kind == SaxParsedTypes_2.ZEILE_T.KLASSEN) {
                                     tEintraege = z.KlassenNummern;
-                                    if (z.BlockEintrag) {
-                                        var tFound = null;
-                                        for (var i = 0; i < s.ZusatzBloecke.length; i++) {
-                                            var tBlockZusatz = s.ZusatzBloecke[i];
-                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.EMBEDDED) {
-                                            }
-                                            if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_T.PASSEND) {
-                                                if (tBlockZusatz.Verweistyp.ReferenzKey === z.BlockEintrag.Referenzkey) {
-                                                    if (tFound == null) {
-                                                        tFound = tBlockZusatz;
-                                                    }
-                                                    else {
-                                                        console.warn("zusatzbloecke enthaelt refkey mehrmals x: ", z.BlockEintrag.Referenzkey);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        if (tFound) {
-                                            z.BlockEintrag.Blockinhalt = tFound;
-                                            tFound["XVirtualized"] = true;
-                                            console.log("added into zug oder klassenzeile", tFound);
-                                        }
-                                        else {
-                                            console.warn("x Zusatzinfobase fehlt fuer refkey ", z.BlockEintrag.Referenzkey);
-                                        }
-                                    }
                                 }
                                 if ((z.kind == SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB)
                                     || (z.kind == SaxParsedTypes_2.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN)
@@ -4956,30 +4924,6 @@ System.register("SaxValidator", ["SaxParsedTypes", "SaxInputTypes", "SaxBaseType
                                     switch (zi.kind) {
                                         case BLOCK_T.BLOCK:
                                             if (zi.Start && zi.Referenzkey) {
-                                                var tFound = null;
-                                                for (var i = 0; i < s.ZusatzBloecke.length; i++) {
-                                                    var tBlockZusatz = s.ZusatzBloecke[i];
-                                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.EMBEDDED) {
-                                                    }
-                                                    if (tBlockZusatz.Verweistyp.kind == VERWEIS_T.FERN || tBlockZusatz.Verweistyp.kind == VERWEIS_T.PASSEND) {
-                                                        if (tBlockZusatz.Verweistyp.ReferenzKey === zi.Referenzkey) {
-                                                            if (tFound == null) {
-                                                                tFound = tBlockZusatz;
-                                                            }
-                                                            else {
-                                                                console.warn("zusatzbloecke enthaelt refkey mehrmals: ", zi.Referenzkey);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                if (tFound) {
-                                                    zi.Blockinhalt = tFound;
-                                                    tFound["YVirtualized"] = true;
-                                                    console.log("added into normal or anschlusszeile", tFound);
-                                                }
-                                                else {
-                                                    console.warn("x Zusatzinfobase fehlt fuer refkey ", zi.Referenzkey);
-                                                }
                                             }
                                             break;
                                         case BLOCK_T.LEER:
@@ -5310,6 +5254,16 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                             var tDebugString = "";
                                             td.title = ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-";
                                             td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
+                                            var ze_Blockinhalt_1 = undefined;
+                                            if (ze.Referenzkey != null) {
+                                                input.ZusatzBloecke.forEach(function (angabeAusListe) {
+                                                    if ((angabeAusListe.Verweistyp.kind == VERWEIS_T.FERN) || (angabeAusListe.Verweistyp.kind == VERWEIS_T.PASSEND)) {
+                                                        if (angabeAusListe.Verweistyp.ReferenzKey === ze.Referenzkey) {
+                                                            ze_Blockinhalt_1 = angabeAusListe;
+                                                        }
+                                                    }
+                                                });
+                                            }
                                             if (ze.Valid == false) {
                                                 console.log("render block invalid ", ze);
                                                 if (ze.Senkrecht) {
@@ -5326,13 +5280,13 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 if (ze.Senkrecht) {
                                                     td.setAttribute("class", "blockSenkrecht valid");
                                                     var tSenkrechtDiv = document.createElement("div");
-                                                    tSenkrechtDiv.innerHTML = (ze.Start ? SaxParser_1.ZI_Renderer.TBlockInhaltNachRenderKomplex(ze.Blockinhalt, false) : "") + tDebugString;
+                                                    tSenkrechtDiv.innerHTML = (ze.Start ? SaxParser_1.ZI_Renderer.TBlockInhaltNachRenderKomplex(ze_Blockinhalt_1, false) : "") + tDebugString;
                                                     tSenkrechtDiv.setAttribute("class", "senkrecht " + "senkOrgBreit-" + ze.Breite + " " + "senkOrgHoch-" + ze.Hoehe);
                                                     td.appendChild(tSenkrechtDiv);
                                                 }
                                                 else {
                                                     td.setAttribute("class", "blockWaagerecht valid");
-                                                    td.innerHTML = (ze.Start ? SaxParser_1.ZI_Renderer.TBlockInhaltNachRenderKomplex(ze.Blockinhalt, false) : "") + tDebugString;
+                                                    td.innerHTML = (ze.Start ? SaxParser_1.ZI_Renderer.TBlockInhaltNachRenderKomplex(ze_Blockinhalt_1, false) : "") + tDebugString;
                                                 }
                                             }
                                             console.warn(" !!!! need algo for horizontal multiline zusatzinfo");
@@ -5968,7 +5922,8 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                         case BLOCK_T.BLOCK:
                                             if (tZNEintrag.Blockinhalt) {
                                                 console.warn("todo: error handling");
-                                                tZugNr = "" + tZNEintrag.Blockinhalt.Inhalt.BLOCK.Standard.ZugNr;
+                                                console.warn("todo fix reading zugnr from zusatzzeileninfo");
+                                                tZugNr = "" + (-9999);
                                                 tZNEintrag.BerechneterZugLauf = {
                                                     kind: ZUGLAUF_BERECHNET,
                                                     isStart: false,
@@ -6051,14 +6006,7 @@ System.register("SaxParsedNachberechnung", ["SaxParsedTypes", "SaxBaseTypes"], f
                                         case BLOCK_T.ANKUNFT:
                                         case BLOCK_T.BLOCK:
                                             if (tEintrag.kind === BLOCK_T.BLOCK) {
-                                                if (tEintrag.Blockinhalt) {
-                                                    if ((tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.PASSEND) ||
-                                                        (tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.EMBEDDED)) {
-                                                        if (tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.ZugNr) {
-                                                            tZugNr = '' + tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.ZugNr;
-                                                        }
-                                                    }
-                                                }
+                                                console.warn("todo read from zusatzinfo");
                                             }
                                             tEintrag.BerechneterZugLauf = {
                                                 kind: ZUGLAUF_BERECHNET,
@@ -6409,26 +6357,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
                                                 }
                                                 break;
                                             case BLOCK_T.BLOCK:
-                                                console.warn("todo auszulesender blockinhalt: ", tEintrag.Blockinhalt);
-                                                if (tEintrag.Passend) {
-                                                    if (tEintrag.Blockinhalt) {
-                                                        if (tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.verlasseKbsNach) {
-                                                            var tEntN = {
-                                                                kind: LAUFEINTRAG_VERLASSENACHKBS
-                                                            };
-                                                            tCurrentFolge.push(tEntN);
-                                                        }
-                                                        if (tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.erreicheKbsAus) {
-                                                            var tEntKo = {
-                                                                kind: LAUFEINTRAG_KOMMEAUSKBS
-                                                            };
-                                                            tCurrentFolge.push(tEntKo);
-                                                        }
-                                                        if (tEintrag.Blockinhalt.Inhalt.BLOCK.Standard.Fahrtage) {
-                                                            console.warn("todo implement fahrtage");
-                                                        }
-                                                    }
-                                                }
+                                                console.warn("todo read from zusatzinfo");
                                                 break;
                                             case BLOCK_T.DICKERSTRICH:
                                                 break;
@@ -6487,15 +6416,15 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
             Ueberschrift: JSON.parse(JSON.stringify(tInput.Ueberschrift)),
             Route1900: JSON.parse(JSON.stringify(tInput.Route1900)),
             Klassen: JSON.parse(JSON.stringify(tInput.Klassen)),
-            Zeilen: tInput.Zeilen.map(virtualize),
-            ZusatzBloecke: tInput.ZusatzBloecke
+            Zeilen: JSON.parse(JSON.stringify(tInput.Zeilen)).map(virtualize),
+            ZusatzBloecke: JSON.parse(JSON.stringify(tInput.ZusatzBloecke))
         };
         return tResult;
     }
     exports_10("makeTableVirtual", makeTableVirtual);
     function virtualizeZugNrZugKlasse(tInput) {
         console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
-        var tResult = tInput;
+        var tResult = JSON.parse(JSON.stringify(tInput));
         var iz = 0;
         var _loop_1 = function () {
             console.log("while ", iz);
@@ -6646,7 +6575,6 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                     if (t != null) {
                         SaxRender.Renderer.renderTable(t, tVirtualTablezugkla);
                     }
-                    console.log(JSON.stringify(tVirtualTablezugkla));
                     return tResult;
                 };
                 Sched.doAllLogged = function () {
