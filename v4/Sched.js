@@ -562,7 +562,7 @@ var x34 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: WerktageVorSonnUndFesttagen } }
             }, {
                 q: "von Limbach",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Limbach" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Limbach } }
             }, {
                 q: "Sonn und festtags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -592,7 +592,7 @@ var x34 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "von limbach",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Limbach" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Limbach } }
             }, {
                 q: "pfeilstart",
                 BLOCK: { Standard: { scope: Zelle, PfeilStart: true } }
@@ -785,7 +785,7 @@ var x40 = [{
             }, {
                 q: "* mit umsteigen in grossbothen",
                 c: "//in AnschlussNachIn Zeile",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: "Grossbothen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Grossbothen } } }
             }, {
                 q: "+SonnUndFesttags",
                 c: "AnschlussNachInZeile",
@@ -834,7 +834,7 @@ var x42 = [{
             }, {
                 q: "nach colditz ank 1203 wird von grimma nach colditz nur am ersten mittwoch jeden monats abgelassen und verkehrt " +
                     "sonach in der nacht vom 2/3 mai, 6/7juni, 4/5 juli, 1/2 august und 5/6 september",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Colditz", AnkunftOrt: Colditz, AnkunftZeit: MV1203, Fahrtage: ersterMittwochJedenMonatsDH2mai6juni4juli1august5september } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Colditz, AnkunftOrt: Colditz, AnkunftZeit: MV1203, Fahrtage: ersterMittwochJedenMonatsDH2mai6juni4juli1august5september } }
             }, {
                 q: "{nur freitag",
                 c: " //anschluss zelle",
@@ -906,7 +906,7 @@ var x46 = [{
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.DresdnerVerbindungsbahnzuegseSieheUnter1 } }
             }, {
                 q: "!Schles. Bf.",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { SubBhf: "Schles.Bf" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Dresden_Neust_Schl_Bf } } }
             }, {
                 q: "# zug 5 vermitt. anschluss in richt n wien",
                 c: "mit naechstem ein text aber besser auf 2 aufteilen und marker trennen !!!!",
@@ -920,15 +920,15 @@ var x46 = [{
             }, {
                 q: "v Elsterw. 640",
                 c: "ZEILE_ANSCHLUSS_ZUBRINGER_AB  ZEILE_ANSCHLUSS_ZUBRINGER_IN   Paar, dessen erster teil veraendert ist",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Elsterwerda", Zeit: ZHV(640) } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Elsterwerda, Zeit: ZHV(640) } } }
             }, {
                 q: "v Elsterw.",
                 c: "ZEILE_ANSCHLUSS_ZUBRINGER_AB  ZEILE_ANSCHLUSS_ZUBRINGER_IN   Paar, dessen erster teil veraendert ist;   keine zeitangabe !!!",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Elsterwerda" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Elsterwerda } } }
             }, {
                 q: "v Riesa.",
                 c: "ZEILE_ANSCHLUSS_ZUBRINGER_AB  ZEILE_ANSCHLUSS_ZUBRINGER_IN   Paar, dessen erster teil veraendert ist;   keine zeitangabe !!!",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Riesa" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Riesa } } }
             }, {
                 q: "speisewagen Berlin - Wien",
                 BLOCK: { Standard: { scope: Zug, Speisewagen: ["Berlin", "Wien"] } }
@@ -960,7 +960,7 @@ var x47 = [{
                 BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Klasse: Kl1bis3 } } }
             }, {
                 q: "*schles bhf",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { SubBhf: "SchlesBf" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Dresden_Neust_Schl_Bf } } }
             }, {
                 q: "Speisewagen Karlsbad berlin",
                 BLOCK: { Standard: { scope: Zug, Speisewagen: ["Karlsbad", "Berlin"] } }
@@ -969,19 +969,19 @@ var x47 = [{
                 BLOCK: { Standard: { scope: Zug, Speisewagen: ["Wien", "Bodenbach", "Berlin"] } }
             }, {
                 q: "bis elsterwerda",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Elsterwerda" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Elsterwerda } } }
             }, {
                 q: "bis riesa ",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Riesa" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Riesa } } }
             }, {
                 q: "*schles bhf",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { SubBhf: "Schles.Bf." } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Dresden_Neust_Schl_Bf } } }
             }, {
                 q: "bis leisnig",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Leisnig" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Leisnig } } }
             }, {
                 q: "bis nossen",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Nossen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Nossen } } }
             }
         ]
     }];
@@ -1009,16 +1009,16 @@ var x49 = [{
                 BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Wurzen, endZeileBhf: Leipzig }, AllgemeineInfo: AllgemeineInfo.SieheUnter7 } }
             }, {
                 q: "* ueber Halle Bebra",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Ueber: ["Halle", "Bebra"] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Ueber: [Halle, Bebra] } } }
             }, {
                 q: "nach stuttgart-mailand",
-                BLOCK: { Standard: { scope: Zug, AnschlussWeiterNach: { WeitereFernziele: ["Stuttgart", "Mailand"] } } }
+                BLOCK: { Standard: { scope: Zug, AnschlussWeiterNach: { WeitereFernziele: [Stuttgart, Mailand] } } }
             }, {
                 q: "+Bei den mit + bezeichneten zuegen findet omnibusueberfuehrung v dresdner nach den thuer Bahnhofe statt",
                 BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: ["DresdnerBhf", "ThueringerBhf"] } }
             }, {
                 q: "bis Erf. 229",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Leipzig", endZelle: "Frankfurt/M" }, AnschlussWeiterNach: { Bhf: "Erfurt", Zeit: ZMV(229) } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Leipzig, endZelle: Frankfurt_M }, AnschlussWeiterNach: { Bhf: Erfurt, Zeit: ZMV(229) } } }
             },
             {
                 q: "Alle Zuege II u III Kl",
@@ -1052,12 +1052,12 @@ var x50 = [{
                 BLOCK: { Standard: { scope: Zug, ZugWartetNicht: { ZugNr: "3", GepaeckVonNichtUeberfuehrt: ["Magdeburg", "Halle"] } } }
             }, {
                 q: "(Anschluss) von Erf (3:34)",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Frankfurt/M", endZelle: "Leipzig Th Bhf" },
-                        AnschlussZubringerAb: { Bhf: "Erfurt", Zeit: ZHV(334) } } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Frankfurt_M, endZelle: Leipzig_Th_Bf },
+                        AnschlussZubringerAb: { Bhf: Erfurt, Zeit: ZHV(334) } } }
             }, {
                 q: "von Mailand Stuttgart",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Frnakfurt/M", endZelle: "Leipzig Th Bhf" },
-                        AnschlussZubringerAb: { WeitereFernStartpunkte: ["Mailand", "Stuttgart"] } } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Frankfurt_M, endZelle: Leipzig_Th_Bf },
+                        AnschlussZubringerAb: { WeitereFernStartpunkte: [Mailand, Stuttgart] } } }
             }, {
                 q: "Buffetwagen Leipzig-Myslowitz",
                 BLOCK: { Standard: { scope: Zug, Buffetwagen: ["Leipzig", "Myslowitz"] } }
@@ -1078,7 +1078,7 @@ var x51 = [{
             }, {
                 q: "b Casl ",
                 c: "Caslau a.d. Strecke Caslau Nimburg Tetschen heute Caslav  ???",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Tetschen", endZelle: "Wien NWB" }, AnschlussWeiterNach: { Bhf: "Časlau" } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Tetschen, endZelle: Wien_NWB }, AnschlussWeiterNach: { Bhf: Časlau } } }
             },
             {
                 q: "Alle Zuege II. u. III. Kl.",
@@ -1134,7 +1134,7 @@ var x53 = [{
                 BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussWeiterNach: { Geltungstag: SonnUndFesttags, Zeit: ZHV(1132) } } }
             }, {
                 q: "nach Chemnitz Ank.1155",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Chemnitz", AnkunftZeit: ZHV(1155) } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Chemnitz, AnkunftZeit: ZHV(1155) } }
             }, {
                 q: "Nur Freitags.",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Freitags } }
@@ -1175,13 +1175,13 @@ var x54 = [{
                 BLOCK: { Standard: { scope: Zug, Buffetwagen: ["Leipzig", "Myslowitz"] } }
             }, {
                 q: "Schnellzug n. Zittau-Reichenberg über Warnsdorf",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { Kategorie: "Schnellzug", nach: ["Zittau", "Reichenberg"], ueber: "Warnsdorf" } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { Kategorie: "Schnellzug", nach: [Zittau, Reichenberg], ueber: Warnsdorf } } }
             }, {
                 q: "Fahrkarten nach Lauban und weiter zum Zug 121 ohne Preiserhöhung über Kohlfurt ",
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.FahrKartenNLaubanUndWeiterZumZug121ohnePreiserhoehungUeberKohlfurt } }
             }, {
                 q: "bis Horka",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterAb: { bis: "Horka" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterAb: { bis: Horka } } }
             },
             {
                 q: "*Sonn-und Festtags:831",
@@ -1197,7 +1197,7 @@ var x55 = [{
         list: [
             {
                 q: "+vom 15.juni bis 15.september:335 ab breslau",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Bhf: "Breslau", Zeit: ZHN(335) } } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Bhf: Breslau, Zeit: ZHN(335) } } }
             }, {
                 q: "Nur Sonnabends",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Sonnabends } }
@@ -1212,11 +1212,11 @@ var x55 = [{
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Leipzig", "Myslowitz"] } }
             }, {
                 q: "*Schnellzug v Reichenberg-Zittau über Warnsdorf",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { Kategorie: "Schnellzug", aus: ["Reichenberg", "Zittau"], ueber: "Warnsdorf" } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { Kategorie: "Schnellzug", aus: [Reichenberg, Zittau], ueber: Warnsdorf } } }
             },
             {
                 q: "*mit Umst. in Bautzen",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: "Bautzen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: Bautzen } } }
             }, {
                 q: "!Sonn und Festt:705",
                 BLOCK: { Standard: {}, Abweichend: { scope: Zelle, AnschlussZubringerAb: { Zeit: ZHN(705) } } }
@@ -1239,7 +1239,7 @@ var x56 = [{
                 BLOCK: { Standard: { scope: Zug, ZugVerlaesstStreckeAberKommtZurueck: { letzterBhf: "Neugersdorf", abweichend: ["Warnsdorf"], wiederDaBhf: "Zittau" } } }
             }, {
                 q: "von Loebau",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Loebau" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Löbau } }
             }, {
                 q: "+nur sonn und festtags",
                 BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Geltungstag: SonnUndFesttags } } }
@@ -1259,17 +1259,17 @@ var x56 = [{
                 BLOCK: { Standard: { scope: Zug, ZugVerlaesstStreckeAberKommtZurueck: { letzterBhf: "Zittau", abweichend: ["Warnsdorf"], wiederDaBhf: "Neugersdorf" } } }
             }, {
                 q: "nach Loebau Ank 819",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHV(819) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Löbau], AnkunftsZeit: ZHV(819) } } }
             }, {
                 q: "nach Loebau Ank 704",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHN(704) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Löbau], AnkunftsZeit: ZHN(704) } } }
             }, {
                 q: "nach Loebau Ank 931",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHN(931) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Löbau], AnkunftsZeit: ZHN(931) } } }
             },
             {
                 q: "nach Loebau Ank 1129",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Loebau"], AnkunftsZeit: ZHN(1129) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Löbau], AnkunftsZeit: ZHN(1129) } } }
             }
         ]
     }];
@@ -1288,11 +1288,11 @@ var x57 = [{
                             Klasse: Kl1bis3, ZugNr: "850", weg: [{ bhfAb: "Reichenberg", zeit: ZHN(246) }, { bhfAb: "Machendorf", zeit: ZHN(258) }, { bhfAn: "Kratzau", zeit: ZHN(307) }] } } }
             }, {
                 q: "10:00 in Kreibitz",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Kreibitz", Zeit: ZHN(1000) } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Kreibitz, Zeit: ZHN(1000) } } }
             },
             {
                 q: "11:31 in Ebersbach",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Ebersbach", Zeit: ZHN(1131) } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Ebersbach, Zeit: ZHN(1131) } } }
             }, {
                 q: "*In Oberullersdorf halten die Zuege nur zum Aussteigen",
                 BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Oberullersdorf, endZeileBhf: Oberullersdorf }, ZuegeHaltenNurZumAussteigen: true } }
@@ -1309,7 +1309,7 @@ var x57 = [{
         head: "57.32 Oberoderwitz-Loebau und zurueck",
         list: [{
                 q: "*mit Umsteigen in Bautzen",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: "Bautzen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Bautzen } } }
             }
         ]
     }];
@@ -1339,7 +1339,7 @@ var x59 = [{
                 BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
             }, {
                 q: "*mit umsteigen in bautzen",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: "Bautzen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Bautzen } } }
             },
             {
                 q: "Alle Zuege II - IV Kl",
@@ -1353,7 +1353,7 @@ var x59 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: DonnerstagOderWennDieserFesttagDannMittwochVorher, RedundanteZugNr: [2701] } }
             }, {
                 q: "*mit umsteigen in bautzen",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: "Bautzen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Bautzen } } }
             },
             {
                 q: "Alle Zuege II - III Kl",
@@ -1388,13 +1388,13 @@ var x60 = [{
             }, {
                 q: "Von Cunewalde",
                 c: "NICHT: Obercunewalde",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Cunewalde" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Cunewalde } }
             }, {
                 q: "Von Obercunewalde",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Obercunewalde" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Obercunewalde } }
             }, {
                 q: "Nach Obercunewalde",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Obercunewalde" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Obercunewalde } }
             }
         ]
     }, {
@@ -1469,11 +1469,11 @@ var x61 = [{
             }, {
                 q: "anschluss aus zugnr 624",
                 c: "",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Seidenberg", endZelle: "Nikrisch" }, ZugNr: "624" } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Seidenberg, endZelle: Nikrisch }, ZugNr: "624" } }
             }, {
                 q: "anschluss aus zugnr 628",
                 c: "",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Seidenberg", endZelle: "Nikrisch" }, ZugNr: "628" } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Seidenberg, endZelle: Nikrisch }, ZugNr: "628" } }
             }
         ]
     }];
@@ -1568,7 +1568,7 @@ var x64 = [{
             }, {
                 q: "o Schl.Bhf.",
                 c: "muss das nach DD Neustadt statt Hbf ??? ??? -> zug endet schon in Neustadt s.Seite 27 !!!",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "DD Neustadt", SubBhf: "Schl.Bf" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Dresden_Neust_Schl_Bf } } }
             }, {
                 q: "Nur in d Nacht n. Dienstag und Sonntag.",
                 c: "Interpretation des 'nach' ist aus FKB So 1899 fuer den selben Zug uebernommen   ",
@@ -1630,10 +1630,10 @@ var x66 = [{
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Dresden", "Muenchen"] } }
             }, {
                 q: "*von Meerane",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Meerane" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Meerane } }
             }, {
                 q: "+von Meerane",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Meerane" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Meerane } }
             }]
     }];
 var x67 = [{
@@ -1652,7 +1652,7 @@ var x67 = [{
                 BLOCK: { Standard: { scope: Zug, ZugVerlaesstStreckeAberKommtZurueck: { letzterBhf: "Hof", abweichend: ["Schnabelwald"], wiederDaBhf: "Muenchen" } } }
             }, {
                 q: "bis weiden",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Weiden" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Weiden } }
             }, {
                 q: "D I.II.",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Reichenbach_i_V, TZgueltigBisBhf: Hof }, Kategorie: "DZug", Klasse: Kl1bis2 } }
@@ -1664,18 +1664,18 @@ var x67 = [{
                 BLOCK: { Standard: { scope: Zelle, Klasse: Kl1 } }
             }, {
                 q: "*Zug2039(II-IV.Kl) von Gössnitz",
-                BLOCK: { Standard: { scope: Zug, ZugNr: "2039", Klasse: Kl2bis4, erreicheKbsAus: "Goessnitz" } }
+                BLOCK: { Standard: { scope: Zug, ZugNr: "2039", Klasse: Kl2bis4, erreicheKbsAus: Gössnitz } }
             }]
     },
     {
         head: "67.55",
         list: [{
                 q: "+ von Chemnitz",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Chemnitz" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Chemnitz } } }
             }, {
                 q: "!Ueber Reichenbach i.V. ",
                 c: " //Ue originalschreibung!!!",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: ["Reichenbach i V"] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: [Reichenbach_i_V] } } }
             }, {
                 q: "IV Klasse wird auch an Tagen geführt, die in sachsen als festtage, in reuss aber als werktage gelten.",
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.IV_Klasse_wird_auch_an_Tagen_gefuehrt__die_in_Sachsen_als_Festtage__in_Reuss_aber_als_Werktage_gelten } }
@@ -1699,13 +1699,13 @@ var x68 = [{
             }, {
                 q: "+ mit umsteigen in Reichenbach iV s640",
                 c: "FKB56 zeigt den anschluss in Reichenbach mit einem Pfeil 144->155",
-                BLOCK: { Standard: {}, Alternative: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Muenchen", mitUmstiegIn: "Reichenbach", Kategorie: "Schnellzug", Zeit: ZGN(640) } } }
+                BLOCK: { Standard: {}, Alternative: { scope: Zelle, AnschlussZubringerAb: { Bhf: München, mitUmstiegIn: Reichenbach_i_V, Kategorie: "Schnellzug", Zeit: ZGN(640) } } }
             }, {
                 q: "Directe Wagen unter 247.",
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.DirecteWagenSUnter247 } }
             }, {
                 q: "Von Würzburg",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Wuerzburg" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Würzburg } }
             }, {
                 q: "!Nord-Süd-Express",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Hof, TZgueltigBisBhf: Reichenbach_i_V }, AnschlussWeiterNach: { Kategorie: "Nord Sued Express" } } }
@@ -1714,10 +1714,10 @@ var x68 = [{
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Hof, TZgueltigBisBhf: Reichenbach_i_V }, Kategorie: "DZug", Klasse: Kl1bis2 } }
             }, {
                 q: "nach Gössnitz",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Goessnitz" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Gössnitz } }
             }, {
                 q: "Nach Meerane",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Meerane" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Meerane } }
             }
         ]
     }];
@@ -1735,22 +1735,22 @@ var x69 = [{
             }, {
                 q: "b.Tetsch",
                 c: " durchgehender anschlusszug ",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Tetschen" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Tetschen } }
             }]
     }, {
         head: "69.55",
         list: [{
                 q: "i. Chemnitz",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Chemnitz" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Chemnitz } } }
             }, {
                 q: "IV Klasse wird auch an Tagen geführt die in sachsen als festtage, in reuss aber als werktage gelten",
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.IV_Klasse_wird_auch_an_Tagen_gefuehrt__die_in_Sachsen_als_Festtage__in_Reuss_aber_als_Werktage_gelten } }
             }, {
                 q: "*mit umsteigen in crimmitschau",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: "Crimmitschau" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Crimmitschau } } }
             }, {
                 q: "!ueber reichenbach i.V.",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Ueber: ["Reichenbach i V"] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Ueber: [Reichenbach_i_V] } } }
             }
         ]
     }];
@@ -1772,13 +1772,13 @@ var x70 = [{
             }, {
                 q: "n.Zw.",
                 c: "Zugbeginn HN908 siehe FKB61 Meerane ankunft vs Abfahrt 1 minute unterschied...939 ab schoenboernchen, Ankunft S.67 um 1008 in Zwickau",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Zwickau" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Zwickau } }
             }, {
                 q: "Nord-Süd-Expresszug (Brenner)",
                 BLOCK: { Standard: { scope: Zug, Kategorie: "Nord Sued Express" } }
             }, {
                 q: "von Dresden",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Dresden" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Dresden } }
             }, {
                 q: "direkter Wagen I II Kl Leipzig Muenchen",
                 BLOCK: { Standard: { scope: Zug, DirekterWagen: ["Leipzig", "Muenchen"], DirekterwagenKlasse: Kl1bis2 } }
@@ -1802,14 +1802,14 @@ var x71 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "nach Eger(Ank329)",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Eger"], Kategorie: "Schnellzug", AnkunftsZeit: ZHN(329) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Eger], Kategorie: "Schnellzug", AnkunftsZeit: ZHN(329) } } }
             }, {
                 q: "I-IV Kl",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Plauen_i_V, TZgueltigBisBhf: Hof }, Klasse: Kl1bis4 } }
             }, {
                 q: "b.Weiden",
                 c: "anschlusszug verlauf ",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Hof", endZelle: "Muenchen" }, mehrZeiligerAnschlusszugFaehrtNach: "Weiden" } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Hof, endZelle: München }, mehrZeiligerAnschlusszugFaehrtNach: "Weiden" } }
             }, {
                 q: "(rechteck) bei den mit (rechteck) bezeichneten Zügen findet in Leipzig Omnibusüberführung vom Magdeburg. nach dem Bayr.Bhf. statt.",
                 BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: ["MagdeburgerBhf", "BayerischBhf"] } }
@@ -1821,11 +1821,11 @@ var x71 = [{
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Dresden", "Muenchen"] } }
             }, {
                 q: "nach Eger (Ank533)",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Eger"], Kategorie: "Schnellzug", AnkunftsZeit: ZMV(533) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Eger], Kategorie: "Schnellzug", AnkunftsZeit: ZMV(533) } } }
             }, {
                 q: "!über Schnabelwald",
                 c: "detail eines Anschlusszuges mit mehreren Zeilen",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Hof", endZelle: "Nuernberg" }, AnschlussWeiterNach: { Ueber: ["Schnabelwald"] } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Hof, endZelle: Nürnberg }, AnschlussWeiterNach: { Ueber: [Schnabelwald] } } }
             }, {
                 q: "Saechs Staatsb",
                 BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
@@ -1854,23 +1854,23 @@ var x72 = [{
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Werdau }, ZugNr: 205 } }
             }, {
                 q: "von Eger",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Eger" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Eger } }
             }, {
                 q: "v.Zw.",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Chemnitz", endZelle: "Goessnitz" }, mehrzeiligerAnschlusszugKommtAus: "Zwickau" } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Chemnitz, endZelle: Gössnitz }, mehrzeiligerAnschlusszugKommtAus: "Zwickau" } }
             }, {
                 q: "217 I-III",
                 BLOCK: { Standard: { scope: Zug, ZugNr: 217, Klasse: Kl1bis3 } }
             }, {
                 q: "!über Schnabelw.",
                 c: "detail eines Anschlusszuges mit mehreren Zeilen;   evtl ZubringerAb und ZubringerIn in verschiedene Bloecke fassen ???",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: ["Schnabelwald"] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: [Schnabelwald] } } }
             }, {
                 q: "Schlafwagen Münch Dresden",
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Muenchen", "Dresden"] } }
             }, {
                 q: "nach Dresden Ank502",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Dresden"], Kategorie: "Schnellzug", AnkunftsZeit: ZHN(502) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Dresden], Kategorie: "Schnellzug", AnkunftsZeit: ZHN(502) } } }
             }, {
                 q: "schlaf und buffetwagenmuenchen berlin",
                 BLOCK: { Standard: { scope: Zug, Schlafwagen: ["Muenchen", "Berlin"], Buffetwagen: ["Muenchen", "Berlin"] } }
@@ -1894,7 +1894,7 @@ var x73 = [{
                 BLOCK: { Standard: { scope: Zug, Speisewagen: ["Muenchen", "Berlin"] } }
             }, {
                 q: "b coeth",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Leipzig_Magd_Bf", endZelle: "Magdeburg" }, mehrZeiligerAnschlusszugFaehrtNach: "Coethen" } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Leipzig_Magd_Bf, endZelle: Magdeburg }, mehrZeiligerAnschlusszugFaehrtNach: "Coethen" } }
             }, {
                 q: "(Rechteck) bei den mit (rechteck) bezeichneten Zuegen findet in Leipzig omnibusueberfuehrung vom Bayr. nach dem Magdeb. Bhf. statt.",
                 BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: ["BayerischBhf", "MagdeburgerBhf"] } }
@@ -1942,23 +1942,23 @@ var x74 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni } }
             }, {
                 q: "! ueb Mrkt Redwitz",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Muenchen", endZelle: "Eger" }, AnschlussZubringerAb: { Ueber: ["Mrkt Redwitz"] } } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: München, endZelle: Eger }, AnschlussZubringerAb: { Ueber: [Marktredwitz] } } }
             }, {
                 q: "+I.Kl. u. nur von 15.6. bis 15.9.",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Karlsbad", endZelle: "Eger" }, Fahrtage: Vom15JuniBis15September, Klasse: Kl1 } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Karlsbad, endZelle: Eger }, Fahrtage: Vom15JuniBis15September, Klasse: Kl1 } }
             }, {
                 q: "x ueber Franzensbad",
                 c: "Zubringer, der nicht durch eger fahert",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: ["Franzensbad"] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: [Franzensbad] } } }
             }, {
                 q: "+ I.Kl u. nur von  15.5. bis 15.9. ",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Karlsbad", endZelle: "Eger" }, Fahrtage: Vom15MaiBis15September, Klasse: Kl1 } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Karlsbad, endZelle: Eger }, Fahrtage: Vom15MaiBis15September, Klasse: Kl1 } }
             }, {
                 q: "nach Gera Ankunft 1010 ",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Gera"], AnkunftsZeit: ZHV(1010) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Gera], AnkunftsZeit: ZHV(1010) } } }
             }, {
                 q: "*Zug 2085 haelt bis mit 15.Septbr. auch in Antonienhoehe an ",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: Antonienhoehe, RedundanteZugNr: ["2085"] } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: Antonienhöhe, RedundanteZugNr: ["2085"] } }
             }, {
                 q: "*I-IV Kl ",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Adorf, TZgueltigBisBhf: Reichenbach_i_V }, Klasse: Kl1bis4 } }
@@ -1989,28 +1989,28 @@ var x75 = [{
                 BLOCK: { Standard: { scope: Global, AllgemeineInfo: AllgemeineInfo.InVoitersreuthZollrevision } }
             }, {
                 q: "+ueber Greiz //anschluss zubringer aus",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: ["Greiz"] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Ueber: [Greiz] } } }
             }, {
                 q: "*nur I.Kl",
                 BLOCK: { Standard: { scope: Zelle, Klasse: Kl1 } }
             }, {
                 q: "*D I II",
-                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: "Dresden", endZelle: "Reichenbach" }, Kategorie: "DZug", Klasse: Kl1bis2 } }
+                BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Dresden, endZelle: Reichenbach_i_V }, Kategorie: "DZug", Klasse: Kl1bis2 } }
             }, {
                 q: "+Zuege 2106 u. 2108 verkehren nur bis mit 15.September",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: bis15September, RedundanteZugNr: ["2106", "2108"] } }
             }, {
                 q: "(RAUTE) Zug 2082 haelt bis mit 15.Sept auch in antonienhoehe an",
-                BLOCK: { Standard: {}, Abweichend: { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: Antonienhoehe, RedundanteZugNr: ["2082"] } }
+                BLOCK: { Standard: {}, Abweichend: { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: Antonienhöhe, RedundanteZugNr: ["2082"] } }
             }, {
                 q: "(kleiner endstarn) Zuege der Bayer. Staatsbahnen",
                 BLOCK: { Standard: { scope: Zug, Verwaltung: "Bay" } }
             }, {
                 q: "von Gera abf 450",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Gera"], AbfahrtsZeit: ZHV(450) } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: [Gera], AbfahrtsZeit: ZHV(450) } } }
             }, {
                 q: "von Gera abf 742",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Gera"], AbfahrtsZeit: ZHV(742) } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: [Gera], AbfahrtsZeit: ZHV(742) } } }
             }, {
                 q: "** I.-IIIKl. //geschweifte klammer",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Adorf, TZgueltigBisBhf: Eger }, Klasse: Kl1bis3 } }
@@ -2031,23 +2031,23 @@ var x75 = [{
             }, {
                 q: "(grosser endstern) ueber Franzensbad",
                 c: "anderer startort des anschlusses, muss vor eger umnsteigen !!!",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Eger", endZelle: "Karlsbad" }, AnschlussWeiterAb: { Bhf: "Franzensbad" } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Eger, endZelle: Karlsbad }, AnschlussWeiterAb: { Bhf: Franzensbad } } }
             }, {
                 q: "!ueber Marktredwitz",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Eger", endZelle: "Muenchen" }, AnschlussWeiterNach: { Ueber: ["Marktredwitz"] } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Eger, endZelle: München }, AnschlussWeiterNach: { Ueber: [Marktredwitz] } } }
             }, {
                 q: "(rechteck) I.Kl u  nur von 15juni b 15 sept",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Eger", endZelle: "Karlsbad" }, Fahrtage: Vom15JuniBis15September, Klasse: Kl1 } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Eger, endZelle: Karlsbad }, Fahrtage: Vom15JuniBis15September, Klasse: Kl1 } }
             }, {
                 q: "+ I.Kl u nur von 16.V. b 16.IX",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Eger", endZelle: "Karlsbad" }, Fahrtage: vom16maibis16sept, Klasse: Kl1 } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Eger, endZelle: Karlsbad }, Fahrtage: vom16maibis16sept, Klasse: Kl1 } }
             }, {
                 q: "(geschweifte klammer) von 15.6 b. 15.8",
                 c: "Anschluss weiter L 6:55 nach wien",
                 BLOCK: { Standard: { scope: Zelle, GeltungsTag: vom15junibis15august } }
             }, {
                 q: "(geschweifte klammer) ueber M.Redwitz",
-                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: "Eger", endZelle: "Muenchen" }, AnschlussWeiterNach: { Ueber: ["Marktredwitz"] } } }
+                BLOCK: { Standard: { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Eger, endZelle: München }, AnschlussWeiterNach: { Ueber: [Marktredwitz] } } }
             }]
     }];
 var x76 = [{
@@ -2063,13 +2063,13 @@ var x76 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttagsSowieMittwochs } }
             }, {
                 q: "!Saechs Bhf",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { SubBhf: "Saechs Bhf" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Gera_Reuss_S_St_B } } }
             }, {
                 q: "!Gera (Reuss) Saechs. Bhf.",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Gera (Reuss)", SubBhf: "Saechs Bhf" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Gera_Reuss_S_St_B } } }
             }, {
                 q: "* in Altenburg",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Altenburg" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Altenburg } } }
             }, {
                 q: "Sonn und festtags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -2094,7 +2094,7 @@ var x77 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttagsSowie5Juni } }
             }, {
                 q: "i. Bad Elster",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: "Bad Elster" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { Bhf: Bad_Elster } } }
             }]
     }];
 var x78 = [{
@@ -2179,10 +2179,10 @@ var x82 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "ueb Lausigk in Leipzig Ank 1024 ",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Leipzig"], ueber: "Lausigk", Kategorie: "Schnellzug", AnkunftsZeit: ZHV(1024) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Leipzig], ueber: Lausigk, Kategorie: "Schnellzug", AnkunftsZeit: ZHV(1024) } } }
             }, {
                 q: "ub Lausigk in Leipzig Ank 925",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: ["Leipzig"], ueber: "Lausigk", Kategorie: "Schnellzug", AnkunftsZeit: ZHN(925) } } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: { nach: [Leipzig], ueber: Lausigk, Kategorie: "Schnellzug", AnkunftsZeit: ZHN(925) } } }
             }, {
                 q: "Sonn und Festtags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
@@ -2207,10 +2207,10 @@ var x83 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
             }, {
                 q: "Von Leipzig (840 Abf) ueber Lausigk",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Leipzig"], AnschlussAusZeit: "840", ueber: "Lausigk" } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: [Leipzig], AnschlussAusZeit: "840", ueber: Lausigk } } }
             }, {
                 q: "Von Leipzig (635 Abf) ueber Lausigk",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: ["Leipzig"], AnschlussAusZeit: "635", ueber: "Lausigk" } } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: [Leipzig], AnschlussAusZeit: "635", ueber: Lausigk } } }
             }, {
                 q: "+Zug 1640 haelt auch in Oetzsch",
                 BLOCK: { Standard: { scope: Zug, RedundanteZugNr: ["1640"], haeltAuchIn: Oetzsch } }
@@ -2300,11 +2300,11 @@ var x89 = [{
         list: [{
                 q: "v. Noss",
                 c: " eintrag in AnschlussZubringerAus Zeile ohne zeit aber mit anderem Bhf als zeile eigentlich hat",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Nossen" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Nossen } } }
             }, {
                 q: "v. Leisn.",
                 c: " eintrag in AnschlussZubringerAus Zeile ohne zeit aber mit anderem Bhf als zeile eigentlich hat",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: "Leisnig" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { Bhf: Leisnig } } }
             }, {
                 q: "Nur Werktags",
                 BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
@@ -2471,10 +2471,10 @@ var x97 = [{
                 BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
             }, {
                 q: "!Umsteigen in Floeha in Zug1018 (s.Nr.54)  //Anschluss_zubringer_aus, der aber intern ein umsteigen fordert wenn man aus dresden kommt",
-                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: "Floeha", mitUmstiegInZugNr: "1018" } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: Flöha, mitUmstiegInZugNr: "1018" } } }
             }, {
                 q: "+Mit Umsteigen in floeha unter Benutzung der Zuege 1069/107 (s.Nr.11 u 54)",
-                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: "Floeha", mitUmstiegInZugNr: [1069, 107], mitUmstiegSieheKbs: [11, 54] } } }
+                BLOCK: { Standard: { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Flöha, mitUmstiegInZugNr: [1069, 107], mitUmstiegSieheKbs: [11, 54] } } }
             }, {
                 q: "SaechsStaatsb //global",
                 BLOCK: { Standard: { scope: Tabelle, Verwaltung: "Saechs" } }
@@ -2576,7 +2576,7 @@ var x102 = [
                 BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
             }, {
                 q: "nach Stollberg",
-                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
+                BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Stollberg } }
             }, {
                 q: "(rund) Zug 1961",
                 BLOCK: { Standard: { scope: Zug, ZugNr: 1961 } }
@@ -2625,7 +2625,7 @@ var x103 = [{
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Zwickau }, ZugNr: 2060, Klasse: Kl2bis4 } }
             }, {
                 q: "von Stollberg",
-                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: "Stollberg" } }
+                BLOCK: { Standard: { scope: Zug, erreicheKbsAus: Stollberg } }
             }, {
                 q: "**Zug 1996",
                 BLOCK: { Standard: { scope: { kind: "TeilZug", TZgueltigAbBhf: Schlettau, TZgueltigBisBhf: Annaberg }, ZugNr: 1996 } }
@@ -2978,8 +2978,38 @@ var sl = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Bre
 var sj = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "j", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sm = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "m", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var sp = { kind: BLOCK_T.BLOCK, Senkrecht: true, Valid: false, Start: false, Breite: 1, Hoehe: 1, Passend: true, Referenzkey: "p", Blockinhalt: undefined, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
-var Leipzig = { kind: BLOCK_T.BHFTAG, "station": "Adorf", lines: [], upperCase: 'Leipzig' };
+var Leipzig = { kind: BLOCK_T.BHFTAG, "station": "Leipzig", lines: [], upperCase: 'LEIPZIG', Einordnung: "Stadt" };
+var Antonienhöhe = { kind: BLOCK_T.BHFTAG, "station": "Antonienhöhe", "lines": [], "upperCase": "ANTONIENHÖHE" };
+var Bebra = { kind: BLOCK_T.BHFTAG, "station": "Bebra", "lines": [], "upperCase": "" };
+var BerlinAHB = { kind: BLOCK_T.BHFTAG, "station": "Berlin AHB", "lines": [], "upperCase": "BERLIN AHB" };
+var Breslau = { kind: BLOCK_T.BHFTAG, "station": "Breslau", "lines": [], "upperCase": "" };
+var Časlau = { kind: BLOCK_T.BHFTAG, "station": "Časlau", "lines": [], "upperCase": "" };
+var Dresden = { kind: BLOCK_T.BHFTAG, "station": "Dresden", "lines": [], "upperCase": "Dresden", Einordnung: "Stadt" };
+var Elsterwerda = { kind: BLOCK_T.BHFTAG, "station": "Elsterwerda", "lines": [], "upperCase": "" };
+var Erfurt = { kind: BLOCK_T.BHFTAG, "station": "Erfurt", "lines": [], "upperCase": "" };
+var Frankfurt_M = { kind: BLOCK_T.BHFTAG, "station": "Frankfurt_M", "lines": [], "upperCase": "", Einordnung: "Stadt" };
+var Gera = { kind: BLOCK_T.BHFTAG, "station": "Gera", "lines": [], "upperCase": "", Einordnung: "Stadt" };
+var Halle = { kind: BLOCK_T.BHFTAG, "station": "Halle", "lines": [], "upperCase": "" };
+var Kreibitz = { kind: BLOCK_T.BHFTAG, "station": "Kreibitz", "lines": [], "upperCase": "" };
+var Leipzig_Magd_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Magd.Bf.", "lines": [], "upperCase": "" };
+var Leipzig_Th_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Th.Bf.", "lines": [], "upperCase": "" };
+var Magdeburg = { kind: BLOCK_T.BHFTAG, "station": "Magdeburg", "lines": [], "upperCase": "MAGDEBURG" };
+var Mailand = { kind: BLOCK_T.BHFTAG, "station": "Mailand", "lines": [], "upperCase": "" };
+var Marktredwitz = { kind: BLOCK_T.BHFTAG, "station": "Marktredwitz", "lines": [], "upperCase": "" };
+var München = { kind: BLOCK_T.BHFTAG, "station": "München", "lines": [], "upperCase": "" };
+var Nürnberg = { kind: BLOCK_T.BHFTAG, "station": "Nürnberg", "lines": [], "upperCase": "", Einordnung: "Stadt" };
+var Horka = { kind: BLOCK_T.BHFTAG, "station": "Horka", "lines": [], "upperCase": "" };
+var Jueterbog = { kind: BLOCK_T.BHFTAG, "station": "Jüterbog", "lines": [], "upperCase": "JÜterbog" };
+var Karlsbad = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad", "lines": [], "upperCase": "", Einordnung: "Stadt" };
 var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: [], upperCase: 'KARLSBAD B.E.B.' };
+var Schnabelwald = { kind: BLOCK_T.BHFTAG, "station": "Schnabelwald", "lines": [], "upperCase": "" };
+var Seidenberg = { kind: BLOCK_T.BHFTAG, "station": "Seidenberg", "lines": [], "upperCase": "", Einordnung: "Stadt" };
+var Stuttgart = { kind: BLOCK_T.BHFTAG, "station": "Stuttgart", "lines": [], "upperCase": "" };
+var Wien_NWB = { kind: BLOCK_T.BHFTAG, "station": "Wien NWB", "lines": [], "upperCase": "" };
+var Weiden = { kind: BLOCK_T.BHFTAG, "station": "Weiden", "lines": [], "upperCase": "" };
+var Würzburg = { kind: BLOCK_T.BHFTAG, "station": "Würzburg", "lines": [], "upperCase": "" };
+var Zittau = { kind: BLOCK_T.BHFTAG, "station": "Zittau", "lines": [], "upperCase": "", Einordnung: "Stadt" };
+var Zossen = { kind: BLOCK_T.BHFTAG, "station": "Zossen", "lines": [], "upperCase": "Zossen" };
 {
     var Adorf = { kind: BLOCK_T.BHFTAG, "station": "Adorf", "lines": ["PE", "CA"], "upperCase": "ADORF", "dd2": 1260, "dd3": 840, "c2": 780, "c3": 520, "z2": 490, "z3": 330, "via": "Plauen i.V.", "dd2b": 0, "dd3b": 0, "c2b": 690, "c3b": 460, "z2b": 0, "z3b": 0, "viab": "Thalheim", "dd2c": 0, "dd3c": 0, "c2c": 0, "c3c": 0, "z2c": 450, "z3c": 300, "viac": "Voigtsgrün", "comment": "schwer lesbar" };
     var Affalter = { kind: BLOCK_T.BHFTAG, "station": "Affalter", "lines": ["ZC"], "upperCase": "AFFALTER", "dd2": 0, "dd3": 0, "c2": 220, "c3": 150, "z2": 0, "z3": 0, "via": "Neukirchen i.E.", "dd2b": 0, "dd3b": 0, "c2b": 260, "c3b": 170, "z2b": 0, "z3b": 0, "viab": "Einsiedel" };
@@ -2994,7 +3024,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Amerika = { kind: BLOCK_T.BHFTAG, "station": "Amerika", "lines": ["GW"], "upperCase": "AMERIKA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Ammelshain = { kind: BLOCK_T.BHFTAG, "station": "Ammelshain", "lines": ["BSt"], "upperCase": "AMMELSHAIN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Annaberg = { kind: BLOCK_T.BHFTAG, "station": "Annaberg", "lines": ["AF", "WA"], "upperCase": "ANNABERG i.S.", "dd2": 670, "dd3": 450, "c2": 340, "c3": 230, "z2": 630, "z3": 420, "via": "Flöha", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 410, "z3b": 280, "viab": "Aue" };
-    var Antonienhoehe = { kind: BLOCK_T.BHFTAG, "station": "Antonienheoehe", "lines": [], "upperCase": "ANTONIENHOEHE" };
     var Antonsthal = { kind: BLOCK_T.BHFTAG, "station": "Antonsthal", "lines": ["JS"], "upperCase": "ANTONSTHAL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 290, "z3": 200 };
     var Arnsdorf = { kind: BLOCK_T.BHFTAG, "station": "Arnsdorf", "lines": ["GD", "KP"], "upperCase": "ARNSDORF i.S.", "dd2": 160, "dd3": 110, "c2": 640, "c3": 430, "z2": 930, "z3": 620 };
     var Arras = { kind: BLOCK_T.BHFTAG, "station": "Arras", "lines": ["WR"], "upperCase": "ARRAS", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
@@ -3015,7 +3044,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Berga_a_d_E = { kind: BLOCK_T.BHFTAG, "station": "Berga a.d.E.", "lines": ["PWz"], "upperCase": "BERGA a.d.Elster (i.S.=W.)", "dd2": 1020, "dd3": 680, "c2": 540, "c3": 360, "z2": 250, "z3": 170 };
     var Bergen = { kind: BLOCK_T.BHFTAG, "station": "Bergen", "lines": ["HOe"], "upperCase": "BERGEN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 260, "z3": 170 };
     var Berggiesshübel = { kind: BLOCK_T.BHFTAG, "station": "Berggiesshübel", "lines": ["PB"], "upperCase": "BERGGIESSHÜBEL", "dd2": 200, "dd3": 130, "c2": 680, "c3": 450, "z2": 0, "z3": 0 };
-    var BerlinAHB = { kind: BLOCK_T.BHFTAG, "station": "Berlin AHB", "lines": [], "upperCase": "BERLIN AHB" };
     var Bernsbach = { kind: BLOCK_T.BHFTAG, "station": "Bernsbach", "lines": ["ZS"], "upperCase": "BERNSBACH", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Bernsgrün = { kind: BLOCK_T.BHFTAG, "station": "Bernsgrün", "lines": ["WM"], "upperCase": "BERNSGRÜN i.R.ä.L.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 380, "z3": 250 };
     var Bernstadt_i_O_L = { kind: BLOCK_T.BHFTAG, "station": "Bernstadt i.O.L", "lines": ["HB"], "upperCase": "BERNSTADT i.O.=L.", "dd2": 650, "dd3": 440, "c2": 1130, "c3": 750, "z2": 0, "z3": 0, "via": "Löbau" };
@@ -3098,7 +3126,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Dorfchemnitz = { kind: BLOCK_T.BHFTAG, "station": "Dorfchemnitz", "lines": ["CA"], "upperCase": "DORFCHEMNITZ b.Zwönitz", "dd2": 0, "dd3": 0, "c2": 200, "c3": 130, "z2": 300, "z3": 200 };
     var Dorfchemnitz_b_S = { kind: BLOCK_T.BHFTAG, "station": "Dorfchemnitz b. S.", "lines": ["MS"], "upperCase": "DORFCHEMNITZ b.Sayda", "dd2": 380, "dd3": 250, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Dornreichenbach = { kind: BLOCK_T.BHFTAG, "station": "Dornreichenbach", "lines": ["LD"], "upperCase": "DORNREICHENBACH", "dd2": 510, "dd3": 340, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
-    var Dresden = { kind: BLOCK_T.BHFTAG, "station": "Dresden", "lines": [], "upperCase": "Dresden", Einordnung: "Stadt" };
     var Dresd_Wettinerstr = { kind: BLOCK_T.BHFTAG, "station": "Dresd. Wettinerstr.", "lines": ["BD"], "upperCase": "DRESDEN Wettinerstraße", "dd2": 15, "dd3": 10, "c2": 510, "c3": 340, "z2": 800, "z3": 530, "comment": "laut stat verz GD" };
     var Dresden_Hptbf = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hptbf.", "lines": ["BD", "DW", "DFA"], "upperCase": "DRESDEN Hauptbhf.", "dd2": 0, "dd3": 0, "c2": 480, "c3": 320, "z2": 780, "z3": 520 };
     var Dresden_Fr = { kind: BLOCK_T.BHFTAG, "station": "Dresden-Fr.", "lines": ["DE", "DFA"], "upperCase": "DRESDEN-Friedrst.", "dd2": 15, "dd3": 10, "c2": 500, "c3": 340, "z2": 800, "z3": 530 };
@@ -3256,7 +3283,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Jonsdorf = { kind: BLOCK_T.BHFTAG, "station": "Jonsdorf", "lines": ["BJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Jägersgrün = { kind: BLOCK_T.BHFTAG, "station": "Jägersgrün", "lines": ["CA"], "upperCase": "", "dd2": 980, "dd3": 650, "c2": 500, "c3": 340, "z2": 380, "z3": 250, "via": "Aue", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 320, "z3b": 220, "viab": "Voigtsgrün" };
     var Jöhstadt_Bhf = { kind: BLOCK_T.BHFTAG, "station": "Jöhstadt Bhf.", "lines": ["WJ"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 390, "c3": 260, "z2": 0, "z3": 0 };
-    var Jueterbog = { kind: BLOCK_T.BHFTAG, "station": "Jüterbog", "lines": [], "upperCase": "JÜterbog" };
     var Kamenz = { kind: BLOCK_T.BHFTAG, "station": "Kamenz", "lines": ["KP", "KE"], "upperCase": "KAMENZ i.S.", "dd2": 310, "dd3": 210, "c2": 790, "c3": 530, "z2": 1080, "z3": 720 };
     var Kemnitz, Dorf = { kind: BLOCK_T.BHFTAG, "station": "Kemnitz, Dorf", "lines": ["DE"], "upperCase": "", "dd2": 40, "dd3": 20, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Kesselsdorf = { kind: BLOCK_T.BHFTAG, "station": "Kesselsdorf", "lines": ["PNo"], "upperCase": "", "dd2": 85, "dd3": 55, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
@@ -3322,7 +3348,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Leipzig_Bayr_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Bayr.Bf.", "lines": ["LH", "LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 630, "c3": 420, "z2b": 520, "z3b": 350, "via": "Gössnitz", "viab": "Werdau" };
     var Leipzig_Berl_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Berl.Bf.", "lines": ["LHV"], "upperCase": "", "comment": "line by NM", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Leipzig_Dr_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Dr.Bf.", "lines": ["LD"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Riesa" };
-    var Leipzig_Magd_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Magd.Bf.", "lines": [], "upperCase": "" };
     var Leipzig_Stötteritz = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Stötteritz", "lines": ["LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Leipzig_Connewitz = { kind: BLOCK_T.BHFTAG, "station": "Leipzig-Connewitz", "lines": ["LH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "laut stat verz LP, weil strecke nach plagwitz hier abzweigt" };
     var Leisnig = { kind: BLOCK_T.BHFTAG, "station": "Leisnig", "lines": ["BC"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 330, "c3": 220, "z2": 620, "z3": 410, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 540, "z3b": 360, "viab": "Lunzenau" };
@@ -3355,7 +3380,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Lüttnitz = { kind: BLOCK_T.BHFTAG, "station": "Lüttnitz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Machendorf = { kind: BLOCK_T.BHFTAG, "station": "Machendorf", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Machern = { kind: BLOCK_T.BHFTAG, "station": "Machern", "lines": ["LD"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
-    var Magdeburg = { kind: BLOCK_T.BHFTAG, "station": "Magdeburg", "lines": [], "upperCase": "MAGDEBURG" };
     var Mahlis = { kind: BLOCK_T.BHFTAG, "station": "Mahlis", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Malter = { kind: BLOCK_T.BHFTAG, "station": "Malter", "lines": ["HK"], "upperCase": "", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Maltitz = { kind: BLOCK_T.BHFTAG, "station": "Maltitz", "lines": ["LWg"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
@@ -3769,7 +3793,6 @@ var Karlsbad_BEB = { kind: BLOCK_T.BHFTAG, "station": "Karlsbad B.E.B.", lines: 
     var Zittau_Vorstadt = { kind: BLOCK_T.BHFTAG, "station": "Zittau Vorstadt", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Zittel = { kind: BLOCK_T.BHFTAG, "station": "Zittel", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Zoblitz = { kind: BLOCK_T.BHFTAG, "station": "Zoblitz", "lines": ["GD"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
-    var Zossen = { kind: BLOCK_T.BHFTAG, "station": "Zossen", "lines": [], "upperCase": "Zossen" };
     var Zschaitz = { kind: BLOCK_T.BHFTAG, "station": "Zschaitz", "lines": ["RC"], "upperCase": "", "dd2": 440, "dd3": 300, "c2": 290, "c3": 200, "z2": 0, "z3": 0 };
     var Zschernitzsch = { kind: BLOCK_T.BHFTAG, "station": "Zschernitzsch", "lines": ["ZA"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Zschopau = { kind: BLOCK_T.BHFTAG, "station": "Zschopau", "lines": ["AF"], "upperCase": "", "dd2": 510, "dd3": 340, "c2": 180, "c3": 120, "z2": 470, "z3": 320 };
@@ -5645,7 +5668,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                                 "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "nach Stollberg",
-                                    BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
+                                    BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Stollberg } }
                                 }
                             },
                             {
@@ -5657,7 +5680,7 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                                 "TextOrt": { "kind": TEXTORT_T.NICHTANGEGEBEN },
                                 Inhalt: {
                                     q: "nach Stollberg",
-                                    BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
+                                    BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Stollberg } }
                                 }
                             },
                             {

@@ -164,7 +164,7 @@ export class InputData {
                     Inhalt:
                      {
                          q: "nach Stollberg", //verlasse KBS
-                        BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
+                        BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Stollberg } }
                     }}
                     
                     //{
@@ -180,7 +180,7 @@ export class InputData {
                     Inhalt:
                      {
                          q: "nach Stollberg", //verlasse KBS
-                        BLOCK: { Standard: { scope: Zug, verlasseKbsNach: "Stollberg" } }
+                        BLOCK: { Standard: { scope: Zug, verlasseKbsNach: Stollberg } }
                     }}
 
                     // }, {
