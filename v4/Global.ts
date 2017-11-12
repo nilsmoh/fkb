@@ -6,29 +6,33 @@
 
 // EINTRAG in Zelle    
 enum BLOCK_T{
-        BHFTAG = "BHFTAG",
 
-        ZUG_NR_WERT = "ZUG_NR_WERT",
-        KLASSEN_WERT = "KLASSEN_WERT",
+    KM_WERT = "BLOCK_KMWERT", //km eintrag ganz vorn
+    BHFTAG = "BHFTAG",
+    HEADERREF = "BLOCK_HEADERREFERENCE",   //a oder aa
+    HEADERLFD = "BLOCK_HEADERLFD",
+    HEADERVIA = "BLOCK_HEADERVIA", 
+   ANSCHLUSS_NUMMERN = 'BLOCK_HEADER_ANSCHLUSS_NUMMERN',
+
+
+    
         ZEILEN_TYP = "ZEILEN_TYP",
         TRENNER = "TRENNER",
 
-        LEER = "LEER",
+        ZUG_NR_WERT = "ZUG_NR_WERT",
+        KLASSEN_WERT = "KLASSEN_WERT",
+
+        LEER = "LEER", //
         BLOCK = "BLOCKEINTRAG", //fuer TBlockEintrag wa / sa   //1x1 vorerst
         ERROR = "BLOCKERROR",
-        KEINHALT = "BLOCKKEINHALT",
-        DICKERSTRICH = "BLOCK_DICKERSTRICH",
-        ZEITEINTRAG = "BLOCK_ZEITEINTRAG",
-        ANKUNFT = "BLOCK_ANKUNFT",
-        HEADERREF = "BLOCK_HEADERREFERENCE",   //a oder aa
-        HEADERLFD = "BLOCK_HEADERLFD",
-        HEADERVIA = "BLOCK_HEADERVIA", 
+        KEINHALT = "BLOCKKEINHALT", //   |
+        DICKERSTRICH = "BLOCK_DICKERSTRICH", // -
+        ZEITEINTRAG = "BLOCK_ZEITEINTRAG",   // 723
+        ANKUNFT = "BLOCK_ANKUNFT",  // Ank.
+         
 
-        KM_WERT = "BLOCK_KMWERT", //km eintrag ganz vorn
-
-        ZEILENZUSATZINFO = "BLOCK_ZEILENZUSATZINFO",
-        ANSCHLUSS_NUMMERN = 'BLOCK_HEADER_ANSCHLUSS_NUMMERN'             
-
+        ZEILENZUSATZINFO = "BLOCK_ZEILENZUSATZINFO"
+                  
 
 }
 
@@ -328,6 +332,8 @@ interface StationTicketInfoEntryKpxTagged {
     z2d?: number;
     z3d?: number;
     viad?: string;
+
+    Einordnung? : "Stadt" | "Bahnhof" | "Teilbahnhof";
 }
 
 
@@ -404,7 +410,7 @@ type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechts
     enum VERWEIS_T{
         PASSEND = "VERWEIS_PASSEND",
         FERN = "VERWEIS_FERN" ,
-        //EMBEDDED = "VERWEIS_EMBEDDED",
+        //EMBEDDED = "VERWEIS_EMBEDDED",  //zugnr und klasse, jetzt durch zeilentyp festgelegt
         GLOBAL_DEFAULT = "VERWEIS_GLOBAL_DEFAULT"
     }
 
@@ -425,6 +431,7 @@ type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechts
         kind: typeof VERWEIS_T.EMBEDDED // VERWEIS_EMBEDDED
     }
     */
+    
     // z.b. alle zuege 2u3 klasse,  textort gibt die renderposition an
     interface TVerweisGlobalDefault {
         kind: typeof VERWEIS_T.GLOBAL_DEFAULT // VERWEIS_GLOBAL_DEFAULT
@@ -534,10 +541,6 @@ var sp :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false
 //region ZEIT
     type TEchteZeit = TZeitRoh | TZeit24;
 
-  
-
- 
-
     interface TZeitRoh {
         kind: typeof ZEIT_ROH;
         RohZeit: number;
@@ -562,7 +565,9 @@ var sp :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false
 
     }
 
+type VerwaltungT = "Saechs" | "KEDBerlin" | "KEDHalle" | "KEDBreslau" | "Bay" | "DahmeUckroerEisenbahn";
 
+//var Saechs: VerwaltungT =  "Saechs";
 
 
 
@@ -589,6 +594,10 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Amerika : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Amerika", "lines": ["GW"], "upperCase": "AMERIKA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Ammelshain : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Ammelshain", "lines": ["BSt"], "upperCase": "AMMELSHAIN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Annaberg : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Annaberg", "lines": ["AF", "WA"], "upperCase": "ANNABERG i.S.", "dd2": 670, "dd3": 450, "c2": 340, "c3": 230, "z2": 630, "z3": 420, "via": "Flöha", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 410, "z3b": 280, "viab": "Aue" };
+    
+    var Antonienhoehe : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Antonienheoehe", "lines": [], "upperCase": "ANTONIENHOEHE" };
+  
+    
     var Antonsthal : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Antonsthal", "lines": ["JS"], "upperCase": "ANTONSTHAL", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 290, "z3": 200 };
     var Arnsdorf : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Arnsdorf", "lines": ["GD", "KP"], "upperCase": "ARNSDORF i.S.", "dd2": 160, "dd3": 110, "c2": 640, "c3": 430, "z2": 930, "z3": 620 };
     var Arras : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Arras", "lines": ["WR"], "upperCase": "ARRAS", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
@@ -609,6 +618,10 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Berga_a_d_E : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Berga a.d.E.", "lines": ["PWz"], "upperCase": "BERGA a.d.Elster (i.S.=W.)", "dd2": 1020, "dd3": 680, "c2": 540, "c3": 360, "z2": 250, "z3": 170 };
     var Bergen : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Bergen", "lines": ["HOe"], "upperCase": "BERGEN", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 260, "z3": 170 };
     var Berggiesshübel : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Berggiesshübel", "lines": ["PB"], "upperCase": "BERGGIESSHÜBEL", "dd2": 200, "dd3": 130, "c2": 680, "c3": 450, "z2": 0, "z3": 0 };
+    
+    var BerlinAHB : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Berlin AHB", "lines": [], "upperCase": "BERLIN AHB" };
+
+
     var Bernsbach : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Bernsbach", "lines": ["ZS"], "upperCase": "BERNSBACH", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Bernsgrün : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Bernsgrün", "lines": ["WM"], "upperCase": "BERNSGRÜN i.R.ä.L.", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 380, "z3": 250 };
     var Bernstadt_i_O_L : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Bernstadt i.O.L", "lines": ["HB"], "upperCase": "BERNSTADT i.O.=L.", "dd2": 650, "dd3": 440, "c2": 1130, "c3": 750, "z2": 0, "z3": 0, "via": "Löbau" };
@@ -691,6 +704,11 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Dorfchemnitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dorfchemnitz", "lines": ["CA"], "upperCase": "DORFCHEMNITZ b.Zwönitz", "dd2": 0, "dd3": 0, "c2": 200, "c3": 130, "z2": 300, "z3": 200 };
     var Dorfchemnitz_b_S : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dorfchemnitz b. S.", "lines": ["MS"], "upperCase": "DORFCHEMNITZ b.Sayda", "dd2": 380, "dd3": 250, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Dornreichenbach : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dornreichenbach", "lines": ["LD"], "upperCase": "DORNREICHENBACH", "dd2": 510, "dd3": 340, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    
+    var Dresden : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden", "lines": [], "upperCase": "Dresden", Einordnung:"Stadt" };
+
+
+    
     var Dresd_Wettinerstr : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresd. Wettinerstr.", "lines": ["BD"], "upperCase": "DRESDEN Wettinerstraße", "dd2": 15, "dd3": 10, "c2": 510, "c3": 340, "z2": 800, "z3": 530, "comment": "laut stat verz GD" };
     var Dresden_Hptbf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hptbf.", "lines": ["BD", "DW", "DFA"], "upperCase": "DRESDEN Hauptbhf.", "dd2": 0, "dd3": 0, "c2": 480, "c3": 320, "z2": 780, "z3": 520 };
     var Dresden_Fr : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden-Fr.", "lines": ["DE", "DFA"], "upperCase": "DRESDEN-Friedrst.", "dd2": 15, "dd3": 10, "c2": 500, "c3": 340, "z2": 800, "z3": 530 };
@@ -848,6 +866,9 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Jonsdorf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Jonsdorf", "lines": ["BJ"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Jägersgrün : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Jägersgrün", "lines": ["CA"], "upperCase": "", "dd2": 980, "dd3": 650, "c2": 500, "c3": 340, "z2": 380, "z3": 250, "via": "Aue", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 320, "z3b": 220, "viab": "Voigtsgrün" };
     var Jöhstadt_Bhf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Jöhstadt Bhf.", "lines": ["WJ"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 390, "c3": 260, "z2": 0, "z3": 0 };
+    
+    var Jueterbog : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Jüterbog", "lines": [], "upperCase": "JÜterbog" };
+      
     var Kamenz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Kamenz", "lines": ["KP", "KE"], "upperCase": "KAMENZ i.S.", "dd2": 310, "dd3": 210, "c2": 790, "c3": 530, "z2": 1080, "z3": 720 };
     var Kemnitz, Dorf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Kemnitz, Dorf", "lines": ["DE"], "upperCase": "", "dd2": 40, "dd3": 20, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Kesselsdorf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Kesselsdorf", "lines": ["PNo"], "upperCase": "", "dd2": 85, "dd3": 55, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
@@ -913,6 +934,9 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Leipzig_Bayr_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Bayr.Bf.", "lines": ["LH", "LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 630, "c3": 420, "z2b": 520, "z3b": 350, "via": "Gössnitz", "viab": "Werdau" };
     var Leipzig_Berl_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Berl.Bf.", "lines": ["LHV"], "upperCase": "", "comment": "line by NM", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Leipzig_Dr_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Dr.Bf.", "lines": ["LD"], "upperCase": "", "dd2": 720, "dd3": 480, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "via": "Riesa" };
+    var Leipzig_Magd_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Magd.Bf.", "lines": [],  "upperCase": ""};
+    
+    
     var Leipzig_Stötteritz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Stötteritz", "lines": ["LHV"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Leipzig_Connewitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig-Connewitz", "lines": ["LH"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0, "comment": "laut stat verz LP, weil strecke nach plagwitz hier abzweigt" };
     var Leisnig : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leisnig", "lines": ["BC"], "upperCase": "", "dd2": 480, "dd3": 320, "c2": 330, "c3": 220, "z2": 620, "z3": 410, "via": "Döbeln Bhf.", "dd2b": 0, "dd3b": 0, "c2b": 0, "c3b": 0, "z2b": 540, "z3b": 360, "viab": "Lunzenau" };
@@ -945,6 +969,9 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Lüttnitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Lüttnitz", "lines": ["OD"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Machendorf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Machendorf", "lines": ["RZ"], "upperCase": "IBÖ", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Machern : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Machern", "lines": ["LD"], "upperCase": "", "dd2": 620, "dd3": 410, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    
+    var Magdeburg : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Magdeburg", "lines": [], "upperCase": "MAGDEBURG" };
+    
     var Mahlis : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mahlis", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Malter : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Malter", "lines": ["HK"], "upperCase": "", "dd2": 140, "dd3": 90, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Maltitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Maltitz", "lines": ["LWg"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
@@ -1358,6 +1385,9 @@ var Karlsbad_BEB :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "sta
     var Zittau_Vorstadt : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zittau Vorstadt", "lines": ["ZO"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Zittel : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zittel", "lines": ["ZM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Zoblitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zoblitz", "lines": ["GD"], "upperCase": "", "dd2": 540, "dd3": 360, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
+    
+    var Zossen : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zossen", "lines": [], "upperCase": "Zossen" };
+
     var Zschaitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zschaitz", "lines": ["RC"], "upperCase": "", "dd2": 440, "dd3": 300, "c2": 290, "c3": 200, "z2": 0, "z3": 0 };
     var Zschernitzsch : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zschernitzsch", "lines": ["ZA"], "upperCase": "ISA", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Zschopau : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Zschopau", "lines": ["AF"], "upperCase": "", "dd2": 510, "dd3": 340, "c2": 180, "c3": 120, "z2": 470, "z3": 320 };

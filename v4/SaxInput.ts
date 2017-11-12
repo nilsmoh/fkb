@@ -317,7 +317,7 @@ export class InputData {
 					"TextOrt" : {		"kind" : TEXTORT_T.LINKSVONHEADER	},
                     Inhalt:{
                         q: "Saechs Staatsb", //global   
-                        BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                        BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
                     }}
                 ]
 
@@ -754,7 +754,7 @@ export class InputData {
                         "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
                         Inhalt: {
                             q: "S. Staatsb.",
-                            BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                            BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
                         }
                     },
                 //  {   typ:global,       klassen: k2b4,          verweisort: headerrechts           },
@@ -799,7 +799,7 @@ export class InputData {
                         "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
                         Inhalt: {
                             q: "S. Staatsb.",
-                            BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                            BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
                         }
                     },
                 //  {   typ:global,       klassen: k2b3,          verweisort: headerrechts           },
@@ -857,7 +857,7 @@ export class InputData {
                         "TextOrt": { "kind": TEXTORT_T.LINKSVONHEADER },
                         Inhalt: {
                             q: "S. Staatsb.",
-                            BLOCK: { Standard: { scope: Global, Verwaltung: "saechs" } }
+                            BLOCK: { Standard: { scope: Global, Verwaltung: "Saechs" } }
                         }
                     },
                 //  {   typ:global,       klassen: k2b3,          verweisort: headerrechts           },
