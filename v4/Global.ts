@@ -580,14 +580,31 @@ type VerwaltungT = "Saechs" | "KEDBerlin" | "KEDHalle" | "KEDBreslau" | "Bay" | 
 var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig", lines:[], upperCase: 'LEIPZIG', Einordnung:"Stadt"};
     var Antonienhöhe : StationTicketInfoEntryKpxTagged  = { kind: BLOCK_T.BHFTAG, "station": "Antonienhöhe", "lines": [], "upperCase": "ANTONIENHÖHE" };
     var Bebra : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Bebra", "lines": [],  "upperCase": ""};
+    
+    var Berlin : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Berlin", "lines": [], "upperCase": "BERLIN", Einordnung:"Stadt" };
     var BerlinAHB : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Berlin AHB", "lines": [], "upperCase": "BERLIN AHB" };
     var Breslau : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Breslau", "lines": [],  "upperCase": ""};
     var Časlau : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Časlau", "lines": [],  "upperCase": ""};
+    var Cöthen : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Cöthen", "lines": [],  "upperCase": ""};
+    
+    var Dabendorf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dabendorf", "lines": [],  "upperCase": ""};
+    
+    var Döbeln : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Döbeln", "lines": [], "upperCase": "", Einordnung:"Stadt" };
+
+    var Dobrilugk_Kirchhain : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": " Dobrilugk_Kirchhain", "lines": [], "upperCase": "Dresden", Einordnung:"Stadt" };
+
     var Dresden : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden", "lines": [], "upperCase": "Dresden", Einordnung:"Stadt" };
-    var Elsterwerda : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Elsterwerda", "lines": [],  "upperCase": ""};
+
+  var Elsterwerda_OberlausitzeBhf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Elsterwerda Oberlausitzer Bhf.", "lines": [],  "upperCase": ""};
+
+    var Elsterwerda : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Elsterwerda", "lines": [],  "upperCase": "" , Einordnung:"Stadt"};
     var Erfurt : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Erfurt", "lines": [],  "upperCase": ""};
     var Frankfurt_M : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Frankfurt_M", "lines": [],  "upperCase": "", Einordnung:"Stadt"};
     var Gera : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Gera", "lines": [],  "upperCase": "", Einordnung:"Stadt"};
+    
+    var Grimma : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Grimma", "lines": [],  "upperCase": "", Einordnung:"Stadt"};
+    var GrossLichterfeldeOst : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "GrossLichterfeldeOst", "lines": [],  "upperCase": ""};
+    
     var Halle : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Halle", "lines": [],  "upperCase": ""};
     var Kreibitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Kreibitz", "lines": [],  "upperCase": ""};
    
@@ -599,6 +616,10 @@ var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station"
     var Mailand : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mailand", "lines": [],  "upperCase": ""};
     var Marktredwitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Marktredwitz", "lines": [],  "upperCase": ""};
     var München : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "München", "lines": [],  "upperCase": ""};
+
+    var Mylau_Hst : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mylau Hst.", "lines": [],  "upperCase": ""};
+
+    var Myslowitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Myslowitz", "lines": [], "upperCase": "", Einordnung:"Stadt" };
 
     var Nürnberg : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Nürnberg", "lines": [],  "upperCase": "", Einordnung:"Stadt"};
 
@@ -614,8 +635,16 @@ var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station"
     var Seidenberg : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Seidenberg", "lines": [],  "upperCase": "", Einordnung:"Stadt"};
 
     var Stuttgart : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Stuttgart", "lines": [],  "upperCase": ""};
+
+
+    var Teplitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Teplitz", "lines": [], "upperCase": "Dresden", Einordnung:"Stadt" };
+
+
     var Wien_NWB : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Wien NWB", "lines": [],  "upperCase": ""};
     var Weiden : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Weiden", "lines": [],  "upperCase": ""};
+    
+    var Wien : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Wien", "lines": [],  "upperCase": "", Einordnung:"Stadt"};
+
     var Würzburg : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Würzburg", "lines": [],  "upperCase": ""};
    
    
@@ -1028,8 +1057,8 @@ var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station"
     var Muldenberg : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Muldenberg", "lines": ["CA", "FM"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 550, "c3": 370, "z2": 280, "z3": 190 };
     var Muldenhütten : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Muldenhütten", "lines": ["DW"], "upperCase": "", "dd2": 220, "dd3": 150, "c2": 270, "c3": 180, "z2": 0, "z3": 0 };
     var Mutzschen : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mutzschen", "lines": ["MN"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
-    var Mylau, Bahnhof : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mylau, Bahnhof", "lines": ["RM"], "upperCase": "", "dd2": 940, "dd3": 630, "c2": 460, "c3": 310, "z2": 170, "z3": 120 };
-    var Mylau, Haltestelle : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mylau, Haltestelle", "lines": ["RM"], "upperCase": "", "dd2": 945, "dd3": 635, "c2": 465, "c3": 315, "z2": 175, "z3": 125, "comment": "todo spezial:vmtl pauschal 5pfg ab myl bhf" };
+    var Mylau_Bahnhof : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mylau, Bahnhof", "lines": ["RM"], "upperCase": "", "dd2": 940, "dd3": 630, "c2": 460, "c3": 310, "z2": 170, "z3": 120 };
+    var Mylau_Haltestelle : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mylau, Haltestelle", "lines": ["RM"], "upperCase": "", "dd2": 945, "dd3": 635, "c2": 465, "c3": 315, "z2": 175, "z3": 125, "comment": "todo spezial:vmtl pauschal 5pfg ab myl bhf" };
     var Müdisdorf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Müdisdorf", "lines": ["BGh"], "upperCase": "", "dd2": 0, "dd3": 0, "c2": 0, "c3": 0, "z2": 0, "z3": 0 };
     var Mügeln_b_O : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mügeln b.O.", "lines": ["OD", "MN"], "upperCase": "", "dd2": 470, "dd3": 320, "c2": 370, "c3": 250, "z2": 0, "z3": 0 };
     var Mügeln_b_P : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mügeln b.P.", "lines": ["BD", "MG"], "upperCase": "", "dd2": 70, "dd3": 50, "c2": 560, "c3": 370, "z2": 840, "z3": 560 };
