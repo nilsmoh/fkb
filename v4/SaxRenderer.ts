@@ -586,7 +586,7 @@ export class Renderer{
                                     tSpanStunde.setAttribute("class","ZeitStunde"+ (ze.Schnellzug ? " Schnellzug": "") 
                                         + ((ze.Zeit.Valid === ETimeValid.Nein) ? " TimeInvalid": "") );                                // compiler bug !!!
 
-                                    tSpanStunde.innerHTML =  ((tStunde < 10) ? "&nbsp;" : "") + tStunde.toString();
+                                    tSpanStunde.innerHTML =  ((tStunde < 10) ? "&nbsp;" : "") + tStunde.toString() + ":";
                                     
                                     let tSpanMinuten= document.createElement("span");
                                     tSpanMinuten.setAttribute("class","ZeitMinuten" + (ze.Schnellzug ? " Schnellzug": "") + (tUnterstrichen ? " nachtsUnterstrichen" :""));
@@ -597,6 +597,7 @@ export class Renderer{
                                     td.appendChild(tSpanRefKey);
                                     td.appendChild(tSpanOpticalMarker);
                                     td.appendChild(tSpanStunde);
+                                    
                                     td.appendChild(tSpanMinuten);
 
                                     // Opticalmarker nicht kursiv bei schnellzug! siehe seite 36

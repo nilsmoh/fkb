@@ -2,6 +2,7 @@
    import * as ParsedTypes from "./SaxParsedTypes";
 import { ZI_Renderer } from "./SaxParser";
 import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxParsedTypes";
+import { assertNever } from "./SaxBaseTypes";
 
    //creates completely new (by JSON)
    export function makeTableVirtual(tInput:ParsedTypes.SingleDirectionScheduleTyped):ParsedTypes.SingleDirectionScheduleTyped_plusVirtual 
@@ -229,3 +230,76 @@ import { TZugNrZeile, ZEILE_T, TKlassenNrZeile, TKlassenNrEintrag } from "./SaxP
         return tResult;
     }
     
+
+    export function berechneZeiten2(tInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual): ParsedTypes.SingleDirectionScheduleTyped_plusVirtual{
+        console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
+        var tResult:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = JSON.parse(JSON.stringify( tInput)); 
+
+        tResult.Zeilen.forEach((zei)=>{
+           
+            switch(zei.kind){
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                case ParsedTypes.ZEILE_T.NORMAL:
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    let tNachmittag = false;
+                    let tLast = -1;
+                    zei.Zeiteintraege.forEach((i)=>{
+                        switch (i.kind){
+                            case BLOCK_T.ZUG_NR_WERT:
+                            case BLOCK_T.LEER:
+                            case BLOCK_T.KEINHALT:
+                            case BLOCK_T.DICKERSTRICH:
+                            case BLOCK_T.KEINHALT:
+                            case BLOCK_T.ERROR:
+                            case BLOCK_T.ANKUNFT:
+                            case BLOCK_T.BLOCK:
+                            case BLOCK_T.KLASSEN_WERT:
+                                     
+                                break;
+                            case BLOCK_T.ZEITEINTRAG:
+                                switch (i.Zeit.kind){
+                                    case "ZEIT_ROH":
+                                        //i.Zeit.RohZeit
+                                        if (tLast == -1){   //erster fall
+                                                                                    
+                                        }else{
+                                            //normalfall
+                                            if (i.Zeit.RohZeit < tLast){
+                                                tNachmittag = true;
+                                            }
+
+                                        }
+                                        tLast = i.Zeit.RohZeit;
+                                        i.Zeit = makeZ(i.Zeit.RohZeit,GesternHeuteMorgen.Heute, tNachmittag,ETimeValid.Berechnet24);
+                                        break;
+                                    case "ZEIT_24":
+                                        if (i.Zeit.WelcherTag == GesternHeuteMorgen.Heute){
+                                            tLast = (((i.Zeit.Stunde24 > 12) ? (i.Zeit.Stunde24 - 12) : i.Zeit.Stunde24) * 100)  +   i.Zeit.Minute24;
+                                            tNachmittag = i.Zeit.Stunde24 > 12;
+                                        }
+                                        break;
+                                    default:
+                                        assertNever(i.Zeit)
+                                }
+                                break;    
+                            default:
+                                assertNever(i)
+                        }
+                    });
+
+
+                break;
+                    case ParsedTypes.ZEILE_T.ZUGNR:
+                    case ParsedTypes.ZEILE_T.KLASSEN:
+                    break;
+                default:
+                    assertNever(zei)
+            }
+        });
+
+        return tResult;
+    }
+        
+ 

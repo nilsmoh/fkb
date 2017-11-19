@@ -68,7 +68,7 @@ var GesternHeuteMorgen;
     GesternHeuteMorgen[GesternHeuteMorgen["Heute"] = 2] = "Heute";
     GesternHeuteMorgen[GesternHeuteMorgen["Morgen"] = 3] = "Morgen";
 })(GesternHeuteMorgen || (GesternHeuteMorgen = {}));
-var makeZ = function (zeit12, ghm, nachmittag) {
+var makeZ = function (zeit12, ghm, nachmittag, validity) {
     var tStunde12 = Math.floor(zeit12 / 100);
     var tMinute24 = zeit12 - (Math.floor(zeit12 / 100) * 100);
     if (!nachmittag) {
@@ -81,7 +81,7 @@ var makeZ = function (zeit12, ghm, nachmittag) {
         Stunde24: (nachmittag ? 12 : 0) + tStunde12,
         Minute24: tMinute24,
         WelcherTag: ghm,
-        Valid: ETimeValid.Vorgabe24,
+        Valid: (validity != undefined) ? validity : ETimeValid.Vorgabe24,
         src: zeit12
     };
     return tResult;
@@ -5372,7 +5372,7 @@ System.register("SaxRenderer", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], 
                                                 var tSpanStunde = document.createElement("span");
                                                 tSpanStunde.setAttribute("class", "ZeitStunde" + (ze.Schnellzug ? " Schnellzug" : "")
                                                     + ((ze.Zeit.Valid === ETimeValid.Nein) ? " TimeInvalid" : ""));
-                                                tSpanStunde.innerHTML = ((tStunde < 10) ? "&nbsp;" : "") + tStunde.toString();
+                                                tSpanStunde.innerHTML = ((tStunde < 10) ? "&nbsp;" : "") + tStunde.toString() + ":";
                                                 var tSpanMinuten = document.createElement("span");
                                                 tSpanMinuten.setAttribute("class", "ZeitMinuten" + (ze.Schnellzug ? " Schnellzug" : "") + (tUnterstrichen ? " nachtsUnterstrichen" : ""));
                                                 tSpanMinuten.innerHTML = (tMinuten < 10) ? "0" + tMinuten.toString() : tMinuten.toString();
@@ -6444,7 +6444,7 @@ System.register("SaxZuglaufAuslesen", ["SaxBaseTypes", "SaxParsedTypes"], functi
         }
     };
 });
-System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (exports_10, context_10) {
+System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser", "SaxBaseTypes"], function (exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
     function makeTableVirtual(tInput) {
@@ -6557,7 +6557,69 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
         return tResult;
     }
     exports_10("virtualizeZugNrZugKlasse", virtualizeZugNrZugKlasse);
-    var ParsedTypes, SaxParser_2, SaxParsedTypes_5;
+    function berechneZeiten2(tInput) {
+        console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
+        var tResult = JSON.parse(JSON.stringify(tInput));
+        tResult.Zeilen.forEach(function (zei) {
+            switch (zei.kind) {
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_ZUBRINGER_AB:
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_ZUBRINGER_IN:
+                case ParsedTypes.ZEILE_T.NORMAL:
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_WEITER_AB:
+                case ParsedTypes.ZEILE_T.ANSCHLUSS_WEITER_IN:
+                    var tNachmittag_1 = false;
+                    var tLast_1 = -1;
+                    zei.Zeiteintraege.forEach(function (i) {
+                        switch (i.kind) {
+                            case BLOCK_T.ZUG_NR_WERT:
+                            case BLOCK_T.LEER:
+                            case BLOCK_T.KEINHALT:
+                            case BLOCK_T.DICKERSTRICH:
+                            case BLOCK_T.KEINHALT:
+                            case BLOCK_T.ERROR:
+                            case BLOCK_T.ANKUNFT:
+                            case BLOCK_T.BLOCK:
+                            case BLOCK_T.KLASSEN_WERT:
+                                break;
+                            case BLOCK_T.ZEITEINTRAG:
+                                switch (i.Zeit.kind) {
+                                    case "ZEIT_ROH":
+                                        if (tLast_1 == -1) {
+                                        }
+                                        else {
+                                            if (i.Zeit.RohZeit < tLast_1) {
+                                                tNachmittag_1 = true;
+                                            }
+                                        }
+                                        tLast_1 = i.Zeit.RohZeit;
+                                        i.Zeit = makeZ(i.Zeit.RohZeit, GesternHeuteMorgen.Heute, tNachmittag_1, ETimeValid.Berechnet24);
+                                        break;
+                                    case "ZEIT_24":
+                                        if (i.Zeit.WelcherTag == GesternHeuteMorgen.Heute) {
+                                            tLast_1 = (((i.Zeit.Stunde24 > 12) ? (i.Zeit.Stunde24 - 12) : i.Zeit.Stunde24) * 100) + i.Zeit.Minute24;
+                                            tNachmittag_1 = i.Zeit.Stunde24 > 12;
+                                        }
+                                        break;
+                                    default:
+                                        SaxBaseTypes_6.assertNever(i.Zeit);
+                                }
+                                break;
+                            default:
+                                SaxBaseTypes_6.assertNever(i);
+                        }
+                    });
+                    break;
+                case ParsedTypes.ZEILE_T.ZUGNR:
+                case ParsedTypes.ZEILE_T.KLASSEN:
+                    break;
+                default:
+                    SaxBaseTypes_6.assertNever(zei);
+            }
+        });
+        return tResult;
+    }
+    exports_10("berechneZeiten2", berechneZeiten2);
+    var ParsedTypes, SaxParser_2, SaxParsedTypes_5, SaxBaseTypes_6;
     return {
         setters: [
             function (ParsedTypes_1) {
@@ -6566,6 +6628,9 @@ System.register("SaxVirtualTable", ["SaxParsedTypes", "SaxParser"], function (ex
             },
             function (SaxParser_2_1) {
                 SaxParser_2 = SaxParser_2_1;
+            },
+            function (SaxBaseTypes_6_1) {
+                SaxBaseTypes_6 = SaxBaseTypes_6_1;
             }
         ],
         execute: function () {
@@ -6613,7 +6678,7 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                     SaxValidator.Validator.validate_mergeBlocks(tResult);
                     SaxValidator.Validator.validate_addZusatzinfobase(tResult);
                     var tVirtualTable = SaxVirtualTable_1.makeTableVirtual(tResult);
-                    var tVirtualTablezugkla = SaxVirtualTable_1.virtualizeZugNrZugKlasse(tVirtualTable);
+                    var tVirtualTablezugkla = SaxVirtualTable_1.berechneZeiten2(SaxVirtualTable_1.virtualizeZugNrZugKlasse(tVirtualTable));
                     var t = document.getElementById("testdiv");
                     if (t != null) {
                         SaxRender.Renderer.renderTable(t, tVirtualTablezugkla);

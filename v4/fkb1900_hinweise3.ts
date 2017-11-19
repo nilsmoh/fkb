@@ -234,7 +234,7 @@ type Block2Entry = {
         Morgen
     }
 
-var makeZ = function(zeit12:number, ghm:GesternHeuteMorgen, nachmittag:boolean ): TZeit24 {
+var makeZ = function(zeit12:number, ghm:GesternHeuteMorgen, nachmittag:boolean, validity? : ETimeValid ): TZeit24 {
     let tStunde12 = Math.floor( zeit12/100);
     let tMinute24 = zeit12 - (Math.floor( zeit12/100) * 100);
 
@@ -250,7 +250,7 @@ var makeZ = function(zeit12:number, ghm:GesternHeuteMorgen, nachmittag:boolean )
         Stunde24: (nachmittag ? 12 : 0 ) + tStunde12,
         Minute24: tMinute24,
         WelcherTag: ghm,
-        Valid: ETimeValid.Vorgabe24,
+        Valid: (validity != undefined) ? validity : ETimeValid.Vorgabe24,
         src: zeit12
 
     }
