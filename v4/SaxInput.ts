@@ -286,7 +286,7 @@ export class InputData {
 					"TextOrt" : {		"kind" : TEXTORT_T.NICHTANGEGEBEN	},
                     Inhalt:{
                         q: "Pfeil", //Anschluss wird erreicht
-                        BLOCK: { Standard: { scope: Zelle, PfeilStart: true } }
+                        BLOCK: { Standard: { scope: Zelle, PfeilStart: 1 } }
                     }}
                     // {
                     //     cellkey: "n822",
@@ -303,7 +303,7 @@ export class InputData {
 					"TextOrt" : {	"kind" : TEXTORT_T.NICHTANGEGEBEN	},
                     Inhalt:{
                         q: "Pfeil", //Anschluss wird erreicht
-                        BLOCK: { Standard: { scope: Zelle, PfeilZiel: true } }
+                        BLOCK: { Standard: { scope: Zelle, PfeilZiel: 1 } }
                  }}
 
                     // },

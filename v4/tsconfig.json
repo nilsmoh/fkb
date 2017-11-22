@@ -8,7 +8,7 @@
         "preserveConstEnums": true,
         "outFile": "Sched.js",
         "sourceMap": true,
-		  "strictNullChecks": true
+		"strictNullChecks": true
     },
   "include": [
     "*.ts"

@@ -10,7 +10,9 @@ import * as SaxSchedules from "./SaxInput";
 
 import * as SaxNachberechnung from "./SaxParsedNachberechnung";
 import { ZugExtraktor, Lauf } from "./SaxZuglaufAuslesen";
-import { makeTableVirtual, virtualizeZugNrZugKlasse, berechneZeiten2 } from "./SaxVirtualTable";
+import { makeTableVirtual, // virtualizeZugNrZugKlasse, 
+            berechneZeiten2, 
+            virtualizeZugNrZugKlasse} from "./SaxVirtualTable";
 
 // simpler HIGH Level Aufruf
 
@@ -64,7 +66,7 @@ export class Sched{
 
             // todo move zusatzblocks into new virtual table lines
 
-            const tVirtualTablezugkla = berechneZeiten2( virtualizeZugNrZugKlasse(tVirtualTable));          
+            const tVirtualTablezugkla =  berechneZeiten2( virtualizeZugNrZugKlasse(tVirtualTable));          
 
             // todo render the new virtual
 

@@ -33,6 +33,7 @@ import { assertNever } from "./SaxBaseTypes";
      * 
      * @param tInput 
      */
+    
     export function virtualizeZugNrZugKlasse(tInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual): ParsedTypes.SingleDirectionScheduleTyped_plusVirtual{
         console.log("--- VIRTUALIZE ZugNr, ZugKlasse -------");
         var tResult:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = JSON.parse(JSON.stringify( tInput)); 
@@ -82,40 +83,14 @@ import { assertNever } from "./SaxBaseTypes";
 
                                     if (!ZI_Renderer.isEmptyBIBGlobal(tr)) {
 
-                                        let s: Block2Entry = tr.Inhalt.BLOCK.Standard as Block2Entry;
-                                        if (s.scope.kind == "Zug") {
+                                        let ss: Block2Entry = tr.Inhalt.BLOCK.Standard as Block2Entry;
+                                        if (ss.scope.kind == "Zug") {
+                                            let s = ss as Block2EntryX;
                                             console.log(s.scope, s.ZugNr, s.Klasse);
 
-                                            /*
-                                            let tStandardZugVirtuelleZeile: TZugNrZeile & {Virtual: boolean} = {
-                                                kind: ZEILE_T.ZUGNR,
-                                                ZugNummern: new Array<ParsedTypes.TNormalZeileEintragBase>(),
-                                                ZeitZeileZusatzInfo: undefined,
-                                                Virtual: true
-                                            }
-                                            
-                                            //TODO
-                                            let tStandardKlasseVirtuelleZeile: TKlassenNrZeile & {Virtual: boolean} = {
-                                                kind: ZEILE_T.KLASSEN,
-                                                KlassenNummern: new Array<ParsedTypes.TKlassenNrEintrag>(),
-                                                ZeitZeileZusatzInfo: undefined,
-                                                Virtual: true,
-                                                BlockEintrag: undefined   // falls in Kopfspalte ???
-                                            }
-                                            */
                                             //let tNeedVirtualZugZeile = false;
                                             //let tNeedVirtualKlassenZeile = false;
-                                            /*
-                                            for (let i = 0; i < zeile.Zeiteintraege.length  ;i++){
-                                                if ((i < zidx) || (i > zidx)){
-                                                    tStandardZugVirtuelleZeile.ZugNummern.push( {BerechneterZugLauf:{  kind: ZUGLAUF_UNBEKANNT}, MitStrich:false, kind: BLOCK_T.LEER } );
-                                                    tStandardKlasseVirtuelleZeile.KlassenNummern.push( {BerechneterZugLauf:{  kind: ZUGLAUF_UNBEKANNT}, MitStrich:false, kind: BLOCK_T.LEER } );
-                                                }
-                                                
-                                                
-                                                if (i == zidx){
-                                                    */
-
+                                         
                                             if (s.ZugNr) {
                                                 let tEntr: TZugNrEintrag = {
                                                     kind: BLOCK_T.ZUG_NR_WERT,
@@ -163,29 +138,7 @@ import { assertNever } from "./SaxBaseTypes";
 
                                             //}
 
-                                            /*
-                                                                                        if (tNeedVirtualZugZeile){
-                                                                                             console.log("VI:",tNeedVirtualZugZeile , tStandardZugVirtuelleZeile);
-                                                                                             tResult.Zeilen.splice(iz,0,tStandardZugVirtuelleZeile);  //changing our resultcopy in place
-                                                                                             iz++;
-                                                                                        }
-                                            
-                                                                                        if (tNeedVirtualKlassenZeile){
-                                                                                             console.log("VI:",tNeedVirtualKlassenZeile ,tStandardKlasseVirtuelleZeile);
-                                                                                             tResult.Zeilen.splice(iz,0,tStandardKlasseVirtuelleZeile);  //changing our resultcopy in place
-                                                                                             iz++;
-                                                                                        }
-                                                                                       */
-
-
-                                            /**
-                                             * {kind: "ZUGNR", ZugNummern: Array(21), Virtual: false}
-                                             * 
-                                             * {kind: "ZUG_NR_WERT", zugnr: "1933", BerechneterZugLauf: {…}}
-
-
-                                             */
-
+                                          
 
                                         }
                                     }
@@ -228,6 +181,14 @@ import { assertNever } from "./SaxBaseTypes";
         }
 
         return tResult;
+    }
+    
+
+    export function virtualizePfeil(tInput: ParsedTypes.SingleDirectionScheduleTyped_plusVirtual): ParsedTypes.SingleDirectionScheduleTyped_plusVirtual{
+        console.log("--- TODO VIRTUALIZE Pfeil -------");
+        var tResult:ParsedTypes.SingleDirectionScheduleTyped_plusVirtual = JSON.parse(JSON.stringify( tInput)); 
+        return tResult;
+
     }
     
 

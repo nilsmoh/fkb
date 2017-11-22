@@ -30,7 +30,7 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
 
 // functions filling SingleDirectionScheduleTyped value
     export class Nachberechnung {
-
+/*
         // fuelle .berechneterZuglauf  mit BerechneterZuglauf struct
         public static berechneZugLaeufe(s: SingleDirectionScheduleTyped): SingleDirectionScheduleTyped {
             // 0) bestimme Spaltenzahl
@@ -178,16 +178,7 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
 
                                     if (tEintrag.kind === BLOCK_T.BLOCK) {
                                         console.warn("todo read from zusatzinfo");
-                                        /*    
-                                        if (tEintrag.Blockinhalt) {
-                                            if ((tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.PASSEND) ||
-                                                (tEintrag.Blockinhalt.Verweistyp.kind === VERWEIS_T.EMBEDDED)) {
-                                                if ((tEintrag.Blockinhalt.Inhalt.BLOCK.Standard as Block2Entry).ZugNr) {
-                                                    tZugNr = ''+(tEintrag.Blockinhalt.Inhalt.BLOCK.Standard as Block2Entry).ZugNr; // tEintrag.Blockinhalt.ZugNrOderKlasse.Zugnr;
-                                                }
-                                            }
-                                        }
-                                        */
+                                      
                                     }
 
 
@@ -257,7 +248,7 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
                                 tEintrag = tZeile.Zeiteintraege[sp];
                             }
                             if ((tEintrag.kind != BLOCK_T.ERROR) && (tEintrag.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET)) {
-                                if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr) /* || (tLoesche) */) {
+                                if ((tCurrentZugNr != tEintrag.BerechneterZugLauf.ZugNr) ) {
                                     //if ((tCurrentZugNr != undefined)&&(tCurrentZugNr.length > 0)) {
                                     var TEb = tEintrag.BerechneterZugLauf;
                                     if (tEintrag.BerechneterZugLauf.ZugNr) {
@@ -393,7 +384,7 @@ import { assertNever /* , TZeit24,  ZEIT_24, */ } from "./SaxBaseTypes";
 
             return s;
         }
-
+*/
     }
 
 
