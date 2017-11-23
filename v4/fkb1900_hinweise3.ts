@@ -7,8 +7,8 @@ interface Empty {
 }
 
 interface Block2 {
-    Standard: Block2Entry  | BlockEntryZeilenFolge |Block2EntryVirtuelleFolgeZelle | Block2EntryTabelle | Empty,
-    Abweichend?: Block2Entry  | BlockEntryZeilenFolge |Block2EntryVirtuelleFolgeZelle | Block2EntryTabelle | Empty
+    Standard: Block2Entry  | BlockEntryZeilenFolge |Block2EntryVirtuelleFolgeZelle | Block2EntryTabelle | Block2Zelle  | Empty | Block2EntryZubringerZellenFolge|  Block2EntryAnschlussWeiterZellenFolge ,
+    Abweichend?: Block2Entry  | BlockEntryZeilenFolge |Block2EntryVirtuelleFolgeZelle | Block2EntryTabelle | Block2Zelle  | Empty
     ,Alternative?: Block2Entry  //echter zweiter Eintrag in Tabelle, fuer den aber kein platz ist
    // scope?: string
 }
@@ -31,9 +31,9 @@ interface page {
     q: string,    //quelle
     c?: string,    //kommentar
     BLOCK: {
-    Standard: Block2EntryX | Block2EntryScTabellenTeilFortsetzung | BlockEntryZeilenFolge | Block2EntryScGlobal & {checked:true} 
-        | Block2EntryZuegeInBelegtenSpalten |Block2EntryVirtuelleFolgeZelle | Block2EntryTeilZug  | Block2EntryTabelle  | Empty,
-    Abweichend?: Block2Entry | BlockEntryZeilenFolge  | Block2EntryTabelle  | Empty
+    Standard: Block2EntryX | Block2EntryScTabellenTeilFortsetzung | BlockEntryZeilenFolge | Block2EntryScGlobal & {checked:true} | Block2EntryAnschlussWeiterZellenFolge
+        | Block2EntryZuegeInBelegtenSpalten |Block2EntryVirtuelleFolgeZelle | Block2EntryTeilZug  | Block2EntryTabelle | Block2EntryZubringerZellenFolge | Block2Zelle  | Empty,
+    Abweichend?: Block2Entry | BlockEntryZeilenFolge  | Block2EntryTabelle | Block2Zelle  | Empty
     ,Alternative?: Block2Entry  //echter zweiter Eintrag in Tabelle, fuer den aber kein platz ist
    // scope?: string
 }}>
@@ -140,12 +140,12 @@ type KategorieTyp = "Schnellzug" | "DZug" | "Nord Sued Express";
 
 type Block2EntryScGlobal =  {
     scope: ScGlobal,
-    Verwaltung?:any,
-    Klasse?:any,
-    AllgemeineInfo?:any,
-    FahrkartenInfo?:any,
-    AlleZuegeHaltenIn?: any,
-    ZugOhneSpalte?: any
+    Verwaltung?: VerwaltungT | Array<{ von: StationTicketInfoEntryKpxTagged, bis:StationTicketInfoEntryKpxTagged, Dir: VerwaltungT }>,
+    AllgemeineInfo?:AllgemeineInfo,
+    Klasse? : EKlassen,
+    FahrkartenInfo? : string,
+    AlleZuegeHaltenIn?:  StationTicketInfoEntryKpxTagged   , //globale zusatzinfo, wahrscheinlich kein platz fuer Zelle,
+    ZugOhneSpalte?: TZugOhneSpalte
  }
 
   //z.b. siehe auch unter 5, d.h. geschweifte klammer senkrecht in header
@@ -165,52 +165,139 @@ type Block2EntryScGlobal =  {
 
 type Block2EntryTeilZug = {
     scope: ScTeilZug,
-    Kategorie? :any,
-    GeltungsTag? :any,
-    Klasse?:any,
-    Fahrtage?:any,
-    RedundanteZugNr?:any,
-    ZeilenLinkOhneBedeutung? : any,
-    ZugNr? :any
+    Kategorie? :KategorieTyp,
+    GeltungsTag? : string,
+    Klasse?: EKlassen,
+    Fahrtage?:FAEHRT_T,
+    RedundanteZugNr?: Array<String | Number>,
+    ZeilenLinkOhneBedeutung? : boolean,
+    ZugNr? : string | number
 
 }
 
 type Block2EntryVirtuelleFolgeZelle = {
     scope: ScVirtuelleFolgeZelle, //kein platz fuer extra zeile, koennte als extrazeile nach verweis umgesetzt werden
-    AnkunftOrt: any , //Dresden_Neust_Leip_Bf, 
-    Kategorie:any, //"Schnellzug",  
-    AnkunftZeit: any,
+    AnkunftOrt: StationTicketInfoEntryKpxTagged , //Dresden_Neust_Leip_Bf, 
+    Kategorie:KategorieTyp, //"Schnellzug",  
+    AnkunftZeit:  FertigeZeit,
     PfeilStart: number
 }
 
 type Block2EntryZugNr = {
     scope : ScZugFuerExpliziteNrn,
-    Klasse: any 
+    Klasse:  EKlassen,//any 
 }
 
 type Block2EntryTabelle = {
     scope: ScTabelle,
-    Verwaltung?: any,
-    Klasse?:any,
-    Fahrtage?:any,
-    AllgemeineInfo?:any
+    Verwaltung?: VerwaltungT | Array<{ von: StationTicketInfoEntryKpxTagged, bis:StationTicketInfoEntryKpxTagged, Dir: VerwaltungT }>,  
+    Klasse?: EKlassen,//any,
+    Fahrtage?:FAEHRT_T,
+    AllgemeineInfo?: AllgemeineInfo
 }
 
+type Block2EntryZubringerZellenFolge = {
+    scope: ScZubringerZellenFolge,
+    Fahrtage?:FAEHRT_T,
+    Kategorie?:KategorieTyp,
+    Klasse?: EKlassen,//any,
+    mehrzeiligerAnschlusszugKommtAus?: StationTicketInfoEntryKpxTagged ,
+    AnschlussZubringerAb?:TAnschlussZubringerAb,
+    ZugNr?: string | number
+}
+
+type Block2EntryAnschlussWeiterZellenFolge = {
+    scope: ScAnschlussWeiterZellenFolge,
+    Fahrtage?:FAEHRT_T,
+    AnschlussWeiterAb?: {Bhf?:StationTicketInfoEntryKpxTagged ,  bis?:StationTicketInfoEntryKpxTagged  },
+    Klasse?:  EKlassen,
+    AnschlussWeiterNach?:any,
+    mehrZeiligerAnschlusszugFaehrtNach?:StationTicketInfoEntryKpxTagged
+}
+
+
+interface TZugOhneSpalte { Fahrtage?: string, Klasse?: string, ZugNr?: string, weg: [{ bhfAb?: StationTicketInfoEntryKpxTagged, zeit?: FertigeZeit, bhfAn?: StationTicketInfoEntryKpxTagged }] } //z.b.fkb61
+  
+interface TAnschlussZubringerAb {ZugNr?: string, Bhf?: StationTicketInfoEntryKpxTagged, Zeit?: FertigeZeit , Klasse?: string, WeitereFernStartpunkte?: Array<StationTicketInfoEntryKpxTagged>,
+        Geltungstag?: string,  mitUmstiegIn?: StationTicketInfoEntryKpxTagged, mitUmstiegInZugNr?: string, ohneUmstieg?: boolean, Ueber?: StationTicketInfoEntryKpxTagged[], Kategorie?: KategorieTyp
+    }    // anschluss abfahrt fuer zelle jetzt mit konkretem zeilentyp !!! 
 
 
 // nur 1 Bedeutung: Tabelle wird hier aufgespalten z.b. vorortzuege
 interface Block2EntryScTabellenTeilFortsetzung  {scope: ScTabellenTeilFortsetzung};
 
-type Block2Entry = Block2EntryX | Block2EntryScTabellenTeilFortsetzung | Block2EntryScGlobal | Block2EntryZuegeInBelegtenSpalten 
-        |  Block2EntryVirtuelleFolgeZelle | Block2EntryZugNr | Block2EntryTeilZug | Block2EntryTabelle ;
+type Block2Entry = Block2EntryX | Block2Zelle | Block2EntryScTabellenTeilFortsetzung | Block2EntryScGlobal | Block2EntryZuegeInBelegtenSpalten 
+        |  Block2EntryVirtuelleFolgeZelle | Block2EntryZugNr | Block2EntryTeilZug | Block2EntryTabelle |  Block2EntryZubringerZellenFolge ;
+
+type Block2Zelle = {
+    scope: ScZelle,
+     //angabe ausserhalb des eigentlichen zuglauf (vor oder nach dem teil der in der tabelle angegeben ist z.b fkb 1 )
+    OhneNrNach?: StationTicketInfoEntryKpxTagged | Array<StationTicketInfoEntryKpxTagged> | Array<{ziel:StationTicketInfoEntryKpxTagged, ank: any}>,
+    OhneNrAus?: StationTicketInfoEntryKpxTagged | Array<StationTicketInfoEntryKpxTagged>,
+    // abweichung INNERHALB des eigentlichen zuglaufs der tabelle
+    verlasseKbsNach?: StationTicketInfoEntryKpxTagged | { Kategorie?: KategorieTyp, nach: StationTicketInfoEntryKpxTagged[], ueber?: StationTicketInfoEntryKpxTagged, AnkunftsZeit?:  FertigeZeit },
+    erreicheKbsAus?: StationTicketInfoEntryKpxTagged | { Kategorie?: KategorieTyp, aus: StationTicketInfoEntryKpxTagged[], ueber?: StationTicketInfoEntryKpxTagged, 
+    AbfahrtsZeit?: FertigeZeit },
+    Fahrtage?: FAEHRT_T,
+    GeltungsTag?: string, //falls scope zelle
+    RedundanteZugNr?: Array<String | Number>,
+    virtuellerAnschluss?: { AnschlussAusZeit: FertigeZeit, AnschlussAusBhf: StationTicketInfoEntryKpxTagged }, //Zubringer ohne eigene zeile
+    AnkunftOrt?:  StationTicketInfoEntryKpxTagged /*String*/,                     // DD Neust  // Schles.Bhf  jetzt in ankunftort 
+    AnkunftZeit?: FertigeZeit,
+    AbfahrtsOrt?: StationTicketInfoEntryKpxTagged, //string,
+    AbfahrtsZeit?: FertigeZeit,
+    haeltAuchIn?: StationTicketInfoEntryKpxTagged, //string,
+    
+   AnschlussZubringerAb?: TAnschlussZubringerAb,
+    AnschlussZubringerIn?: { ZugNr?: string, Geltungstag?: string },
+//    AnschlussWeiterAb?: {Bhf?:StationTicketInfoEntryKpxTagged ,  bis?:StationTicketInfoEntryKpxTagged  },
+    AnschlussWeiterNach?: { Geltungstag?: string, /*SubBhf?: string,*/ Bhf?: StationTicketInfoEntryKpxTagged ,Ueber?: Array</*string*/StationTicketInfoEntryKpxTagged>, Zeit?: FertigeZeit, 
+                WeitereFernziele?: Array</*string*/StationTicketInfoEntryKpxTagged>, mitUmstiegIn?: StationTicketInfoEntryKpxTagged,mitUmstiegInZugNr?:number[], 
+                mitUmstiegSieheKbs?:number[] 
+                ohneUmstieg?: boolean, Kategorie?: string },
+    
+    
+    ZugOhneSpalte?: TZugOhneSpalte,
+    Verwaltung?: VerwaltungT | Array<{ von: StationTicketInfoEntryKpxTagged, bis:StationTicketInfoEntryKpxTagged, Dir: VerwaltungT }>,  
+    Klasse?: EKlassen,
+//    ZuegeHaltenNurZumEinsteigen?: boolean, //JETZT scope Zeilenfolge 
+//    ZuegeHaltenNurZumAussteigen?: boolean, //JETZT scope Zeilenfolge
+    PfeilStart?: number,           //uebergang/Anschluss von diesem Zug nach .. wird erreicht
+    PfeilZiel?: number,            // dieser Zug wird erreicht
+    ZugNr?: string | number,
+    DirekterWagen?: Array<StationTicketInfoEntryKpxTagged>, // scope Zug, gilt aber ggf auch vorher im zubringer und oder nachher im anschluss
+    DirekterwagenKlasse?: string,
+    ZeilenLinkOhneBedeutung?: boolean // Marker 2x in tabelle, einmal an zug und einmal zusaetzlich um die zeile zu finden, letzteres kann ignoriert werden
+    Schlafwagen?: StationTicketInfoEntryKpxTagged | Array<StationTicketInfoEntryKpxTagged> | { von: StationTicketInfoEntryKpxTagged }, // angabe senkrecht in spalte, ueber konkreten Zuglauf hinaus
+    Speisewagen?: StationTicketInfoEntryKpxTagged | Array<StationTicketInfoEntryKpxTagged> | { von: StationTicketInfoEntryKpxTagged },   // angabe senkrecht in spalte, ueber konkreten Zuglauf hinaus
+    Buffetwagen?: StationTicketInfoEntryKpxTagged | Array<StationTicketInfoEntryKpxTagged> | { von: StationTicketInfoEntryKpxTagged },   // angabe senkrecht in spalte, ueber konkreten Zuglauf hinaus
+    FahrkartenInfo?: string //text zur gueltigkeit von rueckfahrkarten, ohne direkten einfluss auf fahrplan,
+    AllgemeineInfo?: AllgemeineInfo,
+    andererBhf?: StationTicketInfoEntryKpxTagged,               //fuer scope zelle , Z.B. Anschluss aus gilt fuer anderen Bahnhof als zellenkopf angibt 
+    ZugVerlaesstStreckeAberKommtZurueck?: { letzterBhf:  StationTicketInfoEntryKpxTagged, abweichend: Array< StationTicketInfoEntryKpxTagged>, wiederDaBhf:  StationTicketInfoEntryKpxTagged },  //z.B. dresdenhbf -> weinboehla ueber cossebaude
+    //AlleZuegeHaltenIn?: StationTicketInfoEntryKpxTagged /* string*/, //globale zusatzinfo, wahrscheinlich kein platz fuer Zelle,
+    ZugVermitteltAnschluss?: { ZugNr: string, Ziele: Array< StationTicketInfoEntryKpxTagged> },
+    OmnibusUeberfuehrung?: Array< StationTicketInfoEntryKpxTagged>, // subbahnhoefe in LEipzig,
+    OmnibusUeberfuehrungZuAnschlusszuegen?: Array<StationTicketInfoEntryKpxTagged>,
+    NurArbeiterBefoerderung?: boolean,
+    ZugWartetNicht?: { ZugNr: string, GepaeckVonNichtUeberfuehrt: Array<StationTicketInfoEntryKpxTagged> },
+    haeltWerktagsFuerIVKlInProesen?: boolean,
+    Klasse4AuchSonnUndFesttags?: true,
+    Kategorie?: KategorieTyp //z.B. DZug oder Schnellzug, z.B. wenn nur teil des weges hochgestuft,
+    mehrZeiligerAnschlusszugFaehrtNach?: StationTicketInfoEntryKpxTagged,
+    mehrzeiligerAnschlusszugKommtAus?: StationTicketInfoEntryKpxTagged
+
+}
+
+
 
 type Block2EntryX = {
     scope:  
           ScZug //z.B. passend rechts daneben
-        | ScZelle //z.b. abweichende Fahrzeit
-//  EXTRA | ScZeilenFolge     //z.b. siehe auch unter 5, d.h. geschweifte klammer senkrecht in HEADER
-        | ScZubringerZellenFolge //z.b. zubringer aus anderem abfahrtsort
-        | ScAnschlussWeiterZellenFolge //z.b. anschluss verkehrt nach anderem zielort, oder z.b. anschluss verkehrt ueber woanders
+//        | ScZelle //z.b. abweichende Fahrzeit
+// EXTRA  | ScZeilenFolge     //z.b. siehe auch unter 5, d.h. geschweifte klammer senkrecht in HEADER
+// EXTRA  | ScZubringerZellenFolge //z.b. zubringer aus anderem abfahrtsort
+// EXTRA  | ScAnschlussWeiterZellenFolge //z.b. anschluss verkehrt nach anderem zielort, oder z.b. anschluss verkehrt ueber woanders
 // EXTRA  | ScZugFuerExpliziteNrn  //abweichung fuer explizit angegebene Zugnummern
 // EXTRA  | ScTeilZug //z.b. geschweifte klammer mit abweichender zugnummer  + klasse
 // EXTRA  | ScTabellenTeilFortsetzung // nur 1 Bedeutung: Tabelle wird hier aufgespalten z.b. vorortzuege
@@ -237,18 +324,16 @@ type Block2EntryX = {
     AbfahrtsZeit?: FertigeZeit,
     haeltAuchIn?: StationTicketInfoEntryKpxTagged, //string,
     
-    AnschlussZubringerAb?: {ZugNr?: string, Bhf?: StationTicketInfoEntryKpxTagged, Zeit?: FertigeZeit , Klasse?: string, WeitereFernStartpunkte?: Array<StationTicketInfoEntryKpxTagged>,
-        Geltungstag?: string,  mitUmstiegIn?: StationTicketInfoEntryKpxTagged, mitUmstiegInZugNr?: string, ohneUmstieg?: boolean, Ueber?: StationTicketInfoEntryKpxTagged[], Kategorie?: KategorieTyp
-    },    // anschluss abfahrt fuer zelle jetzt mit konkretem zeilentyp !!! 
+   AnschlussZubringerAb?: TAnschlussZubringerAb,
     AnschlussZubringerIn?: { ZugNr?: string, Geltungstag?: string },
-    AnschlussWeiterAb?: {Bhf?:StationTicketInfoEntryKpxTagged ,  bis?:StationTicketInfoEntryKpxTagged  },
+//    AnschlussWeiterAb?: {Bhf?:StationTicketInfoEntryKpxTagged ,  bis?:StationTicketInfoEntryKpxTagged  },
     AnschlussWeiterNach?: { Geltungstag?: string, /*SubBhf?: string,*/ Bhf?: StationTicketInfoEntryKpxTagged ,Ueber?: Array</*string*/StationTicketInfoEntryKpxTagged>, Zeit?: FertigeZeit, 
                 WeitereFernziele?: Array</*string*/StationTicketInfoEntryKpxTagged>, mitUmstiegIn?: StationTicketInfoEntryKpxTagged,mitUmstiegInZugNr?:number[], 
                 mitUmstiegSieheKbs?:number[] 
                 ohneUmstieg?: boolean, Kategorie?: string },
     
     
-    ZugOhneSpalte?: { Fahrtage?: string, Klasse?: string, ZugNr?: string, weg: [{ bhfAb?: StationTicketInfoEntryKpxTagged, zeit?: FertigeZeit, bhfAn?: StationTicketInfoEntryKpxTagged }] }, //z.b.fkb61
+    ZugOhneSpalte?: TZugOhneSpalte,
     Verwaltung?: VerwaltungT | Array<{ von: StationTicketInfoEntryKpxTagged, bis:StationTicketInfoEntryKpxTagged, Dir: VerwaltungT }>,  
     Klasse?: EKlassen,
 //    ZuegeHaltenNurZumEinsteigen?: boolean, //JETZT scope Zeilenfolge 
@@ -266,7 +351,7 @@ type Block2EntryX = {
     AllgemeineInfo?: AllgemeineInfo,
     andererBhf?: StationTicketInfoEntryKpxTagged,               //fuer scope zelle , Z.B. Anschluss aus gilt fuer anderen Bahnhof als zellenkopf angibt 
     ZugVerlaesstStreckeAberKommtZurueck?: { letzterBhf:  StationTicketInfoEntryKpxTagged, abweichend: Array< StationTicketInfoEntryKpxTagged>, wiederDaBhf:  StationTicketInfoEntryKpxTagged },  //z.B. dresdenhbf -> weinboehla ueber cossebaude
-    AlleZuegeHaltenIn?: StationTicketInfoEntryKpxTagged /* string*/, //globale zusatzinfo, wahrscheinlich kein platz fuer Zelle,
+    //AlleZuegeHaltenIn?: StationTicketInfoEntryKpxTagged /* string*/, //globale zusatzinfo, wahrscheinlich kein platz fuer Zelle,
     ZugVermitteltAnschluss?: { ZugNr: string, Ziele: Array< StationTicketInfoEntryKpxTagged> },
     OmnibusUeberfuehrung?: Array< StationTicketInfoEntryKpxTagged>, // subbahnhoefe in LEipzig,
     OmnibusUeberfuehrungZuAnschlusszuegen?: Array<StationTicketInfoEntryKpxTagged>,
@@ -751,7 +836,7 @@ const x30: Array<page> = [{
     },
     {
        q: "Pfeilziel",
-        BLOCK: { Standard:  check<Block2EntryX>( { scope: Zelle, PfeilZiel: 1 } ) }
+        BLOCK: { Standard:  check<Block2Zelle>( { scope: Zelle, PfeilZiel: 1 } ) }
     },
     {
         q: "+zug 1556 verkehrt von coswig bis meissen-c nur sonn und festtags",
@@ -1383,16 +1468,16 @@ var x48: Array<page> = [{
     list: [{
         //auch über röder giltig  fuer FK gehoert in zeilenzusatzinfo
         q: "*von 15juni bis15sept:335",
-        BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Kategorie:"Schnellzug", Zeit: ZHN(335) } } }
+        BLOCK: { Standard: {}, Abweichend: id<Block2Zelle>( { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Kategorie:"Schnellzug", Zeit: ZHN(335) } } ) }
     }, {
         q: "Schlafwagen Myslowitz Leipzig",
-        BLOCK: { Standard: { scope: Zug, Schlafwagen: [Myslowitz, Leipzig] } }
+        BLOCK: { Standard: id<Block2EntryX>( { scope: Zug, Schlafwagen: [Myslowitz, Leipzig] } ) }
     }, {
         q: "Buffetwagen Myslowitz Leipzig",
-        BLOCK: { Standard: { scope: Zug, Buffetwagen: [Myslowitz, Leipzig] } }
+        BLOCK: { Standard: id<Block2EntryX>( { scope: Zug, Buffetwagen: [Myslowitz, Leipzig] } ) }
     }, {
         q: "Dresdner Vorortzuege siehe unter 6",
-        BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Dresd_Wettinerstr, endZeileBhf: Priestewitz }, AllgemeineInfo: AllgemeineInfo.DresdenerVorortzuegesieheunter6 } }
+        BLOCK: { Standard: id<BlockEntryZeilenFolge>( { scope: { kind: "ZeilenFolge", startZeileBhf: Dresd_Wettinerstr, endZeileBhf: Priestewitz }, AllgemeineInfo: AllgemeineInfo.DresdenerVorortzuegesieheunter6 } ) }
     }
     ]
 }];
@@ -1413,8 +1498,7 @@ var x49: Array<page> = [{
         BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: [Leipzig_Dr_Bf  /* "DresdnerBhf"*/, Leipzig_Th_Bf /*"ThueringerBhf"*/] } }
     }, {
         q: "bis Erf. 229",
-         //{ kind: "AnschlussWeiterZellenFolge", startZelle: string, endZelle: string }
-        BLOCK: { Standard: { scope:  { kind: "AnschlussWeiterZellenFolge", startZelle: Leipzig, endZelle: Frankfurt_M }, AnschlussWeiterNach: { Bhf: Erfurt, Zeit: ZMV(229) /*"MV229"*/ } } }
+        BLOCK: { Standard: id<Block2EntryAnschlussWeiterZellenFolge> ( { scope:  { kind: "AnschlussWeiterZellenFolge", startZelle: Leipzig, endZelle: Frankfurt_M }, AnschlussWeiterNach: { Bhf: Erfurt, Zeit: ZMV(229) /*"MV229"*/ } } ) }
     },
     // KBS25 Radebeul
     {
@@ -1479,9 +1563,7 @@ var x51: Array<page> = [{
     }, {
         q: "b Casl ",
         c: "Caslau a.d. Strecke Caslau Nimburg Tetschen heute Caslav  ???",
-         //{ kind: "AnschlussWeiterZellenFolge", startZelle: string, endZelle: string }
-          //{ kind: "AnschlussWeiterZellenFolge", startZelle: string, endZelle: string }
-        BLOCK: { Standard: { scope:  { kind: "AnschlussWeiterZellenFolge", startZelle: Tetschen, endZelle: Wien_NWB },  AnschlussWeiterNach: { Bhf: Časlau } } }
+        BLOCK: { Standard: id<Block2EntryAnschlussWeiterZellenFolge> (  { scope: { kind: "AnschlussWeiterZellenFolge", startZelle: Tetschen, endZelle: Wien_NWB },  AnschlussWeiterNach: { Bhf: Časlau } } ) }
     },
     // Radeburg kbs25
     {
@@ -1848,7 +1930,7 @@ var x61: Array<page> = [{
     head: "61",
     list: [{
         q: "(kleines viereck) Vom 15.Juni bis 15.September: s335",
-        BLOCK: { Standard: {}, Abweichend: { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Kategorie:"Schnellzug", Zeit: ZHN(3353) /*"s335"*/ } } }
+        BLOCK: { Standard: {}, Abweichend:  id<Block2Zelle>( { scope: Zelle, GeltungsTag: Vom15JuniBis15September, AnschlussZubringerAb: { Kategorie:"Schnellzug", Zeit: ZHN(3353) /*"s335"*/ } } ) }
     }
     
     , {
@@ -1866,11 +1948,6 @@ var x61: Array<page> = [{
         q: "Sonn- und Festtagszuege", //mehrspalte ueberschrift
         BLOCK: { Standard:  id<Block2EntryZuegeInBelegtenSpalten> ( { scope: ZuegeInBelegtenSpalten, Fahrtage: SonnUndFesttags } ) }
     }
-    
-    
-
-//XXXXX
-
     ,  {
         q: "Görlitz-Nikrisch-Seidenberg: K.Eisenb.Dir. Breslau, Nikrisch-Zittau: Sächs. Staatsb.",
         //{kind:"ZeilenFolge", startZeileBhf:string, endZeileBhf: string}
@@ -1881,8 +1958,6 @@ var x61: Array<page> = [{
             Abweichend: id<BlockEntryZeilenFolge>(  { scope: check< ScZeilenFolge >( { kind: "ZeilenFolge", startZeileBhf: Nikrisch, endZeileBhf: Zittau_Bf } ), Verwaltung: "Saechs" } )
         }
     }
-    
-    
     , {
         q: "* Die Sonn-und Festtagszuege 617 und 618 verkehren nur bis ende august.",
         BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttagsBisEndeAugust, RedundanteZugNr: [617, 618] } }
@@ -1915,11 +1990,11 @@ var x61: Array<page> = [{
     }, {
         q: "anschluss aus zugnr 624",
         c: "",
-        BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Seidenberg, endZelle: Nikrisch }, ZugNr: "624" } }
+        BLOCK: { Standard: id<Block2EntryZubringerZellenFolge>(  { scope: { kind: "ZubringerZellenFolge", startZelle: Seidenberg, endZelle: Nikrisch }, ZugNr: "624" } ) }
     }, {
         q: "anschluss aus zugnr 628",
         c: "",
-        BLOCK: { Standard: { scope: { kind: "ZubringerZellenFolge", startZelle: Seidenberg, endZelle: Nikrisch },  ZugNr: "628"  } }
+        BLOCK: { Standard: id<Block2EntryZubringerZellenFolge>( { scope: { kind: "ZubringerZellenFolge", startZelle: Seidenberg, endZelle: Nikrisch },  ZugNr: "628"  } ) }
     }
     
     ]
@@ -2151,17 +2226,17 @@ var x68: Array<page> = [{
     head: "68",
     list: [{
         q: "siehe u 56",
-        BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Hof, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter56 } }
+        BLOCK: { Standard: id<BlockEntryZeilenFolge>( { scope: { kind: "ZeilenFolge", startZeileBhf: Hof, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter56 } ) }
     }, {
         q: "siehe u 58",
-        BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Eger, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter58 } }
+        BLOCK: { Standard:  id<BlockEntryZeilenFolge>( { scope: { kind: "ZeilenFolge", startZeileBhf: Eger, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter58 }) }
     }, {
         q: "siehe u 9",
-        BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Wüstenbrand, endZeileBhf: Chemnitz }, AllgemeineInfo: AllgemeineInfo.SieheUnter9 } }
+        BLOCK: { Standard:  id<BlockEntryZeilenFolge>( { scope: { kind: "ZeilenFolge", startZeileBhf: Wüstenbrand, endZeileBhf: Chemnitz }, AllgemeineInfo: AllgemeineInfo.SieheUnter9 } ) }
     }, {
         q: "+ mit umsteigen in Reichenbach iV s640",
         c: "FKB56 zeigt den anschluss in Reichenbach mit einem Pfeil 144->155",
-        BLOCK: { Standard: {}, Alternative: { scope: Zelle, AnschlussZubringerAb: { Bhf: München, mitUmstiegIn: Reichenbach_i_V, Kategorie: "Schnellzug",  Zeit: ZGN(640) /* gestern nachmittag"S640" */ } } }
+        BLOCK: { Standard: {}, Alternative: id<Block2Zelle>( { scope: Zelle, AnschlussZubringerAb: { Bhf: München, mitUmstiegIn: Reichenbach_i_V, Kategorie: "Schnellzug",  Zeit: ZGN(640) /* gestern nachmittag"S640" */ } } ) }
 
     }, {
         q: "Directe Wagen unter 247.",
@@ -2279,7 +2354,7 @@ var x71: Array<page> = [{
     }, {
         q: "b.Weiden",
         c: "anschlusszug verlauf ",
-        BLOCK: { Standard: { scope: {kind: "AnschlussWeiterZellenFolge", startZelle:Hof, endZelle:München}, mehrZeiligerAnschlusszugFaehrtNach: Weiden } }
+        BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> (  { scope: {kind: "AnschlussWeiterZellenFolge", startZelle:Hof, endZelle:München}, mehrZeiligerAnschlusszugFaehrtNach: Weiden } ) }
     }, {
         q: "(rechteck) bei den mit (rechteck) bezeichneten Zügen findet in Leipzig Omnibusüberführung vom Magdeburg. nach dem Bayr.Bhf. statt.",
         BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: [Leipzig_Magd_Bf , Leipzig_Bayr_Bf] } }
@@ -2332,14 +2407,14 @@ var x72: Array<page> = [{
         BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, erreicheKbsAus: Eger } ) }
     }, {
         q: "v.Zw.", // Anschlusszug kommt von woanders als obere zeilen des selben anschlusszug sagen
-        BLOCK:{Standard: id<Block2EntryX>(  {scope:   { kind: "ZubringerZellenFolge", startZelle: Chemnitz, endZelle: Gössnitz }, mehrzeiligerAnschlusszugKommtAus: Zwickau } ) }
+        BLOCK:{Standard: id<Block2EntryZubringerZellenFolge>(  {scope:   { kind: "ZubringerZellenFolge", startZelle: Chemnitz, endZelle: Gössnitz }, mehrzeiligerAnschlusszugKommtAus: Zwickau } ) }
     }, {
         q: "217 I-III", //Klasse und zug in einer Zelle nebeneinander
         BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, ZugNr: 217, Klasse: Kl1bis3 } ) }
     }, {
         q: "!über Schnabelw.",
         c: "detail eines Anschlusszuges mit mehreren Zeilen;   evtl ZubringerAb und ZubringerIn in verschiedene Bloecke fassen ???",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zelle, AnschlussZubringerAb: { Ueber: [Schnabelwald] } } ) }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, AnschlussZubringerAb: { Ueber: [Schnabelwald] } } ) }
 
     }, {
         q: "Schlafwagen Münch Dresden",
@@ -2370,21 +2445,18 @@ var x73: Array<page> = [{
             q: "+IV.Kl. auch Sonn und Festtag",
             BLOCK: { Standard: id<BlockEntryZeilenFolge>(  { scope: { kind: "ZeilenFolge", startZeileBhf: Leipzig_Bayr_Bf, endZeileBhf: Leipzig_Berl_Bf }, AllgemeineInfo: AllgemeineInfo.IVKlAuchSonnUndFeiertags } ) }
         }
-        //,{
         //bayr bhf
-        //}
         , {
             q: "speisewagen muenchen berlin",
-            BLOCK: { Standard: { scope: Zug, Speisewagen: [München, Berlin] } }
+            BLOCK: { Standard:  id<Block2EntryX>( { scope: Zug, Speisewagen: [München, Berlin] } ) }
         }, {
             q: "b coeth",
-            BLOCK: { Standard: { scope:   {kind: "AnschlussWeiterZellenFolge", startZelle: Leipzig_Magd_Bf  , endZelle: Magdeburg}, mehrZeiligerAnschlusszugFaehrtNach: Cöthen } }
+            BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> (  { scope:   {kind: "AnschlussWeiterZellenFolge", startZelle: Leipzig_Magd_Bf  , endZelle: Magdeburg}, mehrZeiligerAnschlusszugFaehrtNach: Cöthen } ) }
         }, {
             q: "(Rechteck) bei den mit (rechteck) bezeichneten Zuegen findet in Leipzig omnibusueberfuehrung vom Bayr. nach dem Magdeb. Bhf. statt.",
-            BLOCK: { Standard: { scope: Zug, OmnibusUeberfuehrung: [Leipzig_Bayr_Bf , Leipzig_Magd_Bf] } }
+            BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, OmnibusUeberfuehrung: [Leipzig_Bayr_Bf , Leipzig_Magd_Bf] } ) }
         }]
 }
-
 ,
 {
     head: "73.57",
@@ -2395,16 +2467,16 @@ var x73: Array<page> = [{
     }, 
     {
         q: "+in der auf einen sonn oder festtag folgenden nacht",
-        BLOCK: { Standard: { scope: Zug, Fahrtage: InDerAufEinenSonnOderFesttagFolgendenNacht } }
+        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, Fahrtage: InDerAufEinenSonnOderFesttagFolgendenNacht } ) }
     }, {
         q: "s.a.u.8",
         BLOCK: { Standard: id<BlockEntryZeilenFolge>(  { scope: { kind: "ZeilenFolge", startZeileBhf: Leipzig_Connewitz , endZeileBhf: Oetzsch }, AllgemeineInfo: AllgemeineInfo.SieheUnter8 } ) }
     }, {
         q: "nur Werktags",
-        BLOCK: { Standard: { scope: Zug, Fahrtage: Werktags } }
+        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, Fahrtage: Werktags } ) }
     }, {
         q: "sonn und festtags",
-        BLOCK: { Standard: { scope: Zug, Fahrtage: SonnUndFesttags } }
+        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, Fahrtage: SonnUndFesttags } ) }
     }, {
         q: "247 II-IV", // mit geschweifter klammer, ersatz durch anfangs und endmarker
         BLOCK: { Standard: id<Block2EntryTeilZug>( { scope: {kind:"TeilZug", TZgueltigAbBhf: Gaschwitz, TZgueltigBisBhf: Leipzig_Bayr_Bf}, ZugNr: 247, Klasse: Kl2bis4 } ) }
@@ -2436,17 +2508,17 @@ var x74: page[] = [{
         BLOCK: { Standard: id<Block2EntryX>( { scope: Zug, Fahrtage: vom1MaiBis15SeptOhneSonnUndFesttageOhne14Juni } ) }
     }, {
         q: "! ueb Mrkt Redwitz",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: { kind: "ZubringerZellenFolge", startZelle: München, endZelle: Eger }, AnschlussZubringerAb: { Ueber: [Marktredwitz] }   } ) }
+        BLOCK: { Standard: id<Block2EntryZubringerZellenFolge>(  { scope: { kind: "ZubringerZellenFolge", startZelle: München, endZelle: Eger }, AnschlussZubringerAb: { Ueber: [Marktredwitz] }   } ) }
     }, {
         q: "+I.Kl. u. nur von 15.6. bis 15.9.", //anschluss_zubringer_ab und anschluss_zubringer_hin",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: { kind: "ZubringerZellenFolge", startZelle: Karlsbad, endZelle: Eger }, Fahrtage: Vom15JuniBis15September, Klasse: Kl1  } ) }
+        BLOCK: { Standard: id<Block2EntryZubringerZellenFolge>(  { scope: { kind: "ZubringerZellenFolge", startZelle: Karlsbad, endZelle: Eger }, Fahrtage: Vom15JuniBis15September, Klasse: Kl1  } ) }
     }, {
         q: "x ueber Franzensbad",
         c: "Zubringer, der nicht durch eger fahert",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zelle, AnschlussZubringerAb: { Ueber: [Franzensbad] } } ) }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, AnschlussZubringerAb: { Ueber: [Franzensbad] } } ) }
     }, {
         q: "+ I.Kl u. nur von  15.5. bis 15.9. ", //anschluss_zubringer_ab und anschluss_zubringer_hin",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: { kind: "ZubringerZellenFolge", startZelle: Karlsbad, endZelle: Eger }, Fahrtage: Vom15MaiBis15September, Klasse: Kl1  } ) }
+        BLOCK: { Standard: id<Block2EntryZubringerZellenFolge>(  { scope: { kind: "ZubringerZellenFolge", startZelle: Karlsbad, endZelle: Eger }, Fahrtage: Vom15MaiBis15September, Klasse: Kl1  } ) }
     }, {
         q: "nach Gera Ankunft 1010 ", //verlaeest Strecke",
         BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, verlasseKbsNach: { nach: [Gera], AnkunftsZeit: ZHV(1010) } } ) }
@@ -2464,7 +2536,7 @@ var x74: page[] = [{
         BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, Verwaltung: "Bay" } ) }
     }, {
         q: "!D. I.II.",   //Anschluss ist DZug 1+2 klasse",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zelle, Kategorie: "DZug", Klasse: Kl1bis2 } ) }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, Kategorie: "DZug", Klasse: Kl1bis2 } ) }
     }, {
         q: "211 I-IV ",//geschweifte klammer", oberer Bf !
         BLOCK: { Standard: id<Block2EntryTeilZug>( { scope: {kind:"TeilZug", TZgueltigAbBhf: Plauen_i_V , TZgueltigBisBhf: Reichenbach_i_V}, ZugNr: 211, Klasse: Kl1bis4 } ) }
@@ -2485,66 +2557,66 @@ var x75: page[] = [{
         BLOCK: { Standard:  check<Block2EntryScGlobal>( { scope: Global, AllgemeineInfo: AllgemeineInfo.InVoitersreuthZollrevision } ) }
     }, {
         q: "+ueber Greiz //anschluss zubringer aus",
-        BLOCK: { Standard:  id<Block2EntryX>(   { scope: Zelle, AnschlussZubringerAb: { Ueber: [Greiz] } }) }
+        BLOCK: { Standard:  id<Block2Zelle>(   { scope: Zelle, AnschlussZubringerAb: { Ueber: [Greiz] } }) }
     }, {
         q: "*nur I.Kl",
-        BLOCK: { Standard:  id<Block2EntryX>(   { scope: Zelle, Klasse: Kl1 }) }
+        BLOCK: { Standard:  id<Block2Zelle>(   { scope: Zelle, Klasse: Kl1 }) }
     }, {
         q: "*D I II",
-        BLOCK: { Standard:  id<Block2EntryX>(   { scope: {kind:"ZubringerZellenFolge", startZelle: Dresden, endZelle: Reichenbach_i_V } , Kategorie: "DZug", Klasse: Kl1bis2 } ) }
+        BLOCK: { Standard:  id<Block2EntryZubringerZellenFolge>(   { scope: {kind:"ZubringerZellenFolge", startZelle: Dresden, endZelle: Reichenbach_i_V } , Kategorie: "DZug", Klasse: Kl1bis2 } ) }
     }, {
         q: "+Zuege 2106 u. 2108 verkehren nur bis mit 15.September",
         BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, Fahrtage: bis15September, RedundanteZugNr: ["2106", "2108"] } ) }
     }, {
         q: "(RAUTE) Zug 2082 haelt bis mit 15.Sept auch in antonienhoehe an",
-        BLOCK: { Standard: {}, Abweichend: { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: Antonienhöhe, RedundanteZugNr: ["2082"] } }
+        BLOCK: { Standard: {}, Abweichend:  id<Block2EntryX>(  { scope: Zug, GeltungsTag: bis15September, haeltAuchIn: Antonienhöhe, RedundanteZugNr: ["2082"] } ) }
     }, {
         q: "(kleiner endstarn) Zuege der Bayer. Staatsbahnen",
         BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, Verwaltung: "Bay" } ) }
     }, {
         q: "von Gera abf 450",
-        BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: [Gera], AbfahrtsZeit: ZHV(450) } } }
+        BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, erreicheKbsAus: { aus: [Gera], AbfahrtsZeit: ZHV(450) } } ) }
     }, {
         q: "von Gera abf 742",
-        BLOCK: { Standard: { scope: Zug, erreicheKbsAus: { aus: [Gera], AbfahrtsZeit: ZHV(742) } } }
+        BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, erreicheKbsAus: { aus: [Gera], AbfahrtsZeit: ZHV(742) } } ) }
     }, {
         q: "** I.-IIIKl. //geschweifte klammer",
         BLOCK: { Standard: id<Block2EntryTeilZug>( { scope: {kind:"TeilZug", TZgueltigAbBhf: Adorf, TZgueltigBisBhf: Eger}, Klasse: Kl1bis3 } ) }
     }, {
         q: "s.u.56",
-        BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Magdeburg, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter56 } }
+        BLOCK: { Standard:  id<BlockEntryZeilenFolge>(  { scope: { kind: "ZeilenFolge", startZeileBhf: Magdeburg, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter56 } ) }
     }, {
         q: "s.u.54",
-        BLOCK: { Standard: { scope: { kind: "ZeilenFolge", startZeileBhf: Dresden, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter54 } }
+        BLOCK: { Standard:  id<BlockEntryZeilenFolge>(  { scope: { kind: "ZeilenFolge", startZeileBhf: Dresden, endZeileBhf: Reichenbach_i_V }, AllgemeineInfo: AllgemeineInfo.SieheUnter54 } ) }
     }, {
         //q:"//Pfeil ist unklare :-( 736->750    umstieg moeglich ",
         q: "Pfeilstart",
         c: "Anschluss hier an zugende in anderen zug mittenrein",
-        BLOCK: { Standard: { scope: Zelle, PfeilStart: 1 } }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, PfeilStart: 1 } ) }
     }, {
         q: "Pfeilende",
         c: "Mitten rein in anderen Zuglauf !!!",
-        BLOCK: { Standard: { scope: Zelle, PfeilZiel: 1 } }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, PfeilZiel: 1 } ) }
     }, {
         q: "(grosser endstern) ueber Franzensbad",
         c: "anderer startort des anschlusses, muss vor eger umnsteigen !!!",
-        BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:Karlsbad}, AnschlussWeiterAb: {Bhf: Franzensbad} } }
+        BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> (  { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:Karlsbad}, AnschlussWeiterAb: {Bhf: Franzensbad} } ) }
     }, {
         q: "!ueber Marktredwitz",
-        BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:München}, AnschlussWeiterNach: { Ueber: [Marktredwitz] } } }
+        BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> (  { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:München}, AnschlussWeiterNach: { Ueber: [Marktredwitz] } } ) }
     }, {
         q: "(rechteck) I.Kl u  nur von 15juni b 15 sept",
-        BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:Karlsbad}, Fahrtage: Vom15JuniBis15September, Klasse: Kl1 } }
+        BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> ( { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:Karlsbad}, Fahrtage: Vom15JuniBis15September, Klasse: Kl1 }) }
     }, {
         q: "+ I.Kl u nur von 16.V. b 16.IX",
-        BLOCK: { Standard: { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:Karlsbad}, Fahrtage: vom16maibis16sept, Klasse: Kl1 } }
+        BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> (  { scope:  {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:Karlsbad}, Fahrtage: vom16maibis16sept, Klasse: Kl1 } ) }
     }, {
         q: "(geschweifte klammer) von 15.6 b. 15.8",
         c: "Anschluss weiter L 6:55 nach wien",
-        BLOCK: { Standard: { scope: Zelle, GeltungsTag: vom15junibis15august } }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, GeltungsTag: vom15junibis15august } ) }
     }, {
         q: "(geschweifte klammer) ueber M.Redwitz",
-        BLOCK: { Standard: { scope: {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:München} , AnschlussWeiterNach: { Ueber: [Marktredwitz] } } }
+        BLOCK: { Standard:  id<Block2EntryAnschlussWeiterZellenFolge> (  { scope: {kind: "AnschlussWeiterZellenFolge", startZelle:Eger, endZelle:München} , AnschlussWeiterNach: { Ueber: [Marktredwitz] } } ) }
     }]
 }];
 
@@ -2828,11 +2900,11 @@ var x89: page[] = [{
     list: [{
         q: "v. Noss",
         c: " eintrag in AnschlussZubringerAus Zeile ohne zeit aber mit anderem Bhf als zeile eigentlich hat",
-        BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zelle, AnschlussZubringerAb: {Bhf: Nossen } } ) }
+        BLOCK: { Standard:  id<Block2Zelle>(  { scope: Zelle, AnschlussZubringerAb: {Bhf: Nossen } } ) }
     }, {
         q: "v. Leisn.",
         c: " eintrag in AnschlussZubringerAus Zeile ohne zeit aber mit anderem Bhf als zeile eigentlich hat",
-        BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zelle, AnschlussZubringerAb: {Bhf: Leisnig } } ) }
+        BLOCK: { Standard:  id<Block2Zelle>(  { scope: Zelle, AnschlussZubringerAb: {Bhf: Leisnig } } ) }
     }, {
         q: "Nur Werktags",
         BLOCK: { Standard:  id<Block2EntryX>(  { scope: Zug, Fahrtage: Werktags } ) }
@@ -3012,10 +3084,10 @@ var x97: page[] = [{
         BLOCK: { Standard: id<Block2EntryX>(  { scope: Zug, Fahrtage: SonnUndFesttags } ) }
     }, {
         q: "!Umsteigen in Floeha in Zug1018 (s.Nr.54)  //Anschluss_zubringer_aus, der aber intern ein umsteigen fordert wenn man aus dresden kommt",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: Flöha, mitUmstiegInZugNr: "1018" } } ) }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, AnschlussZubringerAb: { mitUmstiegIn: Flöha, mitUmstiegInZugNr: "1018" } } ) }
     }, {
         q: "+Mit Umsteigen in floeha unter Benutzung der Zuege 1069/107 (s.Nr.11 u 54)",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Flöha, mitUmstiegInZugNr: [1069, 107], mitUmstiegSieheKbs: [11, 54] } } ) }
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, AnschlussWeiterNach: { mitUmstiegIn: Flöha, mitUmstiegInZugNr: [1069, 107], mitUmstiegSieheKbs: [11, 54] } } ) }
     }, {
         q: "SaechsStaatsb //global",
         BLOCK: { Standard:  id<Block2EntryTabelle>(  { scope: Tabelle, Verwaltung: "Saechs" } ) }
@@ -3209,7 +3281,7 @@ var x104: Array<page> = [{
     {
         q: "*Sonn und Festtags",
         c: "//*644 Anschluss nur sonntags sozusagen",
-        BLOCK: { Standard: id<Block2EntryX>(  { scope: Zelle, GeltungsTag: SonnUndFesttags } ) } //sonst leer
+        BLOCK: { Standard: id<Block2Zelle>(  { scope: Zelle, GeltungsTag: SonnUndFesttags } ) } //sonst leer
     }
     ]
 }];
