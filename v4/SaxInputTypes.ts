@@ -204,6 +204,8 @@ export var Z2065 : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "2065" , 
 export var Z1991 = "_Z1991";
 export var Z1998 = "_Z1998";
 
+export var Z1506a  : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "1506a" , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}};
+export var ZD65  : TZugNrEintrag = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "D65" , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}};
 
 export var m747 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"m",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 747 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; // _m747 
 
@@ -220,9 +222,12 @@ export var s748 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null
 export var s800 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 800 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s800";
 export var s321 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 321 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s321";
 export var s810 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 810 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s810";
-
-
 export var a858 : TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"a",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 858 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; /// "_a858";
+
+export var s = function(num:number): TZeiteintrag{
+    return  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"",Schnellzug: true,Zeit:{kind:ZEIT_ROH,RohZeit: num },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; 
+
+}
 
 export var s113 = "_s113";
 export var s710 = "_s710";

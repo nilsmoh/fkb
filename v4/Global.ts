@@ -66,6 +66,8 @@ var sMV = function(n:number){
 }
 
 
+
+
 enum EKlassen {
     NichtAngegeben = "_Klassen_nicht_angegeben",
 
@@ -102,8 +104,10 @@ var ZUGLAUF_UNBEKANNT: "ZUGLAUF_UNBEKANNT" = "ZUGLAUF_UNBEKANNT";
 var ZUGLAUF_BERECHNET: "ZUGLAUF_BERECHNET" = "ZUGLAUF_BERECHNET";
 
 
-
+var k1b2 : TKlassenEintrag = {kind: BLOCK_T.KLASSEN_WERT, klassen:  EKlassen.Klassen1bis2, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT} }; //"_Klassen_1_bis_3";
 var k1b3 : TKlassenEintrag = {kind: BLOCK_T.KLASSEN_WERT, klassen:  EKlassen.Klassen1bis3, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT} }; //"_Klassen_1_bis_3";
+var k1b4 : TKlassenEintrag = {kind: BLOCK_T.KLASSEN_WERT, klassen:  EKlassen.Klassen1bis4, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT} }; //"_Klassen_1_bis_3";
+
 var k2b4 : TKlassenEintrag = {kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen2bis4 , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}}; // "_Klassen_2_bis_4";
 var k2b3 : TKlassenEintrag = {kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen2bis3 , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}}; // "_Klassen_2_bis_3";
 var k3b4 : TKlassenEintrag = {kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen3bis4 , BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT}}; // "_Klassen_3_bis_4";
@@ -365,6 +369,7 @@ interface TLeerEintrag {
         kind: typeof BLOCK_T.LEER;
         MitStrich: boolean;
         BerechneterZugLauf: TZugLaufInfo;
+        Alternative?: boolean;
 }
 
 interface TAnkunftEintrag { //"Ank." in tabelle
@@ -473,11 +478,16 @@ interface TKMEintrag{
 
 var _ : TLeerEintrag =   /*var tLeer: TLeerEintrag = */ { kind: BLOCK_T.LEER,    MitStrich: true,     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }     };
 var nix : TLeerEintrag = _; // waagerechter strich
-var gnix  /* =  "_Nixleer"; // wirklich leer  var tResultEntryL */ : TLeerEintrag = { kind: BLOCK_T.LEER,     MitStrich: false,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }        };
+var gnix : TLeerEintrag = { kind: BLOCK_T.LEER,     MitStrich: false,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };  //wirklich leer
+var alt : TLeerEintrag = { kind: BLOCK_T.LEER, MitStrich: true, Alternative:true,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };  //alternativer weg kbs1
+
+
 var kHlt: TKeinHalt = /* "_Kein_Halt";  //  var tResultEntryK: TKeinHalt = */ {    kind: BLOCK_T.KEINHALT,     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };
 var ank /*= "_XZug_endet"; // zuege endet vorzeitig    var tResultEntryAnk*/ : TAnkunftEintrag = { kind: BLOCK_T.ANKUNFT,    BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }       };
 var Ank = ank; // an fuer zuege die nur auf teilstrecke fahren
 var dick /* = "_CELL_dickerstrich";  //var tResultEntryD*/ : TDickerStrichEintrag = {       kind: BLOCK_T.DICKERSTRICH,       BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }      };
+
+//var alt = 
 
 //ZEILENSORTEN
 
@@ -609,8 +619,11 @@ var Leipzig :StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station"
     var Kreibitz : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Kreibitz", "lines": [],  "upperCase": ""};
    
     var Leipzig_Magd_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Magd.Bf.", "lines": [],  "upperCase": ""};
-     var Leipzig_Th_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Th.Bf.", "lines": [],  "upperCase": ""};
+    var Leipzig_Th_Bf : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Th.Bf.", "lines": [],  "upperCase": ""};
   
+    var Dresden_Hbf_Nordh : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hbf Nordh.", "lines": [],  "upperCase": "", Einordnung:"Teilbahnhof"};
+    var Dresden_Hbf_Mitth : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hbf Mittelh.", "lines": [],  "upperCase": "", Einordnung:"Teilbahnhof"};
+    var Dresden_Hbf_Suedh : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hbf Südh.", "lines": [],  "upperCase": "", Einordnung:"Teilbahnhof"};
 
     var Magdeburg : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Magdeburg", "lines": [], "upperCase": "MAGDEBURG" };
     var Mailand : StationTicketInfoEntryKpxTagged = { kind: BLOCK_T.BHFTAG, "station": "Mailand", "lines": [],  "upperCase": ""};
