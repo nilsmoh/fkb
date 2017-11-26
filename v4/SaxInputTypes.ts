@@ -224,8 +224,8 @@ export var s321 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null
 export var s810 : TZeiteintrag  =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:null,Schnellzug:true,Zeit:{kind:ZEIT_ROH,RohZeit: 810 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; //= "_s810";
 export var a858 : TZeiteintrag = {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"a",Schnellzug:false,Zeit:{kind:ZEIT_ROH,RohZeit: 858 },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; /// "_a858";
 
-export var s = function(num:number): TZeiteintrag{
-    return  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"",Schnellzug: true,Zeit:{kind:ZEIT_ROH,RohZeit: num },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; 
+export var s = function(num:number, ref?:string): TZeiteintrag{
+    return  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey: ref ? ref : null,Schnellzug: true,Zeit:{kind:ZEIT_ROH,RohZeit: num },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; 
 
 }
 
@@ -249,10 +249,34 @@ export var a818 = "_a818";
 
 export var Z1960 = "_Z1960";
 
-export var a = (n:number) => { 
-    var tRes:TZeiteintrag =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"a",Schnellzug:false,
+export var rohref = (a:string, n:number) => { 
+    var tRes:TZeiteintrag =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:a ,Schnellzug:false,
                     Zeit:{kind:ZEIT_ROH,RohZeit: n },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; 
     return tRes;
 }
 
+export var aa = (n:number) => {return rohref("aa", n)};
+export var ab = (n:number) => {return rohref("ab", n)};
+export var ac= (n:number) => {return rohref("ac", n)};
+export var ad = (n:number) => {return rohref("ad", n)};
+export var ae = (n:number) => {return rohref("ae", n)};
+export var af = (n:number) => {return rohref("af", n)};
+export var ag = (n:number) => {return rohref("ag", n)};
+export var ah = (n:number) => {return rohref("ah", n)};
+export var ai = (n:number) => {return rohref("ai", n)};
+export var aj = (n:number) => {return rohref("aj", n)};
+export var ak = (n:number) => {return rohref("ak", n)};
+export var al = (n:number) => {return rohref("al", n)};
+export var am = (n:number) => {return rohref("am", n)};
+//an schon vergeben
+export var ao = (n:number) => {return rohref("ao", n)};
+export var ap = (n:number) => {return rohref("ap", n)};
+
+
+
+
+
+
+
+export var b = (n:number) => {return rohref("b", n)};
 

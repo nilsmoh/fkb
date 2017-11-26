@@ -370,6 +370,7 @@ interface TLeerEintrag {
         MitStrich: boolean;
         BerechneterZugLauf: TZugLaufInfo;
         Alternative?: boolean;
+        RefKey?:string;
 }
 
 interface TAnkunftEintrag { //"Ank." in tabelle
@@ -483,6 +484,12 @@ var _ : TLeerEintrag =   /*var tLeer: TLeerEintrag = */ { kind: BLOCK_T.LEER,   
 var nix : TLeerEintrag = _; // waagerechter strich
 var gnix : TLeerEintrag = { kind: BLOCK_T.LEER,     MitStrich: false,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };  //wirklich leer
 var alt : TLeerEintrag = { kind: BLOCK_T.LEER, MitStrich: true, Alternative:true,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };  //alternativer weg kbs1
+var aaa = function(s:string){
+    var tRes:TLeerEintrag =  { kind: BLOCK_T.LEER, MitStrich: true, Alternative:true, RefKey:s,   BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };  //alternativer weg kbs1
+    return tRes;
+    }
+
+
 
 
 var kHlt: TKeinHalt = /* "_Kein_Halt";  //  var tResultEntryK: TKeinHalt = */ {    kind: BLOCK_T.KEINHALT,     BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT }         };
