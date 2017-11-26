@@ -213,7 +213,7 @@ var x24 = [
                     "//DEFAULT  :  direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer -> Coswig" +
                     "//ABWEICHEND: direkt_daneben_passend_senkrecht_ABWEICHEND_SONNUNDFESSTAG _weiter_nach_ohne_streckennummer_Meiss_Coelln" +
                     "// UNTERSCHEIDBAR GGF NUR PER FETTDRUCK",
-                BLOCK: { Standard: { scope: Zug, OhneNrNach: Coswig }, Abweichend: { scope: Zug, Fahrtage: SonnUndFesttags, OhneNrNach: Meissen_Cölln } }
+                BLOCK: { Standard: id({ scope: Zug, OhneNrNach: Coswig }), Abweichend: { scope: Zug, Fahrtage: SonnUndFesttags, OhneNrNach: Meissen_Cölln } }
             },
             {
                 q: "Fortsetzung",
@@ -2820,7 +2820,9 @@ var Kl3bis4 = EKlassen.Klassen3bis4;
 var KlNurEine = EKlassen.KlassenNurEine;
 var ZUGLAUF_UNBEKANNT = "ZUGLAUF_UNBEKANNT";
 var ZUGLAUF_BERECHNET = "ZUGLAUF_BERECHNET";
+var k1b2 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen1bis2, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var k1b3 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen1bis3, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var k1b4 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen1bis4, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var k2b4 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen2bis4, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var k2b3 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen2bis3, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var k3b4 = { kind: BLOCK_T.KLASSEN_WERT, klassen: EKlassen.Klassen3bis4, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
@@ -2945,7 +2947,9 @@ var TEXTORT_T;
     TEXTORT_T["RECHTSVONHEADER"] = "TEXTORT_RECHTSVONHEADER";
     TEXTORT_T["UNTERHEADER"] = "TEXTORT_UNTERHEADER";
     TEXTORT_T["GANZESPALTE"] = "TEXTORT_GANZESPALTE";
+    TEXTORT_T["RECHTSNEBENZUG"] = "TEXTORT_RECHTSNEBENZUG";
 })(TEXTORT_T || (TEXTORT_T = {}));
+;
 ;
 ;
 ;
@@ -2965,6 +2969,7 @@ var VERWEIS_T;
 var _ = { kind: BLOCK_T.LEER, MitStrich: true, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var nix = _;
 var gnix = { kind: BLOCK_T.LEER, MitStrich: false, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var alt = { kind: BLOCK_T.LEER, MitStrich: true, Alternative: true, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var kHlt = { kind: BLOCK_T.KEINHALT, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var ank = { kind: BLOCK_T.ANKUNFT, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 var Ank = ank;
@@ -3028,6 +3033,9 @@ var Halle = { kind: BLOCK_T.BHFTAG, "station": "Halle", "lines": [], "upperCase"
 var Kreibitz = { kind: BLOCK_T.BHFTAG, "station": "Kreibitz", "lines": [], "upperCase": "" };
 var Leipzig_Magd_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Magd.Bf.", "lines": [], "upperCase": "" };
 var Leipzig_Th_Bf = { kind: BLOCK_T.BHFTAG, "station": "Leipzig Th.Bf.", "lines": [], "upperCase": "" };
+var Dresden_Hbf_Nordh = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hbf Nordh.", "lines": [], "upperCase": "", Einordnung: "Teilbahnhof" };
+var Dresden_Hbf_Mitth = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hbf Mittelh.", "lines": [], "upperCase": "", Einordnung: "Teilbahnhof" };
+var Dresden_Hbf_Suedh = { kind: BLOCK_T.BHFTAG, "station": "Dresden Hbf Südh.", "lines": [], "upperCase": "", Einordnung: "Teilbahnhof" };
 var Magdeburg = { kind: BLOCK_T.BHFTAG, "station": "Magdeburg", "lines": [], "upperCase": "MAGDEBURG" };
 var Mailand = { kind: BLOCK_T.BHFTAG, "station": "Mailand", "lines": [], "upperCase": "" };
 var Marktredwitz = { kind: BLOCK_T.BHFTAG, "station": "Marktredwitz", "lines": [], "upperCase": "" };
@@ -3941,7 +3949,7 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
         return (("number" != typeof test) && (test != null) && (test.kind == undefined));
     }
     exports_3("isIZeilenZusatzInfo", isIZeilenZusatzInfo);
-    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960;
+    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, Z1506a, ZD65, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960, a;
     return {
         setters: [],
         execute: function () {
@@ -3976,6 +3984,8 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("Z2065", Z2065 = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "2065", BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("Z1991", Z1991 = "_Z1991");
             exports_3("Z1998", Z1998 = "_Z1998");
+            exports_3("Z1506a", Z1506a = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "1506a", BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
+            exports_3("ZD65", ZD65 = { kind: BLOCK_T.ZUG_NR_WERT, zugnr: "D65", BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("m747", m747 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "m", Schnellzug: false, Zeit: { kind: ZEIT_ROH, RohZeit: 747 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("b355", b355 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "b", Schnellzug: false, Zeit: { kind: ZEIT_ROH, RohZeit: 355 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("a510", a510 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "a", Schnellzug: false, Zeit: { kind: ZEIT_ROH, RohZeit: 510 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
@@ -3988,6 +3998,9 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("s321", s321 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: null, Schnellzug: true, Zeit: { kind: ZEIT_ROH, RohZeit: 321 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("s810", s810 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: null, Schnellzug: true, Zeit: { kind: ZEIT_ROH, RohZeit: 810 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
             exports_3("a858", a858 = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "a", Schnellzug: false, Zeit: { kind: ZEIT_ROH, RohZeit: 858 }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } });
+            exports_3("s", s = function (num) {
+                return { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "", Schnellzug: true, Zeit: { kind: ZEIT_ROH, RohZeit: num }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+            });
             exports_3("s113", s113 = "_s113");
             exports_3("s710", s710 = "_s710");
             exports_3("s845", s845 = "_s845");
@@ -4002,6 +4015,11 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("a659", a659 = "_a659");
             exports_3("a818", a818 = "_a818");
             exports_3("Z1960", Z1960 = "_Z1960");
+            exports_3("a", a = function (n) {
+                var tRes = { kind: BLOCK_T.ZEITEINTRAG, Referenzkey: "a", Schnellzug: false,
+                    Zeit: { kind: ZEIT_ROH, RohZeit: n }, BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+                return tRes;
+            });
         }
     };
 });
@@ -5606,6 +5624,68 @@ System.register("SaxInput", ["SaxInputTypes"], function (exports_7, context_7) {
                 function InputData() {
                 }
                 InputData.einzelplaene = [
+                    id({
+                        route1900: 1,
+                        seite: 24,
+                        caption: "Verbindungsbahn. Richtung Dresden Hbf-Dresden Neustadt",
+                        zeilen: [
+                            [_zugnr, zn, 452, 121, 281, 2, 1542, 685, 424, 641, 1504, 311, SaxInputTypes_2.Z1506a, 687, 1544, 1506, 51],
+                            [_klassen, kl, k1b3, k1b3, k1b4, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b2, k1b4, k1b4, k1b4, k1b3],
+                            [Dresden_Hbf_Nordh, ab, SaxInputTypes_2.a(1207), alt, 256, SaxInputTypes_2.s(348), 529, alt, 548, alt, 557, 610, 656, alt, 717, 733, SaxInputTypes_2.s(741)],
+                            [Dresden_Hbf_Mitth, ab, alt, SaxInputTypes_2.s(1238), alt, alt, alt, 537, alt, 552, alt, alt, alt, 700, alt, alt, alt],
+                            [5.5, Dresd_Wettinerstr, an, 1211, kHlt, 300, kHlt, 533, 541, 552, 556, 601, 614, 700, 704, 721, 737, kHlt],
+                            [Dresd_Wettinerstr, ab, 1212, kHlt, 301, kHlt, 534, 542, 553, 557, 602, 615, 701, 705, 722, 738, kHlt],
+                            [3.7, Dresden_Neust_Leip_Bf, an, 1216, alt, 305, SaxInputTypes_2.s(355), 538, alt, 557, alt, 606, 619, 705, alt, 726, 742, SaxInputTypes_2.s(748)],
+                            [3.8, Dresden_Neust_Schl_Bf, an, alt, 1246, alt, alt, alt, 547, alt, 602, alt, alt, alt, 710, alt, alt, alt],
+                            [_zugnr, zn, 4, 426, 1546, 689, 643, 1548, 691, 428, 61, 123, 6, 430, 1552, 695, 1508, 645],
+                            [_klassen, wa, kl, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4],
+                            [Dresden_Hbf_Nordh, ab, SaxInputTypes_2.s(755), 810, 823, alt, alt, 915, alt, 935, SaxInputTypes_2.s(1006), alt, SaxInputTypes_2.s(1031), 1126, 1150, alt, 1216, alt],
+                            [Dresden_Hbf_Mitth, ab, alt, alt, alt, 838, 851, alt, 930, alt, alt, SaxInputTypes_2.s(1011), alt, alt, alt, 1207, alt, 1221],
+                            [5.5, Dresd_Wettinerstr, an, kHlt, 814, 827, 842, 855, 919, 934, 939, kHlt, kHlt, kHlt, 1130, 1154, 1211, 1220, 1225],
+                            [Dresd_Wettinerstr, ab, kHlt, 815, 828, 843, 856, 920, 935, 940, kHlt, kHlt, kHlt, 1131, 1155, 1212, 1221, 1226],
+                            [3.7, Dresden_Neust_Leip_Bf, an, SaxInputTypes_2.s(802), 819, 832, alt, alt, 924, alt, 944, SaxInputTypes_2.s(1033), alt, SaxInputTypes_2.s(1038), 1135, 1159, alt, 1225, alt],
+                            [3.8, Dresden_Neust_Schl_Bf, an, alt, alt, alt, 848, 901, alt, 940, alt, alt, SaxInputTypes_2.s(1019), alt, alt, alt, 1217, alt, 1231],
+                            [_zugnr, zn, 1554, 697, 1556, 1560, 699, 283, 63, 434, 1510, 701, 313, 647, 1564, 703, 8],
+                            [_klassen, kl, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3],
+                            [Dresden_Hbf_Nordh, ab, 1226, alt, 117, 152, alt, 205, SaxInputTypes_2.s(214), 224, 235, alt, 253, alt, 319, alt, SaxInputTypes_2.s(408)],
+                            [Dresden_Hbf_Mitth, ab, alt, 104, alt, alt, 157, alt, alt, alt, alt, 247, alt, 258, alt, 347, alt],
+                            [5.5, Dresd_Wettinerstr, an, 1230, 108, 121, 156, 201, 209, kHlt, 228, 239, 251, 257, 302, 323, 351, kHlt],
+                            [Dresd_Wettinerstr, ab, 1231, 109, 122, 157, 202, 210, kHlt, 229, 240, 252, 258, 303, 324, 352, kHlt],
+                            [3.7, Dresden_Neust_Leip_Bf, an, 1235, alt, 126, 201, alt, 215, SaxInputTypes_2.s(221), 233, 244, alt, 302, alt, 328, alt, SaxInputTypes_2.s(415)],
+                            [3.8, Dresden_Neust_Schl_Bf, an, alt, 114, alt, alt, 207, alt, alt, alt, alt, 257, alt, 308, alt, 357, alt],
+                            [_zugnr, zn, 125, 1508, 705, 1512, 649, 440, 1572, SaxInputTypes_2.ZD65, 1574, 707, 53, 651, 12, 315, 711, 1514],
+                            [_klassen, kl, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b4, k1b4, k1b3, k1b4, k1b3, k1b4, k1b4, k1b4],
+                            [Dresden_Hbf_Nordh, ab, alt, 443, alt, 508, alt, 546, 557, SaxInputTypes_2.s(631), 638, alt, SaxInputTypes_2.s(706), alt, SaxInputTypes_2.s(719), 726, alt, 753],
+                            [Dresden_Hbf_Mitth, ab, SaxInputTypes_2.s(423), alt, 502, alt, 516, alt, alt, alt, alt, 658, alt, 712, alt, alt, 733, alt],
+                            [5.5, Dresd_Wettinerstr, an, kHlt, 447, 506, 512, 520, 550, 601, kHlt, 642, 702, kHlt, 716, kHlt, 730, 737, 757],
+                            [Dresd_Wettinerstr, ab, kHlt, 448, 507, 513, 521, 551, 602, kHlt, 643, 703, kHlt, 717, kHlt, 731, 739, 758],
+                            [3.7, Dresden_Neust_Leip_Bf, an, alt, 452, alt, 517, alt, 555, 606, SaxInputTypes_2.s(638), 647, alt, SaxInputTypes_2.s(713), alt, SaxInputTypes_2.s(726), 735, alt, 802],
+                            [3.8, Dresden_Neust_Schl_Bf, an, SaxInputTypes_2.s(431), alt, 512, alt, 526, alt, alt, alt, alt, 708, alt, 722, alt, alt, 745, alt],
+                            [_zugnr, zn, 444, 1578, 1516, 713, 1580, 653, 1582, 285, 83, 448, 1584, 717, 1586, 655],
+                            [_klassen, kl, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b4, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4],
+                            [Dresden_Hbf_Nordh, ab, 802, 820, 844, alt, 908, alt, 940, 1001, alt, 1012, 1032, alt, 1123, alt],
+                            [Dresden_Hbf_Mitth, ab, alt, alt, alt, 900, alt, 925, alt, alt, SaxInputTypes_2.s(1006), alt, alt, 1037, alt, 1131],
+                            [5.5, Dresd_Wettinerstr, an, 806, 824, 848, 904, 912, 929, 944, 1005, kHlt, 1016, 1036, 1041, 1127, 1135],
+                            [Dresd_Wettinerstr, ab, 807, 825, 849, 905, 913, 930, 945, 1006, kHlt, 1017, 1037, 1042, 1128, 1136],
+                            [3.7, Dresden_Neust_Leip_Bf, an, 811, 829, 853, alt, 917, alt, 950, 1010, alt, 1021, 1041, alt, 1132, alt],
+                            [3.8, Dresden_Neust_Schl_Bf, an, alt, alt, alt, 910, alt, 935, alt, alt, SaxInputTypes_2.s(1014), alt, alt, 1047, alt, 1141]
+                        ],
+                        ZellenVerweise: [
+                            id({
+                                "Verweistyp": {
+                                    "kind": VERWEIS_T.FERN,
+                                    "ReferenzKey": "a",
+                                    "OpticalMarker": ""
+                                },
+                                "TextOrt": { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                                Inhalt: {
+                                    q: "nach Riesa-Leipzig",
+                                    c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+                                    BLOCK: { Standard: { scope: Zug, OhneNrNach: [Riesa, Leipzig] }, Abweichend: {} }
+                                }
+                            })
+                        ]
+                    }),
                     {
                         route1900: 99,
                         seite: 102,
@@ -6483,6 +6563,82 @@ System.register("SaxApp", ["SaxParser", "SaxValidator", "SaxRenderer", "SaxInput
                 return Sched;
             }());
             exports_11("Sched", Sched);
+        }
+    };
+});
+System.register("saxinputpages/saxinput24", ["SaxInputTypes"], function (exports_12, context_12) {
+    "use strict";
+    var __moduleName = context_12 && context_12.id;
+    var SaxInputTypes_3, page24;
+    return {
+        setters: [
+            function (SaxInputTypes_3_1) {
+                SaxInputTypes_3 = SaxInputTypes_3_1;
+            }
+        ],
+        execute: function () {
+            page24 = id({
+                route1900: 1,
+                seite: 24,
+                caption: "Verbindungsbahn. Richtung Dresden Hbf-Dresden Neustadt",
+                zeilen: [
+                    [_zugnr, zn, 452, 121, 281, 2, 1542, 685, 424, 641, 1504, 311, SaxInputTypes_3.Z1506a, 687, 1544, 1506, 51],
+                    [_klassen, kl, k1b3, k1b3, k1b4, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b2, k1b4, k1b4, k1b4, k1b3],
+                    [Dresden_Hbf_Nordh, ab, SaxInputTypes_3.a(1207), alt, 256, SaxInputTypes_3.s(348), 529, alt, 548, alt, 557, 610, 656, alt, 717, 733, SaxInputTypes_3.s(741)],
+                    [Dresden_Hbf_Mitth, ab, alt, SaxInputTypes_3.s(1238), alt, alt, alt, 537, alt, 552, alt, alt, alt, 700, alt, alt, alt],
+                    [5.5, Dresd_Wettinerstr, an, 1211, kHlt, 300, kHlt, 533, 541, 552, 556, 601, 614, 700, 704, 721, 737, kHlt],
+                    [Dresd_Wettinerstr, ab, 1212, kHlt, 301, kHlt, 534, 542, 553, 557, 602, 615, 701, 705, 722, 738, kHlt],
+                    [3.7, Dresden_Neust_Leip_Bf, an, 1216, alt, 305, SaxInputTypes_3.s(355), 538, alt, 557, alt, 606, 619, 705, alt, 726, 742, SaxInputTypes_3.s(748)],
+                    [3.8, Dresden_Neust_Schl_Bf, an, alt, 1246, alt, alt, alt, 547, alt, 602, alt, alt, alt, 710, alt, alt, alt],
+                    [_zugnr, zn, 4, 426, 1546, 689, 643, 1548, 691, 428, 61, 123, 6, 430, 1552, 695, 1508, 645],
+                    [_klassen, wa, kl, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4],
+                    [Dresden_Hbf_Nordh, ab, SaxInputTypes_3.s(755), 810, 823, alt, alt, 915, alt, 935, SaxInputTypes_3.s(1006), alt, SaxInputTypes_3.s(1031), 1126, 1150, alt, 1216, alt],
+                    [Dresden_Hbf_Mitth, ab, alt, alt, alt, 838, 851, alt, 930, alt, alt, SaxInputTypes_3.s(1011), alt, alt, alt, 1207, alt, 1221],
+                    [5.5, Dresd_Wettinerstr, an, kHlt, 814, 827, 842, 855, 919, 934, 939, kHlt, kHlt, kHlt, 1130, 1154, 1211, 1220, 1225],
+                    [Dresd_Wettinerstr, ab, kHlt, 815, 828, 843, 856, 920, 935, 940, kHlt, kHlt, kHlt, 1131, 1155, 1212, 1221, 1226],
+                    [3.7, Dresden_Neust_Leip_Bf, an, SaxInputTypes_3.s(802), 819, 832, alt, alt, 924, alt, 944, SaxInputTypes_3.s(1033), alt, SaxInputTypes_3.s(1038), 1135, 1159, alt, 1225, alt],
+                    [3.8, Dresden_Neust_Schl_Bf, an, alt, alt, alt, 848, 901, alt, 940, alt, alt, SaxInputTypes_3.s(1019), alt, alt, alt, 1217, alt, 1231],
+                    [_zugnr, zn, 1554, 697, 1556, 1560, 699, 283, 63, 434, 1510, 701, 313, 647, 1564, 703, 8],
+                    [_klassen, kl, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3],
+                    [Dresden_Hbf_Nordh, ab, 1226, alt, 117, 152, alt, 205, SaxInputTypes_3.s(214), 224, 235, alt, 253, alt, 319, alt, SaxInputTypes_3.s(408)],
+                    [Dresden_Hbf_Mitth, ab, alt, 104, alt, alt, 157, alt, alt, alt, alt, 247, alt, 258, alt, 347, alt],
+                    [5.5, Dresd_Wettinerstr, an, 1230, 108, 121, 156, 201, 209, kHlt, 228, 239, 251, 257, 302, 323, 351, kHlt],
+                    [Dresd_Wettinerstr, ab, 1231, 109, 122, 157, 202, 210, kHlt, 229, 240, 252, 258, 303, 324, 352, kHlt],
+                    [3.7, Dresden_Neust_Leip_Bf, an, 1235, alt, 126, 201, alt, 215, SaxInputTypes_3.s(221), 233, 244, alt, 302, alt, 328, alt, SaxInputTypes_3.s(415)],
+                    [3.8, Dresden_Neust_Schl_Bf, an, alt, 114, alt, alt, 207, alt, alt, alt, alt, 257, alt, 308, alt, 357, alt],
+                    [_zugnr, zn, 125, 1508, 705, 1512, 649, 440, 1572, SaxInputTypes_3.ZD65, 1574, 707, 53, 651, 12, 315, 711, 1514],
+                    [_klassen, kl, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b4, k1b4, k1b3, k1b4, k1b3, k1b4, k1b4, k1b4],
+                    [Dresden_Hbf_Nordh, ab, alt, 443, alt, 508, alt, 546, 557, SaxInputTypes_3.s(631), 638, alt, SaxInputTypes_3.s(706), alt, SaxInputTypes_3.s(719), 726, alt, 753],
+                    [Dresden_Hbf_Mitth, ab, SaxInputTypes_3.s(423), alt, 502, alt, 516, alt, alt, alt, alt, 658, alt, 712, alt, alt, 733, alt],
+                    [5.5, Dresd_Wettinerstr, an, kHlt, 447, 506, 512, 520, 550, 601, kHlt, 642, 702, kHlt, 716, kHlt, 730, 737, 757],
+                    [Dresd_Wettinerstr, ab, kHlt, 448, 507, 513, 521, 551, 602, kHlt, 643, 703, kHlt, 717, kHlt, 731, 739, 758],
+                    [3.7, Dresden_Neust_Leip_Bf, an, alt, 452, alt, 517, alt, 555, 606, SaxInputTypes_3.s(638), 647, alt, SaxInputTypes_3.s(713), alt, SaxInputTypes_3.s(726), 735, alt, 802],
+                    [3.8, Dresden_Neust_Schl_Bf, an, SaxInputTypes_3.s(431), alt, 512, alt, 526, alt, alt, alt, alt, 708, alt, 722, alt, alt, 745, alt],
+                    [_zugnr, zn, 444, 1578, 1516, 713, 1580, 653, 1582, 285, 83, 448, 1584, 717, 1586, 655],
+                    [_klassen, kl, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b4, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4],
+                    [Dresden_Hbf_Nordh, ab, 802, 820, 844, alt, 908, alt, 940, 1001, alt, 1012, 1032, alt, 1123, alt],
+                    [Dresden_Hbf_Mitth, ab, alt, alt, alt, 900, alt, 925, alt, alt, SaxInputTypes_3.s(1006), alt, alt, 1037, alt, 1131],
+                    [5.5, Dresd_Wettinerstr, an, 806, 824, 848, 904, 912, 929, 944, 1005, kHlt, 1016, 1036, 1041, 1127, 1135],
+                    [Dresd_Wettinerstr, ab, 807, 825, 849, 905, 913, 930, 945, 1006, kHlt, 1017, 1037, 1042, 1128, 1136],
+                    [3.7, Dresden_Neust_Leip_Bf, an, 811, 829, 853, alt, 917, alt, 950, 1010, alt, 1021, 1041, alt, 1132, alt],
+                    [3.8, Dresden_Neust_Schl_Bf, an, alt, alt, alt, 910, alt, 935, alt, alt, SaxInputTypes_3.s(1014), alt, alt, 1047, alt, 1141]
+                ],
+                ZellenVerweise: [
+                    id({
+                        "Verweistyp": {
+                            "kind": VERWEIS_T.FERN,
+                            "ReferenzKey": "a",
+                            "OpticalMarker": ""
+                        },
+                        "TextOrt": { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                        Inhalt: {
+                            q: "nach Riesa-Leipzig",
+                            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+                            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Riesa, Leipzig] }, Abweichend: {} }
+                        }
+                    })
+                ]
+            });
         }
     };
 });

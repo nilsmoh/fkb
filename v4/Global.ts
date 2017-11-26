@@ -384,14 +384,15 @@ interface TDickerStrichEintrag {  //wWaagerechter BLOCK_DICKERSTRICH  siehe seit
 
 
     //// TEXTORT //Text wird in z.b. links neben header geschrieben
-type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte;
+type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechtsVonHeader | TTextOrtUnterHeader | TTextOrtGanzeSpalte | TTextOrtRechtsNebenZug;
     
     enum TEXTORT_T {
         NICHTANGEGEBEN = "TEXTORT_NICHTANGEGEBEN",
         LINKSVONHEADER = "TEXTORT_LINKSVONHEADER",
         RECHTSVONHEADER = "TEXTORT_RECHTSVONHEADER",
         UNTERHEADER = "TEXTORT_UNTERHEADER",
-        GANZESPALTE = "TEXTORT_GANZESPALTE"
+        GANZESPALTE = "TEXTORT_GANZESPALTE",
+        RECHTSNEBENZUG = "TEXTORT_RECHTSNEBENZUG" //SPECIMEN:  seite 24 "n.Riesa-Leipz."
     }
 
     interface TTextOrtNichtAngegeben { kind: typeof TEXTORT_T.NICHTANGEGEBEN };
@@ -399,6 +400,8 @@ type TTextOrt = TTextOrtNichtAngegeben | TTextOrtLinksVonHeader | TTextOrtRechts
     interface TTextOrtRechtsVonHeader { kind: typeof TEXTORT_T.RECHTSVONHEADER };
     interface TTextOrtUnterHeader { kind: typeof TEXTORT_T.UNTERHEADER };
     interface TTextOrtGanzeSpalte { kind: typeof TEXTORT_T.GANZESPALTE, UebersprungeneSpalten: number, Spaltenbreite: number };
+
+    interface TTextOrtRechtsNebenZug { kind: typeof TEXTORT_T.RECHTSNEBENZUG};
 
     //endregion
 

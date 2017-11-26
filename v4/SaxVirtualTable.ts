@@ -85,7 +85,7 @@ import { assertNever } from "./SaxBaseTypes";
 
                                         let ss: Block2Entry = tr.Inhalt.BLOCK.Standard as Block2Entry;
                                         if (ss.scope.kind == "Zug") {
-                                            let s = ss as Block2EntryX;
+                                            let s = ss as Block2EntryZug;
                                             console.log(s.scope, s.ZugNr, s.Klasse);
 
                                             //let tNeedVirtualZugZeile = false;

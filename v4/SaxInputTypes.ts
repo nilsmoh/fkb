@@ -249,4 +249,10 @@ export var a818 = "_a818";
 
 export var Z1960 = "_Z1960";
 
+export var a = (n:number) => { 
+    var tRes:TZeiteintrag =  {  kind: BLOCK_T.ZEITEINTRAG,Referenzkey:"a",Schnellzug:false,
+                    Zeit:{kind:ZEIT_ROH,RohZeit: n },BerechneterZugLauf: {kind: ZUGLAUF_UNBEKANNT}}; 
+    return tRes;
+}
+
 

@@ -11,7 +11,8 @@
 		"strictNullChecks": true
     },
   "include": [
-    "*.ts"
+    "*.ts",
+    "./saxinputpages/*.ts"
   ],
     "exclude": [
         "node_modules",
