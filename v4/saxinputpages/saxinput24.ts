@@ -14,7 +14,7 @@ import {SingleDirectionScheduleInput,  /*sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl,  */
      WaltersdfHst, MittwMrkb, a510, s810, Z1967, Z1971, Z2045, Z2065, n822, m747, d1153, b355, s321, s550, s748, c510, s800
      /*,s113 ,s710, s845 , s1058*/ /*,wx,sj,sp,sm*/ , /*ZW, SC,AN, CT, AU, LU, CN, JO, KA,*/ /* x135, x150, a644,a659,a818,a754,b233,c937, */  
      Z1960,/*dick,*/ Z1991, Z1998, /*m149,*/ cross,chooseown,nach9spalten
-     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten, a858,  nach5spalten2spalten,nach4spalten2spalten, Z1506a, s, ZD65,  aa, ac, ae, ag, ai, aj, ak, am, ao, 
+     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten, a858,  nach5spalten2spalten,nach4spalten2spalten, Z1506a, s, ZD65,  aa, ac, ae, ag, ai, aj, ak, am, ao, bb, bc, bf, bh, bl, bm, bo, 
     } from "./../SaxInputTypes";
 
 import { /*VERWEIS_T, TEXTORT_T*/ } from "./SaxParsedTypes";    
@@ -38,14 +38,14 @@ id<SingleDirectionScheduleInput>( {
 [3.7, Dresden_Neust_Leip_Bf,an, 1216    ,    alt  , 305   ,s(355)     ,    538,      alt,    557,  alt,      606,   619,    705,  alt,  726,  742,  s(748)],
 [3.8, Dresden_Neust_Schl_Bf,an, alt     ,    1246 , alt   ,  alt      ,    alt,      547,    alt,  602,      alt,   alt,    alt,  710,   alt, alt,   alt],
 
-[_zugnr, zn,                       4, 426,1546, 689, 643,1548, 691, 428,     61,    123,      6,  430,1552, 695,1508, 645],
-[_klassen,  wx,        kl,         k1b3,k1b4,k1b4,k1b4,k1b4,k1b4,k1b4,k1b4,   k1b3,   k1b3,   k1b3, k1b4,k1b4,k1b4,k1b4,k1b4],
-[Dresden_Hbf_Nordh,ab ,         s(755),810, 823,alt, alt, 915,alt , 935,s(1006),    alt,s(1031), 1126,1150, alt,1216, alt],
-[Dresden_Hbf_Mitth, ab,         alt   ,alt, alt,838, 851, alt,930 , alt,alt    ,s(1011),   alt ,  alt,alt ,1207, alt,1221],
-[5.5, Dresd_Wettinerstr,an,     kHlt  ,814, 827,842, 855, 919,934 , 939,   kHlt,   kHlt,   kHlt, 1130,1154,1211,1220,1225],
-  [Dresd_Wettinerstr, ab,       kHlt  ,815, 828,843, 856, 920,935 , 940,   kHlt,   kHlt,   kHlt, 1131,1155,1212,1221,1226],
-[3.7, Dresden_Neust_Leip_Bf,an, s(802),819, 832,alt, alt, 924,alt , 944,s(1033),    alt,s(1038), 1135,1159, alt,1225, alt],  
-[3.8, Dresden_Neust_Schl_Bf,an,    alt,alt, alt,848, 901,alt ,940 , alt,alt    ,s(1019),    alt,  alt, alt,1217, alt,1231],
+[_zugnr, zn,                     4       ,    426,  1546,       689,      643,   1548,      691,    428,          61,      123,           6,     430,    1552,      695,    1508,      645],
+[_klassen,  wx,        kl,       k1b3    ,   k1b4,  k1b4,      k1b4,     k1b4,   k1b4,     k1b4,   k1b4,        k1b3,     k1b3,        k1b3,    k1b4,    k1b4,     k1b4,    k1b4,     k1b4],
+[Dresden_Hbf_Nordh,ab ,       s(755,"ba"),bb(810),bc(823),aaa("bd"),aaa("be"),bf(915),aaa("bg"),bh(935),s(1006,"bi"),aaa("bj"),s(1031,"bk"),bl(1126),bm(1150),aaa("bn"),bo(1216),aaa("bp")],
+[Dresden_Hbf_Mitth, ab,         alt      ,    alt,    alt,      838,      851,    alt,      930,    alt,         alt,  s(1011),        alt ,     alt,    alt ,     1207,     alt,     1221],
+[5.5, Dresd_Wettinerstr,an,     kHlt     ,    814,    827,      842,      855,    919,      934,    939,        kHlt,     kHlt,        kHlt,    1130,    1154,     1211,    1220,     1225],
+  [Dresd_Wettinerstr, ab,       kHlt     ,    815,    828,      843,      856,    920,      935,    940,        kHlt,     kHlt,        kHlt,    1131,    1155,     1212,    1221,     1226],
+[3.7, Dresden_Neust_Leip_Bf,an, s(802)   ,    819,    832,      alt,      alt,    924,     alt ,    944,     s(1033),      alt,     s(1038),    1135,    1159,      alt,    1225,      alt],  
+[3.8, Dresden_Neust_Schl_Bf,an,    alt   ,    alt,    alt,      848,      901,    alt ,    940 ,    alt,     alt    ,  s(1019),         alt,     alt,     alt,     1217,     alt,     1231],
 
 [  _zugnr, zn,                 1554, 697,1556,1560, 699, 283,    63, 434,1510, 701, 313, 647,1564, 703,   8  ],
 [  _klassen,          kl,      k1b4,k1b4,k1b4,k1b4,k1b4,k1b4,  k1b3,k1b3,k1b4,k1b4,k1b4,k1b4,k1b4,k1b4, k1b3 ],
@@ -76,6 +76,7 @@ id<SingleDirectionScheduleInput>( {
 
     ],
         ZellenVerweise: [
+            // #region block1 a
             id<TBlockinhaltBaseV2>({
                 Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "aa", OpticalMarker: "" },
                 TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
@@ -249,6 +250,15 @@ id<SingleDirectionScheduleInput>( {
             })
 
 
-        ]
+            // #endregion
 
+            // #region block2 b...
+
+
+
+
+
+            // #endregion
+    
+        ]
     });

@@ -3953,7 +3953,7 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
         return (("number" != typeof test) && (test != null) && (test.kind == undefined));
     }
     exports_3("isIZeilenZusatzInfo", isIZeilenZusatzInfo);
-    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, Z1506a, ZD65, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960, rohref, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, ao, ap, b;
+    var defaultzug, restspalte, WaltersdfHst, MittwMrkb, MARKERPREFIX, fatdot, cross, chooseown, BAHNVERWALTUNGPREFIX, Sachs, fern, passend, global, pfeilziel, pfeilstart, sonn_und_festtags, nur_werktags, headerlinks, headerrechts, nach9spalten, nach4spalten2spalten, nach10spalten4spalten, nach4spalten, nach6spalten, nach5spalten2spalten, Z1971, Z2045, Z1967, Z2065, Z1991, Z1998, Z1506a, ZD65, m747, b355, a510, n822, c510, d1153, s550, s748, s800, s321, s810, a858, s, s113, s710, s845, s1058, c937, b233, a754, m149, x135, x150, a644, a659, a818, Z1960, rohref, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, ao, ap, b, ba, bb, bc, bd, be, bf, bg, bh, bi, bj, bk, bl, bm, bn, bo, bp, bq, br, bs, bt, bu, bv;
     return {
         setters: [],
         execute: function () {
@@ -4040,6 +4040,28 @@ System.register("SaxInputTypes", [], function (exports_3, context_3) {
             exports_3("ao", ao = function (n) { return rohref("ao", n); });
             exports_3("ap", ap = function (n) { return rohref("ap", n); });
             exports_3("b", b = function (n) { return rohref("b", n); });
+            exports_3("ba", ba = function (n) { return rohref("ba", n); });
+            exports_3("bb", bb = function (n) { return rohref("bb", n); });
+            exports_3("bc", bc = function (n) { return rohref("bc", n); });
+            exports_3("bd", bd = function (n) { return rohref("bd", n); });
+            exports_3("be", be = function (n) { return rohref("be", n); });
+            exports_3("bf", bf = function (n) { return rohref("bf", n); });
+            exports_3("bg", bg = function (n) { return rohref("bg", n); });
+            exports_3("bh", bh = function (n) { return rohref("bh", n); });
+            exports_3("bi", bi = function (n) { return rohref("bi", n); });
+            exports_3("bj", bj = function (n) { return rohref("bj", n); });
+            exports_3("bk", bk = function (n) { return rohref("bk", n); });
+            exports_3("bl", bl = function (n) { return rohref("bl", n); });
+            exports_3("bm", bm = function (n) { return rohref("bm", n); });
+            exports_3("bn", bn = function (n) { return rohref("bn", n); });
+            exports_3("bo", bo = function (n) { return rohref("bo", n); });
+            exports_3("bp", bp = function (n) { return rohref("bp", n); });
+            exports_3("bq", bq = function (n) { return rohref("bq", n); });
+            exports_3("br", br = function (n) { return rohref("br", n); });
+            exports_3("bs", bs = function (n) { return rohref("bs", n); });
+            exports_3("bt", bt = function (n) { return rohref("bt", n); });
+            exports_3("bu", bu = function (n) { return rohref("bu", n); });
+            exports_3("bv", bv = function (n) { return rohref("bv", n); });
         }
     };
 });
@@ -6550,7 +6572,7 @@ System.register("saxinputpages/saxinput24", ["SaxInputTypes"], function (exports
                     [3.8, Dresden_Neust_Schl_Bf, an, alt, 1246, alt, alt, alt, 547, alt, 602, alt, alt, alt, 710, alt, alt, alt],
                     [_zugnr, zn, 4, 426, 1546, 689, 643, 1548, 691, 428, 61, 123, 6, 430, 1552, 695, 1508, 645],
                     [_klassen, wx, kl, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b4, k1b3, k1b3, k1b3, k1b4, k1b4, k1b4, k1b4, k1b4],
-                    [Dresden_Hbf_Nordh, ab, SaxInputTypes_3.s(755), 810, 823, alt, alt, 915, alt, 935, SaxInputTypes_3.s(1006), alt, SaxInputTypes_3.s(1031), 1126, 1150, alt, 1216, alt],
+                    [Dresden_Hbf_Nordh, ab, SaxInputTypes_3.s(755, "ba"), SaxInputTypes_3.bb(810), SaxInputTypes_3.bc(823), aaa("bd"), aaa("be"), SaxInputTypes_3.bf(915), aaa("bg"), SaxInputTypes_3.bh(935), SaxInputTypes_3.s(1006, "bi"), aaa("bj"), SaxInputTypes_3.s(1031, "bk"), SaxInputTypes_3.bl(1126), SaxInputTypes_3.bm(1150), aaa("bn"), SaxInputTypes_3.bo(1216), aaa("bp")],
                     [Dresden_Hbf_Mitth, ab, alt, alt, alt, 838, 851, alt, 930, alt, alt, SaxInputTypes_3.s(1011), alt, alt, alt, 1207, alt, 1221],
                     [5.5, Dresd_Wettinerstr, an, kHlt, 814, 827, 842, 855, 919, 934, 939, kHlt, kHlt, kHlt, 1130, 1154, 1211, 1220, 1225],
                     [Dresd_Wettinerstr, ab, kHlt, 815, 828, 843, 856, 920, 935, 940, kHlt, kHlt, kHlt, 1131, 1155, 1212, 1221, 1226],

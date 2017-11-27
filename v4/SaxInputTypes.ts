@@ -279,4 +279,25 @@ export var ap = (n:number) => {return rohref("ap", n)};
 
 
 export var b = (n:number) => {return rohref("b", n)};
-
+export var ba = (n:number) => {return rohref("ba", n)};
+export var bb = (n:number) => {return rohref("bb", n)};
+export var bc = (n:number) => {return rohref("bc", n)};
+export var bd= (n:number) => {return rohref("bd", n)};
+export var be= (n:number) => {return rohref("be", n)};
+export var bf= (n:number) => {return rohref("bf", n)};
+export var bg= (n:number) => {return rohref("bg", n)};
+export var bh = (n:number) => {return rohref("bh", n)};
+export var bi = (n:number) => {return rohref("bi", n)};
+export var bj = (n:number) => {return rohref("bj", n)};
+export var bk = (n:number) => {return rohref("bk", n)};
+export var bl = (n:number) => {return rohref("bl", n)};
+export var bm = (n:number) => {return rohref("bm", n)};
+export var bn = (n:number) => {return rohref("bn", n)};
+export var bo = (n:number) => {return rohref("bo", n)};
+export var bp = (n:number) => {return rohref("bp", n)};
+export var bq = (n:number) => {return rohref("bq", n)};
+export var br = (n:number) => {return rohref("br", n)};
+export var bs = (n:number) => {return rohref("bs", n)};
+export var bt = (n:number) => {return rohref("bt", n)};
+export var bu = (n:number) => {return rohref("bu", n)};
+export var bv = (n:number) => {return rohref("bv", n)};
