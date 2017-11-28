@@ -14,7 +14,7 @@ import {SingleDirectionScheduleInput,  /*sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl,  */
      WaltersdfHst, MittwMrkb, a510, s810, Z1967, Z1971, Z2045, Z2065, n822, m747, d1153, b355, s321, s550, s748, c510, s800
      /*,s113 ,s710, s845 , s1058*/ /*,wx,sj,sp,sm*/ , /*ZW, SC,AN, CT, AU, LU, CN, JO, KA,*/ /* x135, x150, a644,a659,a818,a754,b233,c937, */  
      Z1960,/*dick,*/ Z1991, Z1998, /*m149,*/ cross,chooseown,nach9spalten
-     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten, a858,  nach5spalten2spalten,nach4spalten2spalten, Z1506a, s, ZD65,  aa, ac, ae, ag, ai, aj, ak, am, ao, bb, bc, bf, bh, bl, bm, bo, ca, cc, cd, cf, ci, ch, ck, cm, 
+     ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten, a858,  nach5spalten2spalten,nach4spalten2spalten, Z1506a, s, ZD65,  aa, ac, ae, ag, ai, aj, ak, am, ao, bb, bc, bf, bh, bl, bm, bo, ca, cc, cd, cf, ci, ch, ck, cm, db, dd, df, dp, dg, di, dn, ea, eb, ee, ec, eg, eh, ej, ek, em, 
     } from "./../SaxInputTypes";
 
 import { /*VERWEIS_T, TEXTORT_T*/ } from "./SaxParsedTypes";    
@@ -66,9 +66,9 @@ id<SingleDirectionScheduleInput>( {
 // #endregion block3 c
 // #region block4 d
 
-[  _zugnr, zn,                   125, 1508, 705,1512, 649, 440,1572,  ZD65,1574, 707,    53, 651,    12, 315, 711,1514 ],
-[  _klassen,          kl,       k1b3, k1b4,k1b4,k1b4,k1b4,k1b4,k1b4,  k1b3,k1b4,k1b4,  k1b3,k1b4,  k1b3,k1b4,k1b4,k1b4 ],
-[   Dresden_Hbf_Nordh,ab  ,      alt,  443, alt, 508, alt, 546, 557,s(631), 638, alt,s(706), alt,s(719), 726, alt, 753 ],
+[  _zugnr, zn,                    125,   1508,      705,   1512,      649,    440,   1572,       ZD65,   1574,      707,         53,      651,         12,    315,      711,  1514 ],
+[  _klassen,          kl,        k1b3,   k1b4,     k1b4,   k1b4,     k1b4,   k1b4,   k1b4,       k1b3,   k1b4,     k1b4,       k1b3,     k1b4,       k1b3,   k1b4,     k1b4,  k1b4 ],
+[   Dresden_Hbf_Nordh,ab   ,aaa("da"),db(443),aaa("dc"),dd(508),aaa("de"),df(546),dg(557),s(631,"dh"),di(638),aaa("dj"),s(706,"dk"),aaa("dl"),s(719,"dm"),dn(726),aaa("do"),dp(753)],
 [   Dresden_Hbf_Mitth, ab,    s(423),  alt, 502, alt, 516, alt, alt,   alt, alt, 658,   alt, 712,   alt, alt, 733, alt ],
 [5.5,Dresd_Wettinerstr,an,      kHlt,  447, 506, 512, 520, 550, 601,  kHlt, 642, 702,  kHlt, 716,  kHlt, 730, 737, 757 ],  
 [Dresd_Wettinerstr,    ab,      kHlt,  448, 507, 513, 521, 551, 602,  kHlt, 643, 703,  kHlt, 717,  kHlt, 731, 739, 758 ],
@@ -78,9 +78,9 @@ id<SingleDirectionScheduleInput>( {
 // #endregion block4 d
 // #region block5 e
 
-[  _zugnr, zn,                 444, 1578, 1516,  713, 1580, 653, 1582, 285,     83,  448, 1584,  717, 1586,  655 ],
-[  _klassen,          kl,     k1b4, k1b4, k1b4, k1b4, k1b4,k1b4, k1b3,k1b4,   k1b3, k1b3, k1b4, k1b4, k1b4, k1b4 ],
-[  Dresden_Hbf_Nordh,ab ,      802,  820,  844,  alt,  908, alt, 940, 1001,    alt, 1012, 1032,  alt, 1123,  alt ],
+[  _zugnr, zn,                   444,   1578,   1516,      713,   1580,      653,   1582,     285,       83,     448,    1584,      717,    1586,    655  ],
+[  _klassen,          kl,       k1b4,   k1b4,   k1b4,     k1b4,   k1b4,     k1b4,   k1b3,    k1b4,     k1b3,    k1b3,    k1b4,     k1b4,    k1b4,   k1b4  ],
+[  Dresden_Hbf_Nordh,ab ,    ea(802),eb(820),ec(844),aaa("ed"),ee(908),aaa("ef"),eg(940),eh(1001),aaa("ei"),ej(1012),ek(1032),aaa("el"),em(1123),aaa("en")],
 [  Dresden_Hbf_Mitth, ab,      alt,  alt,  alt,  900,  alt, 925, alt,  alt,s(1006),  alt,  alt, 1037,  alt, 1131 ],
 [5.5,Dresd_Wettinerstr,    an, 806,  824,  848,  904,  912, 929, 944, 1005,   kHlt, 1016, 1036, 1041, 1127, 1135 ],
 [Dresd_Wettinerstr,        ab, 807,  825,  849,  905,  913, 930, 945, 1006,   kHlt, 1017, 1037, 1042, 1128, 1136 ],
@@ -546,6 +546,305 @@ id<TBlockinhaltBaseV2>({
             })
 
             // #endregion
+
+            // #region block4 d
+
+            ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "da", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:      {
+            q: "nach Görlitz",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Görlitz] }, Abweichend: {} }
+        },  
+            })
+                  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "db", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:    {
+            q: "nach Meissen-Cölln",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Meissen_Cölln] }, Abweichend: {} }
+        },    
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dc", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:       {
+            q: "nach Arnsdorf",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Arnsdorf] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dd", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Döbeln-Leipzig",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Döbeln, Leipzig] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "de", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Görlitz",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Görlitz] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "df", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:          {
+            q: "nach Riesa-Leipzig",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Riesa, Leipzig] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dg", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Meissen-Cölln",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Meissen_Cölln] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dh", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:         {
+            q: "nach Elsterwerda-Berlin",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Elsterwerda, Berlin] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "di", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Meissen-Cölln",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Meissen_Cölln] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dj", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:       {
+            q: "nach Arnsdorf",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Arnsdorf] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dk", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:         {
+            q: "nach Röderau-Berlin",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Röderau, Berlin] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dl", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:    {
+            q: "nach Görlitz",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Görlitz] }, Abweichend: {} }
+        },    
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dm", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:          {
+            q: "nach Riesa-Leipzig",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Riesa, Leipzig] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dn", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:     {
+            q: "nach Elsterwerda-Berlin",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Elsterwerda, Berlin] }, Abweichend: {} }
+        },    
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "do", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:         {
+            q: "nach Radeberg",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Radeberg] }, Abweichend: {} }
+        },
+            })      ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "dp", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Döbeln-Leipzig",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Döbeln, Leipzig] }, Abweichend: {} }
+        },
+            })     
+
+
+            // #endregion d
+
+            // #region e
+
+                 ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ea", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:          {
+            q: "nach Riesa",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Riesa] }, Abweichend: {} }
+        },
+            })       ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "eb", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Meissen-Cölln",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Meissen_Cölln] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ec", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Döbeln-Leisn",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer    zugnummer deutet stattdessen auf leipzig ?!",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Döbeln, Leisnig] }, Abweichend: {} }
+        },   
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ed", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:       {
+            q: "nach Arnsdorf",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Arnsdorf] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ee", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Coswig",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Coswig] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ef", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:   {
+            q: "nach Görlitz",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Görlitz] }, Abweichend: {} }
+        },         
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "eg", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:       {
+            q: "Sonn- und Festtags nach Meissen-Cölln",
+            c: "nicht tägl !",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Meissen_Cölln], Fahrtage: SonnUndFesttags }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "eh", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:         {
+            q: "nach Röderau-Berlin",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Röderau, Berlin] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ei", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Reichenberg",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Reichenberg] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ej", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:          {
+            q: "nach Riesa-Leipzig",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Riesa, Leipzig] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ek", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Nossen",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Nossen] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "el", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:       {
+            q: "nach Arnsdorf",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Arnsdorf] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "em", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:        {
+            q: "nach Meissen-Cölln",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Meissen_Cölln] }, Abweichend: {} }
+        },
+            })     
+  ,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "en", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
+                Inhalt:    {
+            q: "nach Bautzen",
+            c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
+            BLOCK: { Standard: { scope: Zug, OhneNrNach: [Bautzen] }, Abweichend: {} }
+        },    
+            })     
+  
+
+
+            // 3endregion e
+
 
         ]
     });
