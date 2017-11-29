@@ -11,12 +11,15 @@ import {SingleDirectionScheduleInput,  /*sa, sb,sc,sd,se,sf,sg,sh,si,sk,sl,  */
      ,nach10spalten4spalten, headerrechts, nach4spalten,nach6spalten, a858,  nach5spalten2spalten,nach4spalten2spalten, Z1506a, s, ZD65,  
     } from "./SaxInputTypes";
 
+import {page24} from "./saxinputpages/saxinput24";    
+
 import { /*VERWEIS_T, TEXTORT_T*/ } from "./SaxParsedTypes";    
 
 export class InputData {
         public static einzelplaene: SingleDirectionScheduleInput[] = [
  
- 
+            page24,
+
  /*
 /////  Seite 102
 */ 

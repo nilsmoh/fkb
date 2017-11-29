@@ -82,7 +82,8 @@ import { /*IZellenEigenschaft */} from "./SaxInputTypes";
         kind: typeof ZEILE_T.KLASSEN,
         KlassenNummern: Array<TKlassenNrEintrag>,
         ZeitZeileZusatzInfo: ZeitZeileZusatzInfo | undefined,    //letzter eintrag
-        BlockEintrag: TBlockEintrag | undefined                  // falls in Kopfspalte
+        //BlockEintrag: TBlockEintrag | undefined,                  // falls in Kopfspalte
+        HeaderTextRef: string | undefined  //z.b. Fortsetzung in fkb1
     }
 
     export enum EAnAb {

@@ -61,7 +61,8 @@ import { assertNever } from "./SaxBaseTypes";
                                                 KlassenNummern: new Array<ParsedTypes.TKlassenNrEintrag>(),
                                                 ZeitZeileZusatzInfo: undefined,
                                                 Virtual: true,
-                                                BlockEintrag: undefined   // falls in Kopfspalte ???
+                                                //BlockEintrag: undefined   // falls in Kopfspalte ??? jetzt ersetzt durch    HeaderTextRef
+                                                HeaderTextRef: undefined
                                             }
 
 

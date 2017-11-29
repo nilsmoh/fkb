@@ -23,7 +23,7 @@ import { /*VERWEIS_T, TEXTORT_T*/ } from "./SaxParsedTypes";
 //        public static einzelplaene: SingleDirectionScheduleInput[] = [
  
 
-var page24:SingleDirectionScheduleInput =
+export var page24:SingleDirectionScheduleInput =
 id<SingleDirectionScheduleInput>( {
     route1900: 1,
     seite:24,
@@ -43,7 +43,7 @@ id<SingleDirectionScheduleInput>( {
 // #region block2 b
 
 [_zugnr, zn,                     4       ,    426,  1546,       689,      643,   1548,      691,    428,          61,      123,           6,     430,    1552,      695,    1508,      645],
-[_klassen,  wx,        kl,       k1b3    ,   k1b4,  k1b4,      k1b4,     k1b4,   k1b4,     k1b4,   k1b4,        k1b3,     k1b3,        k1b3,    k1b4,    k1b4,     k1b4,    k1b4,     k1b4],
+[_klassen,  wb,        kl,       k1b3    ,   k1b4,  k1b4,      k1b4,     k1b4,   k1b4,     k1b4,   k1b4,        k1b3,     k1b3,        k1b3,    k1b4,    k1b4,     k1b4,    k1b4,     k1b4],
 [Dresden_Hbf_Nordh,ab ,       s(755,"ba"),bb(810),bc(823),aaa("bd"),aaa("be"),bf(915),aaa("bg"),bh(935),s(1006,"bi"),aaa("bj"),s(1031,"bk"),bl(1126),bm(1150),aaa("bn"),bo(1216),aaa("bp")],
 [Dresden_Hbf_Mitth, ab,         alt      ,    alt,    alt,      838,      851,    alt,      930,    alt,         alt,  s(1011),        alt ,     alt,    alt ,     1207,     alt,     1221],
 [5.5, Dresd_Wettinerstr,an,     kHlt     ,    814,    827,      842,      855,    919,      934,    939,        kHlt,     kHlt,        kHlt,    1130,    1154,     1211,    1220,     1225],
@@ -55,7 +55,7 @@ id<SingleDirectionScheduleInput>( {
 // #region block3 c
 
 [  _zugnr, zn,                 1554,      697,   1556,   1560,      699,     283,         63,    434,   1510,      701,    313,      647,   1564,      703,        8  ],
-[  _klassen,          kl,      k1b4,     k1b4,   k1b4,   k1b4,     k1b4,    k1b4,       k1b3,   k1b3,   k1b4,     k1b4,   k1b4,     k1b4,   k1b4,     k1b4,      k1b3 ],
+[  _klassen,   wc,       kl,      k1b4,     k1b4,   k1b4,   k1b4,     k1b4,    k1b4,       k1b3,   k1b3,   k1b4,     k1b4,   k1b4,     k1b4,   k1b4,     k1b4,      k1b3 ],
 [   Dresden_Hbf_Nordh,ab  ,ca(1226),aaa("cb"),cc(117),cd(152),aaa("ce"), cf(205),s(214,"cg"),ch(224),ci(235),aaa("cj"),ck(253),aaa("cl"),cm(319),aaa("cn"),s(408,"co")],
 [   Dresden_Hbf_Mitth, ab,      alt, 104, alt, alt, 157, alt,   alt, alt, alt, 247, alt, 258, alt, 347, alt  ],
 [5.5,Dresd_Wettinerstr,an,     1230, 108, 121, 156, 201, 209,  kHlt, 228, 239, 251, 257, 302, 323, 351, kHlt ],
@@ -67,7 +67,7 @@ id<SingleDirectionScheduleInput>( {
 // #region block4 d
 
 [  _zugnr, zn,                    125,   1508,      705,   1512,      649,    440,   1572,       ZD65,   1574,      707,         53,      651,         12,    315,      711,  1514 ],
-[  _klassen,          kl,        k1b3,   k1b4,     k1b4,   k1b4,     k1b4,   k1b4,   k1b4,       k1b3,   k1b4,     k1b4,       k1b3,     k1b4,       k1b3,   k1b4,     k1b4,  k1b4 ],
+[  _klassen,  wd,        kl,        k1b3,   k1b4,     k1b4,   k1b4,     k1b4,   k1b4,   k1b4,       k1b3,   k1b4,     k1b4,       k1b3,     k1b4,       k1b3,   k1b4,     k1b4,  k1b4 ],
 [   Dresden_Hbf_Nordh,ab   ,aaa("da"),db(443),aaa("dc"),dd(508),aaa("de"),df(546),dg(557),s(631,"dh"),di(638),aaa("dj"),s(706,"dk"),aaa("dl"),s(719,"dm"),dn(726),aaa("do"),dp(753)],
 [   Dresden_Hbf_Mitth, ab,    s(423),  alt, 502, alt, 516, alt, alt,   alt, alt, 658,   alt, 712,   alt, alt, 733, alt ],
 [5.5,Dresd_Wettinerstr,an,      kHlt,  447, 506, 512, 520, 550, 601,  kHlt, 642, 702,  kHlt, 716,  kHlt, 730, 737, 757 ],  
@@ -79,7 +79,7 @@ id<SingleDirectionScheduleInput>( {
 // #region block5 e
 
 [  _zugnr, zn,                   444,   1578,   1516,      713,   1580,      653,   1582,     285,       83,     448,    1584,      717,    1586,    655  ],
-[  _klassen,          kl,       k1b4,   k1b4,   k1b4,     k1b4,   k1b4,     k1b4,   k1b3,    k1b4,     k1b3,    k1b3,    k1b4,     k1b4,    k1b4,   k1b4  ],
+[  _klassen,  we,        kl,       k1b4,   k1b4,   k1b4,     k1b4,   k1b4,     k1b4,   k1b3,    k1b4,     k1b3,    k1b3,    k1b4,     k1b4,    k1b4,   k1b4  ],
 [  Dresden_Hbf_Nordh,ab ,    ea(802),eb(820),ec(844),aaa("ed"),ee(908),aaa("ef"),eg(940),eh(1001),aaa("ei"),ej(1012),ek(1032),aaa("el"),em(1123),aaa("en")],
 [  Dresden_Hbf_Mitth, ab,      alt,  alt,  alt,  900,  alt, 925, alt,  alt,s(1006),  alt,  alt, 1037,  alt, 1131 ],
 [5.5,Dresd_Wettinerstr,    an, 806,  824,  848,  904,  912, 929, 944, 1005,   kHlt, 1016, 1036, 1041, 1127, 1135 ],
@@ -252,23 +252,26 @@ id<SingleDirectionScheduleInput>( {
                     c: "//direkt_daneben_passend_senkrecht_weiter_nach_ohne_streckennummer",
                     BLOCK: { Standard: { scope: Zug, OhneNrNach: [Röderau, Berlin] }, Abweichend: {} }
                 },
-            }),
-
-
-            id<TBlockinhaltBaseV2>({
-                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "wx", OpticalMarker: "" },
-                TextOrt: { "kind": TEXTORT_T.NICHTANGEGEBEN },
-                Inhalt: {
-                    q: "Fortsetzung",
-                    c: "Tabellenteil untereinander statt logisch nebeneinander",
-                    BLOCK: { Standard: check<Block2EntryScTabellenTeilFortsetzung>({ scope: TabellenteilFortSetzung }), Abweichend: {} }
-                }
             })
+
+
+          
 
 
             // #endregion
 
             // #region block2 b...
+ ,
+ id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "b", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.NICHTANGEGEBEN },
+                Inhalt: {
+            q: "Fortsetzung",
+            c: "Tabellenteil untereinander statt logisch nebeneinander",
+            BLOCK: { Standard:  check<Block2EntryScTabellenTeilFortsetzung>( { scope: TabellenteilFortSetzung}), Abweichend: {} }
+        }
+            })
+ 
  ,
  id<TBlockinhaltBaseV2>({
                 Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ba", OpticalMarker: "" },
@@ -420,6 +423,18 @@ id<TBlockinhaltBaseV2>({
             // #region block3 c
 ,
 id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "c", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.NICHTANGEGEBEN },
+                Inhalt: {
+            q: "Fortsetzung",
+            c: "Tabellenteil untereinander statt logisch nebeneinander",
+            BLOCK: { Standard:  check<Block2EntryScTabellenTeilFortsetzung>( { scope: TabellenteilFortSetzung}), Abweichend: {} }
+        }
+            })
+ 
+
+,
+id<TBlockinhaltBaseV2>({
                 Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ca", OpticalMarker: "" },
                 TextOrt: { "kind": TEXTORT_T.RECHTSNEBENZUG },
                 Inhalt:       {
@@ -548,6 +563,20 @@ id<TBlockinhaltBaseV2>({
             // #endregion
 
             // #region block4 d
+
+,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "d", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.NICHTANGEGEBEN},
+                Inhalt: {
+            q: "Fortsetzung",
+            c: "Tabellenteil untereinander statt logisch nebeneinander",
+            BLOCK: { Standard:  check<Block2EntryScTabellenTeilFortsetzung>( { scope: TabellenteilFortSetzung}), Abweichend: {} }
+        }
+            })
+ 
+
+
 
             ,
 id<TBlockinhaltBaseV2>({
@@ -700,7 +729,16 @@ id<TBlockinhaltBaseV2>({
             // #endregion d
 
             // #region e
-
+,
+id<TBlockinhaltBaseV2>({
+                Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "e", OpticalMarker: "" },
+                TextOrt: { "kind": TEXTORT_T.NICHTANGEGEBEN },
+                Inhalt: {
+            q: "Fortsetzung",
+            c: "Tabellenteil untereinander statt logisch nebeneinander",
+            BLOCK: { Standard:  check<Block2EntryScTabellenTeilFortsetzung>( { scope: TabellenteilFortSetzung}), Abweichend: {} }
+        }
+            })
                  ,
 id<TBlockinhaltBaseV2>({
                 Verweistyp: { "kind": VERWEIS_T.FERN, ReferenzKey: "ea", OpticalMarker: "" },

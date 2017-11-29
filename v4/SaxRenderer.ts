@@ -384,6 +384,7 @@ export class Renderer{
                                 tEintraege = z.KlassenNummern;
                                 tdk.innerHTML = "";
 
+/*
                                 if (z.BlockEintrag != null){
                                     
                                     //var vt = z.BlockEintrag.Blockinhalt!.Verweistyp;
@@ -392,6 +393,11 @@ export class Renderer{
                                     //}
                                     tdk.innerHTML += ZI_Renderer.TBlockInhaltNachRenderKomplex(z.BlockEintrag.Blockinhalt, false);
                                 }
+*/
+                                if (z.HeaderTextRef != null){
+                                    tdk.innerHTML += z.HeaderTextRef;
+                                }
+
                                 break;
                          }
 
@@ -449,11 +455,22 @@ export class Renderer{
                             //var ze: SaxSchedulesTyped.TNormalZeileEintrag = zex;
                             switch (ze.kind) {
                                 case BLOCK_T.LEER:
+
+                                
                                     console.log(ze.MitStrich );
                                     //var zel: TLeerEintrag  = ze as TLeerEintrag;
-                                    td.innerHTML = ((ze.MitStrich == true) ? "-" : "");
+
+                                    if (ze.RefKey){
+                                        td.innerHTML += ze.RefKey;
+                                    }
+                                    td.innerHTML += ((ze.MitStrich == true) ? "-" : "");
                                     td.title = " Z" + (ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET ? ze.BerechneterZugLauf.ZugNr : "-");
                                     td.style.backgroundColor = tCalcRgba(ze.BerechneterZugLauf);
+
+                                    if (ze.Alternative){
+                                        td.innerHTML += "~";
+                                    }
+
                                     //if ((ze.BerechneterZugLauf.kind == ZUGLAUF_BERECHNET) && (ze.BerechneterZugLauf.isEnd)){
                                     //    td.innerHTML += " isEnd ";
                                     //}

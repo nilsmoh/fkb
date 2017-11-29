@@ -739,7 +739,8 @@ export class Importer {
                             kind: ZEILE_T.KLASSEN,
                             KlassenNummern: [],
                             ZeitZeileZusatzInfo: undefined,    //letzter eintrag
-                            BlockEintrag: undefined
+                            //BlockEintrag: undefined,
+                            HeaderTextRef: undefined
                         }
                         tResultZeile = tResultZeileK;
                     }
@@ -915,6 +916,23 @@ export class Importer {
                             tResultZeile.Lfd = merged_ZeitZeileZusatzInfo.Lfd;
                             
 
+
+                         break;
+
+                         case ZEILE_T.KLASSEN:
+                            //const temp_KlasseZusatzInfo_Vorn: ZeitZeileZusatzInfo = Importer.erstelleZZZausHeaderArray(zeile.slice(0,tTrennerIndex));
+                            //console.log("xxy ", temp_KlasseZusatzInfo_Vorn);
+
+                            //schreibe wa textverweis, z.b. fkb1 Fortsetzung
+
+                            var tResultZeileTyped = tResultZeile;
+
+                            zeile.slice(0,tTrennerIndex).forEach((i)=>{
+                                if (i.kind === BLOCK_T.BLOCK){
+                                    tResultZeileTyped.HeaderTextRef = i.Referenzkey;
+                                }
+                            });
+        
 
                          break;
                     }

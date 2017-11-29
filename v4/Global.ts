@@ -529,6 +529,13 @@ var _weiter_in = _anschluss_nach_in;
 //var WAAGERECHT_PREFIX = "_waagerecht_";
 
 var wa:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"a",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var wb:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"b",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var wc:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"c",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var wd:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"d",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+var we:TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"e",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
+
+
+
 var wx :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:false,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"x",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
 
 var sa :TBlockEintrag={kind:BLOCK_T.BLOCK,Senkrecht:true,Valid:false,Start:false,Breite:1,Hoehe:1,Passend:true,Referenzkey:"a",Blockinhalt:undefined,BerechneterZugLauf: { kind: ZUGLAUF_UNBEKANNT } };
